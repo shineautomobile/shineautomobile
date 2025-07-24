@@ -712,42 +712,7 @@
     </div>
   </section>
 
-  <!-- Booking Form -->
-  <section id="book" class="form-section">
-    <h2 class="section-title">Envoyez une soumission</h2>
-    <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="return validateForm(event)">
-      <input type="hidden" name="_captcha" value="false">
-      <div class="form-group">
-        <input type="text" name="Nom Complet" id="name" placeholder="Nom complet" required aria-label="Nom complet">
-        <p class="form-error" id="name-error">Veuillez entrer un nom valide.</p>
-      </div>
-      <div class="form-group">
-        <input type="text" name="Type de voiture" id="car-type" placeholder="Type de voiture (ex: Sedan, SUV, Camion)" required aria-label="Type de voiture">
-        <p class="form-error" id="car-type-error">Veuillez spécifier le type de voiture.</p>
-      </div>
-      <div class="form-group">
-        <input type="tel" name="Téléphone" id="phone" placeholder="Numéro de téléphone" required aria-label="Numéro de téléphone" pattern="[0-9]{10,}">
-        <p class="form-error" id="phone-error">Veuillez entrer un numéro de téléphone valide (10 chiffres minimum).</p>
-      </div>
-      <div class="form-group">
-        <input type="text" name="Adresse" id="address" placeholder="Adresse à domicile" required aria-label="Adresse à domicile">
-        <p class="form-error" id="address-error">Veuillez entrer une adresse valide.</p>
-      </div>
-      <div class="form-group">
-        <select name="Type de lavage" id="lavage" onchange="showPrice()" required aria-label="Type de lavage">
-          <option value="">Choisir un service</option>
-          <option value="Lavage Extérieur - 29,99$">Lavage Extérieur - 29,99$</option>
-          <option value="Lavage Intérieur - 49,99$ (+15$ SUV / +25$ Camion/Van)">Lavage Intérieur - 49,99$ (+15$ SUV / +25$ Camion/Van)</option>
-          <option value="Lavage Régulier - 69,99$ (+15$ SUV / +25$ Camion/Van)">Lavage Régulier - 69,99$ (+15$ SUV / +25$ Camion/Van)</option>
-          <option value="Remise à neuf - 159,99$ (+15$ SUV / +40$ Camion/Van)">Remise à neuf - 159,99$ (+15$ SUV / +40$ Camion/Van)</option>
-          <option value="Shampoing des sièges - 49,99$ (+25$ SUV/Camion/Van)">Shampoing des sièges - 49,99$ (+25$ SUV/Camion/Van)</option>
-        </select>
-        <p class="form-error" id="lavage-error">Veuillez sélectionner un service.</p>
-      </div>
-      <div class="form-group">
-        <input type="date" name="Date" id="date" required aria-label="Date de réservation">
-        <p class="form-error" id="date-error">Veuillez sélectionner une date valide.</p>
-      </div>
+  
       <p id="prix" aria-live="polite"></p>
       <button type="submit">Envoyer</button>
       <p class="important-notif">* Important : des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke</p>
