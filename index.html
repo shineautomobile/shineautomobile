@@ -14,6 +14,7 @@
       --bg-color: #F9FAFB; /* Fond gris clair */
       --text-color: #111827; /* Texte sombre */
       --white: #FFFFFF;
+      --error-color: #DC2626; /* Rouge pour erreurs */
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --border-radius: 12px;
       --transition: all 0.3s ease;
@@ -43,7 +44,7 @@
       padding: 0 1.5rem;
     }
 
-    /* Logo animé */
+    /* Logo animé fixe */
     .fixed-logo {
       position: fixed;
       top: 20px;
@@ -253,10 +254,10 @@
 
     /* Form Section */
     .form-section {
-      background: var(--white);
+      background: linear-gradient(135deg, var(--white), rgba(16, 185, 129, 0.05));
       padding: 3rem 2rem;
       border-radius: var(--border-radius);
-      max-width: 600px;
+      max-width: 700px;
       margin: 3rem auto;
       box-shadow: var(--shadow);
       animation: fadeInUp 1s ease;
@@ -265,7 +266,25 @@
     .form-section form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
+    }
+
+    .form-section .form-group {
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideInField 0.5s ease forwards;
+    }
+
+    .form-section .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-section .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-section .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-section .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-section .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-section .form-group:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes slideInField {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .form-section input,
@@ -293,29 +312,41 @@
       cursor: pointer;
       font-weight: 600;
       font-size: 1.1rem;
+      position: relative;
+      overflow: hidden;
+      animation: pulse 2s infinite;
     }
 
     .form-section button:hover {
       background: var(--primary-color);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
     }
 
     .form-error {
-      color: #DC2626;
+      color: var(--error-color);
       font-size: 0.9rem;
       margin-top: 0.25rem;
       display: none;
+      animation: fadeIn 0.3s ease;
     }
 
-    #price-info {
+    #prix {
       font-style: italic;
-      color: #4B5563;
+      color: var(--text-color);
       min-height: 1.5rem;
       text-align: center;
+      transition: opacity 0.3s ease;
     }
 
-    .note {
+    .important-notif {
       font-size: 0.9rem;
-      color: #DC2626;
+      color: var(--error-color);
       text-align: center;
       margin-top: 1rem;
     }
@@ -382,7 +413,14 @@
       max-width: 500px;
       text-align: center;
       box-shadow: var(--shadow);
-      animation: fadeInUp 0.5s ease-out;
+      position: relative;
+      animation: sparkle 1s ease;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(0.95); }
+      50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     .modal-content h3 {
@@ -404,6 +442,7 @@
 
     .modal-content button:hover {
       background: var(--primary-color);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
     }
 
     /* Responsive Design */
@@ -552,32 +591,52 @@
   <!-- Booking Form -->
   <section id="book" class="form-section">
     <h2 class="section-title">Envoyez une soumission</h2>
-    <form id="bookingForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="return validateForm(event)">
+    <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="return validateForm(event)">
       <input type="hidden" name="_captcha" value="false">
-      <select id="service-select" name="Service" required aria-label="Choisir un service">
-        <option value="">Choisir un service...</option>
-        <option value="Lavage Extérieur - 29.99">Lavage Extérieur – 29,99$</option>
-        <option value="Lavage Intérieur - 49.99">Lavage Intérieur – 49,99$ (+15$ SUV / +25$ Camion/Van)</option>
-        <option value="Lavage Complet - 69.99">Lavage Complet – 69,99$ (+15$ SUV / +25$ Camion/Van)</option>
-        <option value="Remise à neuf - 159.99">Remise à neuf – 159,99$ (+15$ SUV / +40$ Camion/Van)</option>
-        <option value="Shampoing des sièges - 49.99">Shampoing des sièges – 49,99$ (+25$ SUV/Camion/Van)</option>
-      </select>
-      <p class="form-error" id="service-error">Veuillez sélectionner un service.</p>
-      <input type="date" id="date" name="Date" required aria-label="Date de réservation">
-      <p class="form-error" id="date-error">Veuillez sélectionner une date valide.</p>
-      <div id="price-info"></div>
-      <button type="submit">Envoyer la demande</button>
-      <p class="note">* Frais supplémentaires hors Sherbrooke</p>
+      <div class="form-group">
+        <input type="text" name="Nom Complet" id="name" placeholder="Nom complet" required aria-label="Nom complet">
+        <p class="form-error" id="name-error">Veuillez entrer un nom valide.</p>
+      </div>
+      <div class="form-group">
+        <input type="text" name="Type de voiture" id="car-type" placeholder="Type de voiture (ex: Sedan, SUV, Camion)" required aria-label="Type de voiture">
+        <p class="form-error" id="car-type-error">Veuillez spécifier le type de voiture.</p>
+      </div>
+      <div class="form-group">
+        <input type="tel" name="Téléphone" id="phone" placeholder="Numéro de téléphone" required aria-label="Numéro de téléphone" pattern="[0-9]{10,}">
+        <p class="form-error" id="phone-error">Veuillez entrer un numéro de téléphone valide (10 chiffres minimum).</p>
+      </div>
+      <div class="form-group">
+        <input type="text" name="Adresse" id="address" placeholder="Adresse à domicile" required aria-label="Adresse à domicile">
+        <p class="form-error" id="address-error">Veuillez entrer une adresse valide.</p>
+      </div>
+      <div class="form-group">
+        <select name="Type de lavage" id="lavage" onchange="showPrice()" required aria-label="Type de lavage">
+          <option value="">Choisir un service</option>
+          <option value="Lavage Extérieur - 29,99$">Lavage Extérieur - 29,99$</option>
+          <option value="Lavage Intérieur - 49,99$ (+15$ SUV / +25$ Camion/Van)">Lavage Intérieur - 49,99$ (+15$ SUV / +25$ Camion/Van)</option>
+          <option value="Lavage Régulier - 69,99$ (+15$ SUV / +25$ Camion/Van)">Lavage Régulier - 69,99$ (+15$ SUV / +25$ Camion/Van)</option>
+          <option value="Remise à neuf - 159,99$ (+15$ SUV / +40$ Camion/Van)">Remise à neuf - 159,99$ (+15$ SUV / +40$ Camion/Van)</option>
+          <option value="Shampoing des sièges - 49,99$ (+25$ SUV/Camion/Van)">Shampoing des sièges - 49,99$ (+25$ SUV/Camion/Van)</option>
+        </select>
+        <p class="form-error" id="lavage-error">Veuillez sélectionner un service.</p>
+      </div>
+      <div class="form-group">
+        <input type="date" name="Date" id="date" required aria-label="Date de réservation">
+        <p class="form-error" id="date-error">Veuillez sélectionner une date valide.</p>
+      </div>
+      <p id="prix" aria-live="polite"></p>
+      <button type="submit">Envoyer</button>
+      <p class="important-notif">* Important : des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke</p>
     </form>
   </section>
 
   <!-- Contact Section -->
   <section id="contact" class="contact container">
     <h2 class="section-title">Contactez-nous</h2>
-    <a href="mailto:info.shineautomobile@gmail.com">📧 info.shineautomobile@gmail.com</a>
-    <a href="tel:8736623813">📞 873-662-3813</a>
-    <a href="sms:+18736623813">💬 Envoyer un texte</a>
-    <a href="https://www.instagram.com/shineautomobile_/" target="_blank" rel="noopener">📸 Instagram</a>
+    <p>📧 Email : <a href="mailto:info.shineautomobile@gmail.com">info.shineautomobile@gmail.com</a></p>
+    <p>📞 Téléphone : <a href="tel:8736623813">873-662-3813</a></p>
+    <p>💬 <a href="sms:+18736623813">Envoyez-nous un texto</a></p>
+    <p>📸 <a href="https://www.instagram.com/shineautomobile_/" target="_blank" rel="noopener">Suivez-nous sur Instagram</a></p>
   </section>
 
   <!-- Map Section -->
@@ -587,10 +646,11 @@
   </section>
 
   <!-- Modal -->
-  <div class="modal" id="modal">
+  <div class="modal" id="confirmationModal">
     <div class="modal-content">
-      <h3>Merci ! 🎉</h3>
-      <p>Votre demande de réservation a bien été envoyée. Nous vous contacterons sous 24h.</p>
+      <h3>Merci pour votre réservation ! ✨</h3>
+      <p>Votre demande a été reçue. Nous vous contacterons dans les 24h pour confirmer votre rendez-vous.</p>
+      <p>Pour toute question, appelez-nous au <a href="tel:8736623813">873-662-3813</a>.</p>
       <button onclick="closeModal()">Fermer</button>
     </div>
   </div>
@@ -615,9 +675,10 @@
 
     // Form Price Display
     function showPrice() {
-      const select = document.getElementById('service-select');
-      const priceInfo = document.getElementById('price-info');
-      priceInfo.textContent = select.value ? `Prix estimé : ${select.value.split('-')[1].trim()}` : '';
+      const select = document.getElementById('lavage');
+      const prix = document.getElementById('prix');
+      prix.textContent = select.value ? `Vous avez choisi : ${select.value}` : '';
+      prix.style.opacity = select.value ? '1' : '0';
     }
 
     // Form Validation
@@ -625,28 +686,29 @@
       event.preventDefault();
       let isValid = true;
 
-      const service = document.getElementById('service-select');
-      const date = document.getElementById('date');
-      const serviceError = document.getElementById('service-error');
-      const dateError = document.getElementById('date-error');
+      const fields = [
+        { id: 'name', errorId: 'name-error', validate: value => value.trim().length > 2 },
+        { id: 'car-type', errorId: 'car-type-error', validate: value => value.trim().length > 0 },
+        { id: 'phone', errorId: 'phone-error', validate: value => /^[0-9]{10,}$/.test(value) },
+        { id: 'address', errorId: 'address-error', validate: value => value.trim().length > 5 },
+        { id: 'lavage', errorId: 'lavage-error', validate: value => value !== '' },
+        { id: 'date', errorId: 'date-error', validate: value => value !== '' },
+      ];
 
-      if (!service.value) {
-        serviceError.style.display = 'block';
-        isValid = false;
-      } else {
-        serviceError.style.display = 'none';
-      }
-
-      if (!date.value) {
-        dateError.style.display = 'block';
-        isValid = false;
-      } else {
-        dateError.style.display = 'none';
-      }
+      fields.forEach(field => {
+        const input = document.getElementById(field.id);
+        const error = document.getElementById(field.errorId);
+        if (!field.validate(input.value)) {
+          error.style.display = 'block';
+          isValid = false;
+        } else {
+          error.style.display = 'none';
+        }
+      });
 
       if (isValid) {
-        document.getElementById('modal').classList.add('active');
-        document.getElementById('bookingForm').submit();
+        document.getElementById('confirmationModal').classList.add('active');
+        document.getElementById('submissionForm').submit();
       }
 
       return isValid;
@@ -654,18 +716,15 @@
 
     // Modal
     function closeModal() {
-      document.getElementById('modal').classList.remove('active');
+      document.getElementById('confirmationModal').classList.remove('active');
     }
-
-    // Initialize form listener
-    document.getElementById('service-select').addEventListener('change', showPrice);
 
     // Handle URL parameters
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const service = urlParams.get('service');
+      const service = urlParams.get('service')?.replace(/_/g, ' ');
       if (service) {
-        const select = document.getElementById('service-select');
+        const select = document.getElementById('lavage');
         select.value = service;
         showPrice();
       }
