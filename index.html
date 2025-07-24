@@ -2,85 +2,140 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ShineAutomobile - Service de lavage automobile à domicile en Estrie. Qualité professionnelle à prix imbattables.">
   <title>✨ ShineAutomobile • Lavage à Domicile • Estrie</title>
-  <meta name="description" content="ShineAutomobile - Service de lavage automobile à domicile en Estrie.">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --c1: #4F46E5; /* violet */
-      --c2: #10B981; /* turquoise */
-      --c3: #F59E0B; /* jaune doré */
-      --bg: #F9FAFB;
-      --text: #111827;
+      --primary-color: #1E3A8A; /* Bleu profond */
+      --accent-color: #10B981; /* Turquoise vibrant */
+      --highlight-color: #F59E0B; /* Jaune doré */
+      --bg-color: #F9FAFB; /* Fond gris clair */
+      --text-color: #111827; /* Texte sombre */
       --white: #FFFFFF;
-      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      color: var(--text);
-      background: var(--bg);
+      color: var(--text-color);
+      background: var(--bg-color);
       line-height: 1.6;
     }
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: 1200px; margin: auto; padding: 0 1rem; }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Logo animé */
+    .fixed-logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 200;
+    }
+
+    .fixed-logo img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: var(--shadow);
+      animation: spinLogo 8s linear infinite;
+    }
+
+    @keyframes spinLogo {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      z-index: 100;
+      padding: 1rem 0;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: var(--text-color);
+      padding: 0.5rem 1rem;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+      background: rgba(30, 58, 138, 0.1);
+      border-radius: 6px;
+    }
+
+    /* Header */
     header {
-      background: linear-gradient(135deg, var(--c1), var(--c2));
-      padding: 2.5rem 0;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      padding: 4rem 0;
       text-align: center;
       color: var(--white);
     }
-    header .logo {
-      width: 120px;
-      filter: drop-shadow(0 3px 6px var(--shadow));
-    }
-    nav {
-      position: sticky; top: 0; background: var(--white);
-      box-shadow: 0 2px 4px var(--shadow); z-index: 100;
-    }
-    nav .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      padding: 1rem 0;
-    }
-    nav .nav-links a {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 500;
-      color: var(--text);
-      padding: 0.5rem;
-      transition: color 0.3s;
-    }
-    nav .nav-links a:hover { color: var(--c1); }
 
-    .hero {
-      background: var(--white);
-      margin: 1.5rem 0;
-      padding: 3rem 1rem;
-      text-align: center;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px var(--shadow);
-      animation: fadeInUp 1s ease;
-    }
-    .hero h1 {
+    header h1 {
       font-family: 'Raleway', sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--white), var(--highlight-color));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-    .hero p.subtitle {
-      font-weight: 600;
-      color: var(--c2);
       margin-bottom: 1rem;
     }
+
+    /* Hero Section */
+    .hero {
+      background: var(--white);
+      margin: 2rem 0;
+      padding: 4rem 1.5rem;
+      text-align: center;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      animation: fadeInUp 1s ease;
+    }
+
+    .hero p.subtitle {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+
     .hero p.desc {
       color: #374151;
       max-width: 700px;
       margin: auto;
-      line-height: 1.6;
     }
 
     @keyframes fadeInUp {
@@ -88,300 +143,533 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
+    /* Section Title */
     .section-title {
       text-align: center;
       font-family: 'Raleway', sans-serif;
-      font-size: 2rem;
-      margin: 3rem 0 1rem;
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin: 3rem 0 1.5rem;
       position: relative;
     }
+
     .section-title::after {
       content: '';
-      width: 80px; height: 4px;
-      background: var(--c1);
+      width: 100px;
+      height: 5px;
+      background: var(--accent-color);
       position: absolute;
-      bottom: -10px; left: 50%;
+      bottom: -10px;
+      left: 50%;
       transform: translateX(-50%);
-      border-radius: 2px;
+      border-radius: 3px;
     }
 
+    /* Services */
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem 0;
     }
+
     .card {
       background: var(--white);
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px var(--shadow);
-      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
     }
+
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 16px var(--shadow);
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     }
-    .card h3 { color: var(--c1); margin-bottom: 1rem; }
+
+    .card h3 {
+      font-family: 'Raleway', sans-serif;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
     .card p.price {
-      font-size: 1.25rem; font-weight: 600;
-      margin-bottom: 0.75rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
     }
+
     .card ul {
       list-style: none;
       color: #4B5563;
-      padding-left: 1rem;
     }
+
     .card ul li {
-      margin: 0.5rem 0;
+      margin: 0.75rem 0;
       position: relative;
-      padding-left: 1.5rem;
+      padding-left: 1.8rem;
+      font-size: 0.95rem;
     }
+
     .card ul li::before {
       content: '✔';
       position: absolute;
-      left: 0; top: 0;
-      color: var(--c2);
+      left: 0;
+      color: var(--accent-color);
+      font-weight: 700;
     }
 
+    /* Slideshow */
     .slideshow {
       position: relative;
-      width: 100%;
-      max-height: 400px;
+      max-width: 100%;
+      height: 450px;
+      margin: 3rem 0;
+      border-radius: var(--border-radius);
       overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px var(--shadow);
-      margin: 2rem 0;
+      box-shadow: var(--shadow);
     }
+
     .slide {
       position: absolute;
-      width: 100%; height: 100%;
-      opacity: 0; transition: opacity 1s ease-in-out;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
     }
-    .slide img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .slide.active { opacity: 1; }
 
-    /* Book form */
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--border-radius);
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    /* Form Section */
     .form-section {
       background: var(--white);
-      padding: 2rem 1rem;
-      border-radius: 12px;
-      max-width: 600px; margin: 2rem auto;
-      box-shadow: 0 4px 8px var(--shadow);
+      padding: 3rem 2rem;
+      border-radius: var(--border-radius);
+      max-width: 600px;
+      margin: 3rem auto;
+      box-shadow: var(--shadow);
       animation: fadeInUp 1s ease;
     }
-    .form-section input, .form-section select, .form-section button {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
+
+    .form-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-section input,
+    .form-section select,
+    .form-section button {
+      padding: 1rem;
       border: 1px solid #D1D5DB;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 1rem;
       font-family: 'Poppins', sans-serif;
+      transition: var(--transition);
     }
+
+    .form-section input:focus,
+    .form-section select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
     .form-section button {
-      background: var(--c2);
+      background: var(--accent-color);
       color: var(--white);
-      font-weight: 600;
       border: none;
       cursor: pointer;
-      transition: background 0.3s;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
+
     .form-section button:hover {
-      background: var(--c1);
+      background: var(--primary-color);
     }
+
+    .form-error {
+      color: #DC2626;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
     #price-info {
       font-style: italic;
       color: #4B5563;
-      margin-bottom: 1rem;
-      min-height: 1.25rem;
+      min-height: 1.5rem;
+      text-align: center;
     }
+
     .note {
       font-size: 0.9rem;
       color: #DC2626;
       text-align: center;
-      margin-bottom: 1rem;
+      margin-top: 1rem;
     }
 
+    /* Contact Section */
     .contact {
       text-align: center;
-      margin: 2rem 0;
+      padding: 3rem 0;
       animation: fadeInUp 1s ease;
     }
+
     .contact a {
       display: inline-block;
-      margin: 0.5rem 1rem;
-      color: var(--c1);
-      transition: color 0.3s;
+      margin: 0.75rem 1.5rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      transition: var(--transition);
     }
-    .contact a:hover { color: var(--c2); }
 
+    .contact a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    /* Map Section */
     .map-container {
       text-align: center;
-      margin: 2rem 0;
+      margin: 3rem 0;
       animation: fadeInUp 1s ease;
     }
+
     .map-container iframe {
       width: 100%;
-      height: 300px;
-      border-radius: 12px;
+      max-width: 900px;
+      height: 350px;
+      border-radius: var(--border-radius);
       border: none;
-      box-shadow: 0 4px 8px var(--shadow);
+      box-shadow: var(--shadow);
     }
 
+    /* Modal */
     .modal {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
       display: none;
       align-items: center;
       justify-content: center;
+      z-index: 1000;
       padding: 1rem;
     }
-    .modal.active { display: flex; }
+
+    .modal.active {
+      display: flex;
+    }
+
     .modal-content {
       background: var(--white);
-      padding: 2rem; border-radius: 12px;
-      max-width: 480px; text-align: center;
-      box-shadow: 0 6px 12px var(--shadow);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      max-width: 500px;
+      text-align: center;
+      box-shadow: var(--shadow);
       animation: fadeInUp 0.5s ease-out;
     }
+
+    .modal-content h3 {
+      font-family: 'Raleway', sans-serif;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
     .modal-content button {
-      background: var(--c2);
+      background: var(--accent-color);
       color: var(--white);
-      padding: 0.75rem 1.5rem;
+      padding: 1rem 2rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      transition: background 0.3s;
+      margin-top: 1rem;
     }
-    .modal-content button:hover { background: var(--c1); }
 
+    .modal-content button:hover {
+      background: var(--primary-color);
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2rem; }
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .hero {
+        padding: 2rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        font-size: 0.95rem;
+        padding: 0.5rem;
+      }
+
+      .fixed-logo img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .slideshow {
+        height: 300px;
+      }
+
+      .form-section {
+        padding: 2rem 1rem;
+      }
     }
   </style>
 </head>
-
 <body>
-
-<nav class="container">
-  <div class="nav-links">
-    <a href="#services">Services</a>
-    <a href="#gallery">Galerie</a>
-    <a href="#book">Réserver</a>
-    <a href="#contact">Contact</a>
+  <!-- Logo animé fixe -->
+  <div class="fixed-logo">
+    <img src="logo.png" alt="Logo ShineAutomobile" title="ShineAutomobile">
   </div>
-</nav>
 
-<header>
-  <div class="container">
-    <img src="logo.png" alt="Logo ShineAutomobile" class="logo">
-  </div>
-</header>
+  <!-- Navigation -->
+  <nav class="container">
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#gallery">Galerie</a>
+      <a href="#book">Réserver</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
 
-<section class="hero container">
-  <h1>ShineAutomobile</h1>
-  <p class="subtitle">Lavage à domicile en Estrie</p>
-  <p class="desc">Des tarifs imbattables avec un service professionnel, rapide et attentionné – directement chez vous.</p>
-</section>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <h1>ShineAutomobile</h1>
+    </div>
+  </header>
 
-<section id="services" class="container">
-  <h2 class="section-title">Nos Services</h2>
-  <div class="services">
-    <!-- Service Card Template -->
-    ${['Extérieur:29.99','Intérieur:49.99','Complet:69.99','Remise à neuf:159.99','Shampoing sièges:49.99'].map(s => {
-      const [name,price]=s.split(':');
-      return `
+  <!-- Hero Section -->
+  <section class="hero container">
+    <p class="subtitle">Lavage à domicile en Estrie</p>
+    <p class="desc">Profitez d’un service professionnel, rapide et soigné directement chez vous, à des prix imbattables.</p>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="container">
+    <h2 class="section-title">Nos Services</h2>
+    <div class="services">
       <div class="card">
-        <h3>${name}</h3>
-        <p class="price">${price} $</p>
+        <h3>Lavage Extérieur</h3>
+        <p class="price">29,99 $</p>
         <ul>
-          <li>Nettoyage complet</li>
-          <li>Jantes & vitres</li>
-          <li>Séchage manuel</li>
+          <li>Nettoyage complet de la carrosserie</li>
+          <li>Lavage des jantes et traitement des roues</li>
+          <li>Nettoyage des vitres extérieures</li>
+          <li>Séchage manuel sans traces</li>
+          <li>Nettoyage autour des portes</li>
         </ul>
-      </div>`;
-    }).join('')}
+      </div>
+      <div class="card">
+        <h3>Lavage Intérieur</h3>
+        <p class="price">49,99 $ (+15$ SUV / +25$ Camion/Van)</p>
+        <ul>
+          <li>Aspirateur complet (sièges, tapis, coffre)</li>
+          <li>Nettoyage des surfaces plastiques</li>
+          <li>Nettoyage du tableau de bord</li>
+          <li>Dépoussiérage minutieux</li>
+          <li>Nettoyage des vitres intérieures</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Lavage Complet</h3>
+        <p class="price">69,99 $ (+15$ SUV / +25$ Camion/Van)</p>
+        <ul>
+          <li>Nettoyage complet de la carrosserie</li>
+          <li>Lavage des jantes et traitement des roues</li>
+          <li>Nettoyage des vitres extérieures et intérieures</li>
+          <li>Séchage manuel sans traces</li>
+          <li>Aspirateur complet (sièges, tapis, coffre)</li>
+          <li>Nettoyage des surfaces plastiques</li>
+          <li>Nettoyage du tableau de bord</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Remise à neuf</h3>
+        <p class="price">159,99 $ (+15$ SUV / +40$ Camion/Van)</p>
+        <ul>
+          <li>Lavage complet + shampoing sol, tapis et sièges</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Shampoing des sièges</h3>
+        <p class="price">49,99 $ (+25$ SUV/Camion/Van)</p>
+        <ul>
+          <li>Shampoing professionnel des sièges</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="container">
+    <h2 class="section-title">Avant / Après & Autos Lavées</h2>
+    <div class="slideshow" id="slideshow">
+      <div class="slide active"><img src="lavage1.jpeg" alt="Avant 1"></div>
+      <div class="slide"><img src="lavage2.jpeg" alt="Après 1"></div>
+      <div class="slide"><img src="lavage3.jpeg" alt="Avant 2"></div>
+      <div class="slide"><img src="lavage4.jpeg" alt="Après 2"></div>
+      <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
+      <div class="slide"><img src="lavage6.jpeg" alt="Après 3"></div>
+      <div class="slide"><img src="lavage7.jpeg" alt="Avant 4"></div>
+      <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
+    </div>
+  </section>
+
+  <!-- Booking Form -->
+  <section id="book" class="form-section">
+    <h2 class="section-title">Envoyez une soumission</h2>
+    <form id="bookingForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="return validateForm(event)">
+      <input type="hidden" name="_captcha" value="false">
+      <select id="service-select" name="Service" required aria-label="Choisir un service">
+        <option value="">Choisir un service...</option>
+        <option value="Lavage Extérieur - 29.99">Lavage Extérieur – 29,99$</option>
+        <option value="Lavage Intérieur - 49.99">Lavage Intérieur – 49,99$ (+15$ SUV / +25$ Camion/Van)</option>
+        <option value="Lavage Complet - 69.99">Lavage Complet – 69,99$ (+15$ SUV / +25$ Camion/Van)</option>
+        <option value="Remise à neuf - 159.99">Remise à neuf – 159,99$ (+15$ SUV / +40$ Camion/Van)</option>
+        <option value="Shampoing des sièges - 49.99">Shampoing des sièges – 49,99$ (+25$ SUV/Camion/Van)</option>
+      </select>
+      <p class="form-error" id="service-error">Veuillez sélectionner un service.</p>
+      <input type="date" id="date" name="Date" required aria-label="Date de réservation">
+      <p class="form-error" id="date-error">Veuillez sélectionner une date valide.</p>
+      <div id="price-info"></div>
+      <button type="submit">Envoyer la demande</button>
+      <p class="note">* Frais supplémentaires hors Sherbrooke</p>
+    </form>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact container">
+    <h2 class="section-title">Contactez-nous</h2>
+    <a href="mailto:info.shineautomobile@gmail.com">📧 info.shineautomobile@gmail.com</a>
+    <a href="tel:8736623813">📞 873-662-3813</a>
+    <a href="sms:+18736623813">💬 Envoyer un texte</a>
+    <a href="https://www.instagram.com/shineautomobile_/" target="_blank" rel="noopener">📸 Instagram</a>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-container container">
+    <h2 class="section-title">Où nous opérons</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27742.879392138616!2d-71.93583354999999!3d45.4001107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb7e40ca0f3e2bd%3A0x8a2e8f683678bc88!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1684450605089" allowfullscreen title="Carte de Sherbrooke, QC"></iframe>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3>Merci ! 🎉</h3>
+      <p>Votre demande de réservation a bien été envoyée. Nous vous contacterons sous 24h.</p>
+      <button onclick="closeModal()">Fermer</button>
+    </div>
   </div>
-</section>
 
-<section id="gallery" class="container">
-  <h2 class="section-title">Avant / Après & Autos Lavées</h2>
-  <div class="slideshow" id="slideshow">
-    ${Array.from({length: 8}).map((_,i) => `
-      <div class="slide${i==0?' active':''}">
-        <img src="lavage${i+1}.jpeg" alt="Photo ${i+1}">
-      </div>`).join('')}
-  </div>
-</section>
+  <script>
+    // Slideshow
+    function createSlideshow() {
+      const slides = document.querySelectorAll('#slideshow .slide');
+      let index = 0;
 
-<section id="book" class="form-section">
-  <h2 class="section-title">Envoyez une soumission</h2>
-  <form onsubmit="submitForm(event)">
-    <select id="service-select" required>
-      <option value="">Choisir un service...</option>
-      <option value="29.99">Extérieur – 29,99$</option>
-      <option value="49.99">Intérieur – 49,99$</option>
-      <option value="69.99">Complet – 69,99$</option>
-      <option value="159.99">Remise à neuf – 159,99$</option>
-      <option value="49.99">Shampoing sièges – 49,99$</option>
-    </select>
-    <input type="date" id="date" required>
-    <div id="price-info"></div>
-    <button type="submit">Envoyer la demande</button>
-    <p class="note">* Frais supplémentaires hors Sherbrooke</p>
-  </form>
-</section>
+      function showSlide() {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+        index = (index + 1) % slides.length;
+      }
 
-<section id="contact" class="contact container">
-  <h2 class="section-title">Contactez-nous</h2>
-  <a href="mailto:info.shineautomobile@gmail.com">📧 Email</a>
-  <a href="tel:8736623813">📞 Téléphone</a>
-  <a href="sms:+18736623813">💬 Texte</a>
-  <a href="https://www.instagram.com/shineautomobile_/">📸 Instagram</a>
-</section>
+      showSlide();
+      setInterval(showSlide, 3000);
+    }
 
-<section class="map-container container">
-  <div class="section-title">Où nous opérons</div>
-  <iframe src="https://www.google.com/maps/embed?..."></iframe>
-</section>
+    createSlideshow();
 
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>Merci ! 🎉</h3>
-    <p>Votre demande de réservation a bien été envoyée.</p>
-    <button onclick="closeModal()">Fermer</button>
-  </div>
-</div>
+    // Form Price Display
+    function showPrice() {
+      const select = document.getElementById('service-select');
+      const priceInfo = document.getElementById('price-info');
+      priceInfo.textContent = select.value ? `Prix estimé : ${select.value.split('-')[1].trim()}` : '';
+    }
 
-<script>
-  // Slideshow
-  let idx = 0;
-  const slides = document.querySelectorAll('#slideshow .slide');
-  setInterval(() => {
-    slides[idx].classList.remove('active');
-    idx = (idx + 1) % slides.length;
-    slides[idx].classList.add('active');
-  }, 3000);
+    // Form Validation
+    function validateForm(event) {
+      event.preventDefault();
+      let isValid = true;
 
-  // Form interactions
-  const sel = document.getElementById('service-select');
-  const priceInfo = document.getElementById('price-info');
-  sel.addEventListener('change', () => {
-    priceInfo.textContent = sel.value ? 'Prix estimé : ' + sel.value + ' $' : '';
-  });
+      const service = document.getElementById('service-select');
+      const date = document.getElementById('date');
+      const serviceError = document.getElementById('service-error');
+      const dateError = document.getElementById('date-error');
 
-  function submitForm(e) {
-    e.preventDefault();
-    document.getElementById('modal').classList.add('active');
-    // Ici, on pourrait envoyer vers votre backend ou FormSubmit
-  }
-  function closeModal() {
-    document.getElementById('modal').classList.remove('active');
-  }
-</script>
+      if (!service.value) {
+        serviceError.style.display = 'block';
+        isValid = false;
+      } else {
+        serviceError.style.display = 'none';
+      }
+
+      if (!date.value) {
+        dateError.style.display = 'block';
+        isValid = false;
+      } else {
+        dateError.style.display = 'none';
+      }
+
+      if (isValid) {
+        document.getElementById('modal').classList.add('active');
+        document.getElementById('bookingForm').submit();
+      }
+
+      return isValid;
+    }
+
+    // Modal
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+
+    // Initialize form listener
+    document.getElementById('service-select').addEventListener('change', showPrice);
+
+    // Handle URL parameters
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const service = urlParams.get('service');
+      if (service) {
+        const select = document.getElementById('service-select');
+        select.value = service;
+        showPrice();
+      }
+    });
+  </script>
 </body>
 </html>
