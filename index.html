@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Service de lavage automobile à domicile en Estrie. Qualité professionnelle à prix imbattables.">
-  <title>Shineautomobile - Lavage auto à votre domicile partout dans l'Estrie</title>
+  <title>Shineautomobile - Lavage auto à domicile en Estrie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #007BFF;
-      --secondary-color: #f2f8ff;
-  
-      --text-color: #333;
-      --white: #ffffff;
-      --hover-color: #0056b3;
+      --primary-color: #1E3A8A;
+      --secondary-color: #F1F5F9;
+      --accent-color: #3B82F6;
+      --text-color: #1F2937;
+      --white: #FFFFFF;
+      --hover-color: #1E40AF;
     }
 
     * {
@@ -22,51 +23,64 @@
     }
 
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--secondary-color);
       color: var(--text-color);
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
     }
 
     header {
-      background-color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
       color: var(--white);
-      padding: 2.5rem;
+      padding: 3rem 0;
       text-align: center;
-      font-size: 2 rem;
-      font-weight: bold;
     }
 
-    section {
-      padding: 2rem;
+    header img.logo {
+      width: 150px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .hero {
       text-align: center;
+      padding: 3rem 0;
+      background-color: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 2rem 0;
     }
 
     .blue-text {
-      color: var(--primary-color);
-      font-weight: bold;
+      color: var(--accent-color);
+      font-weight: 600;
+      margin: 1rem 0;
     }
 
     .services {
-      max-width: 800px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      padding: 2.3rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 3rem 0;
     }
 
     .service-card {
-      border: 2px solid var(--primary-color);
-      border-radius: 20px;
-      padding: 1.5rem;
-      background-color: var(--secondary-color);
+      background: var(--white);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .service-card h3 {
@@ -75,34 +89,78 @@
     }
 
     .service-card ul {
-      text-align: left;
-      list-style: disc;
+      list-style: none;
+      padding: 0;
+    }
+
+    .service-card ul li {
+      padding: 0.5rem 0;
+      position: relative;
       padding-left: 1.5rem;
+    }
+
+    .service-card ul li::before {
+      content: '✓';
+      color: var(--accent-color);
+      position: absolute;
+      left: 0;
+    }
+
+    .slideshow-container {
+      position: relative;
+      max-width: 100%;
+      height: 400px;
+      margin: 2rem auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .slide, .slide-car {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide img, .slide-car img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .slide.active, .slide-car.active {
+      opacity: 1;
+      z-index: 1;
     }
 
     form {
       max-width: 600px;
       margin: 2rem auto;
       padding: 2rem;
-      border: 2px solid var(--primary-color);
+      background: var(--white);
       border-radius: 10px;
-      background-color: var(--secondary-color);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     form input, form select, form button {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.8rem;
       margin: 0.5rem 0;
+      border: 1px solid #E5E7EB;
       border-radius: 5px;
-      border: 1px solid #ccc;
       font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
     }
 
     form button {
-      background-color: var(--primary-color);
+      background-color: var(--accent-color);
       color: var(--white);
       border: none;
       cursor: pointer;
+      font-weight: 600;
       transition: background-color 0.3s ease;
     }
 
@@ -111,13 +169,14 @@
     }
 
     .contact {
-      padding: 2rem;
       text-align: center;
+      padding: 3rem 0;
     }
 
     .contact a {
-      color: var(--primary-color);
+      color: var(--accent-color);
       text-decoration: none;
+      font-weight: 500;
     }
 
     .contact a:hover {
@@ -132,12 +191,11 @@
     .map iframe {
       width: 100%;
       max-width: 800px;
-      height: 200px;
-      border: none;
+      height: 300px;
       border-radius: 10px;
+      border: none;
     }
 
-    /* Modal styles */
     .modal {
       display: none;
       position: fixed;
@@ -145,14 +203,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
       justify-content: center;
       align-items: center;
       z-index: 1000;
     }
 
     .modal-content {
-      background-color: var(--white);
+      background: var(--white);
       padding: 2rem;
       border-radius: 10px;
       max-width: 500px;
@@ -160,160 +218,74 @@
       position: relative;
     }
 
-    .modal-content p {
-      margin-bottom: 1rem;
-    }
-
     .modal-content button {
-      background-color: var(--primary-color);
+      background: var(--accent-color);
       color: var(--white);
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-weight: 600;
     }
 
     .modal-content button:hover {
-      background-color: var(--hover-color);
+      background: var(--hover-color);
+    }
+
+    .important-notif {
+      text-align: center;
+      color: #DC2626;
+      font-size: 0.9rem;
+      margin: 1rem 0;
     }
 
     @media (max-width: 768px) {
-      header {
-        font-size: 1.8rem;
-      }
-
       .services {
         grid-template-columns: 1fr;
       }
 
-      form {
-        padding: 1rem;
+      .slideshow-container {
+        height: 300px;
+      }
+
+      header {
+        padding: 2rem 0;
       }
     }
   </style>
 </head>
 <body>
-  <header>Shineautomobile</header>
-<section>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Mon Site</title>
-  <style>
-    .logo {
-      width: 150px; /* Ajustez la taille selon vos besoins */
-      height: auto;
-    }
-  </style>
-</head>
-<body>
+  <header>
+    <div class="container">
+      <img src="logo.png" alt="Shineautomobile Logo" class="logo">
+      <h1>Shineautomobile</h1>
+    </div>
+  </header>
 
-</body>
-</html>
-</body>
-    <h2>Service de lavage automobile à votre domicile partout en Estrie</h2>
-    <p class="blue-text">Des tarifs imbattables pour un service de qualité</p>
-    <p>Profitez d’un lavage automobile professionnel, offert directement à votre domicile partout en Estrie. Service rapide, soigné et au meilleur rapport qualité-prix.</p>
-    </section>
-<section>
-  <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Shineautomobile - Avant / Après</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f8fc;
-      text-align: center;
-    }
+  <section class="hero">
+    <div class="container">
+      <h2>Service de lavage automobile à domicile en Estrie</h2>
+      <p class="blue-text">Des tarifs imbattables pour un service de qualité</p>
+      <p>Profitez d’un lavage automobile professionnel directement à votre domicile, partout en Estrie. Service rapide, soigné et au meilleur rapport qualité-prix.</p>
+    </div>
+  </section>
 
-    h1 {
-      color: #004080;
-      margin: 30px 0;
-    }
+  <section class="container">
+    <h2>Résultats Avant / Après</h2>
+    <div class="slideshow-container" id="slideshow">
+      <div class="slide active"><img src="lavage1.jpeg" alt="Avant 1"></div>
+      <div class="slide"><img src="lavage2.jpeg" alt="Après 1"></div>
+      <div class="slide"><img src="lavage3.jpeg" alt="Avant 2"></div>
+      <div class="slide"><img src="lavage4.jpeg" alt="Après 2"></div>
+      <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
+      <div class="slide"><img src="lavage6.jpeg" alt="Après 3"></div>
+      <div class="slide"><img src="lavage7.jpeg" alt="Avant 4"></div>
+      <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
+    </div>
+  </section>
 
-    .slideshow-container {
-      position: relative;
-      max-width: 100%;
-      height: 500px;
-      overflow: hidden;
-    }
-
-    .slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Résultats Avant / Après - Shineautomobile</h1>
-
-  <div class="slideshow-container" id="slideshow">
-    <!-- Paire 1 -->
-    <div class="slide active"><img src="lavage1.jpeg" alt="Avant 1"></div>
-    <div class="slide"><img src="lavage2.jpeg" alt="Après 1"></div>
-
-    <!-- Paire 2 -->
-    <div class="slide"><img src="lavage3.jpeg" alt="Avant 2"></div>
-    <div class="slide"><img src="lavage4.jpeg" alt="Après 2"></div>
-
-    <!-- Paire 3 -->
-    <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
-    <div class="slide"><img src="lavage6.jpeg" alt="Avant 3"></div>
-
-    <!-- Paire 4 -->
-    <div class="slide"><img src="lavage7.jpeg" alt="Avant 4"></div>
-    <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
-  </div>
-
-  <script>
-    let slides = document.querySelectorAll('.slide');
-    let index = 0;
-
-    function showSlide() {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-      });
-
-      slides[index].classList.add('active');
-      index = (index + 1) % slides.length;
-    }
-
-    setInterval(showSlide, 2000); // Toutes les 3 secondes
-  </script>
-
-</body>
-</html>
-  </script>
-
-</body>
-</html>
-</section>
-  <h2> Nos services </h2>
-      </section>
-    </script>
-</body>
-</html>
-  <section class="services">
+  <section class="container services">
+    <h2>Nos services</h2>
     <div class="service-card">
       <h3>Lavage Extérieur</h3>
       <p><strong>29,99$</strong></p>
@@ -325,7 +297,6 @@
         <li>Nettoyage autour des portes</li>
       </ul>
     </div>
-
     <div class="service-card">
       <h3>Lavage Intérieur</h3>
       <p><strong>49,99$ (+15$ SUV/ +25 Camion/Van)</strong></p>
@@ -337,9 +308,8 @@
         <li>Nettoyage des vitres intérieur</li>
       </ul>
     </div>
-
     <div class="service-card">
-      <h3>Lavage Régulier ( ext & int )</h3>
+      <h3>Lavage Régulier (ext & int)</h3>
       <p><strong>69,99$ (+15$ SUV/ +25 Camion/Van)</strong></p>
       <ul>
         <li>Nettoyage complet de la carrosserie</li>
@@ -353,7 +323,6 @@
         <li>Dépoussiérage minutieux</li>
       </ul>
     </div>
-
     <div class="service-card">
       <h3>Remise à neuf</h3>
       <p><strong>159,99$ (+15$ SUV/ +40 Camion/Van)</strong></p>
@@ -361,7 +330,6 @@
         <li>Lavage régulier + shampoing sol, tapis et sièges</li>
       </ul>
     </div>
-
     <div class="service-card">
       <h3>Shampoing des sièges</h3>
       <p><strong>49,99$ (+25$ SUV/Camion/Van)</strong></p>
@@ -371,107 +339,43 @@
     </div>
   </section>
 
-<div class="slideshow-container" id="voitures-slideshow">
-  <div class="slide-car active"><img src="voitur1.jpeg" alt="Voitur lavée 1"></div>
-  <div class="slide-car"><img src="voiture2.jpeg" alt="Voiture lavée 2"></div>
-  <div class="slide-car"><img src="voitur3.jpeg" alt="Voitur lavée 3"></div>
-  <div class="slide-car"><img src="voiture4.jpeg" alt="Voiture lavée 4"></div>
-  <div class="slide-car"><img src="voiture5.jpeg" alt="Voiture lavée 5"></div>
-  <div class="slide-car"><img src="voiture6.jpeg" alt="Voiture lavée 6"></div>
-  <div class="slide-car"><img src="voiture7.jpeg" alt="Voiture lavée 7"></div>
-</div>
+  <section class="container">
+    <h2>Voitures Lavées</h2>
+    <div class="slideshow-container" id="voitures-slideshow">
+      <div class="slide-car active"><img src="voitur1.jpeg" alt="Voiture lavée 1"></div>
+      <div class="slide-car"><img src="voiture2.jpeg" alt="Voiture lavée 2"></div>
+      <div class="slide-car"><img src="voitur3.jpeg" alt="Voiture lavée 3"></div>
+      <div class="slide-car"><img src="voiture4.jpeg" alt="Voiture lavée 4"></div>
+      <div class="slide-car"><img src="voitur5.jpeg" alt="Voiture lavée 5"></div>
+      <div class="slide-car"><img src="voiture6.jpeg" alt="Voiture lavée 6"></div>
+      <div class="slide-car"><img src="voiture7.jpeg" alt="Voiture lavée 7"></div>
+    </div>
+  </section>
 
-<style>
-  .slideshow-container {
-    position: relative;
-    max-width: 100%;
-    height: 500px;
-    margin: 40px auto;
-    overflow: hidden;
-  }
+  <section class="container">
+    <h2>Envoyez une soumission</h2>
+    <form action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="showModal(); return true;">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="Nom Complet" placeholder="Nom complet" required aria-label="Nom complet">
+      <input type="text" name="Type de voiture" placeholder="Type de voiture (ex: Sedan, SUV, Camion)" required aria-label="Type de voiture">
+      <input type="tel" name="Téléphone" placeholder="Numéro de téléphone" required aria-label="Numéro de téléphone">
+      <input type="text" name="Adresse" placeholder="Adresse à domicile" required aria-label="Adresse à domicile">
+      <select name="Type de lavage" id="lavage" onchange="showPrice()" required aria-label="Type de lavage">
+        <option value="">Choisir un service</option>
+        <option value="Lavage Extérieur">Lavage Extérieur - 29,99$</option>
+        <option value="Lavage Intérieur">Lavage Intérieur - 49,99$ (+15$ SUV/ +25 Camion/Van)</option>
+        <option value="Lavage Régulier">Lavage Régulier - 69,99$ (+15$ SUV/ +25 Camion/Van)</option>
+        <option value="Remise à neuf">Remise à neuf - 159,99$ (+15$ SUV/ +40 Camion/Van)</option>
+        <option value="Shampoing des sièges">Shampoing des sièges - 49,99$ (+25$ SUV/Camion/Van)</option>
+      </select>
+      <input type="date" name="Date" required aria-label="Date de réservation">
+      <p id="prix" aria-live="polite"></p>
+      <button type="submit">Envoyer</button>
+    </form>
+    <p class="important-notif">* Important : des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke</p>
+  </section>
 
-  .slide-car {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-
-  .slide-car img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-
-  .slide-car.active {
-    opacity: 1;
-    z-index: 1;
-  }
-
-  h2 {
-    text-align: center;
-    color: #004080;
-    font-size: 28px;
-    margin-top: 50px;
-  }
-</style>
-
-<script>
-  let slidesCar = document.querySelectorAll('.slide-car');
-  let indexCar = 0;
-
-  function showCarSlide() {
-    slidesCar.forEach(slide => slide.classList.remove('active'));
-    slidesCar[indexCar].classList.add('active');
-    indexCar = (indexCar + 1) % slidesCar.length;
-  }
-
-  setInterval(showCarSlide, 2000);
-</script>
-
-  <section>
-  <h2>Envoyez une soumission !</h2>
-  <form action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="showModal(); return true;">
-    
-    <!-- Champs cachés -->
-    <input type="hidden" name="_captcha" value="false">
-    <!-- <input type="hidden" name="_next" value="https://shineautomobile.github.io/merci.html"> -->
-
-    <!-- Champs visibles -->
-    <input type="text" name="Nom Complet" placeholder="Nom complet" required aria-label="Nom complet">
-    <input type="text" name="Type de voiture" placeholder="Type de voiture (ex: Sedan, SUV, Camion)" required aria-label="Type de voiture">
-    <input type="tel" name="Téléphone" placeholder="Numéro de téléphone" required aria-label="Numéro de téléphone">
-    <input type="text" name="Adresse" placeholder="Adresse à domicile" required aria-label="Adresse à domicile">
-    
-    <select name="Type de lavage" id="lavage" onchange="showPrice()" required aria-label="Type de lavage">
-      <option value="">Choisir un service</option>
-      <option value="Lavage Extérieur">Lavage Extérieur - 29,99$</option>
-      <option value="Lavage Intérieur">Lavage Intérieur - 49,99$ (+15$ SUV/ +25 Camion/Van)</option>
-      <option value="Lavage Régulier">Lavage Régulier - 69,99$ (+15$ SUV/ +25 Camion/Van)</option>
-      <option value="Remise à neuf">Remise à neuf - 159,99$ (+15$ SUV/ +40 Camion/Van)</option>
-      <option value="Shampoing des sièges">Shampoing des sièges - 49,99$ (+25$ SUV/Camion/Van)</option>
-    </select>
-
-    <input type="date" name="Date" required aria-label="Date de réservation">
-    <p id="prix" aria-live="polite"></p>
-    
-    <button type="submit">Envoyer</button>
-  </form>
-</section>
-<p class="important_notif"* Important : des frais applicables pour les services à l’extérieur de Sherbrooke</p>
-  <section>
-  <script>
-    // Récupérer le paramètre 'service' depuis l'URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const service = urlParams.get('service').replace(/_/g, ' ');
-    document.getElementById('service').value = service || 'Service non spécifié';
-  </script>
-</body>
-</html>
-</section>
-  <section class="contact">
+  <section class="contact container">
     <h2>Contactez-nous</h2>
     <p>📧 Email : <a href="mailto:info.shineautomobile@gmail.com">info.shineautomobile@gmail.com</a></p>
     <p>📞 Téléphone : <a href="tel:8736623813">873-662-3813</a></p>
@@ -479,11 +383,10 @@
     <p>📸 <a href="https://www.instagram.com/shineautomobile_/" target="_blank" rel="noopener">Suivez-nous sur Instagram</a></p>
   </section>
 
-  <div class="map">
+  <section class="map container">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27742.879392138616!2d-71.93583354999999!3d45.4001107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb7e40ca0f3e2bd%3A0x8a2e8f683678bc88!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1684450605089" allowfullscreen title="Carte de Sherbrooke, QC"></iframe>
-  </div>
+  </section>
 
-  <!-- Modal -->
   <div class="modal" id="confirmationModal">
     <div class="modal-content">
       <h3>Merci pour votre réservation !</h3>
@@ -494,12 +397,34 @@
   </div>
 
   <script>
+    // Slideshow for Before/After
+    const slides = document.querySelectorAll('.slide');
+    let index = 0;
+    function showSlide() {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+      index = (index + 1) % slides.length;
+    }
+    setInterval(showSlide, 3000);
+
+    // Slideshow for Cars
+    const slidesCar = document.querySelectorAll('.slide-car');
+    let indexCar = 0;
+    function showCarSlide() {
+      slidesCar.forEach(slide => slide.classList.remove('active'));
+      slidesCar[indexCar].classList.add('active');
+      indexCar = (indexCar + 1) % slidesCar.length;
+    }
+    setInterval(showCarSlide, 3000);
+
+    // Form price display
     function showPrice() {
       const type = document.getElementById("lavage").value;
       const prix = document.getElementById("prix");
       prix.innerHTML = type ? `Vous avez choisi : ${type}` : "";
     }
 
+    // Modal functions
     function showModal() {
       const modal = document.getElementById("confirmationModal");
       modal.style.display = "flex";
@@ -508,6 +433,15 @@
     function closeModal() {
       const modal = document.getElementById("confirmationModal");
       modal.style.display = "none";
+    }
+
+    // URL parameter handling
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service')?.replace(/_/g, ' ');
+    if (service) {
+      const select = document.getElementById('lavage');
+      select.value = service;
+      showPrice();
     }
   </script>
 </body>
