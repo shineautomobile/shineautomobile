@@ -36,6 +36,7 @@
     a {
       text-decoration: none;
       color: inherit;
+      transition: var(--transition);
     }
 
     .container {
@@ -44,26 +45,72 @@
       padding: 0 1.5rem;
     }
 
-    /* Logo animé fixe */
+    /* Logo animé et titre */
+    .header-container {
+      position: relative;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .fixed-logo {
-      position: fixed;
-      top: 20px;
-      left: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
       z-index: 200;
+      animation: logoGrowAndMove 2s ease-in-out forwards;
     }
 
     .fixed-logo img {
-      width: 60px;
-      height: 60px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       border: 3px solid var(--white);
       box-shadow: var(--shadow);
-      animation: spinLogo 8s linear infinite;
+      animation: spinLogo 2s linear forwards;
+    }
+
+    @keyframes logoGrowAndMove {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+      100% {
+        transform: translate(-47vw, -80px) scale(0.5);
+        position: fixed;
+        top: 20px;
+        left: 20px;
+      }
     }
 
     @keyframes spinLogo {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
+    }
+
+    .site-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--white);
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideTitle 2s ease-in-out 0.5s forwards;
+    }
+
+    @keyframes slideTitle {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     /* Navigation */
@@ -74,6 +121,7 @@
       box-shadow: var(--shadow);
       z-index: 100;
       padding: 1rem 0;
+      transition: var(--transition);
     }
 
     .nav-links {
@@ -95,6 +143,7 @@
       color: var(--primary-color);
       background: rgba(30, 58, 138, 0.1);
       border-radius: 6px;
+      transform: scale(1.05);
     }
 
     /* Header */
@@ -103,16 +152,7 @@
       padding: 4rem 0;
       text-align: center;
       color: var(--white);
-    }
-
-    header h1 {
-      font-family: 'Raleway', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--white), var(--highlight-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
+      transition: var(--transition);
     }
 
     /* Hero Section */
@@ -124,6 +164,7 @@
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       animation: fadeInUp 1s ease;
+      transition: var(--transition);
     }
 
     .hero p.subtitle {
@@ -131,12 +172,14 @@
       font-size: 1.3rem;
       color: var(--accent-color);
       margin-bottom: 1rem;
+      transition: var(--transition);
     }
 
     .hero p.desc {
       color: #374151;
       max-width: 700px;
       margin: auto;
+      transition: var(--transition);
     }
 
     @keyframes fadeInUp {
@@ -152,6 +195,7 @@
       font-weight: 600;
       margin: 3rem 0 1.5rem;
       position: relative;
+      transition: var(--transition);
     }
 
     .section-title::after {
@@ -164,6 +208,7 @@
       left: 50%;
       transform: translateX(-50%);
       border-radius: 3px;
+      transition: var(--transition);
     }
 
     /* Services */
@@ -192,6 +237,7 @@
       color: var(--primary-color);
       font-size: 1.5rem;
       margin-bottom: 1rem;
+      transition: var(--transition);
     }
 
     .card p.price {
@@ -199,6 +245,7 @@
       font-weight: 600;
       color: var(--text-color);
       margin-bottom: 1rem;
+      transition: var(--transition);
     }
 
     .card ul {
@@ -211,6 +258,7 @@
       position: relative;
       padding-left: 1.8rem;
       font-size: 0.95rem;
+      transition: var(--transition);
     }
 
     .card ul li::before {
@@ -230,6 +278,7 @@
       border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--shadow);
+      transition: var(--transition);
     }
 
     .slide {
@@ -261,6 +310,7 @@
       margin: 3rem auto;
       box-shadow: var(--shadow);
       animation: fadeInUp 1s ease;
+      transition: var(--transition);
     }
 
     .form-section form {
@@ -269,19 +319,19 @@
       gap: 1.5rem;
     }
 
-    .form-section .form-group {
+    .form-group {
       position: relative;
       opacity: 0;
       transform: translateY(20px);
       animation: slideInField 0.5s ease forwards;
     }
 
-    .form-section .form-group:nth-child(1) { animation-delay: 0.1s; }
-    .form-section .form-group:nth-child(2) { animation-delay: 0.2s; }
-    .form-section .form-group:nth-child(3) { animation-delay: 0.3s; }
-    .form-section .form-group:nth-child(4) { animation-delay: 0.4s; }
-    .form-section .form-group:nth-child(5) { animation-delay: 0.5s; }
-    .form-section .form-group:nth-child(6) { animation-delay: 0.6s; }
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
 
     @keyframes slideInField {
       to { opacity: 1; transform: translateY(0); }
@@ -315,11 +365,13 @@
       position: relative;
       overflow: hidden;
       animation: pulse 2s infinite;
+      transition: var(--transition);
     }
 
     .form-section button:hover {
       background: var(--primary-color);
       box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      transform: scale(1.02);
     }
 
     @keyframes pulse {
@@ -349,6 +401,7 @@
       color: var(--error-color);
       text-align: center;
       margin-top: 1rem;
+      transition: var(--transition);
     }
 
     /* Contact Section */
@@ -356,6 +409,7 @@
       text-align: center;
       padding: 3rem 0;
       animation: fadeInUp 1s ease;
+      transition: var(--transition);
     }
 
     .contact a {
@@ -369,6 +423,7 @@
     .contact a:hover {
       color: var(--accent-color);
       text-decoration: underline;
+      transform: scale(1.05);
     }
 
     /* Map Section */
@@ -376,6 +431,7 @@
       text-align: center;
       margin: 3rem 0;
       animation: fadeInUp 1s ease;
+      transition: var(--transition);
     }
 
     .map-container iframe {
@@ -385,6 +441,7 @@
       border-radius: var(--border-radius);
       border: none;
       box-shadow: var(--shadow);
+      transition: var(--transition);
     }
 
     /* Modal */
@@ -400,6 +457,7 @@
       justify-content: center;
       z-index: 1000;
       padding: 1rem;
+      transition: var(--transition);
     }
 
     .modal.active {
@@ -415,6 +473,7 @@
       box-shadow: var(--shadow);
       position: relative;
       animation: sparkle 1s ease;
+      transition: var(--transition);
     }
 
     @keyframes sparkle {
@@ -427,6 +486,7 @@
       font-family: 'Raleway', sans-serif;
       color: var(--primary-color);
       margin-bottom: 1rem;
+      transition: var(--transition);
     }
 
     .modal-content button {
@@ -438,25 +498,47 @@
       cursor: pointer;
       font-weight: 600;
       margin-top: 1rem;
+      transition: var(--transition);
     }
 
     .modal-content button:hover {
       background: var(--primary-color);
       box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      transform: scale(1.02);
     }
 
     /* Responsive Design */
     @media (max-width: 768px) {
-      header h1 {
+      .header-container {
+        height: 150px;
+      }
+
+      .fixed-logo img {
+        width: 100px;
+        height: 100px;
+      }
+
+      @keyframes logoGrowAndMove {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.3);
+        }
+        100% {
+          transform: translate(-45vw, -60px) scale(0.5);
+          position: fixed;
+          top: 15px;
+          left: 15px;
+        }
+      }
+
+      .site-title {
         font-size: 2rem;
       }
 
       .hero {
         padding: 2rem 1rem;
-      }
-
-      .hero h1 {
-        font-size: 1.8rem;
       }
 
       .section-title {
@@ -473,11 +555,6 @@
         padding: 0.5rem;
       }
 
-      .fixed-logo img {
-        width: 50px;
-        height: 50px;
-      }
-
       .slideshow {
         height: 300px;
       }
@@ -489,10 +566,15 @@
   </style>
 </head>
 <body>
-  <!-- Logo animé fixe -->
-  <div class="fixed-logo">
-    <img src="logo.png" alt="Logo ShineAutomobile" title="ShineAutomobile">
-  </div>
+  <!-- Header avec logo et titre animés -->
+  <header>
+    <div class="container header-container">
+      <div class="fixed-logo">
+        <img src="logo.png" alt="Logo ShineAutomobile" title="ShineAutomobile">
+      </div>
+      <h1 class="site-title">ShineAutomobile</h1>
+    </div>
+  </header>
 
   <!-- Navigation -->
   <nav class="container">
@@ -503,13 +585,6 @@
       <a href="#contact">Contact</a>
     </div>
   </nav>
-
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <h1>ShineAutomobile</h1>
-    </div>
-  </header>
 
   <!-- Hero Section -->
   <section class="hero container">
@@ -584,6 +659,55 @@
       <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
       <div class="slide"><img src="lavage6.jpeg" alt="Après 3"></div>
       <div class="slide"><img src="lavage7.jpeg" alt="Avant 4"></div>
+      <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
+    </div>
+  </section>
+
+  <!-- Booking Form -->
+  <section id="book" class="form-section">
+    <h2 class="section-title">Envoyez une soumission</h2>
+    <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="return validateForm(event)">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="form-group">
+        <input type="text" name="Nom Complet" id="name" placeholder="Nom complet" required aria-label="Nom complet">
+        <p class="form-error" id="name-error">Veuillez entrer un nom valide.</p>
+      </div>
+      <div class="form-group">
+        <input type="text" name="Type de voiture" id="car-type" placeholder="Type de voiture (ex: Sedan, SUV, Camion)" required aria-label="Type de voiture">
+        <p class="form-error" id="car-type-error">Veuillez spécifier le type de voiture.</p>
+      </div>
+      <div class="form-group">
+        <input type="tel" name="Téléphone" id="phone" placeholder="Numéro de téléphone" required aria-label="Numéro de téléphone" pattern="[0-9]{10,}">
+        <p class="form-error" id="phone-error">Veuillez entrer un numéro de téléphone valide (10 chiffres minimum).</p>
+      </div>
+      <div class="form-group">
+        <input type="text" name="Adresse" id="address" placeholder="Adresse à domicile" required aria-label="Adresse à domicile">
+        <p class="form-error" id="address-error">Veuillez entrer une adresse valide.</p>
+      </div>
+      <div class="form-group">
+        <select name="Type de lavage" id="lavage" onchange="showPrice()" required aria-label="Type de lavage">
+          <option value="">Choisir un service</option>
+          <option value="Lavage Extérieur - 29,99$">Lavage Extérieur - 29,99$</option>
+          <option value="Lavage Intérieur - 49,99$ (+15$ SUV / +25$ Camion/Van)">Lavage Intérieur - 49,99$ (+15$ SUV / +25$ Camion/Van)</option>
+          <option value="Lavage Régulier - 69,99$ (+15$ SUV / +25$ Camion/Van)">Lavage Régulier - 69,99$ (+15$ SUV / +25$ Camion/Van)</option>
+          <option value="Remise à neuf - 159,99$ (+15$ SUV / +40$ Camion/Van)">Remise à neuf - 159,99$ (+15$ SUV / +40$ Camion/Van)</option>
+          <li>Shampoing professionnel des sièges</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="container">
+    <h2 class="section-title">Avant / Après & Autos Lavées</h2>
+    <div class="slideshow" id="slideshow">
+      <div class="slide active"><img src="lavage1.jpeg" alt="Avant 1"></div>
+      <div class="slide"><img src="lavage2.jpeg" alt="Après 1"></div>
+      <div class="slide"><img src="lavage3.jpeg" alt="Avant 2"></div>
+      <div class="slide"><img src="lavage4.jpeg" alt="Après 2"></div>
+      <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
+      <div class="slide"><img src="lavage6.jpeg" alt="Après 3"></div>
+      <div class="slide"><img src="lavage7.jpeg" alt="Après 3"></div>
       <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
     </div>
   </section>
