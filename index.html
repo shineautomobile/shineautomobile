@@ -380,50 +380,6 @@
       margin-top: 1rem;
     }
 
-    /* About Section */
-    .about {
-      background: var(--white);
-      padding: 3rem 2rem;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin: 3rem auto;
-      max-width: 900px;
-      animation: fadeInUp 1s ease;
-    }
-
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .about img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      object-fit: cover;
-    }
-
-    .about p {
-      color: #4B5563;
-      font-size: 1.1rem;
-      line-height: 1.8;
-    }
-
-    @media (max-width: 768px) {
-      .about-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .about img {
-        max-width: 200px;
-        margin: 0 auto;
-      }
-    }
-
     /* Contact Section */
     .contact {
       text-align: center;
@@ -563,8 +519,7 @@
   <!-- Header -->
   <header>
     <div class="container">
-      <!-- Logo : Assurez-vous que 'images/logo.png' existe dans le dossier 'images' -->
-      <img src="images/logo.png" alt="Logo ShineAutomobile" class="logo">
+      <img src="logo.png" alt="Logo ShineAutomobile" class="logo">
       <h1 class="site-title">ShineAutomobile</h1>
     </div>
   </header>
@@ -645,22 +600,21 @@
   <section id="gallery" class="container">
     <h2 class="section-title">Galerie Avant / Après & Voitures Lavées</h2>
     <div class="slideshow" id="slideshow">
-      <!-- Images Diaporama : Assurez-vous que ces fichiers existent dans 'images' -->
-      <div class="slide active"><img src="images/lavage1.jpeg" alt="Avant 1"></div>
-      <div class="slide"><img src="images/lavage2.jpeg" alt="Après 1"></div>
-      <div class="slide"><img src="images/lavage3.jpeg" alt="Avant 2"></div>
-      <div class="slide"><img src="images/lavage4.jpeg" alt="Après 2"></div>
-      <div class="slide"><img src="images/lavage5.jpeg" alt="Avant 3"></div>
-      <div class="slide"><img src="images/lavage6.jpeg" alt="Après 3"></div>
-      <div class="slide"><img src="images/lavage7.jpeg" alt="Avant 4"></div>
-      <div class="slide"><img src="images/lavage8.jpeg" alt="Après 4"></div>
-      <div class="slide"><img src="images/voiture1.jpeg" alt="Voiture lavée 1"></div>
-      <div class="slide"><img src="images/voiture2.jpeg" alt="Voiture lavée 2"></div>
-      <div class="slide"><img src="images/voiture3.jpeg" alt="Voiture lavée 3"></div>
-      <div class="slide"><img src="images/voiture4.jpeg" alt="Voiture lavée 4"></div>
-      <div class="slide"><img src="images/voiture5.jpeg" alt="Voiture lavée 5"></div>
-      <div class="slide"><img src="images/voiture6.jpeg" alt="Voiture lavée 6"></div>
-      <div class="slide"><img src="images/voiture7.jpeg" alt="Voiture lavée 7"></div>
+      <div class="slide active"><img src="lavage1.jpeg" alt="Avant 1"></div>
+      <div class="slide"><img src="lavage2.jpeg" alt="Après 1"></div>
+      <div class="slide"><img src="lavage3.jpeg" alt="Avant 2"></div>
+      <div class="slide"><img src="lavage4.jpeg" alt="Après 2"></div>
+      <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
+      <div class="slide"><img src="lavage6.jpeg" alt="Après 3"></div>
+      <div class="slide"><img src="lavage7.jpeg" alt="Avant 4"></div>
+      <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
+      <div class="slide"><img src="voiture1.jpeg" alt="Voiture lavée 1"></div>
+      <div class="slide"><img src="voiture2.jpeg" alt="Voiture lavée 2"></div>
+      <div class="slide"><img src="voiture3.jpeg" alt="Voiture lavée 3"></div>
+      <div class="slide"><img src="voiture4.jpeg" alt="Voiture lavée 4"></div>
+      <div class="slide"><img src="voiture5.jpeg" alt="Voiture lavée 5"></div>
+      <div class="slide"><img src="voiture6.jpeg" alt="Voiture lavée 6"></div>
+      <div class="slide"><img src="voiture7.jpeg" alt="Voiture lavée 7"></div>
     </div>
     <div class="slideshow-controls">
       <button onclick="toggleSlideshow('avant-apres')">Avant / Après</button>
@@ -708,16 +662,6 @@
       <button type="submit">Envoyer</button>
       <p class="important-notif">* Important : des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke</p>
     </form>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about container">
-    <h2 class="section-title">À propos de moi</h2>
-    <div class="about-content">
-      <!-- Photo À propos : Assurez-vous que 'images/IMG_5982.jpeg' existe -->
-      <img src="images/IMG_5982.jpeg" alt="Portrait du propriétaire de ShineAutomobile">
-      <p>Je suis le fondateur de ShineAutomobile, passionné par l’automobile et dédié à offrir un service de lavage à domicile exceptionnel en Estrie. Avec une attention méticuleuse aux détails et un engagement envers la satisfaction client, je m’assure que chaque véhicule brille comme neuf, directement chez vous. Faites confiance à ShineAutomobile pour un service professionnel et personnalisé !</p>
-    </div>
   </section>
 
   <!-- Contact Section -->
