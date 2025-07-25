@@ -65,12 +65,13 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      z-index: 10;
       animation: moveLogo 2s ease-in-out forwards;
     }
 
     @keyframes moveLogo {
       0% { transform: translate(-50%, -50%) scale(1); }
-      100% { transform: translate(-45vw, -80px) scale(0.5); top: 20px; left: 20px; }
+      100% { transform: translate(0, 0); top: 20px; left: 20px; scale: 0.8; }
     }
 
     .site-title {
@@ -82,11 +83,12 @@
       left: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
+      z-index: 5;
       animation: slideTitle 2s ease-in-out 0.5s forwards;
     }
 
     @keyframes slideTitle {
-      0% { opacity: 0; transform: translate(-50%, -50%) translateX(-50px); }
+      0% { opacity: 0; transform: translate(-50%, -50%) translateX(0); }
       100% { opacity: 1; transform: translate(-50%, -50%) translateX(0); }
     }
 
@@ -481,13 +483,13 @@
 
       @keyframes moveLogo {
         0% { transform: translate(-50%, -50%) scale(1); }
-        100% { transform: translate(-45vw, -60px) scale(0.5); top: 15px; left: 15px; }
+        100% { transform: translate(0, 0); top: 15px; left: 15px; scale: 0.8; }
       }
 
       .nav-links {
         gap: 1rem;
         justify-content: center;
-        flex-wrap: nowrap; /* Garde les liens côte à côte */
+        flex-wrap: nowrap;
       }
 
       .nav-links a {
@@ -749,7 +751,7 @@
         document.getElementById('confirmationModal').classList.add('active');
         setTimeout(() => {
           document.getElementById('submissionForm').submit();
-        }, 500); // Petit délai pour afficher le modal avant soumission
+        }, 500);
       }
 
       return isValid;
