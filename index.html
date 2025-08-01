@@ -943,4 +943,108 @@
         index: 0
       },
       'washed': {
-        slides: document.query
+        slides: document.querySelectorAll('#slideshow-washed .slide'),
+        index: 0
+      }
+    };
+
+    function showSlide(slideshowId) {
+      const { slides, index } = slideshows[slideshowId];
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+      slideshows[slideshowId].index = (index + 1) % slides.length;
+    }
+
+    function prevSlide(slideshowId) {
+      const { slides } = slideshows[slideshowId];
+      slideshows[slideshowId].index = (slideshows[slideshowId].index - 1 + slides.length) % slides.length;
+      showSlide(slideshowId);
+    }
+
+    function nextSlide(slideshowId) {
+      showSlide(slideshowId);
+    }
+
+    // Initialize slideshows
+    showSlide('before-after');
+    showSlide('washed');
+    setInterval(() => showSlide('before-after'), 3000);
+    setInterval(() => showSlide('washed'), 3000);
+
+    // Form Price Display
+    function showPrice() {
+      const select = document.getElementById('lavage');
+      const prix = document.getElementById('prix');
+      prix.textContent = select.value ? `Vous avez choisi : ${select.value}` : '';
+    }
+
+    // Form Validation
+    function validateForm(event) {
+      event.preventDefault();
+      let isValid = true;
+
+      const fields = [
+        { id: 'name', errorId: 'name-error', validate: value => value.trim().length > 2 },
+        { id: 'car-type', errorId: 'car-type-error', validate: value => value.trim().length > 0 },
+        { id: 'phone', errorId: 'phone-error', validate: value => /^[0-9]{10,}$/.test(value) },
+        { id: 'address', errorId: 'address-error', validate: value => value.trim().length > 5 },
+        { id: 'lavage', errorId: 'lavage-error', validate: value => value !== '' },
+        { id: 'date', errorId: 'date-error', validate: value => value !== '' },
+      ];
+
+      fields.forEach(field => {
+        const input = document.getElementById(field.id);
+        const error = document.getElementById(field.errorId);
+        if (!field.validate(input.value)) {
+          error.style.display = 'block';
+          isValid = false;
+        } else {
+          error.style.display = 'none';
+        }
+      });
+
+      if (isValid) {
+        document.getElementById('confirmationModal').classList.add('active');
+        setTimeout(() => {
+          document.getElementById('submissionForm').submit();
+        }, 500);
+      }
+
+      return isValid;
+    }
+
+    // Modal
+    function closeModal() {
+      document.getElementById('confirmationModal').classList.remove('active');
+    }
+
+    // Handle URL parameters and Smooth Section Transitions
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const service = urlParams.get('service')?.replace(/_/g, ' ');
+      if (service) {
+        const select = document.getElementById('lavage');
+        select.value = service;
+        showPrice();
+      }
+
+      // Enhanced Section Transitions
+      const sections = document.querySelectorAll('section');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>
