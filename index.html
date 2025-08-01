@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ShineAutomobile offre des services professionnels de lavage automobile à domicile en Estrie. Réservez dès maintenant pour un nettoyage impeccable à prix compétitifs.">
-  <meta name="keywords" content="lavage automobile, nettoyage voiture, lavage à domicile, Sherbrooke, Magog, Estrie, ShineAutomobile">
+  <meta name="description" content="ShineAutomobile offre des services professionnels de lavage automobile à domicile dans toute l'Estrie. Réservez dès maintenant pour un nettoyage impeccable à prix compétitifs.">
+  <meta name="keywords" content="lavage automobile, nettoyage voiture, lavage à domicile, Sherbrooke, Magog, Coaticook, Windsor, Val-des-Sources, Richmond, Danville, East Angus, Cookshire-Eaton, Lac-Mégantic, Estrie, ShineAutomobile">
   <meta name="author" content="ShineAutomobile">
   <title>✨ ShineAutomobile • Lavage à Domicile • Estrie</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "ShineAutomobile",
-      "description": "Lavage automobile à domicile en Estrie",
+      "description": "Lavage automobile à domicile dans toute l'Estrie",
       "telephone": "873-662-3813",
       "email": "info.shineautomobile@gmail.com",
       "address": {
@@ -543,6 +543,16 @@
       padding-top: 1rem;
     }
 
+    .cities-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .cities-list li {
+      flex: 1 0 30%;
+    }
+
     /* Modal */
     .modal {
       position: fixed;
@@ -664,6 +674,10 @@
       .about img {
         max-width: 200px;
         margin: 0 auto;
+      }
+
+      .cities-list li {
+        flex: 1 0 45%;
       }
     }
   </style>
@@ -893,7 +907,7 @@
 
   <!-- Map Section -->
   <section class="map-container container">
-    <h2 class="section-title">Zone de service</h2>
+    <h2 class="section-title">Nos zones de service : Estrie</h2>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27742.879392138616!2d-71.93583354999999!3d45.4001107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb7e40ca0f3e2bd%3A0x8a2e8f683678bc88!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1684450605089" allowfullscreen title="Carte de la zone de service : Sherbrooke"></iframe>
   </section>
 
@@ -903,7 +917,7 @@
       <div class="footer-content">
         <div class="footer-section">
           <h3>ShineAutomobile</h3>
-          <p>Lavage automobile à domicile en Estrie. Service professionnel à prix imbattables.</p>
+          <p>Lavage automobile à domicile dans toute l'Estrie. Service professionnel à prix imbattables.</p>
         </div>
         <div class="footer-section">
           <h3>Liens rapides</h3>
@@ -919,6 +933,22 @@
           <p><a href="mailto:info.shineautomobile@gmail.com" lang="fr">info.shineautomobile@gmail.com</a></p>
           <p><a href="tel:8736623813" lang="fr">873-662-3813</a></p>
           <p><a href="https://www.instagram.com/shineautomobile_/" target="_blank" rel="noopener" lang="fr">Instagram</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Nos zones de service</h3>
+          <p>Nous offrons nos services dans toute l'Estrie, incluant :</p>
+          <ul class="cities-list">
+            <li>Sherbrooke</li>
+            <li>Magog</li>
+            <li>Coaticook</li>
+            <li>Windsor</li>
+            <li>Val-des-Sources</li>
+            <li>Richmond</li>
+            <li>Danville</li>
+            <li>East Angus</li>
+            <li>Cookshire-Eaton</li>
+            <li>Lac-Mégantic</li>
+          </ul>
         </div>
       </div>
       <p class="footer-bottom">© 2025 ShineAutomobile. Tous droits réservés.</p>
