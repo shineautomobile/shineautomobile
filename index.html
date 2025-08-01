@@ -40,6 +40,7 @@
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --border-radius: 12px;
       --transition: all 0.3s ease;
+      --section-border: 1px solid rgba(16, 185, 129, 0.2); /* Border for sections */
     }
 
     * {
@@ -152,6 +153,12 @@
       text-align: center;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
+      border: var(--section-border);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
+    }
+
+    .hero:hover {
+      border-color: var(--accent-color);
     }
 
     .hero p.subtitle {
@@ -277,6 +284,12 @@
       border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--shadow);
+      border: var(--section-border);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
+    }
+
+    .slideshow:hover {
+      border-color: var(--accent-color);
     }
 
     .slide {
@@ -333,6 +346,12 @@
       max-width: 700px;
       margin: 3rem auto;
       box-shadow: var(--shadow);
+      border: var(--section-border);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
+    }
+
+    .form-section:hover {
+      border-color: var(--accent-color);
     }
 
     .form-section form {
@@ -439,6 +458,12 @@
       box-shadow: var(--shadow);
       margin: 3rem auto;
       max-width: 900px;
+      border: var(--section-border);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
+    }
+
+    .about:hover {
+      border-color: var(--accent-color);
     }
 
     .about-content {
@@ -467,6 +492,13 @@
     .contact {
       text-align: center;
       padding: 3rem 0;
+      border: var(--section-border);
+      border-radius: var(--border-radius);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
+    }
+
+    .contact:hover {
+      border-color: var(--accent-color);
     }
 
     .contact a {
@@ -486,6 +518,14 @@
     .map-container {
       text-align: center;
       margin: 3rem 0;
+      border: var(--section-border);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
+    }
+
+    .map-container:hover {
+      border-color: var(--accent-color);
     }
 
     .map-container iframe {
@@ -503,6 +543,12 @@
       color: var(--white);
       padding: 3rem 0 1rem;
       margin-top: 3rem;
+      border-top: var(--section-border);
+      transition: border-color 0.3s ease;
+    }
+
+    .footer:hover {
+      border-color: var(--accent-color);
     }
 
     .footer-content {
@@ -615,7 +661,7 @@
     section {
       opacity: 0;
       transform: translateY(30px) scale(0.98);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s ease;
     }
 
     section.visible {
