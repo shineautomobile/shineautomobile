@@ -681,8 +681,6 @@
   <nav class="container">
     <div class="nav-links">
       <a href="#services">Services</a>
-      <a href="#gallery-before-after">Avant / Après</a>
-      <a href="#gallery-washed">Voitures lavées</a>
       <a href="#book">Réserver</a>
       <a href="#about">À propos</a>
       <a href="#contact">Contact</a>
@@ -896,7 +894,7 @@
   <!-- Map Section -->
   <section class="map-container container">
     <h2 class="section-title">Nos zones de service : Sherbrooke et Magog</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27742.879392138616!2d-71.93583354999999!3d45.4001107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb7e40ca0f3e2bd%3A0x8a2e8f683678bc88!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1684450605089!1m5!1m4!1s0x4cb7c8e3f097f3b7%3A0x8b2e8f683678bc88!2sMagog%2C%20QC!3m2!1d45.2702!2d-72.1471" allowfullscreen title="Carte des zones de service : Sherbrooke et Magog"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27742.879392138616!2d-71.93583354999999!3d45.4001107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb7e40ca0f3e2bd%3A0x8a2e8f683678bc88!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1684450605089" allowfullscreen title="Carte de la zone de service : Sherbrooke"></iframe>
   </section>
 
   <!-- Footer -->
@@ -911,8 +909,6 @@
           <h3>Liens rapides</h3>
           <ul>
             <li><a href="#services">Services</a></li>
-            <li><a href="#gallery-before-after">Avant / Après</a></li>
-            <li><a href="#gallery-washed">Voitures lavées</a></li>
             <li><a href="#book">Réserver</a></li>
             <li><a href="#about">À propos</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -947,108 +943,4 @@
         index: 0
       },
       'washed': {
-        slides: document.querySelectorAll('#slideshow-washed .slide'),
-        index: 0
-      }
-    };
-
-    function showSlide(slideshowId) {
-      const { slides, index } = slideshows[slideshowId];
-      slides.forEach(slide => slide.classList.remove('active'));
-      slides[index].classList.add('active');
-      slideshows[slideshowId].index = (index + 1) % slides.length;
-    }
-
-    function prevSlide(slideshowId) {
-      const { slides } = slideshows[slideshowId];
-      slideshows[slideshowId].index = (slideshows[slideshowId].index - 1 + slides.length) % slides.length;
-      showSlide(slideshowId);
-    }
-
-    function nextSlide(slideshowId) {
-      showSlide(slideshowId);
-    }
-
-    // Initialize slideshows
-    showSlide('before-after');
-    showSlide('washed');
-    setInterval(() => showSlide('before-after'), 3000);
-    setInterval(() => showSlide('washed'), 3000);
-
-    // Form Price Display
-    function showPrice() {
-      const select = document.getElementById('lavage');
-      const prix = document.getElementById('prix');
-      prix.textContent = select.value ? `Vous avez choisi : ${select.value}` : '';
-    }
-
-    // Form Validation
-    function validateForm(event) {
-      event.preventDefault();
-      let isValid = true;
-
-      const fields = [
-        { id: 'name', errorId: 'name-error', validate: value => value.trim().length > 2 },
-        { id: 'car-type', errorId: 'car-type-error', validate: value => value.trim().length > 0 },
-        { id: 'phone', errorId: 'phone-error', validate: value => /^[0-9]{10,}$/.test(value) },
-        { id: 'address', errorId: 'address-error', validate: value => value.trim().length > 5 },
-        { id: 'lavage', errorId: 'lavage-error', validate: value => value !== '' },
-        { id: 'date', errorId: 'date-error', validate: value => value !== '' },
-      ];
-
-      fields.forEach(field => {
-        const input = document.getElementById(field.id);
-        const error = document.getElementById(field.errorId);
-        if (!field.validate(input.value)) {
-          error.style.display = 'block';
-          isValid = false;
-        } else {
-          error.style.display = 'none';
-        }
-      });
-
-      if (isValid) {
-        document.getElementById('confirmationModal').classList.add('active');
-        setTimeout(() => {
-          document.getElementById('submissionForm').submit();
-        }, 500);
-      }
-
-      return isValid;
-    }
-
-    // Modal
-    function closeModal() {
-      document.getElementById('confirmationModal').classList.remove('active');
-    }
-
-    // Handle URL parameters and Smooth Section Transitions
-    document.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const service = urlParams.get('service')?.replace(/_/g, ' ');
-      if (service) {
-        const select = document.getElementById('lavage');
-        select.value = service;
-        showPrice();
-      }
-
-      // Enhanced Section Transitions
-      const sections = document.querySelectorAll('section');
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      sections.forEach((section) => {
-        observer.observe(section);
-      });
-    });
-  </script>
-</body>
-</html>
+        slides: document.query
