@@ -3,9 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ShineAutomobile - Lavage automobile à domicile en Estrie. Service professionnel à prix imbattables.">
+  <meta name="description" content="ShineAutomobile offre des services professionnels de lavage automobile à domicile en Estrie. Réservez dès maintenant pour un nettoyage impeccable à prix compétitifs.">
+  <meta name="keywords" content="lavage automobile, nettoyage voiture, lavage à domicile, Sherbrooke, Estrie, ShineAutomobile">
+  <meta name="author" content="ShineAutomobile">
   <title>✨ ShineAutomobile • Lavage à Domicile • Estrie</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "ShineAutomobile",
+      "description": "Lavage automobile à domicile en Estrie",
+      "telephone": "873-662-3813",
+      "email": "info.shineautomobile@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sherbrooke",
+        "addressRegion": "QC",
+        "addressCountry": "CA"
+      },
+      "url": "https://www.shineautomobile.com",
+      "openingHours": "Mo-Su 08:00-18:00",
+      "image": "https://www.shineautomobile.com/logo.png",
+      "sameAs": ["https://www.instagram.com/shineautomobile_/"]
+    }
+  </script>
   <style>
     :root {
       --primary-color: #1E3A8A; /* Bleu profond */
@@ -225,6 +247,31 @@
       left: 0;
       color: var(--accent-color);
       font-weight: 700;
+    }
+
+    /* Testimonials */
+    .card .author {
+      font-style: italic;
+      color: var(--accent-color);
+      margin-top: 1rem;
+      text-align: right;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      display: inline-block;
+      background: var(--accent-color);
+      color: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .cta-button:hover {
+      background: var(--primary-color);
+      transform: scale(1.05);
     }
 
     /* Slideshow */
@@ -455,6 +502,52 @@
       box-shadow: var(--shadow);
     }
 
+    /* Footer */
+    .footer {
+      background: var(--primary-color);
+      color: var(--white);
+      padding: 3rem 0 1rem;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section p, .footer-section a {
+      color: var(--white);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section a:hover {
+      color: var(--accent-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1rem;
+    }
+
     /* Modal */
     .modal {
       position: fixed;
@@ -604,6 +697,7 @@
   <section class="hero container">
     <p class="subtitle">Lavage automobile à domicile en Estrie</p>
     <p class="desc">Profitez d’un service professionnel, rapide et soigné directement chez vous, à des prix imbattables.</p>
+    <a href="#book" class="cta-button">Réserver maintenant</a>
   </section>
 
   <!-- Why Choose Us Section -->
@@ -621,6 +715,28 @@
       <div class="card">
         <h3>Meilleur prix sur le marché</h3>
         <p>Nos tarifs compétitifs, à partir de 29,99 $, offrent un excellent rapport qualité-prix. Profitez d’un service premium sans vous ruiner, avec des options adaptées à tous les budgets.</p>
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <a href="#book" class="cta-button">Réserver maintenant</a>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="container">
+    <h2 class="section-title">Ce que nos clients disent</h2>
+    <div class="services">
+      <div class="card">
+        <p>"Service incroyable ! Ma voiture n’a jamais été aussi propre. Omer est ponctuel et très professionnel."</p>
+        <p class="author">– Sophie L., Sherbrooke</p>
+      </div>
+      <div class="card">
+        <p>"Le lavage complet était parfait, et à un prix très raisonnable. Je recommande vivement !"</p>
+        <p class="author">– Marc T., Magog</p>
+      </div>
+      <div class="card">
+        <p>"Super expérience, le shampoing des sièges a redonné une nouvelle vie à mon SUV !"</p>
+        <p class="author">– Julie P., Sherbrooke</p>
       </div>
     </div>
   </section>
@@ -678,6 +794,9 @@
           <li>Shampoing professionnel des sièges</li>
         </ul>
       </div>
+    </div>
+    <div style="text-align: center;">
+      <a href="#book" class="cta-button">Réserver maintenant</a>
     </div>
   </section>
 
@@ -773,6 +892,34 @@
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27742.879392138616!2d-71.93583354999999!3d45.4001107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb7e40ca0f3e2bd%3A0x8a2e8f683678bc88!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1684450605089" allowfullscreen title="Carte de Sherbrooke, QC"></iframe>
   </section>
 
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>ShineAutomobile</h3>
+          <p>Lavage automobile à domicile en Estrie. Service professionnel à prix imbattables.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Liens rapides</h3>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#book">Réserver</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p><a href="mailto:info.shineautomobile@gmail.com" lang="fr">info.shineautomobile@gmail.com</a></p>
+          <p><a href="tel:8736623813" lang="fr">873-662-3813</a></p>
+          <p><a href="https://www.instagram.com/shineautomobile_/" target="_blank" rel="noopener" lang="fr">Instagram</a></p>
+        </div>
+      </div>
+      <p class="footer-bottom">© 2025 ShineAutomobile. Tous droits réservés.</p>
+    </div>
+  </footer>
+
   <!-- Modal -->
   <div class="modal" id="confirmationModal">
     <div class="modal-content">
@@ -856,7 +1003,7 @@
       document.getElementById('confirmationModal').classList.remove('active');
     }
 
-    // Handle URL parameters
+    // Handle URL parameters and Smooth Section Transitions
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const service = urlParams.get('service')?.replace(/_/g, ' ');
@@ -868,7 +1015,6 @@
 
       // Smooth Section Transitions
       const sections = document.querySelectorAll('section');
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
