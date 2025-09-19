@@ -7,80 +7,25 @@
   <meta name="keywords" content="lavage automobile, nettoyage voiture, lavage à domicile, Sherbrooke, Magog, Coaticook, Windsor, Val-des-Sources, Richmond, Danville, East Angus, Cookshire-Eaton, Lac-Mégantic, Estrie, ShineAutomobile">
   <meta name="author" content="ShineAutomobile">
   <title>✨ ShineAutomobile • Lavage à Domicile • Estrie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "ShineAutomobile",
-      "description": "Service professionnel de lavage automobile à domicile dans toute l'Estrie. Nettoyage extérieur, intérieur, complet, remise à neuf et shampoing des sièges.",
+      "description": "Lavage automobile à domicile dans toute l'Estrie",
       "telephone": "873-662-3813",
       "email": "info.shineautomobile@gmail.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Sherbrooke",
         "addressRegion": "QC",
-        "postalCode": "J1L 0H8",
         "addressCountry": "CA"
       },
       "url": "https://www.shineautomobile.com",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "08:00",
-          "closes": "18:00"
-        }
-      ],
+      "openingHours": "Mo-Su 08:00-18:00",
       "image": "https://www.shineautomobile.com/logo.png",
-      "sameAs": ["https://www.instagram.com/shineautomobile_/"],
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Lavage Extérieur",
-          "description": "Nettoyage complet de la carrosserie, jantes, vitres extérieures et séchage manuel.",
-          "price": "29.99",
-          "priceCurrency": "CAD",
-          "availability": "InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "Lavage Intérieur",
-          "description": "Aspirateur complet, nettoyage des surfaces plastiques, tableau de bord et vitres intérieures.",
-          "price": "49.99",
-          "priceCurrency": "CAD",
-          "availability": "InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "Lavage Complet",
-          "description": "Nettoyage intérieur et extérieur complet, incluant carrosserie, jantes, vitres et aspirateur.",
-          "price": "69.99",
-          "priceCurrency": "CAD",
-          "availability": "InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "Remise à neuf",
-          "description": "Lavage complet avec shampoing des sols, tapis et sièges.",
-          "price": "159.99",
-          "priceCurrency": "CAD",
-          "availability": "InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "Shampoing des sièges",
-          "description": "Shampoing professionnel des sièges pour une propreté optimale.",
-          "price": "49.99",
-          "priceCurrency": "CAD",
-          "availability": "InStock"
-        }
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "150"
-      }
+      "sameAs": ["https://www.instagram.com/shineautomobile_/"]
     }
   </script>
   <style>
@@ -95,7 +40,7 @@
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --border-radius: 12px;
       --transition: all 0.3s ease;
-      --section-border: 1px solid rgba(16, 185, 129, 0.2);
+      --section-border: 1px solid rgba(16, 185, 129, 0.2); /* Border for sections */
     }
 
     * {
@@ -118,132 +63,128 @@
     }
 
     .container {
-      max-width: 1280px;
+      max-width: 1200px;
       margin: auto;
-      padding: 0 2rem;
+      padding: 0 1.5rem;
     }
 
     /* Header */
     header {
       background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-      padding: 2rem 0;
+      padding: 4rem 0;
       text-align: center;
       color: var(--white);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    header.scrolled {
-      background: rgba(30, 58, 138, 0.95);
-      box-shadow: var(--shadow);
+      position: relative;
+      height: 200px;
     }
 
     .logo {
-      width: 90px;
-      height: 90px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       border: 3px solid var(--white);
       box-shadow: var(--shadow);
-      transition: transform 0.3s ease;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      animation: moveLogo 2s ease-in-out forwards;
+    }
+
+    @keyframes moveLogo {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      100% { transform: translate(0, 0); top: 20px; left: 20px; scale: 0.8; }
     }
 
     .site-title {
       font-family: 'Raleway', sans-serif;
       font-size: 2.8rem;
-      font-weight: 700;
-      margin-top: 1rem;
-      opacity: 1;
-      animation: fadeIn 1s ease-in-out;
+      font-weight: 600;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      z-index: 5;
+      animation: slideTitle 2s ease-in-out 0.5s forwards;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @keyframes slideTitle {
+      0% { opacity: 0; transform: translate(-50%, -50%) translateX(0); }
+      100% { opacity: 1; transform: translate(-50%, -50%) translateX(0); }
     }
 
     /* Navigation */
     nav {
-      background: var(--white);
-      box-shadow: var(--shadow);
-      padding: 1rem 0;
       position: sticky;
       top: 0;
-      z-index: 99;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      z-index: 100;
+      padding: 1rem 0;
     }
 
     .nav-links {
       display: flex;
       justify-content: center;
-      gap: 2.5rem;
-      flex-wrap: wrap;
+      gap: 2rem;
     }
 
     .nav-links a {
       font-family: 'Raleway', sans-serif;
-      font-weight: 600;
-      font-size: 1.2rem;
+      font-weight: 500;
+      font-size: 1.1rem;
       padding: 0.5rem 1rem;
-      transition: var(--transition);
     }
 
-    .nav-links a:hover, .nav-links a:focus {
+    .nav-links a:hover {
       color: var(--accent-color);
       background: rgba(16, 185, 129, 0.1);
       border-radius: 6px;
+      transform: scale(1.05);
     }
 
     /* Hero Section */
     .hero {
       background: var(--white);
-      margin: 3rem 0;
-      padding: 4rem 2rem;
+      margin: 2rem 0;
+      padding: 3rem 1.5rem;
       text-align: center;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       border: var(--section-border);
-      transition: var(--transition);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
     }
 
     .hero:hover {
-      transform: translateY(-5px);
       border-color: var(--accent-color);
     }
 
     .hero p.subtitle {
-      font-family: 'Raleway', sans-serif;
       font-weight: 600;
-      font-size: 1.8rem;
+      font-size: 1.3rem;
       color: var(--accent-color);
       margin-bottom: 1rem;
-    }
-
-    .hero .desc {
-      font-size: 1.2rem;
-      color: #4B5563;
-      max-width: 700px;
-      margin: 0 auto 2rem;
     }
 
     /* Section Title */
     .section-title {
       font-family: 'Raleway', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 700;
+      font-size: 2.2rem;
+      font-weight: 600;
       text-align: center;
-      margin: 4rem 0 2rem;
+      margin: 3rem 0 1.5rem;
       position: relative;
-      color: var(--primary-color);
     }
 
     .section-title::after {
       content: '';
-      width: 120px;
-      height: 6px;
+      width: 100px;
+      height: 5px;
       background: var(--accent-color);
       position: absolute;
-      bottom: -12px;
+      bottom: -10px;
       left: 50%;
       transform: translateX(-50%);
       border-radius: 3px;
@@ -252,7 +193,7 @@
     /* Services */
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       padding: 2rem 0;
     }
@@ -266,37 +207,38 @@
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     }
 
     .card h3 {
       font-family: 'Raleway', sans-serif;
       color: var(--primary-color);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
     }
 
     .card p.price {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--text-color);
       margin-bottom: 1rem;
     }
 
-    .card p, .card ul li {
+    .card p {
       color: #4B5563;
       font-size: 1rem;
-      line-height: 1.8;
+      line-height: 1.6;
     }
 
     .card ul {
       list-style: none;
+      color: #4B5563;
     }
 
     .card ul li {
       margin: 0.75rem 0;
-      padding-left: 2rem;
+      padding-left: 1.8rem;
       position: relative;
     }
 
@@ -308,6 +250,7 @@
       font-weight: 700;
     }
 
+    /* Testimonials */
     .card .author {
       font-style: italic;
       color: var(--accent-color);
@@ -322,14 +265,12 @@
       color: var(--white);
       padding: 1rem 2rem;
       border-radius: 8px;
-      font-family: 'Raleway', sans-serif;
       font-weight: 600;
-      font-size: 1.1rem;
-      margin: 1.5rem 0;
+      margin-top: 1.5rem;
       transition: var(--transition);
     }
 
-    .cta-button:hover, .cta-button:focus {
+    .cta-button:hover {
       background: var(--primary-color);
       transform: scale(1.05);
     }
@@ -338,13 +279,13 @@
     .slideshow {
       position: relative;
       max-width: 100%;
-      height: 450px;
+      height: 400px;
       margin: 3rem 0;
       border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--shadow);
       border: var(--section-border);
-      transition: var(--transition);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
     }
 
     .slideshow:hover {
@@ -356,7 +297,7 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity 0.8s ease-in-out;
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
 
     .slide img {
@@ -364,30 +305,21 @@
       height: 100%;
       object-fit: cover;
       border-radius: var(--border-radius);
-      loading: lazy;
     }
 
     .slide.active {
       opacity: 1;
+      transform: scale(1);
+      z-index: 1;
     }
 
-    .slide-caption {
-      position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-      background: rgba(0, 0, 0, 0.7);
-      color: var(--white);
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      font-size: 0.9rem;
+    .slide:not(.active) {
+      transform: scale(0.95);
     }
 
     .slideshow-controls {
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
-      display: flex;
-      gap: 0.5rem;
+      text-align: center;
+      margin-top: 1rem;
     }
 
     .slideshow-controls button {
@@ -395,42 +327,40 @@
       color: var(--white);
       border: none;
       padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 0.9rem;
       transition: var(--transition);
     }
 
-    .slideshow-controls button:hover, .slideshow-controls button:focus {
+    .slideshow-controls button:hover {
       background: var(--primary-color);
       transform: scale(1.05);
     }
 
     /* Form Section */
     .form-section {
-      background: var(--white);
+      background: linear-gradient(135deg, var(--white), rgba(16, 185, 129, 0.05));
       padding: 3rem 2rem;
       border-radius: var(--border-radius);
-      max-width: 800px;
+      max-width: 700px;
       margin: 3rem auto;
       box-shadow: var(--shadow);
       border: var(--section-border);
-      transition: var(--transition);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
     }
 
     .form-section:hover {
       border-color: var(--accent-color);
-      transform: translateY(-5px);
     }
 
     .form-section form {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 1.5rem;
     }
 
     .form-group {
-      display: flex;
-      flex-direction: column;
       opacity: 0;
       transform: translateY(20px);
       animation: slideInField 0.5s ease forwards;
@@ -445,13 +375,6 @@
 
     @keyframes slideInField {
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .form-section label {
-      font-family: 'Raleway', sans-serif;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--primary-color);
     }
 
     .form-section input,
@@ -477,13 +400,31 @@
       border: none;
       padding: 1rem;
       border-radius: 8px;
-      font-family: 'Raleway', sans-serif;
       font-weight: 600;
       cursor: pointer;
-      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
     }
 
-    .form-section button:hover, .form-section button:focus {
+    .form-section button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+
+    .form-section button:hover::after {
+      width: 200px;
+      height: 200px;
+    }
+
+    .form-section button:hover {
       background: var(--primary-color);
       transform: scale(1.02);
     }
@@ -500,7 +441,6 @@
       color: var(--text-color);
       text-align: center;
       min-height: 1.5rem;
-      font-size: 1.1rem;
     }
 
     .important-notif {
@@ -519,12 +459,11 @@
       margin: 3rem auto;
       max-width: 900px;
       border: var(--section-border);
-      transition: var(--transition);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
     }
 
     .about:hover {
       border-color: var(--accent-color);
-      transform: translateY(-5px);
     }
 
     .about-content {
@@ -544,6 +483,7 @@
 
     .about p {
       color: #4B5563;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.1rem;
       line-height: 1.8;
     }
@@ -554,7 +494,7 @@
       padding: 3rem 0;
       border: var(--section-border);
       border-radius: var(--border-radius);
-      transition: var(--transition);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
     }
 
     .contact:hover {
@@ -565,13 +505,13 @@
       display: inline-block;
       margin: 0.75rem;
       color: var(--primary-color);
-      font-weight: 600;
-      transition: var(--transition);
+      font-weight: 500;
     }
 
-    .contact a:hover, .contact a:focus {
+    .contact a:hover {
       color: var(--accent-color);
       text-decoration: underline;
+      transform: scale(1.05);
     }
 
     /* Map Section */
@@ -581,7 +521,7 @@
       border: var(--section-border);
       border-radius: var(--border-radius);
       padding: 1rem;
-      transition: var(--transition);
+      transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.3s ease;
     }
 
     .map-container:hover {
@@ -604,7 +544,7 @@
       padding: 3rem 0 1rem;
       margin-top: 3rem;
       border-top: var(--section-border);
-      transition: var(--transition);
+      transition: border-color 0.3s ease;
     }
 
     .footer:hover {
@@ -613,14 +553,14 @@
 
     .footer-content {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
       margin-bottom: 2rem;
     }
 
     .footer-section h3 {
       font-family: 'Raleway', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 1rem;
     }
 
@@ -638,7 +578,7 @@
       margin-bottom: 0.5rem;
     }
 
-    .footer-section a:hover, .footer-section a:focus {
+    .footer-section a:hover {
       color: var(--accent-color);
     }
 
@@ -666,7 +606,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.6);
       display: none;
       align-items: center;
       justify-content: center;
@@ -695,12 +635,6 @@
     .modal-content h3 {
       font-family: 'Raleway', sans-serif;
       color: var(--primary-color);
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-    }
-
-    .modal-content p {
-      color: #4B5563;
       margin-bottom: 1rem;
     }
 
@@ -711,86 +645,59 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-family: 'Raleway', sans-serif;
       font-weight: 600;
-      transition: var(--transition);
     }
 
-    .modal-content button:hover, .modal-content button:focus {
+    .modal-content button:hover {
       background: var(--primary-color);
       transform: scale(1.02);
     }
 
-    /* Back to Top Button */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--accent-color);
-      color: var(--white);
-      border: none;
-      padding: 1rem;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      z-index: 1000;
-      font-size: 1.2rem;
-    }
-
-    .back-to-top.show {
-      display: block;
-    }
-
-    /* Section Transitions */
+    /* Enhanced Section Transitions */
     html {
       scroll-behavior: smooth;
     }
 
     section {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transform: translateY(30px) scale(0.98);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s ease;
     }
 
     section.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     /* Responsive Design */
     @media (max-width: 768px) {
-      .container {
-        padding: 0 1rem;
-      }
-
       .site-title {
         font-size: 2rem;
       }
 
       .logo {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
+      }
+
+      @keyframes moveLogo {
+        0% { transform: translate(-50%, -50%) scale(1); }
+        100% { transform: translate(0, 0); top: 15px; left: 15px; scale: 0.8; }
       }
 
       .nav-links {
         gap: 1rem;
+        justify-content: center;
+        flex-wrap: nowrap;
       }
 
       .nav-links a {
-        font-size: 1rem;
+        font-size: 0.95rem;
         padding: 0.5rem;
       }
 
       .hero {
         padding: 2rem 1rem;
-      }
-
-      .hero p.subtitle {
-        font-size: 1.4rem;
-      }
-
-      .section-title {
-        font-size: 2rem;
       }
 
       .slideshow {
@@ -799,6 +706,10 @@
 
       .form-section {
         padding: 2rem 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
       }
 
       .about-content {
@@ -947,38 +858,14 @@
   <section id="gallery-before-after" class="container">
     <h2 class="section-title">Galerie Avant / Après</h2>
     <div class="slideshow" id="slideshow-before-after">
-      <div class="slide active">
-        <img src="lavage1.jpeg" alt="Avant 1" loading="lazy">
-        <div class="slide-caption">Avant : Véhicule sale</div>
-      </div>
-      <div class="slide">
-        <img src="lavage2.jpeg" alt="Après 1" loading="lazy">
-        <div class="slide-caption">Après : Nettoyage complet</div>
-      </div>
-      <div class="slide">
-        <img src="lavage3.jpeg" alt="Avant 2" loading="lazy">
-        <div class="slide-caption">Avant : Intérieur poussiéreux</div>
-      </div>
-      <div class="slide">
-        <img src="lavage4.jpeg" alt="Après 2" loading="lazy">
-        <div class="slide-caption">Après : Intérieur impeccable</div>
-      </div>
-      <div class="slide">
-        <img src="lavage5.jpeg" alt="Avant 3" loading="lazy">
-        <div class="slide-caption">Avant : Jantes sales</div>
-      </div>
-      <div class="slide">
-        <img src="lavage6.jpeg" alt="Après 3" loading="lazy">
-        <div class="slide-caption">Après : Jantes brillantes</div>
-      </div>
-      <div class="slide">
-        <img src="lavage7.jpeg" alt="Avant 4" loading="lazy">
-        <div class="slide-caption">Avant : Carrosserie ternie</div>
-      </div>
-      <div class="slide">
-        <img src="lavage8.jpeg" alt="Après 4" loading="lazy">
-        <div class="slide-caption">Après : Carrosserie éclatante</div>
-      </div>
+      <div class="slide active"><img src="lavage1.jpeg" alt="Avant 1"></div>
+      <div class="slide"><img src="lavage2.jpeg" alt="Après 1"></div>
+      <div class="slide"><img src="lavage3.jpeg" alt="Avant 2"></div>
+      <div class="slide"><img src="lavage4.jpeg" alt="Après 2"></div>
+      <div class="slide"><img src="lavage5.jpeg" alt="Avant 3"></div>
+      <div class="slide"><img src="lavage6.jpeg" alt="Après 3"></div>
+      <div class="slide"><img src="lavage7.jpeg" alt="Avant 4"></div>
+      <div class="slide"><img src="lavage8.jpeg" alt="Après 4"></div>
     </div>
     <div class="slideshow-controls">
       <button onclick="prevSlide('before-after')" aria-label="Image précédente Avant / Après">Précédent</button>
@@ -988,36 +875,15 @@
 
   <!-- Washed Cars Gallery Section -->
   <section id="gallery-washed" class="container">
-    <h2 class="section-title"></h2>
+    <h2 class="section-title">Voitures Lavées</h2>
     <div class="slideshow" id="slideshow-washed">
-      <div class="slide active">
-        <img src="voitur1.jpeg" alt="Voiture lavée 1" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
-      <div class="slide">
-        <img src="voiture2.jpeg" alt="Voiture lavée 2" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
-      <div class="slide">
-        <img src="voitur3.jpeg" alt="Voiture lavée 3" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
-      <div class="slide">
-        <img src="voiture4.jpeg" alt="Voiture lavée 4" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
-      <div class="slide">
-        <img src="voiture5.jpeg" alt="Voiture lavée 5" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
-      <div class="slide">
-        <img src="voiture6.jpeg" alt="Voiture lavée 6" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
-      <div class="slide">
-        <img src="voiture7.jpeg" alt="Voiture lavée 7" loading="lazy">
-        <div class="slide-caption"></div>
-      </div>
+      <div class="slide active"><img src="voitur1.jpeg" alt="Voiture lavée 1"></div>
+      <div class="slide"><img src="voiture2.jpeg" alt="Voiture lavée 2"></div>
+      <div class="slide"><img src="voitur3.jpeg" alt="Voiture lavée 3"></div>
+      <div class="slide"><img src="voiture4.jpeg" alt="Voiture lavée 4"></div>
+      <div class="slide"><img src="voiture5.jpeg" alt="Voiture lavée 5"></div>
+      <div class="slide"><img src="voiture6.jpeg" alt="Voiture lavée 6"></div>
+      <div class="slide"><img src="voiture7.jpeg" alt="Voiture lavée 7"></div>
     </div>
     <div class="slideshow-controls">
       <button onclick="prevSlide('washed')" aria-label="Image précédente Voitures lavées">Précédent</button>
@@ -1031,27 +897,22 @@
     <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" onsubmit="return validateForm(event)">
       <input type="hidden" name="_captcha" value="false">
       <div class="form-group">
-        <label for="name">Nom complet</label>
         <input type="text" name="Nom Complet" id="name" placeholder="Nom complet" required aria-label="Nom complet">
         <p class="form-error" id="name-error">Veuillez entrer un nom valide.</p>
       </div>
       <div class="form-group">
-        <label for="car-type">Type de voiture</label>
         <input type="text" name="Type de voiture" id="car-type" placeholder="Type de voiture (ex: Sedan, SUV, Camion)" required aria-label="Type de voiture">
         <p class="form-error" id="car-type-error">Veuillez spécifier le type de voiture.</p>
       </div>
       <div class="form-group">
-        <label for="phone">Numéro de téléphone</label>
         <input type="tel" name="Téléphone" id="phone" placeholder="Numéro de téléphone" required aria-label="Numéro de téléphone" pattern="[0-9]{10,}">
         <p class="form-error" id="phone-error">Veuillez entrer un numéro valide (10 chiffres minimum).</p>
       </div>
       <div class="form-group">
-        <label for="address">Adresse à domicile</label>
         <input type="text" name="Adresse" id="address" placeholder="Adresse à domicile" required aria-label="Adresse à domicile">
         <p class="form-error" id="address-error">Veuillez entrer une adresse valide.</p>
       </div>
       <div class="form-group">
-        <label for="lavage">Type de lavage</label>
         <select name="Type de lavage" id="lavage" onchange="showPrice()" required aria-label="Type de lavage">
           <option value="">Choisir un service</option>
           <option value="Lavage Extérieur - 29,99$">Lavage Extérieur - 29,99$</option>
@@ -1063,7 +924,6 @@
         <p class="form-error" id="lavage-error">Veuillez sélectionner un service.</p>
       </div>
       <div class="form-group">
-        <label for="date">Date de réservation</label>
         <input type="date" name="Date" id="date" required aria-label="Date de réservation">
         <p class="form-error" id="date-error">Veuillez sélectionner une date valide.</p>
       </div>
@@ -1157,9 +1017,6 @@
     </div>
   </div>
 
-  <!-- Back to Top Button -->
-  <button class="back-to-top" aria-label="Retour en haut">⬆</button>
-
   <script>
     // Slideshow for Before/After and Washed Cars
     const slideshows = {
@@ -1193,8 +1050,8 @@
     // Initialize slideshows
     showSlide('before-after');
     showSlide('washed');
-    setInterval(() => showSlide('before-after'), 4000);
-    setInterval(() => showSlide('washed'), 4000);
+    setInterval(() => showSlide('before-after'), 3000);
+    setInterval(() => showSlide('washed'), 3000);
 
     // Form Price Display
     function showPrice() {
@@ -1214,12 +1071,7 @@
         { id: 'phone', errorId: 'phone-error', validate: value => /^[0-9]{10,}$/.test(value) },
         { id: 'address', errorId: 'address-error', validate: value => value.trim().length > 5 },
         { id: 'lavage', errorId: 'lavage-error', validate: value => value !== '' },
-        { id: 'date', errorId: 'date-error', validate: value => {
-          const selectedDate = new Date(value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          return value !== '' && selectedDate >= today;
-        }}
+        { id: 'date', errorId: 'date-error', validate: value => value !== '' },
       ];
 
       fields.forEach(field => {
@@ -1248,22 +1100,7 @@
       document.getElementById('confirmationModal').classList.remove('active');
     }
 
-    // Header Scroll Effect
-    window.addEventListener('scroll', () => {
-      const header = document.querySelector('header');
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    });
-
-    // Back to Top Button
-    const backToTop = document.querySelector('.back-to-top');
-    window.addEventListener('scroll', () => {
-      backToTop.classList.toggle('show', window.scrollY > 300);
-    });
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Handle URL parameters and Section Transitions
+    // Handle URL parameters and Smooth Section Transitions
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const service = urlParams.get('service')?.replace(/_/g, ' ');
@@ -1273,7 +1110,7 @@
         showPrice();
       }
 
-      // Section Transitions
+      // Enhanced Section Transitions
       const sections = document.querySelectorAll('section');
       const observer = new IntersectionObserver(
         (entries) => {
