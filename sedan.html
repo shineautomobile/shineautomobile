@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sedan - Services & Tarifs - ShineAutomobile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+
+        body { 
+            font-family: 'Inter', system_ui, sans-serif; 
+            scroll-behavior: smooth;
+        }
+        .heading-font { 
+            font-family: 'Space Grotesk', sans-serif; 
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.15);
+        }
+
+        .service-card .emoji {
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover .emoji {
+            transform: scale(1.15) rotate(8deg);
+        }
+
+        .btn-select {
+            transition: all 0.3s ease;
+        }
+
+        .btn-select:hover {
+            transform: scale(1.05);
+            background-color: #00e0ff !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <a href="index.html#categories" 
+           class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-10 transition-colors duration-300">
+            ← Retour à l'accueil
+        </a>
+
+        <div class="text-center mb-16 fade-in visible">
+            <h1 class="heading-font text-5xl font-semibold">Services pour Sedan / Petite voiture</h1>
+            <p class="text-gray-600 mt-3 text-xl">Tarifs adaptés aux berlines et voitures compactes</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Carte 1 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in">
+                <div class="text-5xl mb-6 emoji">🚗</div>
+                <h3 class="text-3xl font-semibold mb-2">Lavage Extérieur</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">40$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Rinçage complet, nettoyage approfondi des jantes, vitres extérieures et séchage manuel sans traces.
+                </p>
+                <a href="pageservice.html?service=Lavage Extérieur Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+
+            <!-- Carte 2 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in" style="animation-delay: 100ms;">
+                <div class="text-5xl mb-6 emoji">🌟</div>
+                <h3 class="text-3xl font-semibold mb-2">Lavage Extérieur Plus</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">50$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Lavage extérieur complet + application de cire protectrice.
+                </p>
+                <a href="pageservice.html?service=Lavage Extérieur Plus Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+
+            <!-- Carte 3 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in" style="animation-delay: 200ms;">
+                <div class="text-5xl mb-6 emoji">🧼</div>
+                <h3 class="text-3xl font-semibold mb-2">Lavage Intérieur Régulier</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">75$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Aspiration complète, nettoyage des surfaces, tableau de bord et vitres intérieures.
+                </p>
+                <a href="pageservice.html?service=Lavage Intérieur Régulier Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+
+            <!-- Carte 4 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in" style="animation-delay: 300ms;">
+                <div class="text-5xl mb-6 emoji">🧼</div>
+                <h3 class="text-3xl font-semibold mb-2">Lavage Intérieur Super</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">125$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Lavage intérieur régulier + shampoing des sièges et tapis.
+                </p>
+                <a href="pageservice.html?service=Lavage Intérieur Super Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+
+            <!-- Carte 5 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in" style="animation-delay: 400ms;">
+                <div class="text-5xl mb-6 emoji">🧼</div>
+                <h3 class="text-3xl font-semibold mb-2">Lavage Complet Régulier</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">100$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Lavage extérieur + intérieur régulier.
+                </p>
+                <a href="pageservice.html?service=Lavage Complet Régulier Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+
+            <!-- Carte 6 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in" style="animation-delay: 500ms;">
+                <div class="text-5xl mb-6 emoji">✨</div>
+                <h3 class="text-3xl font-semibold mb-2">Lavage Complet Super</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">175$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Lavage extérieur Plus + intérieur Super.
+                </p>
+                <a href="pageservice.html?service=Lavage Complet Super Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+
+            <!-- Carte 7 -->
+            <div class="service-card bg-white border border-gray-100 rounded-3xl p-8 shadow fade-in" style="animation-delay: 600ms;">
+                <div class="text-5xl mb-6 emoji">🧼</div>
+                <h3 class="text-3xl font-semibold mb-2">Shampoing des Sièges</h3>
+                <p class="text-4xl font-bold text-[#00e0ff] mb-6">50$</p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Shampoing professionnel des sièges et tapis.
+                </p>
+                <a href="pageservice.html?service=Shampoing des Sièges Sedan" target="_blank" 
+                   class="btn-select block text-center bg-gray-900 text-white py-4 rounded-2xl font-medium">
+                    Sélectionner
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton retour en bas -->
+    <div class="max-w-7xl mx-auto px-6 py-12 text-center">
+        <a href="index.html#categories" 
+           class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300">
+            ← Retour à l'accueil
+        </a>
+    </div>
+
+    <script>
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
