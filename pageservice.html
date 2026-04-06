@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prendre Rendez-vous - ShineAutomobile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <div class="max-w-3xl mx-auto px-6 py-12">
+        <a href="index.html" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8">
+            ← Retour à l'accueil
+        </a>
+
+        <h1 class="heading-font text-5xl font-semibold text-center mb-2">Prendre Rendez-vous</h1>
+        <p class="text-center text-gray-600 mb-12">ShineAutomobile - Lavage auto à domicile</p>
+        <h3 class="font-medium text-amber-800">Note importante :</h3><h4 class="text-center text-gray-600 mb-12">Des frais supplémentaires peuvent être appliquer sur les services à l'éxtérieur de Sherbrooke</h4>
+        
+
+        <!-- ==================== FORMULAIRE ==================== -->
+        <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" 
+              class="bg-white rounded-3xl shadow-xl p-10 space-y-8">
+
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous - ShineAutomobile">
+            <input type="hidden" name="_template" value="table">
+
+            <!-- Nom complet -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Nom complet *</label>
+                <input type="text" name="nom" id="nom" required class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+            </div>
+
+            <!-- Service -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Service choisi *</label>
+                <select name="service" id="service" required onchange="calculerTotal()" 
+                        class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+                    <option value="">-- Sélectionnez un service --</option>
+                    
+                    <!-- Sedan, SUV, Van, Pickup et Forfaits (comme avant) -->
+                    <option value="">─ petite voiture ─</option>
+                    <option value="Lavage Extérieur Sedan">Lavage Extérieur - 40$ (Sedan)</option>
+                    <option value="Lavage Extérieur Plus Sedan">Lavage Extérieur Plus - 50$ (Sedan)</option>
+                    <option value="Lavage Intérieur Régulier Sedan">Lavage Intérieur Régulier - 75$ (Sedan)</option>
+                    <option value="Lavage Intérieur Super Sedan">Lavage Intérieur Super - 125$ (Sedan)</option>
+                    <option value="Lavage Complet Régulier Sedan">Lavage Complet Régulier - 100$ (Sedan)</option>
+                    <option value="Lavage Complet Super Sedan">Lavage Complet Super - 175$ (Sedan)</option>
+                    <option value="Shampoing des Sièges Sedan">Shampoing des Sièges - 50$ (Sedan)</option>
+
+                    <option value="">── SUV ──</option>
+                    <option value="Lavage Extérieur SUV">Lavage Extérieur - 40$ (SUV)</option>
+                    <option value="Lavage Extérieur Plus SUV">Lavage Extérieur Plus - 50$ (SUV)</option>
+                    <option value="Lavage Intérieur Régulier SUV">Lavage Intérieur Régulier - 80$ (SUV)</option>
+                    <option value="Lavage Intérieur Super SUV">Lavage Intérieur Super - 130$ (SUV)</option>
+                    <option value="Lavage Complet Régulier SUV">Lavage Complet Régulier - 115$ (SUV)</option>
+                    <option value="Lavage Complet Super SUV">Lavage Complet Super - 180$ (SUV)</option>
+                    <option value="Shampoing des Sièges SUV">Shampoing des Sièges - 50$ (SUV)</option>
+
+                    <option value="">── Van ──</option>
+                    <option value="Lavage Extérieur Van">Lavage Extérieur - 50$ (Van)</option>
+                    <option value="Lavage Extérieur Plus Van">Lavage Extérieur Plus - 60$ (Van)</option>
+                    <option value="Lavage Intérieur Régulier Van">Lavage Intérieur Régulier - 100$ (Van)</option>
+                    <option value="Lavage Intérieur Super Van">Lavage Intérieur Super - 150$ (Van)</option>
+                    <option value="Lavage Complet Régulier Van">Lavage Complet Régulier - 150$ (Van)</option>
+                    <option value="Lavage Complet Super Van">Lavage Complet Super - 200$ (Van)</option>
+                    <option value="Shampoing des Sièges Van">Shampoing des Sièges - 75$ (Van)</option>
+
+                    <option value="">── Pickup ──</option>
+                    <option value="Lavage Extérieur Pickup">Lavage Extérieur - 50$ (Pickup)</option>
+                    <option value="Lavage Extérieur Plus Pickup">Lavage Extérieur Plus - 60$ (Pickup)</option>
+                    <option value="Lavage Intérieur Régulier Pickup">Lavage Intérieur Régulier - 100$ (Pickup)</option>
+                    <option value="Lavage Intérieur Super Pickup">Lavage Intérieur Super - 150$ (Pickup)</option>
+                    <option value="Lavage Complet Régulier Pickup">Lavage Complet Régulier - 150$ (Pickup)</option>
+                    <option value="Lavage Complet Super Pickup">Lavage Complet Super - 200$ (Pickup)</option>
+                    <option value="Shampoing des Sièges Pickup">Shampoing des Sièges - 50$ (Pickup)</option>
+
+                    <option value="">── FORFAITS ──</option>
+                    <option value="Forfait Extérieur 2-4 voitures">Forfait Extérieur 2-4 voitures - 30$/voiture</option>
+                    <option value="Forfait Extérieur 5-10 voitures">Forfait Extérieur 5-10 voitures - 25$/voiture</option>
+                    <option value="Forfait Complet 2 voitures">Forfait Complet 2 voitures - 95$/voiture</option>
+                    <option value="Forfait Complet 3-4 voitures">Forfait Complet 3-4 voitures - 90$/voiture</option>
+                    <option value="Forfait Complet 5+ voitures">Forfait Complet 5+ voitures - 80$/voiture</option>
+                </select>
+            </div>
+
+            <!-- Nombre de voitures + Type -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-medium mb-2">Nb de voitures:</label>
+                    <select name="nombre_voitures" id="nbVoitures" onchange="calculerTotal()" class="border border-gray-300 rounded-2xl px-5 py-4 text-center">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-2">Nom et Type de véhicule(s)</label>
+                    <input type="text" name="type_vehicule" placeholder="Ex: Toyota camry" class="border border-gray-300 rounded-2xl px-5 py-4">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">Numéro de téléphone *</label>
+                <input type="tel" name="telephone" id="telephone" required placeholder="Ex: 873-662-3813" class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">Adresse domicile *</label>
+                <input type="text" name="adresse" id="adresse" required placeholder="Ex: 123 rue Principale, Sherbrooke, QC" class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-2">Date souhaitée *</label>
+                <input type="date" name="date" id="date" required class="border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+            </div>
+
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <div class="flex justify-between items-center text-lg">
+                    <span class="font-medium">Montant total estimé:</span>
+                    <span id="totalPrice" class="text-3xl font-bold text-[#00e0ff]">0$</span>
+                </div>
+                <input type="hidden" name="montant_total" id="montant_total_hidden">
+            </div>
+
+            <button type="submit" class="w-full bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-xl transition">
+                Envoyer
+            </button>
+        </form>
+
+        <!-- ==================== MESSAGE DE REMERCIEMENT ==================== -->
+        <div id="successMessage" class="hidden bg-white rounded-3xl shadow-xl p-12 text-center">
+            <div class="text-6xl mb-6">✅</div>
+            <h2 class="heading-font text-4xl font-semibold mb-4">Merci!</h2>
+            <p class="text-gray-600 text-lg mb-8">Nous avons bien reçu votre demande.<br>Nous vous contacterons le plus rapidement possible.</p>
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-left">
+                <p class="font-medium text-amber-800">Note importante :</p>
+                <p class="text-amber-700 mt-2">
+                    Si vous n'avez pas de nouvelles dans les <strong>24 prochaines heures</strong>, 
+                    veuillez nous appeler au <strong class="text-[#00e0ff]">873-662-3813</strong>.
+                </p>
+            </div>
+           <div class="mt-10">
+                <a href="index.html" 
+                   class="inline-flex items-center gap-2 bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold px-10 py-4 rounded-2xl text-lg transition-all duration-300 shadow-md hover:shadow-lg">D'accord
+                </a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('submissionForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            setTimeout(() => {
+                form.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 800);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form)
+            }).catch(() => {});
+        });
+
+        // Pré-remplissage du service
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        window.onload = function() {
+            const serviceFromUrl = getUrlParameter('service');
+            if (serviceFromUrl) {
+                document.getElementById('service').value = serviceFromUrl;
+                calculerTotal();
+            }
+
+            // Date minimale = aujourd'hui
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').min = today;
+        };
+
+        function calculerTotal() {
+            const nb = parseInt(document.getElementById('nbVoitures').value) || 1;
+            let price = 50;
+            const text = document.getElementById('service').selectedOptions[0]?.text || "";
+
+            if (text.includes("40$")) price = 40;
+            else if (text.includes("50$")) price = 50;
+            else if (text.includes("60$")) price = 60;
+            else if (text.includes("75$")) price = 75;
+            else if (text.includes("80$")) price = 80;
+            else if (text.includes("100$")) price = 100;
+            else if (text.includes("115$")) price = 115;
+            else if (text.includes("125$")) price = 125;
+            else if (text.includes("130$")) price = 130;
+            else if (text.includes("150$")) price = 150;
+            else if (text.includes("175$") || text.includes("180$")) price = 180;
+            else if (text.includes("200$")) price = 200;
+
+            document.getElementById('totalPrice').textContent = (price * nb) + "$";
+            document.getElementById('montant_total_hidden').value = (price * nb) + "$";
+        }
+    </script>
+</body>
+</html>
