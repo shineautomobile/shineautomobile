@@ -28,15 +28,16 @@
             background-repeat: no-repeat;
         }
 
-        /* Transitions générales */
+        /* Transitions générales entre sections */
         section {
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Animations d'apparition au scroll */
         .fade-in {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform: translateY(50px);
+            transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .fade-in.visible {
@@ -44,8 +45,38 @@
             transform: translateY(0);
         }
 
+        /* Animation glissée latérale */
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         .category-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .category-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .service-card {
@@ -57,9 +88,20 @@
             box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
         }
 
+        /* Animation spécifique pour les cartes catégories */
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.2);
+        }
+
+        /* Ligne de connexion animée dans "Comment ça marche" */
+        .step-line {
+            transition: width 1.2s ease;
+        }
+
         /* Menu mobile */
         #mobile-menu {
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
@@ -153,93 +195,93 @@
     </header>
 
      <!-- COMMENT ÇA MARCHE -->
-    <section id="comment-ca-marche" class="py-24 bg-gray-50">
+    <section id="comment-ca-marche" class="py-24 bg-gray-50 fade-in">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 class="heading-font text-5xl font-semibold mb-4">Comment ça marche ?</h2>
             <p class="text-gray-600 mb-12">4 étapes simples pour une voiture impeccable</p>
 
             <div class="grid md:grid-cols-4 gap-8 relative">
-                <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]"></div>
+                <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[#00e0ff] to-[#00c8e0] step-line"></div>
                 
-                <div class="relative z-10"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">📅</div><h4 class="font-semibold mt-6">Vous réservez</h4><p class="text-gray-600 mt-3">En ligne ou par téléphone</p></div>
-                <div class="relative z-10"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">✅</div><h4 class="font-semibold mt-6">Nous confirmons</h4><p class="text-gray-600 mt-3">Selon votre disponibilité</p></div>
-                <div class="relative z-10"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">🏠</div><h4 class="font-semibold mt-6">Nous venons chez vous</h4><p class="text-gray-600 mt-3">À Sherbrooke et environs</p></div>
-                <div class="relative z-10"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">🚗</div><h4 class="font-semibold mt-6">Votre voiture brille</h4><p class="text-gray-600 mt-3">Paiement sur place</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">📅</div><h4 class="font-semibold mt-6">Vous réservez</h4><p class="text-gray-600 mt-3">En ligne ou par téléphone</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">✅</div><h4 class="font-semibold mt-6">Nous confirmons</h4><p class="text-gray-600 mt-3">Selon votre disponibilité</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">🏠</div><h4 class="font-semibold mt-6">Nous venons chez vous</h4><p class="text-gray-600 mt-3">À Sherbrooke et environs</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">🚗</div><h4 class="font-semibold mt-6">Votre voiture brille</h4><p class="text-gray-600 mt-3">Paiement sur place</p></div>
             </div>
         </div>
     </section>
 
     <!-- SECTION CATÉGORIES DE VÉHICULES -->
-<section id="categories" class="py-20 md:py-24 bg-[#f0f9ff]">
-    <div class="max-w-7xl mx-auto px-5">
-        <div class="text-center mb-12 md:mb-16">
-            <h2 class="heading-font text-4xl font-semibold">Choisissez le type de votre véhicule</h2>
-            <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
-                Pour prendre rendez-vous, veuillez sélectionner le type de votre véhicule ci-dessous.<br>
-                Chaque catégorie contient les services et prix adaptés à votre véhicule.
-            </p>
+    <section id="categories" class="py-20 md:py-24 bg-[#f0f9ff]">
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Choisissez le type de votre véhicule</h2>
+                <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
+                    Pour prendre rendez-vous, veuillez sélectionner le type de votre véhicule ci-dessous.<br>
+                    Chaque catégorie contient les services et prix adaptés à votre véhicule.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+                
+                <!-- Sedan -->
+                <a href="sedan.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/sedan.jpeg" alt="Sedan Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
+                        <h3 class="text-3xl font-semibold mb-2">Sedan / Petite voiture</h3>
+                        <p class="text-gray-600">Berlines et voitures compactes</p>
+                        <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- SUV -->
+                <a href="suv.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/vus.jpeg" alt="SUV Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
+                        <h3 class="text-3xl font-semibold mb-2">VUS</h3>
+                        <p class="text-gray-600">VUS et crossovers</p>
+                        <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Van -->
+                <a href="van.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/van.jpeg" alt="Van Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
+                        <h3 class="text-3xl font-semibold mb-2">Van / Minivan</h3>
+                        <p class="text-gray-600">Fourgonnettes et vans</p>
+                        <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Pickup -->
+                <a href="pickup.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/pickup.jpeg" alt="Pickup Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
+                        <h3 class="text-3xl font-semibold mb-2">Pickup / Camionnette</h3>
+                        <p class="text-gray-600">Pickups et camions légers</p>
+                        <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
-            
-            <!-- Sedan -->
-            <a href="sedan.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300">
-                <img src="Images/sedan.jpeg" alt="Sedan Shine Automobile" 
-                     class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-8">
-                    <h3 class="text-3xl font-semibold mb-2">Sedan / Petite voiture</h3>
-                    <p class="text-gray-600">Berlines et voitures compactes</p>
-                    <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
-                        Voir les services 
-                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
-                    </div>
-                </div>
-            </a>
-
-            <!-- SUV -->
-            <a href="suv.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300">
-                <img src="Images/vus.jpeg" alt="SUV Shine Automobile" 
-                     class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-8">
-                    <h3 class="text-3xl font-semibold mb-2">VUS</h3>
-                    <p class="text-gray-600">VUS et crossovers</p>
-                    <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
-                        Voir les services 
-                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Van -->
-            <a href="van.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300">
-                <img src="Images/van.jpeg" alt="Van Shine Automobile" 
-                     class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-8">
-                    <h3 class="text-3xl font-semibold mb-2">Van / Minivan</h3>
-                    <p class="text-gray-600">Fourgonnettes et vans</p>
-                    <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
-                        Voir les services 
-                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Pickup -->
-            <a href="pickup.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300">
-                <img src="Images/pickup.jpeg" alt="Pickup Shine Automobile" 
-                     class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-8">
-                    <h3 class="text-3xl font-semibold mb-2">Pickup / Camionnette</h3>
-                    <p class="text-gray-600">Pickups et camions légers</p>
-                    <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
-                        Voir les services 
-                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- SECTION AUTRES SERVICES -->
     <section id="autres-services" class="py-20 bg-gray-100 fade-in">
@@ -250,7 +292,7 @@
             </div>
 
             <div class="space-y-8 max-w-2xl mx-auto">
-                <div class="service-card bg-white rounded-3xl p-8 shadow hover:shadow-xl">
+                <div class="service-card bg-white rounded-3xl p-8 shadow hover:shadow-xl slide-in-left">
                     <div class="flex flex-col sm:flex-row gap-6">
                         <div class="text-6xl sm:text-7xl flex-shrink-0 text-center">🔑</div>
                         <div class="flex-1">
@@ -266,7 +308,7 @@
                     </div>
                 </div>
 
-                <div class="service-card bg-white rounded-3xl p-8 shadow hover:shadow-xl">
+                <div class="service-card bg-white rounded-3xl p-8 shadow hover:shadow-xl slide-in-right">
                     <div class="flex flex-col sm:flex-row gap-6">
                         <div class="text-6xl sm:text-7xl flex-shrink-0 text-center">🔋</div>
                         <div class="flex-1">
@@ -294,7 +336,7 @@
             </div>
 
             <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-                <div class="service-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-10">
+                <div class="service-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-10 slide-in-left">
                     <div class="text-center mb-10">
                         <h3 class="text-3xl font-semibold">Forfait Lavage Extérieur régulier</h3>
                         <p class="text-[#00e0ff] text-sm mt-2">Nettoyage complet de l’extérieur seulement</p>
@@ -323,7 +365,7 @@
                     </div>
                 </div>
 
-                <div class="service-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-10">
+                <div class="service-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-10 slide-in-right">
                     <div class="text-center mb-10">
                         <h3 class="text-3xl font-semibold">Forfait Lavage Complet</h3>
                         <p class="text-[#00e0ff] text-sm mt-2">Extérieur + Intérieur Régulier</p>
@@ -370,18 +412,19 @@
     </section>
     
     <!-- POURQUOI NOUS CHOISIR -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-white fade-in">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
+            <div class="text-center mb-12 fade-in">
                 <h2 class="heading-font text-4xl font-semibold">Pourquoi nous choisir ?</h2>
             </div>
             <div class="grid md:grid-cols-4 gap-8 text-center">
-                <div><div class="text-5xl mb-4">🌱</div><h4 class="font-semibold">100% Écologique</h4><p class="text-gray-600 mt-2">Produits biodégradables certifiés</p></div>
-                <div><div class="text-5xl mb-4">🏠</div><h4 class="font-semibold">Service à domicile</h4><p class="text-gray-600 mt-2">Nous nous déplaçons chez vous</p></div>
-                <div><div class="text-5xl mb-4">⭐</div><h4 class="font-semibold">Garantie satisfaction</h4><p class="text-gray-600 mt-2"></p></div>
+                <div class="fade-in"><div class="text-5xl mb-4">🌱</div><h4 class="font-semibold">100% Écologique</h4><p class="text-gray-600 mt-2">Produits biodégradables certifiés</p></div>
+                <div class="fade-in"><div class="text-5xl mb-4">🏠</div><h4 class="font-semibold">Service à domicile</h4><p class="text-gray-600 mt-2">Nous nous déplaçons chez vous</p></div>
+                <div class="fade-in"><div class="text-5xl mb-4">⭐</div><h4 class="font-semibold">Garantie satisfaction</h4><p class="text-gray-600 mt-2"></p></div>
             </div>
         </div>
     </section>
+
     <!-- À PROPOS -->
     <section id="apropos" class="py-20 bg-white fade-in">
         <div class="max-w-7xl mx-auto px-5">
@@ -415,15 +458,15 @@
                 <h2 class="heading-font text-4xl font-semibold">Avis de nos clients</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-3xl service-card">★★★★★<p class="italic text-sm mt-4">"Service très professionnel. Ma voiture est impeccable !"</p><p class="mt-6 text-xs text-gray-500">- Marie L.</p></div>
-                <div class="bg-white p-6 rounded-3xl service-card">★★★★★<p class="italic text-sm mt-4">"Déverrouillage rapide et sans dommage. Merci !"</p><p class="mt-6 text-xs text-gray-500">- Jean T.</p></div>
-                <div class="bg-white p-6 rounded-3xl service-card">★★★★★<p class="italic text-sm mt-4">"Excellent lavage complet. Je recommande fortement."</p><p class="mt-6 text-xs text-gray-500">- Sophie D.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Service très professionnel. Ma voiture est impeccable !"</p><p class="mt-6 text-xs text-gray-500">- Marie L.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Déverrouillage rapide et sans dommage. Merci !"</p><p class="mt-6 text-xs text-gray-500">- Jean T.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Excellent lavage complet. Je recommande fortement."</p><p class="mt-6 text-xs text-gray-500">- Sophie D.</p></div>
             </div>
         </div>
     </section>
 
-<!-- CONTACT -->
-    <section id="contact" class="py-20 bg-gray-900 text-white">
+    <!-- CONTACT -->
+    <section id="contact" class="py-20 bg-gray-900 text-white fade-in">
         <div class="max-w-5xl mx-auto px-5 text-center">
             <h2 class="text-4xl font-semibold mb-4">Nous contacter</h2>
             <p class="text-gray-400 mb-12">Réponse rapide par téléphone, texto, courriel ou Instagram</p>
@@ -452,26 +495,25 @@
                     <span class="font-small">Email</span>
                 </a>
     
-                  <!-- Instagram avec vraie icône -->
-            <a href="https://www.instagram.com/shineautomobile_?igsh=aHlzajRhc3lldXQw" 
-               target="_blank"
-               class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105 min-w-[170px]">
-                <img  src="Images/instagram.jpeg"
-                     class="w-8 h-8 mb-4 transition-transform group-hover:scale-110">
-                <span class="font-smal">Instagram</span>
-            </a>
-    <!-- WhatsApp Flottant -->
-            <a href="https://wa.me/18736623813" target="_blank" 
-               class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl hover:scale-110 transition z-50">
-            <i class="fa-brands fa-whatsapp"></i>
-            </a>
-    
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/shineautomobile_?igsh=aHlzajRhc3lldXQw" 
+                   target="_blank"
+                   class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105 min-w-[170px]">
+                    <img src="Images/instagram.jpeg" class="w-8 h-8 mb-4 transition-transform group-hover:scale-110">
+                    <span class="font-smal">Instagram</span>
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- WhatsApp Flottant -->
+    <a href="https://wa.me/18736623813" target="_blank" 
+       class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl hover:scale-110 transition z-50">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <!-- FOOTER -->
-    <footer class="bg-gray-900 text-white py-12">
+    <footer class="bg-gray-900 text-white py-12 fade-in">
         <div class="max-w-7xl mx-auto px-5 text-center">
             <p class="text-2xl font-semibold">ShineAutomobile</p>
             <p class="mt-2 text-sm opacity-75">Lavage auto à domicile en Estrie</p>
@@ -484,16 +526,29 @@
     </footer>
 
     <script>
-        // Animation au scroll
+        // Observer pour toutes les animations
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    // Délai progressif pour les catégories
+                    if (entry.target.classList.contains('category-card')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 120);
+                    } else {
+                        entry.target.classList.add('visible');
+                    }
                 }
             });
-        }, { threshold: 0.1 });
+        }, { 
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        // Observer toutes les sections et cartes
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .category-card').forEach(el => {
+            observer.observe(el);
+        });
 
         // Menu Mobile
         const menuBtn = document.getElementById('menu-btn');
