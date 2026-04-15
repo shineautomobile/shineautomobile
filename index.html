@@ -14,83 +14,55 @@
 
         body { 
             font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth;
         }
 
         .heading-font { 
             font-family: 'Space Grotesk', sans-serif; 
         }
 
-        /* ✅ BACKGROUND CORRIGÉ */
         .hero-bg {
-            background-image: url('Images/photo.jpeg'); /* ⚠️ vérifie le nom exact */
+            background-image: url('Images/photo.jpeg');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
         }
+
+        /* Transitions générales */
+        section {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card {
+            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        }
+
+        /* Menu mobile */
+        #mobile-menu {
+            transition: all 0.4s ease;
+        }
     </style>
 </head>
-
-<body class="bg-gray-50">
-
-    <!-- NAVBAR -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
-
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-[#00e0ff] rounded-2xl flex items-center justify-center text-3xl">✨</div>
-                <div>
-                    <h1 class="heading-font text-2xl font-semibold text-gray-900">ShineAutomobile</h1>
-                    <p class="text-[10px] text-gray-500 -mt-1">LAVAGE À DOMICILE</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <a href="tel:8736623813" class="text-sm font-medium flex items-center gap-1.5">
-                    <i class="fa-solid fa-phone"></i>
-                    <span class="hidden sm:inline">873-662-3813</span>
-                </a>
-            </div>
-
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <header class="hero-bg h-screen flex items-center text-white relative">
-
-        <!-- ✅ UNE SEULE couche sombre -->
-        <div class="absolute inset-0 bg-black/40"></div>
-
-        <div class="max-w-7xl mx-auto px-5 text-center md:text-left z-10">
-            <div class="max-w-xl mx-auto md:mx-0">
-
-                <span class="inline-block px-5 py-2 bg-white/20 backdrop-blur-md rounded-3xl text-sm font-medium mb-6">
-                    Service à Sherbrooke et environs
-                </span>
-
-                <h1 class="heading-font text-5xl md:text-6xl font-semibold leading-tight">
-                    Votre voiture brille,<br>à votre porte.
-                </h1>
-
-                <p class="mt-6 text-lg md:text-xl text-white/90">
-                    Lavage professionnel, écologique et minutieux directement chez vous.
-                </p>
-
-                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="#services" 
-                       class="bg-white text-gray-900 px-8 py-4 rounded-3xl font-semibold text-lg hover:bg-[#00e0ff] hover:text-white transition">
-                        Voir les services
-                    </a>
-
-                    <a href="#" 
-                       class="border border-white/70 hover:bg-white/10 px-8 py-4 rounded-3xl font-semibold text-lg transition">
-                        Prendre rendez-vous
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-    </header>
 
 </body>
 </html>
