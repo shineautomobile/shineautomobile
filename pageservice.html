@@ -35,27 +35,6 @@
 
     <div class="max-w-4xl mx-auto px-5 sm:px-6 py-8">
 
-        <!-- Bannière promotionnelle -->
-        <div class="promo-banner rounded-3xl p-6 mb-10 shadow-lg">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="text-4xl">🎟️</div>
-                    <div>
-                        <p class="font-semibold text-lg">10% de réduction sur Lavage Complet Régulier</p>
-                        <p class="text-sm opacity-90">Code <span class="font-bold">SHINE10</span> • Du 1er au 10 juin 2026</p>
-                    </div>
-                </div>
-                <div onclick="copyPromoCode()" 
-                     class="cursor-pointer bg-white px-6 py-3 rounded-2xl font-mono font-bold text-xl tracking-wider flex items-center gap-3 shadow hover:scale-105 transition">
-                    SHINE10
-                    <i class="fa-solid fa-copy text-[#00e0ff]"></i>
-                </div>
-            </div>
-            <p id="copyMessage" class="text-center text-xs mt-3 text-emerald-800 font-medium hidden">
-                Code copié ! Colle-le dans le champ ci-dessous.
-            </p>
-        </div>
-
         <a href="index.html" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8 text-base">
             ← Retour à l'accueil
         </a>
@@ -154,7 +133,7 @@
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-medium mb-2">Nom et Type de véhicule(s)</label>
                     <input type="text" name="type_vehicule" placeholder="Ex: Toyota Camry" 
-                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 text-base">
+                           class="border border-gray-300 rounded-2xl px-5 py-4 text-base">
                 </div>
             </div>
 
@@ -176,7 +155,7 @@
             <div>
                 <label class="block text-sm font-medium mb-2">Date souhaitée *</label>
                 <input type="date" name="date" id="maDate" required min="2026-06-01" 
-                       class="w-full border border-gray-300 rounded-2xl px-5 py-4 text-base">
+                       class="border border-gray-300 rounded-2xl px-5 py-4 text-base">
             </div>
 
             <!-- Bloc Code Promo + Total -->
@@ -185,7 +164,7 @@
                     <label class="block text-sm font-medium mb-2">Code promo (optionnel)</label>
                     <div class="flex gap-3">
                         <!-- Champ code promo réduit à environ la moitié -->
-                        <input type="text" id="promoCode" placeholder="Ex: SHINE10" maxlength="10"
+                        <input type="text" id="promoCode" maxlength="10"
                                onkeyup="calculerTotal()" 
                                class="w-1/2 border border-gray-300 rounded-2xl px-5 py-4 text-base uppercase">
                         <button type="button" onclick="calculerTotal()" 
