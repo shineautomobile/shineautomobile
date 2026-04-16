@@ -133,7 +133,7 @@
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-medium mb-2">Nom et Type de véhicule(s)</label>
                     <input type="text" name="type_vehicule" placeholder="Ex: Toyota Camry" 
-                           class="border border-gray-300 rounded-2xl px-5 py-4 text-base">
+                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 text-base">
                 </div>
             </div>
 
@@ -155,7 +155,7 @@
             <div>
                 <label class="block text-sm font-medium mb-2">Date souhaitée *</label>
                 <input type="date" name="date" id="maDate" required min="2026-06-01" 
-                       class="border border-gray-300 rounded-2xl px-5 py-4 text-base">
+                       class="w-full border border-gray-300 rounded-2xl px-5 py-4 text-base">
             </div>
 
             <!-- Bloc Code Promo + Total -->
@@ -163,11 +163,9 @@
                 <div>
                     <label class="block text-sm font-medium mb-2">Code promo</label>
                     <div class="flex gap-3">
-                        <!-- Champ code promo réduit à environ la moitié -->
                         <input type="text" id="promoCode" maxlength="10"
-                               onkeyup="calculerTotal()" 
                                class="w-1/2 border border-gray-300 rounded-2xl px-5 py-4 text-base uppercase">
-                        <button type="button" onclick="calculerTotal()" 
+                        <button type="button" onclick="applyPromoCode()" 
                                 class="flex-1 bg-[#00e0ff] hover:bg-[#00c8e0] text-white px-6 rounded-2xl font-medium transition text-base">
                             Appliquer
                         </button>
@@ -220,10 +218,11 @@
     </div>
 
     <script>
-        function calculerTotal() {
-            const nb = parseInt(document.getElementById('nbVoitures').value) || 1;
-            const serviceText = document.getElementById('service').selectedOptions[0]?.text || "";
+        let discountApplied = false;
+
+        function applyPromoCode() {
             const promoCode = document.getElementById('promoCode').value.trim().toUpperCase();
+            const serviceText = document.getElementById('service').selectedOptions[0]?.text || "";
             const dateStr = document.getElementById('maDate').value;
 
             let basePrice = 50;
@@ -248,9 +247,9 @@
             else if (serviceText.includes("175$") || serviceText.includes("180$")) basePrice = 180;
             else if (serviceText.includes("200$")) basePrice = 200;
 
-            let total = basePrice * nb;
+            let total = basePrice * (parseInt(document.getElementById('nbVoitures').value) || 1);
             let originalTotal = total;
-            let discountApplied = false;
+            discountApplied = false;
             let errorMsg = "";
 
             if (promoCode === "SHINE10") {
@@ -328,12 +327,9 @@
             if (serviceFromUrl) {
                 document.getElementById('service').value = serviceFromUrl;
             }
-            calculerTotal();
-
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('maDate').min = today;
-
-            document.getElementById('maDate').addEventListener('change', calculerTotal);
+            // On initialise sans rabais au chargement
+            document.getElementById('totalPrice').textContent = "0$";
+            document.getElementById('maDate').min = new Date().toISOString().split('T')[0];
         };
     </script>
 </body>
