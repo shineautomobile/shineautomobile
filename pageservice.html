@@ -33,7 +33,7 @@
 </head>
 <body class="min-h-screen pb-12">
 
-    <div class="max-w-3xl mx-auto px-5 sm:px-6 py-8">
+    <div class="max-w-4xl mx-auto px-5 sm:px-6 py-8">   <!-- Formulaire élargi -->
 
         <!-- Bannière promotionnelle -->
         <div class="promo-banner rounded-3xl p-6 mb-10 shadow-lg">
@@ -67,7 +67,7 @@
             <strong>Note importante :</strong> Des frais supplémentaires peuvent être appliqués pour les services à l'extérieur de Sherbrooke.
         </div>
 
-        <!-- FORMULAIRE -->
+        <!-- FORMULAIRE ÉLARGI -->
         <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" 
               class="bg-white rounded-3xl shadow-xl p-8 sm:p-10 space-y-8">
 
@@ -180,7 +180,7 @@
                        class="w-full border border-gray-300 rounded-2xl px-5 py-4 text-base">
             </div>
 
-            <!-- Code promo + Total -->
+            <!-- Bloc Code Promo + Total (bouton Appliquer intégré) -->
             <div class="bg-gray-50 border border-gray-200 rounded-3xl p-6 space-y-6">
                 <div>
                     <label class="block text-sm font-medium mb-2">Code promo (optionnel)</label>
@@ -250,7 +250,6 @@
             let basePrice = 50;
             let isEligibleService = false;
 
-            // Détection du prix + vérification si c'est un Lavage Complet Régulier
             if (serviceText.includes("Lavage Complet Régulier")) {
                 isEligibleService = true;
                 if (serviceText.includes("100$")) basePrice = 100;
@@ -284,11 +283,11 @@
                 } 
                 else {
                     const selectedDate = new Date(dateStr);
-                    const startDate = new Date(2026, 5, 1);  // 1er juin 2026
-                    const endDate = new Date(2026, 5, 10);   // 10 juin 2026
+                    const startDate = new Date(2026, 5, 1);
+                    const endDate = new Date(2026, 5, 10);
 
                     if (selectedDate >= startDate && selectedDate <= endDate) {
-                        total = Math.round(total * 0.9); // 10% de réduction
+                        total = Math.round(total * 0.9);
                         discountApplied = true;
                     } else {
                         errorMsg = "Le code SHINE10 est valide uniquement du 1er au 10 juin 2026.";
@@ -296,13 +295,11 @@
                 }
             }
 
-            // Mise à jour affichage
             document.getElementById('originalPrice').textContent = discountApplied ? originalTotal + "$" : "";
             document.getElementById('totalPrice').textContent = total + "$";
             document.getElementById('montant_total_hidden').value = total + "$";
             document.getElementById('code_promo_hidden').value = promoCode;
 
-            // Messages
             const discountText = document.getElementById('discountText');
             const errorText = document.getElementById('errorText');
 
