@@ -13,9 +13,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
         :root {
-            --primary: #3b82f6;     /* Bleu principal (pas foncé) */
-            --primary-light: #60a5fa; /* Bleu plus clair */
-            --accent: #10b981;      /* Vert accent */
+            --primary: #3b82f6;     /* Bleu principal agréable */
+            --primary-light: #60a5fa;
+            --accent: #10b981;      /* Vert frais pour accents */
         }
 
         body { 
@@ -90,10 +90,8 @@
             transform: translateY(-3px);
         }
 
-        /* Accents verts */
         .text-accent { color: var(--accent); }
         .bg-accent { background-color: var(--accent); }
-        .hover\:bg-accent:hover { background-color: var(--accent); }
     </style>
 </head>
 
@@ -130,7 +128,7 @@
             </div>
         </div>
 
-        <!-- Menu Mobile Hamburger -->
+        <!-- Menu Mobile -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-6">
             <div class="px-6 flex flex-col gap-6 text-lg font-medium">
                 <a href="#categories" class="hover:text-blue-600">Services</a>
@@ -180,7 +178,7 @@
             <p class="text-gray-600 mb-12">4 étapes simples pour une voiture impeccable</p>
 
             <div class="grid md:grid-cols-4 gap-8 relative">
-                <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-400 to-blue-500 step-line"></div>
+                <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-400 to-blue-500"></div>
                 
                 <div class="relative z-10 fade-in"><div class="w-20 h-20 mx-auto bg-blue-50 rounded-3xl flex items-center justify-center text-5xl shadow">📅</div><h4 class="font-semibold mt-8 text-xl">Vous réservez</h4><p class="text-gray-600 mt-3">En ligne ou par téléphone</p></div>
                 <div class="relative z-10 fade-in"><div class="w-20 h-20 mx-auto bg-blue-50 rounded-3xl flex items-center justify-center text-5xl shadow">✅</div><h4 class="font-semibold mt-8 text-xl">Nous confirmons</h4><p class="text-gray-600 mt-3">Selon votre disponibilité</p></div>
@@ -223,7 +221,6 @@
                     </div>
                 </a>
 
-                <!-- Les autres cartes category sont identiques, seul le texte accent est en bleu -->
                 <a href="suv.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
                     <img src="Images/vus.jpeg" alt="SUV" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="p-8">
@@ -296,43 +293,139 @@
         </div>
     </section>
 
-    <!-- FORFAITS (fond bleu foncé léger pour contraste) -->
+    <!-- FORFAITS -->
     <section id="forfaits" class="py-20 bg-gradient-to-b from-blue-950 to-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-5">
             <div class="text-center mb-16 fade-in">
                 <h2 class="heading-font text-4xl font-semibold">Forfaits Multi-Voitures</h2>
                 <p class="text-blue-300 mt-4 text-lg">Tarifs dégressifs selon le nombre de véhicules</p>
+                <p class="text-blue-300 mt-2 text-lg">Le forfait est valable pour la même voiture pendant toute la saison.</p>
             </div>
 
-            <!-- Les cartes forfaits restent similaires, avec accents en bleu et vert -->
             <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
                 <div class="service-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-10">
                     <div class="text-center mb-10">
                         <h3 class="text-3xl font-semibold">Forfait Lavage Extérieur régulier</h3>
+                        <p class="text-blue-400 text-sm mt-2">Nettoyage complet de l’extérieur seulement</p>
                     </div>
                     <div class="space-y-6">
                         <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
                             <div><p class="font-medium">2 à 4 voitures</p><p class="text-3xl font-bold text-blue-400">30$ <span class="text-base font-normal">/voiture</span></p></div>
                             <a href="pageservice.html?service=Forfait Extérieur 2-4 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100">Sélectionner</a>
                         </div>
-                        <!-- autres options... -->
+                        <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
+                            <div><p class="font-medium">5 à 10 voitures</p><p class="text-3xl font-bold text-blue-400">25$ <span class="text-base font-normal">/voiture</span></p></div>
+                            <a href="pageservice.html?service=Forfait Extérieur 5-10 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100">Sélectionner</a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Deuxième carte similaire -->
                 <div class="service-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-10">
                     <div class="text-center mb-10">
                         <h3 class="text-3xl font-semibold">Forfait Lavage Complet</h3>
+                        <p class="text-blue-400 text-sm mt-2">Extérieur + Intérieur Régulier</p>
                     </div>
-                    <!-- contenu identique à l’original -->
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
+                            <div><p class="font-medium">2 voitures</p><p class="text-3xl font-bold text-blue-400">95$ <span class="text-base font-normal">/voiture</span></p></div>
+                            <a href="pageservice.html?service=Forfait Complet 2 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100">Sélectionner</a>
+                        </div>
+                        <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
+                            <div><p class="font-medium">3 à 4 voitures</p><p class="text-3xl font-bold text-blue-400">90$ <span class="text-base font-normal">/voiture</span></p></div>
+                            <a href="pageservice.html?service=Forfait Complet 3-4 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100">Sélectionner</a>
+                        </div>
+                        <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
+                            <div><p class="font-medium">5 voitures et plus</p><p class="text-3xl font-bold text-blue-400">80$ <span class="text-base font-normal">/voiture</span></p></div>
+                            <a href="pageservice.html?service=Forfait Complet 5 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100">Sélectionner</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Le reste du code (À propos, témoignages, partenaire, contact, footer) reste fonctionnel avec les nouvelles couleurs -->
+    <!-- POURQUOI NOUS CHOISIR -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Pourquoi nous choisir ?</h2>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="fade-in"><div class="text-5xl mb-4">🌱</div><h4 class="font-semibold">100% Écologique</h4><p class="text-gray-600 mt-2">Produits biodégradables certifiés</p></div>
+                <div class="fade-in"><div class="text-5xl mb-4">🏠</div><h4 class="font-semibold">Service à domicile</h4><p class="text-gray-600 mt-2">Nous nous déplaçons chez vous</p></div>
+                <div class="fade-in"><div class="text-5xl mb-4">⭐</div><h4 class="font-semibold">Garantie satisfaction</h4><p class="text-gray-600 mt-2"></p></div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ... (le reste du HTML est inchangé sauf les couleurs remplacées) ... -->
+    <!-- À PROPOS -->
+    <section id="apropos" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <span class="text-blue-600 font-semibold">À PROPOS</span>
+                    <h2 class="heading-font text-4xl font-semibold mt-3">ShineAutomobile</h2>
+                    <p class="mt-6 text-gray-600">Entreprise locale basée à Sherbrooke, nous offrons un service de lavage auto professionnel à domicile. Notre équipe utilise des produits écologiques et du matériel de qualité pour prendre soin de votre véhicule.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-6 text-center fade-in">
+                    <div class="bg-gray-50 p-6 rounded-3xl transition hover:scale-105"><p class="text-4xl font-bold text-blue-600">100%</p><p class="text-sm mt-2">Écologique</p></div>
+                    <div class="bg-gray-50 p-6 rounded-3xl transition hover:scale-105"><p class="text-4xl font-bold text-blue-600">5/5</p><p class="text-sm mt-2">Satisfaction</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section id="temoignages" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Avis de nos clients</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Service très professionnel. Ma voiture est impeccable !"</p><p class="mt-6 text-xs text-gray-500">- Marie L.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Déverrouillage rapide et sans dommage. Merci !"</p><p class="mt-6 text-xs text-gray-500">- Jean T.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Excellent lavage complet. Je recommande fortement."</p><p class="mt-6 text-xs text-gray-500">- Sophie D.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTENAIRE -->
+    <section class="py-20 bg-zinc-950 border-t border-zinc-800">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-red-500 font-semibold tracking-widest mb-3">NOTRE PARTENAIRE</p>
+            <h2 class="heading-font text-4xl md:text-5xl font-bold mb-12">En collaboration avec</h2>
+            <div class="flex justify-center mb-10">
+                <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank" class="group inline-block p-8 bg-zinc-900 border border-zinc-700 rounded-3xl hover:border-red-600 transition-all duration-300">
+                    <img src="Images/logo-partenaire.jpeg" alt="Nom du Partenaire" class="h-20 md:h-28 w-auto mx-auto transition-transform group-hover:scale-105">
+                </a>
+            </div>
+            <p class="max-w-2xl mx-auto text-zinc-400 text-lg">Nous travaillons en étroite collaboration avec <strong class="text-white">Mon auto mécanique</strong> pour vous offrir un service de mécanique automobile de qualité.</p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-5xl mx-auto px-5 text-center">
+            <h2 class="text-4xl font-semibold mb-4">Nous contacter</h2>
+            <p class="text-gray-400 mb-12">Réponse rapide par téléphone, texto, courriel ou Instagram</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="tel:8736623813" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all hover:scale-105"><div class="text-2xl mb-4">📞</div><span>Téléphone</span></a>
+                <a href="sms:8196623813" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all hover:scale-105"><div class="text-2xl mb-4">💬</div><span>Texto</span></a>
+                <a href="mailto:info.shineautomobile@gmail.com" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all hover:scale-105"><div class="text-2xl mb-4">✉️</div><span>Email</span></a>
+                <a href="https://www.instagram.com/shineautomobile_?igsh=aHlzajRhc3lldXQw" target="_blank" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all hover:scale-105"><img src="Images/instagram.jpeg" class="w-8 h-8 mb-4"><span>Instagram</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARTE -->
+    <section class="py-12 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <h3 class="text-center text-2xl font-semibold mb-8">Nous intervenons à Sherbrooke et environs</h3>
+            <div class="rounded-3xl overflow-hidden shadow-2xl border border-zinc-800">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45155.012057629!2d-71.9325!3d45.4000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92a5d9d8b0c0f%3A0x4b8f8e9f5d8e8f8e!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1744800000000" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
 
     <!-- FOOTER -->
     <footer class="bg-gray-900 text-white py-12">
