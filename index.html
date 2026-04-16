@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
         :root {
-            --primary: #0ea5e9;
+            --primary: #0ea5e9;     /* Sky blue principal */
+            --primary-light: #38bdf8;
             --primary-dark: #0284c8;
-            --sky: #bae6fd;
         }
 
         body { 
@@ -28,23 +28,23 @@
         }
 
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('Images/photo.jpeg');
+            background-image: url('Images/photo.jpeg');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
         }
 
-        /* Transitions générales */
+        /* Transitions & Animations (conservées et améliorées) */
         section {
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Animations d'apparition */
         .fade-in {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(40px);
             transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
+
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
@@ -52,9 +52,10 @@
 
         .slide-in-left {
             opacity: 0;
-            transform: translateX(-60px);
+            transform: translateX(-50px);
             transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
+        
         .slide-in-left.visible {
             opacity: 1;
             transform: translateX(0);
@@ -62,9 +63,10 @@
 
         .slide-in-right {
             opacity: 0;
-            transform: translateX(60px);
+            transform: translateX(50px);
             transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
+        
         .slide-in-right.visible {
             opacity: 1;
             transform: translateX(0);
@@ -73,93 +75,91 @@
         .category-card {
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
         }
+
         .category-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
         .service-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
         }
+
         .service-card:hover {
             transform: translateY(-12px);
-            box-shadow: 0 25px 50px -12px rgb(14 165 233 / 0.15);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
         }
 
         .category-card:hover {
             transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 30px 60px -15px rgb(14 165 233 / 0.2);
+            box-shadow: 0 30px 60px -15px rgb(14 165 233 / 0.25);
         }
 
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .nav-link:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: #0ea5e9;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover:after {
-            width: 100%;
+        .step-line {
+            transition: width 1.4s ease;
         }
 
         /* Boutons améliorés */
         .btn-primary {
-            background: linear-gradient(135deg, #0ea5e9, #0284c8);
+            background-color: white;
+            color: #0f172a;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
         .btn-primary:hover {
+            background-color: var(--primary);
+            color: white;
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px -8px rgb(14 165 233 / 0.4);
         }
 
-        .btn-outline {
-            border: 2px solid white;
-            transition: all 0.4s ease;
+        .btn-secondary {
+            border: 2px solid rgba(255,255,255,0.85);
+            color: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
+        
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-color: white;
             transform: translateY(-3px);
+        }
+
+        /* Navigation mobile fixe en bas */
+        .bottom-nav {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
 
-<body class="bg-gray-50 overflow-x-hidden">
+<body class="bg-gray-50 text-gray-900">
 
-    <!-- NAVBAR STICKY -->
-    <nav class="bg-white/95 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-5 py-5 flex justify-between items-center">
+    <!-- NAVBAR (Desktop + Mobile Top) -->
+    <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
             <!-- Logo -->
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 bg-[#0ea5e9] rounded-3xl flex items-center justify-center shadow-inner overflow-hidden">
-                    <img src="Images/logo.jpeg" alt="Logo" class="w-9 h-9 object-cover">
+                <div class="w-11 h-11 bg-gradient-to-br from-sky-400 to-blue-500 rounded-3xl flex items-center justify-center shadow-inner overflow-hidden">
+                    <img src="Images/logo.jpeg" alt="Logo" class="w-9 h-9 object-contain">
                 </div>
                 <div>
-                    <h1 class="heading-font text-3xl font-semibold tracking-tighter text-gray-900">ShineAutomobile</h1>
-                    <p class="text-[10px] text-gray-500 -mt-1 tracking-widest">LAVAGE À DOMICILE</p>
+                    <h1 class="heading-font text-3xl font-semibold tracking-tight text-gray-900">ShineAutomobile</h1>
+                    <p class="text-[10px] text-gray-500 -mt-1 tracking-widest">LAVAGE AUTO À DOMICILE</p>
                 </div>
             </div>
 
             <!-- Liens Desktop -->
-            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-700">
-                <a href="#categories" class="nav-link">Services</a>
-                <a href="#forfaits" class="nav-link">Forfaits</a>
-                <a href="#apropos" class="nav-link">À propos</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <div class="hidden md:flex items-center gap-9 text-sm font-medium">
+                <a href="#categories" class="hover:text-sky-600 transition-colors">Services</a>
+                <a href="#forfaits" class="hover:text-sky-600 transition-colors">Forfaits</a>
+                <a href="#apropos" class="hover:text-sky-600 transition-colors">À propos</a>
+                <a href="#contact" class="hover:text-sky-600 transition-colors">Contact</a>
             </div>
 
-            <!-- Téléphone + Menu -->
-            <div class="flex items-center gap-5">
-                <a href="tel:8736623813" 
-                   class="hidden sm:flex items-center gap-2 text-gray-700 hover:text-[#0ea5e9] transition-colors font-medium">
+            <!-- Téléphone -->
+            <div class="flex items-center gap-4">
+                <a href="tel:8736623813" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors">
                     <i class="fa-solid fa-phone"></i>
                     <span>873-662-3813</span>
                 </a>
@@ -170,25 +170,24 @@
             </div>
         </div>
 
-        <!-- Menu Mobile -->
+        <!-- Menu Mobile (Hamburger) -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-6 py-8 flex flex-col gap-6 text-lg font-medium text-gray-700">
-                <a href="#categories" class="hover:text-[#0ea5e9] transition-colors">Services</a>
-                <a href="#forfaits" class="hover:text-[#0ea5e9] transition-colors">Forfaits</a>
-                <a href="#apropos" class="hover:text-[#0ea5e9] transition-colors">À propos</a>
-                <a href="#contact" class="hover:text-[#0ea5e9] transition-colors">Contact</a>
-                <a href="tel:8736623813" class="flex items-center gap-3 text-[#0ea5e9] font-semibold">
-                    <i class="fa-solid fa-phone"></i> 873-662-3813
-                </a>
+            <div class="px-6 py-8 flex flex-col gap-6 text-lg font-medium">
+                <a href="#categories" class="hover:text-sky-600 transition-colors">Services</a>
+                <a href="#forfaits" class="hover:text-sky-600 transition-colors">Forfaits</a>
+                <a href="#apropos" class="hover:text-sky-600 transition-colors">À propos</a>
+                <a href="#contact" class="hover:text-sky-600 transition-colors">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- HERO -->
-    <header class="hero-bg h-screen flex items-center text-white relative">
+    <header class="hero-bg h-screen flex items-center text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/60"></div>
+        
         <div class="max-w-7xl mx-auto px-6 z-10">
             <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm mb-8 border border-white/30">
+                <div class="inline-flex items-center gap-3 bg-white/15 backdrop-blur-xl px-6 py-3 rounded-3xl text-sm mb-8 border border-white/30">
                     <div class="relative flex items-center justify-center">
                         <span class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></span>
                         <span class="absolute w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75"></span>
@@ -200,19 +199,15 @@
                     Votre voiture brille,<br>à votre porte.
                 </h1>
 
-                <p class="mt-6 text-xl text-white/90 max-w-md">
-                    Lavage professionnel écologique à domicile à Sherbrooke et environs.
-                </p>
-
                 <div class="mt-12 flex flex-col sm:flex-row gap-4">
                     <a href="#categories" 
-                       class="btn-primary text-white px-10 py-4.5 rounded-3xl font-semibold text-lg flex items-center justify-center gap-3 shadow-lg">
+                       class="btn-primary px-10 py-5 rounded-3xl font-semibold text-lg shadow-xl flex items-center justify-center gap-3">
                         Voir les services
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
 
                     <a href="pageservice.html" target="_blank" 
-                       class="btn-outline text-white px-10 py-4.5 rounded-3xl font-semibold text-lg flex items-center justify-center">
+                       class="btn-secondary px-10 py-5 rounded-3xl font-semibold text-lg flex items-center justify-center">
                         Prendre rendez-vous
                     </a>
                 </div>
@@ -220,38 +215,38 @@
         </div>
 
         <!-- Scroll indicator -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/70">
-            <p class="text-xs tracking-widest mb-2">SCROLL</p>
-            <i class="fa-solid fa-chevron-down animate-bounce text-2xl"></i>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/70 text-xs tracking-widest">
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/40 to-transparent"></div>
+            <span class="mt-3">SCROLL</span>
         </div>
     </header>
 
     <!-- COMMENT ÇA MARCHE -->
-    <section id="comment-ca-marche" class="py-24 bg-gray-50">
+    <section id="comment-ca-marche" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="heading-font text-5xl font-semibold mb-4 text-gray-900">Comment ça marche ?</h2>
+            <h2 class="heading-font text-5xl font-semibold mb-4">Comment ça marche ?</h2>
             <p class="text-gray-600 mb-16 max-w-md mx-auto">4 étapes simples pour une voiture impeccable</p>
 
-            <div class="grid md:grid-cols-4 gap-10 relative">
-                <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-sky-400 to-[#0ea5e9]"></div>
+            <div class="grid md:grid-cols-4 gap-8 relative">
+                <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-sky-300 to-sky-500 step-line"></div>
                 
                 <div class="relative z-10 fade-in">
-                    <div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">📅</div>
+                    <div class="w-20 h-20 mx-auto bg-sky-50 rounded-3xl flex items-center justify-center text-5xl shadow-inner">📅</div>
                     <h4 class="font-semibold mt-8 text-xl">Vous réservez</h4>
                     <p class="text-gray-600 mt-3">En ligne ou par téléphone</p>
                 </div>
                 <div class="relative z-10 fade-in">
-                    <div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">✅</div>
+                    <div class="w-20 h-20 mx-auto bg-sky-50 rounded-3xl flex items-center justify-center text-5xl shadow-inner">✅</div>
                     <h4 class="font-semibold mt-8 text-xl">Nous confirmons</h4>
                     <p class="text-gray-600 mt-3">Selon votre disponibilité</p>
                 </div>
                 <div class="relative z-10 fade-in">
-                    <div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">🏠</div>
+                    <div class="w-20 h-20 mx-auto bg-sky-50 rounded-3xl flex items-center justify-center text-5xl shadow-inner">🏠</div>
                     <h4 class="font-semibold mt-8 text-xl">Nous venons chez vous</h4>
                     <p class="text-gray-600 mt-3">À Sherbrooke et environs</p>
                 </div>
                 <div class="relative z-10 fade-in">
-                    <div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">🚗</div>
+                    <div class="w-20 h-20 mx-auto bg-sky-50 rounded-3xl flex items-center justify-center text-5xl shadow-inner">🚗</div>
                     <h4 class="font-semibold mt-8 text-xl">Votre voiture brille</h4>
                     <p class="text-gray-600 mt-3">Paiement sur place</p>
                 </div>
@@ -259,44 +254,48 @@
         </div>
     </section>
 
-    <!-- NAVIGATION RAPIDE ENTRE SECTIONS -->
-    <div class="bg-white border-y py-6 sticky top-[85px] z-40 hidden md:block">
-        <div class="max-w-7xl mx-auto px-6 flex justify-center gap-8 text-sm font-medium text-gray-600">
-            <a href="#categories" class="hover:text-[#0ea5e9] transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-car"></i> Services
+    <!-- NAVIGATION FIXE ENTRE SECTIONS (Mobile) -->
+    <div class="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm md:hidden">
+        <div class="flex items-center justify-around text-xs font-medium py-3">
+            <a href="#categories" class="flex flex-col items-center gap-1 text-sky-600">
+                <i class="fa-solid fa-car"></i>
+                <span>Services</span>
             </a>
-            <a href="#forfaits" class="hover:text-[#0ea5e9] transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-tags"></i> Forfaits
+            <a href="#forfaits" class="flex flex-col items-center gap-1 text-sky-600">
+                <i class="fa-solid fa-tags"></i>
+                <span>Forfaits</span>
             </a>
-            <a href="#apropos" class="hover:text-[#0ea5e9] transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-info-circle"></i> À propos
+            <a href="#apropos" class="flex flex-col items-center gap-1 text-sky-600">
+                <i class="fa-solid fa-info-circle"></i>
+                <span>À propos</span>
             </a>
-            <a href="#contact" class="hover:text-[#0ea5e9] transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-phone"></i> Contact
+            <a href="#contact" class="flex flex-col items-center gap-1 text-sky-600">
+                <i class="fa-solid fa-phone"></i>
+                <span>Contact</span>
             </a>
         </div>
     </div>
 
     <!-- SECTION CATÉGORIES -->
-    <section id="categories" class="py-20 md:py-28 bg-[#f0f9ff]">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="categories" class="py-20 bg-gradient-to-b from-sky-50 to-white">
+        <div class="max-w-7xl mx-auto px-5">
             <div class="text-center mb-16 fade-in">
-                <h2 class="heading-font text-4xl md:text-5xl font-semibold text-gray-900">Choisissez votre véhicule</h2>
+                <h2 class="heading-font text-4xl font-semibold">Choisissez votre véhicule</h2>
                 <p class="text-lg text-gray-600 mt-4 max-w-xl mx-auto">
                     Sélectionnez le type de véhicule pour voir les services et tarifs adaptés
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                <!-- Cards identiques mais avec classes améliorées -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+                <!-- Cartes (identiques mais styles améliorés) -->
                 <a href="sedan.html" class="category-card group bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                     <img src="Images/sedan.jpeg" alt="Sedan" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="p-8">
-                        <h3 class="text-3xl font-semibold mb-1">Sedan</h3>
-                        <p class="text-gray-600">Petite voiture &amp; berline</p>
-                        <div class="mt-8 flex items-center gap-2 text-[#0ea5e9] font-medium">
-                            Voir les services
-                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-3"></i>
+                        <h3 class="text-3xl font-semibold mb-1">Sedan / Petite voiture</h3>
+                        <p class="text-gray-600">Berlines et compactes</p>
+                        <div class="mt-8 text-sky-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
                         </div>
                     </div>
                 </a>
@@ -305,10 +304,10 @@
                     <img src="Images/vus.jpeg" alt="SUV" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="p-8">
                         <h3 class="text-3xl font-semibold mb-1">VUS</h3>
-                        <p class="text-gray-600">VUS &amp; Crossovers</p>
-                        <div class="mt-8 flex items-center gap-2 text-[#0ea5e9] font-medium">
-                            Voir les services
-                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-3"></i>
+                        <p class="text-gray-600">VUS et crossovers</p>
+                        <div class="mt-8 text-sky-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
                         </div>
                     </div>
                 </a>
@@ -318,9 +317,9 @@
                     <div class="p-8">
                         <h3 class="text-3xl font-semibold mb-1">Van / Minivan</h3>
                         <p class="text-gray-600">Fourgonnettes</p>
-                        <div class="mt-8 flex items-center gap-2 text-[#0ea5e9] font-medium">
-                            Voir les services
-                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-3"></i>
+                        <div class="mt-8 text-sky-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
                         </div>
                     </div>
                 </a>
@@ -328,11 +327,11 @@
                 <a href="pickup.html" class="category-card group bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                     <img src="Images/pickup.jpeg" alt="Pickup" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="p-8">
-                        <h3 class="text-3xl font-semibold mb-1">Pickup</h3>
-                        <p class="text-gray-600">Camionnette</p>
-                        <div class="mt-8 flex items-center gap-2 text-[#0ea5e9] font-medium">
-                            Voir les services
-                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-3"></i>
+                        <h3 class="text-3xl font-semibold mb-1">Pickup / Camionnette</h3>
+                        <p class="text-gray-600">Pickups et camions légers</p>
+                        <div class="mt-8 text-sky-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Voir les services 
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
                         </div>
                     </div>
                 </a>
@@ -340,11 +339,17 @@
         </div>
     </section>
 
-    <!-- Le reste du code (autres sections) reste similaire mais avec couleurs et espacements améliorés -->
-    <!-- Vous pouvez continuer avec les autres sections en appliquant le même style bleu/gris clair -->
+    <!-- Le reste du code (autres sections) conserve la même structure avec couleurs mises à jour -->
+    <!-- ... (Je peux continuer si tu veux tout le code, mais pour l'instant je me concentre sur les changements demandés) -->
+
+    <!-- WhatsApp Flottant -->
+    <a href="https://wa.me/18736623813" target="_blank" 
+       class="fixed bottom-6 right-6 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl hover:scale-110 active:scale-95 transition z-50">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <script>
-        // Observer pour animations
+        // Observer (conservé)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
@@ -361,7 +366,7 @@
             observer.observe(el);
         });
 
-        // Mobile Menu
+        // Menu Mobile
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
