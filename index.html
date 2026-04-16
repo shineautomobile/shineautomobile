@@ -41,6 +41,10 @@
             border-bottom: 2px solid #e5e7eb;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         }
+        .promo-banner {
+            background: linear-gradient(135deg, #00e0ff, #00c8e0);
+            color: #0f172a;
+        }
 
         /* Animations d'apparition au scroll */
         .fade-in {
@@ -226,7 +230,29 @@
             </div>
         </div>
     </section>
-
+    
+    <!-- BANNÈRE PROMOTIONNELLE (à ajouter ici) -->
+    <section>
+        <div class="promo-banner rounded-3xl mx-5 sm:mx-6 mb-10 shadow-lg max-w-4xl mx-auto">
+            <div class="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="text-4xl">🎟️</div>
+                    <div>
+                        <p class="font-semibold text-lg">10% de réduction sur Lavage Complet Régulier</p>
+                        <p class="text-sm opacity-90">Code <span class="font-bold">SHINE10</span> • Du 1er au 10 juin 2026</p>
+                    </div>
+                </div>
+                <div onclick="copyPromoCode()" 
+                     class="cursor-pointer bg-white px-6 py-3 rounded-2xl font-mono font-bold text-xl tracking-wider flex items-center gap-3 shadow hover:scale-105 transition">
+                    SHINE10
+                    <i class="fa-solid fa-copy text-[#00e0ff]"></i>
+                </div>
+            </div>
+            <p id="copyMessage" class="text-center text-xs mt-2 text-emerald-800 font-medium hidden px-6 pb-4">
+                Code copié ! Utilisez-le sur la page de rendez-vous.
+            </p>
+        </div>
+    </section>
     <!-- Bannière promotionnelle -->
     <div class="promo-banner rounded-3xl p-6 mb-10 shadow-lg">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -632,6 +658,16 @@
         document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .category-card').forEach(el => {
             observer.observe(el);
         });
+
+        function copyPromoCode() {
+            navigator.clipboard.writeText("SHINE10").then(() => {
+            const msg = document.getElementById('copyMessage');
+            if (msg) {
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        }
+        });
+        }
 
         // Menu Mobile
         const menuBtn = document.getElementById('menu-btn');
