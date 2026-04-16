@@ -8,23 +8,59 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .heading-font { font-family: 'Space Grotesk', sans-serif; }
+        
+        body { 
+            font-family: 'Inter', system_ui, sans-serif; 
+            background-color: #f0f9ff;
+        }
+        .heading-font { 
+            font-family: 'Space Grotesk', sans-serif; 
+        }
+
+        .promo-banner {
+            background: linear-gradient(135deg, #00e0ff, #00c8e0);
+            color: #0f172a;
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="min-h-screen">
 
     <div class="max-w-3xl mx-auto px-6 py-12">
+
+        <!-- Bannière promotionnelle -->
+        <div class="promo-banner rounded-3xl p-6 mb-10 shadow-lg">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="text-4xl">🎟️</div>
+                    <div>
+                        <p class="font-semibold text-lg">10% de réduction sur votre Lavage Complet Régulier !</p>
+                        <p class="text-sm opacity-90">Code <span class="font-bold">SHINE10</span> • Valable du 1er au 10 juin 2026</p>
+                    </div>
+                </div>
+                <div onclick="copyPromoCode()" 
+                     class="cursor-pointer bg-white px-6 py-3 rounded-2xl font-mono font-bold text-xl tracking-wider flex items-center gap-3 shadow hover:scale-105 transition">
+                    SHINE10
+                    <i class="fa-solid fa-copy text-[#00e0ff]"></i>
+                </div>
+            </div>
+            <p id="copyMessage" class="text-center text-xs mt-3 text-emerald-800 font-medium hidden">
+                Code copié ! Colle-le dans le champ ci-dessous.
+            </p>
+        </div>
+
         <a href="index.html" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8">
             ← Retour à l'accueil
         </a>
 
         <h1 class="heading-font text-5xl font-semibold text-center mb-2">Prendre Rendez-vous</h1>
-        <p class="text-center text-gray-600 mb-12">ShineAutomobile - Lavage auto à domicile</p>
-        <h3 class="font-medium text-amber-800">Note importante :</h3><h4 class="text-center text-gray-600 mb-12">Des frais supplémentaires peuvent être appliquer pour les services à l'éxtérieur de Sherbrooke</h4>
+        <p class="text-center text-gray-600 mb-8">ShineAutomobile - Lavage auto à domicile</p>
         
+        <div class="text-center mb-10">
+            <h3 class="font-medium text-amber-800 inline-block">Note importante :</h3>
+            <h4 class="text-gray-600">Des frais supplémentaires peuvent être appliqués pour les services à l'extérieur de Sherbrooke</h4>
+        </div>
 
-        <!-- ==================== FORMULAIRE ==================== -->
+        <!-- FORMULAIRE -->
         <form id="submissionForm" action="https://formsubmit.co/info.shineautomobile@gmail.com" method="POST" 
               class="bg-white rounded-3xl shadow-xl p-10 space-y-8">
 
@@ -35,7 +71,8 @@
             <!-- Nom complet -->
             <div>
                 <label class="block text-sm font-medium mb-2">Nom complet *</label>
-                <input type="text" name="nom" id="nom" required class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+                <input type="text" name="nom" id="nom" required 
+                       class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
             </div>
 
             <!-- Service -->
@@ -44,8 +81,6 @@
                 <select name="service" id="service" required onchange="calculerTotal()" 
                         class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
                     <option value="">-- Sélectionnez un service --</option>
-                    
-                    <!-- Sedan, SUV, Van, Pickup et Forfaits (comme avant) -->
                     <option value="">─ petite voiture ─</option>
                     <option value="Lavage Extérieur Sedan">Lavage Extérieur - 40$ (Sedan)</option>
                     <option value="Lavage Extérieur Plus Sedan">Lavage Extérieur Plus - 50$ (Sedan)</option>
@@ -91,11 +126,12 @@
                 </select>
             </div>
 
-            <!-- Nombre de voitures + Type -->
+            <!-- Nombre de voitures + Type véhicule -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="md:col-span-1">
-                    <label class="block text-sm font-medium mb-2">Nb de voitures:</label>
-                    <select name="nombre_voitures" id="nbVoitures" onchange="calculerTotal()" class="border border-gray-300 rounded-2xl px-5 py-4 text-center">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Nb de voitures</label>
+                    <select name="nombre_voitures" id="nbVoitures" onchange="calculerTotal()" 
+                            class="border border-gray-300 rounded-2xl px-5 py-4 text-center w-full">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -110,58 +146,181 @@
                 </div>
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium mb-2">Nom et Type de véhicule(s)</label>
-                    <input type="text" name="type_vehicule" placeholder="Ex: Toyota camry" class="border border-gray-300 rounded-2xl px-5 py-4">
+                    <input type="text" name="type_vehicule" placeholder="Ex: Toyota Camry" 
+                           class="border border-gray-300 rounded-2xl px-5 py-4 w-full">
                 </div>
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">Numéro de téléphone *</label>
-                <input type="tel" name="telephone" id="telephone" required placeholder="Ex: 873-662-3813" class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+                <input type="tel" name="telephone" id="telephone" required placeholder="Ex: 873-662-3813" 
+                       class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">Adresse domicile *</label>
-                <input type="text" name="adresse" id="adresse" required placeholder="Ex: 123 rue Principale, Sherbrooke, QC" class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+                <input type="text" name="adresse" id="adresse" required placeholder="Ex: 123 rue Principale, Sherbrooke, QC" 
+                       class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">Date souhaitée *</label>
-                <input type="date" name="date" id="maDate" required min="2026-06-01" class="border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
+                <input type="date" name="date" id="maDate" required min="2026-06-01" 
+                       class="border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff]">
             </div>
 
-            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-                <div class="flex justify-between items-center text-lg">
-                    <span class="font-medium">Total estimé:</span>
-                    <span id="totalPrice" class="text-3xl font-bold text-[#00e0ff]">0$</span>
+            <!-- Code promo + Montant -->
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Code promo (optionnel)</label>
+                    <div class="flex gap-3">
+                        <input type="text" id="promoCode" placeholder="Ex: SHINE10" maxlength="10"
+                               onkeyup="calculerTotal()" 
+                               class="flex-1 border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#00e0ff] uppercase">
+                        <button type="button" onclick="calculerTotal()" 
+                                class="bg-[#00e0ff] hover:bg-[#00c8e0] text-white px-6 rounded-2xl font-medium transition">
+                            Appliquer
+                        </button>
+                    </div>
                 </div>
-                <input type="hidden" name="montant_total" id="montant_total_hidden">
+
+                <div>
+                    <div class="flex justify-between items-center text-lg">
+                        <span class="font-medium">Total estimé :</span>
+                        <div class="text-right">
+                            <span id="originalPrice" class="line-through text-gray-400 text-xl"></span>
+                            <span id="totalPrice" class="text-3xl font-bold text-[#00e0ff] ml-3"></span>
+                        </div>
+                    </div>
+                    <p id="discountText" class="text-emerald-600 text-sm font-medium mt-1 hidden"></p>
+                    <p id="errorText" class="text-amber-600 text-sm font-medium mt-1 hidden"></p>
+                    <input type="hidden" name="montant_total" id="montant_total_hidden">
+                    <input type="hidden" name="code_promo" id="code_promo_hidden" value="">
+                </div>
             </div>
 
-            <button type="submit" class="w-full bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-xl transition">
-                Envoyer
+            <button type="submit" 
+                    class="w-full bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-xl transition-all">
+                Envoyer la demande
             </button>
         </form>
 
-        <!-- ==================== MESSAGE DE REMERCIEMENT ==================== -->
-        <div id="successMessage" class="hidden bg-white rounded-3xl shadow-xl p-12 text-center">
+        <!-- Message de succès -->
+        <div id="successMessage" class="hidden bg-white rounded-3xl shadow-xl p-12 text-center mt-8">
             <div class="text-6xl mb-6">✅</div>
-            <h2 class="heading-font text-4xl font-semibold mb-4">Merci pour votr réservation!</h2>
-            <p class="text-gray-600 text-lg mb-8">Votre demande était bien envoyé et vous serez contacté dans les prochaines 24 heures</p><br>
+            <h2 class="heading-font text-4xl font-semibold mb-4">Merci pour votre réservation !</h2>
+            <p class="text-gray-600 text-lg mb-8">Votre demande a bien été envoyée. Vous serez contacté dans les prochaines 24 heures.</p>
+            
             <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-left">
-                <p class="font-medium text-amber-800">Note importante:</p>
+                <p class="font-medium text-amber-800">Note importante :</p>
                 <p class="text-amber-700 mt-2">
                     Si vous n'avez pas de nouvelles dans les <strong>24 prochaines heures</strong>, 
                     veuillez nous appeler au <strong class="text-[#00e0ff]">873-662-3813</strong>.
                 </p>
             </div>
-           <div class="mt-10">
+            
+            <div class="mt-10">
                 <a href="index.html" 
-                   class="inline-flex items-center gap-2 bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold px-10 py-4 rounded-2xl text-lg transition-all duration-300 shadow-md hover:shadow-lg">D'accord
+                   class="inline-flex items-center gap-2 bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold px-10 py-4 rounded-2xl text-lg transition-all shadow-md">
+                    Retour à l'accueil
                 </a>
+            </div>
         </div>
     </div>
 
     <script>
+        function calculerTotal() {
+            const nb = parseInt(document.getElementById('nbVoitures').value) || 1;
+            const serviceSelect = document.getElementById('service');
+            const serviceText = serviceSelect.selectedOptions[0]?.text || "";
+            const promoCode = document.getElementById('promoCode').value.trim().toUpperCase();
+            const dateStr = document.getElementById('maDate').value;
+
+            let basePrice = 50;
+            let isEligibleService = false;
+
+            // Détection du prix de base + vérification si c'est un "Lavage Complet Régulier"
+            if (serviceText.includes("Lavage Complet Régulier")) {
+                isEligibleService = true;
+                if (serviceText.includes("100$")) basePrice = 100;
+                else if (serviceText.includes("115$")) basePrice = 115;
+                else if (serviceText.includes("150$")) basePrice = 150;
+            } 
+            else if (serviceText.includes("40$")) basePrice = 40;
+            else if (serviceText.includes("50$")) basePrice = 50;
+            else if (serviceText.includes("60$")) basePrice = 60;
+            else if (serviceText.includes("75$")) basePrice = 75;
+            else if (serviceText.includes("80$")) basePrice = 80;
+            else if (serviceText.includes("100$")) basePrice = 100;
+            else if (serviceText.includes("115$")) basePrice = 115;
+            else if (serviceText.includes("125$")) basePrice = 125;
+            else if (serviceText.includes("130$")) basePrice = 130;
+            else if (serviceText.includes("150$")) basePrice = 150;
+            else if (serviceText.includes("175$") || serviceText.includes("180$")) basePrice = 180;
+            else if (serviceText.includes("200$")) basePrice = 200;
+
+            let total = basePrice * nb;
+            let originalTotal = total;
+            let discountApplied = false;
+            let errorMsg = "";
+
+            // Vérification des conditions pour le rabais
+            if (promoCode === "SHINE10") {
+                if (!isEligibleService) {
+                    errorMsg = "Le code SHINE10 est valide uniquement sur les Lavage Complet Régulier.";
+                } 
+                else if (!dateStr) {
+                    errorMsg = "Veuillez sélectionner une date pour vérifier le rabais.";
+                } 
+                else {
+                    const selectedDate = new Date(dateStr);
+                    const startDate = new Date(2026, 5, 1);  // 1er juin 2026 (mois 5 = juin)
+                    const endDate = new Date(2026, 5, 10);   // 10 juin 2026
+
+                    if (selectedDate >= startDate && selectedDate <= endDate) {
+                        total = Math.round(total * 0.9); // 10% de réduction
+                        discountApplied = true;
+                    } else {
+                        errorMsg = "Le code SHINE10 est valide uniquement du 1er au 10 juin 2026.";
+                    }
+                }
+            }
+
+            // Mise à jour de l'affichage
+            document.getElementById('originalPrice').textContent = discountApplied ? originalTotal + "$" : "";
+            document.getElementById('totalPrice').textContent = total + "$";
+            document.getElementById('montant_total_hidden').value = total + "$";
+            document.getElementById('code_promo_hidden').value = promoCode;
+
+            // Messages
+            const discountText = document.getElementById('discountText');
+            const errorText = document.getElementById('errorText');
+
+            if (discountApplied) {
+                discountText.textContent = "✓ 10% de rabais appliqué (code SHINE10)";
+                discountText.classList.remove('hidden');
+                errorText.classList.add('hidden');
+            } else {
+                discountText.classList.add('hidden');
+                if (errorMsg) {
+                    errorText.textContent = errorMsg;
+                    errorText.classList.remove('hidden');
+                } else {
+                    errorText.classList.add('hidden');
+                }
+            }
+        }
+
+        // Copier le code promo
+        function copyPromoCode() {
+            navigator.clipboard.writeText("SHINE10").then(() => {
+                const msg = document.getElementById('copyMessage');
+                msg.classList.remove('hidden');
+                setTimeout(() => msg.classList.add('hidden'), 3000);
+            });
+        }
+
+        // Soumission du formulaire
         const form = document.getElementById('submissionForm');
         const successMessage = document.getElementById('successMessage');
 
@@ -180,45 +339,20 @@
             }).catch(() => {});
         });
 
-        // Pré-remplissage du service
-        function getUrlParameter(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
+        // Initialisation
         window.onload = function() {
-            const serviceFromUrl = getUrlParameter('service');
+            const serviceFromUrl = new URLSearchParams(window.location.search).get('service');
             if (serviceFromUrl) {
                 document.getElementById('service').value = serviceFromUrl;
-                calculerTotal();
             }
+            calculerTotal();
 
-            // Date minimale = aujourd'hui
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('date').min = today;
+            document.getElementById('maDate').min = today;
+
+            // Recalcul à chaque changement de date
+            document.getElementById('maDate').addEventListener('change', calculerTotal);
         };
-
-        function calculerTotal() {
-            const nb = parseInt(document.getElementById('nbVoitures').value) || 1;
-            let price = 50;
-            const text = document.getElementById('service').selectedOptions[0]?.text || "";
-
-            if (text.includes("40$")) price = 40;
-            else if (text.includes("50$")) price = 50;
-            else if (text.includes("60$")) price = 60;
-            else if (text.includes("75$")) price = 75;
-            else if (text.includes("80$")) price = 80;
-            else if (text.includes("100$")) price = 100;
-            else if (text.includes("115$")) price = 115;
-            else if (text.includes("125$")) price = 125;
-            else if (text.includes("130$")) price = 130;
-            else if (text.includes("150$")) price = 150;
-            else if (text.includes("175$") || text.includes("180$")) price = 180;
-            else if (text.includes("200$")) price = 200;
-
-            document.getElementById('totalPrice').textContent = (price * nb) + "$";
-            document.getElementById('montant_total_hidden').value = (price * nb) + "$";
-        }
     </script>
 </body>
 </html>
