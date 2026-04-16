@@ -10,12 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
 
         body { 
             font-family: 'Inter', sans-serif; 
             scroll-behavior: smooth;
-            background-color: #f0f9ff;
         }
 
         .heading-font { 
@@ -29,14 +28,15 @@
             background-repeat: no-repeat;
         }
 
-        /* Animations conservées */
+        /* Transitions générales entre sections */
         section {
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Animations d'apparition au scroll */
         .fade-in {
             opacity: 0;
-            transform: translateY(60px);
+            transform: translateY(50px);
             transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
@@ -45,6 +45,7 @@
             transform: translateY(0);
         }
 
+        /* Animation glissée latérale */
         .slide-in-left {
             opacity: 0;
             transform: translateX(-60px);
@@ -79,7 +80,7 @@
         }
 
         .service-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
         }
 
         .service-card:hover {
@@ -87,93 +88,70 @@
             box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
         }
 
+        /* Animation spécifique pour les cartes catégories */
         .category-card:hover {
             transform: translateY(-15px) scale(1.03);
             box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.2);
         }
 
+        /* Ligne de connexion animée dans "Comment ça marche" */
         .step-line {
             transition: width 1.4s ease;
         }
 
-        /* Navigation sticky */
-        .nav-sticky {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background-color: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 224, 255, 0.15);
-        }
-
-        /* Boutons principaux alignés */
-        .btn-primary {
-            background-color: #00e0ff;
-            color: #0f172a;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #00c8e0;
-            transform: translateY(-3px);
-        }
-
-        .btn-secondary {
-            border: 2px solid white;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background-color: rgba(255,255,255,0.15);
-            transform: translateY(-3px);
+        /* Menu mobile */
+        #mobile-menu {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
 
-<body class="bg-[#f0f9ff]">
+<body class="bg-gray-50">
 
-    <!-- NAVBAR PRINCIPALE -->
-    <nav class="nav-sticky">
-        <div class="max-w-7xl mx-auto px-5 py-5 flex justify-between items-center">
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+
             <!-- Logo -->
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 bg-[#00e0ff] rounded-3xl flex items-center justify-center text-3xl overflow-hidden">
-                    <img src="Images/logo.jpeg" alt="Logo" class="w-10 h-10 object-cover">
-                </div>
+                <div class="w-10 h-10 bg-[#00e0ff] rounded-3xl flex items-center justify-center text-3xl"><img src="Images/logo.jpeg"></div>
                 <div>
-                    <h1 class="heading-font text-3xl font-semibold text-gray-900 tracking-tight">ShineAutomobile</h1>
-                    <p class="text-[10px] text-gray-500 -mt-1 tracking-widest">LAVAGE AUTO À DOMICILE</p>
+                    <h1 class="heading-font text-3xl font-semibold text-gray-900">ShineAutomobile</h1>
+                    <p class="text-[10px] text-gray-500 -mt-1">LAVAGE AUTO À DOMICILE</p>
                 </div>
             </div>
 
             <!-- Liens Desktop -->
-            <div class="hidden md:flex items-center gap-9 text-sm font-medium text-gray-700">
-                <a href="#categories" class="hover:text-[#00e0ff] transition-colors duration-300">Services</a>
-                <a href="#forfaits" class="hover:text-[#00e0ff] transition-colors duration-300">Forfaits</a>
-                <a href="#apropos" class="hover:text-[#00e0ff] transition-colors duration-300">À propos</a>
-                <a href="#contact" class="hover:text-[#00e0ff] transition-colors duration-300">Contact</a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#categories" class="hover:text-[#00e0ff] transition-colors">Services</a>
+                <a href="#forfaits" class="hover:text-[#00e0ff] transition-colors">Forfaits</a>
+                <a href="#apropos" class="hover:text-[#00e0ff] transition-colors">À propos</a>
+                <a href="#contact" class="hover:text-[#00e0ff] transition-colors">Contact</a>
             </div>
-
-            <!-- Téléphone + Hamburger -->
+            <!-- Téléphone -->
             <div class="flex items-center gap-4">
-                <a href="tel:8736623813" class="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-[#00e0ff] transition-colors">
+                <a href="tel:8736623813" class="text-sm font-medium flex items-center gap-1.5 hover:text-[#00e0ff] transition-colors">
                     <i class="fa-solid fa-phone"></i>
-                    <span>873-662-3813</span>
+                    <span class="hidden sm:inline">873-662-3813</span>
                 </a>
-                <button id="menu-btn" class="md:hidden text-3xl text-gray-700 focus:outline-none">
+
+                <!-- Bouton Hamburger -->
+                <button id="menu-btn" class="md:hidden text-2xl text-gray-700 focus:outline-none">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
 
         <!-- Menu Mobile -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-6">
-            <div class="px-6 flex flex-col gap-6 text-lg font-medium text-gray-700">
-                <a href="#categories" class="hover:text-[#00e0ff]">Services</a>
-                <a href="#forfaits" class="hover:text-[#00e0ff]">Forfaits</a>
-                <a href="#apropos" class="hover:text-[#00e0ff]">À propos</a>
-                <a href="#contact" class="hover:text-[#00e0ff]">Contact</a>
-                <a href="tel:8736623813" class="flex items-center gap-3 text-[#00e0ff] font-semibold">
-                    <i class="fa-solid fa-phone"></i> 873-662-3813
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-5 py-6 flex flex-col gap-6 text-lg font-medium">
+                <a href="#categories" class="hover:text-[#00e0ff] transition-colors">Services</a>
+                <a href="#forfaits" class="hover:text-[#00e0ff] transition-colors">Forfaits</a>
+                <a href="#apropos" class="hover:text-[#00e0ff] transition-colors">À propos</a>
+                <a href="#contact" class="hover:text-[#00e0ff] transition-colors">Contact</a>
+                <a href="tel:8736623813" class="flex items-center gap-2 text-[#00e0ff]">
+                    <i class="fa-solid fa-phone"></i> 
+                    Appeler : 873-662-3813
                 </a>
             </div>
         </div>
@@ -183,25 +161,28 @@
     <header class="hero-bg h-screen flex items-center text-white relative">
         <div class="max-w-7xl mx-auto px-6 z-10">
             <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm mb-8 border border-white/30">
-                    <div class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00D4A5] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-[#00D4A5]"></span>
-                    </div>
-                    <span class="font-medium">Service disponible à partir du 1er Juin 2026</span>
+            
+            <!-- Badge avec lumière verte live -->
+            <div class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm mb-6 border border-white/30">
+                <div class="relative flex items-center justify-center">
+                    <span class="w-3 h-3 bg-[#00D4A5] rounded-full animate-pulse"></span>
+                    <span class="absolute w-3 h-3 bg-[#00D4A5] rounded-full animate-ping opacity-75"></span>
                 </div>
+                <span class="font-medium">Service disponible le 1er Juin 2026</span>
+            </div><br><br>
 
-                <h1 class="heading-font text-5xl md:text-6xl font-semibold leading-tight tracking-tighter">
+                <h1 class="heading-font text-5xl md:text-6xl font-semibold leading-tight">
                     Votre voiture brille,<br>à votre porte.
-                </h1>
+                </h1><br><br><br><br>
 
-                <div class="mt-12 flex flex-col sm:flex-row gap-4">
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <a href="#categories" 
-                       class="btn-primary px-10 py-5 rounded-3xl font-semibold text-lg text-center flex-1 sm:flex-none shadow-lg">
+                       class="bg-white text-gray-900 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-red hover:text-white transition-all duration-300">
                         Voir les services
                     </a>
+
                     <a href="pageservice.html" target="_blank" 
-                       class="btn-secondary px-10 py-5 rounded-3xl font-semibold text-lg text-center flex-1 sm:flex-none">
+                       class="border border-white/70 hover:bg-blue/10 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300">
                         Prendre rendez-vous
                     </a>
                 </div>
@@ -209,53 +190,43 @@
         </div>
     </header>
 
-    <!-- COMMENT ÇA MARCHE -->
-    <section id="comment-ca-marche" class="py-24 bg-[#f0f9ff]">
+     <!-- COMMENT ÇA MARCHE -->
+    <section id="comment-ca-marche" class="py-24 bg-gray-50 fade-in">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="heading-font text-5xl font-semibold mb-4 text-gray-900">Comment ça marche ?</h2>
-            <p class="text-gray-600 text-lg mb-16">4 étapes simples pour une voiture impeccable</p>
+            <h2 class="heading-font text-5xl font-semibold mb-4">Comment ça marche ?</h2>
+            <p class="text-gray-600 mb-12">4 étapes simples pour une voiture impeccable</p>
 
             <div class="grid md:grid-cols-4 gap-8 relative">
                 <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[#00e0ff] to-[#00c8e0] step-line"></div>
                 
-                <div class="relative z-10 fade-in"><div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">📅</div><h4 class="font-semibold mt-8 text-xl">Vous réservez</h4><p class="text-gray-600 mt-3">En ligne ou par téléphone</p></div>
-                <div class="relative z-10 fade-in"><div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">✅</div><h4 class="font-semibold mt-8 text-xl">Nous confirmons</h4><p class="text-gray-600 mt-3">Selon votre disponibilité</p></div>
-                <div class="relative z-10 fade-in"><div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">🏠</div><h4 class="font-semibold mt-8 text-xl">Nous venons chez vous</h4><p class="text-gray-600 mt-3">À Sherbrooke et environs</p></div>
-                <div class="relative z-10 fade-in"><div class="w-20 h-20 mx-auto bg-white rounded-3xl flex items-center justify-center text-5xl shadow-xl">🚗</div><h4 class="font-semibold mt-8 text-xl">Votre voiture brille</h4><p class="text-gray-600 mt-3">Paiement sur place</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">📅</div><h4 class="font-semibold mt-6">Vous réservez</h4><p class="text-gray-600 mt-3">En ligne ou par téléphone</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">✅</div><h4 class="font-semibold mt-6">Nous confirmons</h4><p class="text-gray-600 mt-3">Selon votre disponibilité</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">🏠</div><h4 class="font-semibold mt-6">Nous venons chez vous</h4><p class="text-gray-600 mt-3">À Sherbrooke et environs</p></div>
+                <div class="relative z-10 fade-in"><div class="w-16 h-16 mx-auto bg-white rounded-3xl flex items-center justify-center text-4xl shadow">🚗</div><h4 class="font-semibold mt-6">Votre voiture brille</h4><p class="text-gray-600 mt-3">Paiement sur place</p></div>
             </div>
         </div>
     </section>
 
-    <!-- BARRE DE NAVIGATION ÉPINGLÉE (visible en permanence) -->
-    <div class="bg-white border-y border-gray-100 py-5 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-wrap justify-center gap-x-10 gap-y-3 text-sm font-medium text-gray-700">
-                <a href="#categories" class="hover:text-[#00e0ff] transition-colors">Services</a>
-                <a href="#forfaits" class="hover:text-[#00e0ff] transition-colors">Forfaits</a>
-                <a href="#apropos" class="hover:text-[#00e0ff] transition-colors">À propos</a>
-                <a href="#contact" class="hover:text-[#00e0ff] transition-colors">Contact</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECTION CATÉGORIES -->
-    <section id="categories" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="heading-font text-5xl font-semibold text-gray-900">Choisissez le type de votre véhicule</h2>
-                <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+    <!-- SECTION CATÉGORIES DE VÉHICULES -->
+    <section id="categories" class="py-20 md:py-24 bg-[#f0f9ff]">
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Choisissez le type de votre véhicule</h2>
+                <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
                     Pour prendre rendez-vous, veuillez sélectionner le type de votre véhicule ci-dessous.<br>
-                    Chaque catégorie contient les services et prix adaptés.
+                    Chaque catégorie contient les services et prix adaptés à votre véhicule.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+                
                 <!-- Sedan -->
-                <a href="sedan.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                    <img src="Images/sedan.jpeg" alt="Sedan" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="p-8 flex-1 flex flex-col">
+                <a href="sedan.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/sedan.jpeg" alt="Sedan Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
                         <h3 class="text-3xl font-semibold mb-2">Sedan / Petite voiture</h3>
-                        <p class="text-gray-600 flex-1">Berlines et voitures compactes</p>
+                        <p class="text-gray-600">Berlines et voitures compactes</p>
                         <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
                             Voir les services 
                             <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
@@ -264,11 +235,12 @@
                 </a>
 
                 <!-- SUV -->
-                <a href="suv.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                    <img src="Images/vus.jpeg" alt="SUV" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="p-8 flex-1 flex flex-col">
+                <a href="suv.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/vus.jpeg" alt="SUV Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
                         <h3 class="text-3xl font-semibold mb-2">VUS</h3>
-                        <p class="text-gray-600 flex-1">VUS et crossovers</p>
+                        <p class="text-gray-600">VUS et crossovers</p>
                         <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
                             Voir les services 
                             <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
@@ -277,11 +249,12 @@
                 </a>
 
                 <!-- Van -->
-                <a href="van.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                    <img src="Images/van.jpeg" alt="Van" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="p-8 flex-1 flex flex-col">
+                <a href="van.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/van.jpeg" alt="Van Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
                         <h3 class="text-3xl font-semibold mb-2">Van / Minivan</h3>
-                        <p class="text-gray-600 flex-1">Fourgonnettes et vans</p>
+                        <p class="text-gray-600">Fourgonnettes et vans</p>
                         <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
                             Voir les services 
                             <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
@@ -290,11 +263,12 @@
                 </a>
 
                 <!-- Pickup -->
-                <a href="pickup.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm flex flex-col">
-                    <img src="Images/pickup.jpeg" alt="Pickup" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="p-8 flex-1 flex flex-col">
+                <a href="pickup.html" class="category-card group bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+                    <img src="Images/pickup.jpeg" alt="Pickup Shine Automobile" 
+                         class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="p-8">
                         <h3 class="text-3xl font-semibold mb-2">Pickup / Camionnette</h3>
-                        <p class="text-gray-600 flex-1">Pickups et camions légers</p>
+                        <p class="text-gray-600">Pickups et camions légers</p>
                         <div class="mt-8 text-[#00e0ff] font-medium flex items-center gap-2">
                             Voir les services 
                             <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
@@ -305,11 +279,11 @@
         </div>
     </section>
 
-    <!-- AUTRES SERVICES -->
+    <!-- SECTION AUTRES SERVICES -->
     <section id="autres-services" class="py-20 bg-gray-100 fade-in">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="heading-font text-4xl font-semibold text-gray-900">Autres Services d’Urgence</h2>
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Autres Services d’Urgence</h2>
                 <p class="text-gray-600 mt-3">Intervention rapide à Sherbrooke et environs</p>
             </div>
 
@@ -323,7 +297,7 @@
                             <p class="text-gray-700 mb-8 text-[15px] leading-relaxed">
                                 Clés oubliées à l’intérieur ? Nous intervenons rapidement et en toute sécurité sans endommager votre véhicule.
                             </p>
-                            <a href="tel:8736623813" class="block w-full text-center bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-lg active:scale-95 transition-all">
+                            <a href="tel:8736623813" class="block w-full text-center bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-lg active:scale-95 transition-all duration-300">
                                 📞 Appeler maintenant
                             </a>
                         </div>
@@ -339,7 +313,7 @@
                             <p class="text-gray-700 mb-8 text-[15px] leading-relaxed">
                                 Batterie à plat ? Nous venons sur place pour recharger votre batterie rapidement et en toute sécurité.
                             </p>
-                            <a href="tel:8736623813" class="block w-full text-center bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-lg active:scale-95 transition-all">
+                            <a href="tel:8736623813" class="block w-full text-center bg-[#00e0ff] hover:bg-[#00c8e0] text-white font-semibold py-5 rounded-2xl text-lg active:scale-95 transition-all duration-300">
                                 📞 Appeler maintenant
                             </a>
                         </div>
@@ -349,13 +323,13 @@
         </div>
     </section>
 
-    <!-- FORFAITS -->
+    <!-- SECTION FORFAITS MULTI-VOITURES -->
     <section id="forfaits" class="py-20 bg-gray-900 text-white fade-in">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="text-center mb-16 fade-in">
                 <h2 class="heading-font text-4xl font-semibold">Forfaits Multi-Voitures</h2>
-                <p class="text-gray-400 mt-4 text-lg">Tarifs dégressifs selon le nombre de véhicules</p>
-                <p class="text-gray-400 mt-2 text-lg">Le forfait est valable pour la même voiture pendant toute la saison.</p>
+                <p class="text-gray-400 mt-4 text-lg">Tarifs dégressifs selon le nombre de véhicules</p><br>
+                <p class="text-gray-400 mt-4 text-lg">Le forfait est valable pour la même voiture pendant toute la saison.</p><br>
             </div>
 
             <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -370,14 +344,20 @@
                                 <p class="font-medium">2 à 4 voitures</p>
                                 <p class="text-3xl font-bold text-[#00e0ff]">30$ <span class="text-base font-normal">/voiture</span></p>
                             </div>
-                            <a href="pageservice.html?service=Forfait Extérieur 2-4 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">Sélectionner</a>
+                            <a href="pageservice.html?service=Forfait Extérieur 2-4 voitures" target="_blank"
+                               class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">
+                                Sélectionner
+                            </a>
                         </div>
                         <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
                             <div>
                                 <p class="font-medium">5 à 10 voitures</p>
                                 <p class="text-3xl font-bold text-[#00e0ff]">25$ <span class="text-base font-normal">/voiture</span></p>
                             </div>
-                            <a href="pageservice.html?service=Forfait Extérieur 5-10 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">Sélectionner</a>
+                            <a href="pageservice.html?service=Forfait Extérieur 5-10 voitures" target="_blank"
+                               class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">
+                                Sélectionner
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -393,21 +373,30 @@
                                 <p class="font-medium">2 voitures</p>
                                 <p class="text-3xl font-bold text-[#00e0ff]">95$ <span class="text-base font-normal">/voiture</span></p>
                             </div>
-                            <a href="pageservice.html?service=Forfait Complet 2 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">Sélectionner</a>
+                            <a href="pageservice.html?service=Forfait Complet 2 voitures" target="_blank"
+                               class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">
+                                Sélectionner
+                            </a>
                         </div>
                         <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
                             <div>
                                 <p class="font-medium">3 à 4 voitures</p>
                                 <p class="text-3xl font-bold text-[#00e0ff]">90$ <span class="text-base font-normal">/voiture</span></p>
                             </div>
-                            <a href="pageservice.html?service=Forfait Complet 3-4 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">Sélectionner</a>
+                            <a href="pageservice.html?service=Forfait Complet 3-4 voitures" target="_blank"
+                               class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">
+                                Sélectionner
+                            </a>
                         </div>
                         <div class="flex justify-between items-center bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition">
                             <div>
                                 <p class="font-medium">5 voitures et plus</p>
                                 <p class="text-3xl font-bold text-[#00e0ff]">80$ <span class="text-base font-normal">/voiture</span></p>
                             </div>
-                            <a href="pageservice.html?service=Forfait Complet 5 voitures" target="_blank" class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">Sélectionner</a>
+                            <a href="pageservice.html?service=Forfait Complet 5 voitures" target="_blank"
+                               class="bg-white text-gray-900 px-8 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition">
+                                Sélectionner
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -418,29 +407,29 @@
             </p>
         </div>
     </section>
-
+    
     <!-- POURQUOI NOUS CHOISIR -->
     <section class="py-20 bg-white fade-in">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="heading-font text-4xl font-semibold text-gray-900">Pourquoi nous choisir ?</h2>
+            <div class="text-center mb-12 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Pourquoi nous choisir ?</h2>
             </div>
             <div class="grid md:grid-cols-4 gap-8 text-center">
                 <div class="fade-in"><div class="text-5xl mb-4">🌱</div><h4 class="font-semibold">100% Écologique</h4><p class="text-gray-600 mt-2">Produits biodégradables certifiés</p></div>
                 <div class="fade-in"><div class="text-5xl mb-4">🏠</div><h4 class="font-semibold">Service à domicile</h4><p class="text-gray-600 mt-2">Nous nous déplaçons chez vous</p></div>
-                <div class="fade-in"><div class="text-5xl mb-4">⭐</div><h4 class="font-semibold">Garantie satisfaction</h4><p class="text-gray-600 mt-2">Votre satisfaction est notre priorité</p></div>
+                <div class="fade-in"><div class="text-5xl mb-4">⭐</div><h4 class="font-semibold">Garantie satisfaction</h4><p class="text-gray-600 mt-2"></p></div>
             </div>
         </div>
     </section>
 
     <!-- À PROPOS -->
     <section id="apropos" class="py-20 bg-white fade-in">
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-5">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="fade-in">
                     <span class="text-[#00e0ff] font-semibold">À PROPOS</span>
                     <h2 class="heading-font text-4xl font-semibold mt-3">ShineAutomobile</h2>
-                    <p class="mt-6 text-gray-600 leading-relaxed">
+                    <p class="mt-6 text-gray-600">
                         Entreprise locale basée à Sherbrooke, nous offrons un service de lavage auto professionnel à domicile. 
                         Notre équipe utilise des produits écologiques et du matériel de qualité pour prendre soin de votre véhicule.
                     </p>
@@ -461,39 +450,45 @@
 
     <!-- TÉMOIGNAGES -->
     <section id="temoignages" class="py-20 bg-gray-50 fade-in">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="heading-font text-4xl font-semibold text-gray-900">Avis de nos clients</h2>
+        <div class="max-w-7xl mx-auto px-5">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="heading-font text-4xl font-semibold">Avis de nos clients</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-8 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-6">"Service très professionnel. Ma voiture est impeccable !"</p><p class="mt-8 text-xs text-gray-500">- Marie L.</p></div>
-                <div class="bg-white p-8 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-6">"Déverrouillage rapide et sans dommage. Merci !"</p><p class="mt-8 text-xs text-gray-500">- Jean T.</p></div>
-                <div class="bg-white p-8 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-6">"Excellent lavage complet. Je recommande fortement."</p><p class="mt-8 text-xs text-gray-500">- Sophie D.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Service très professionnel. Ma voiture est impeccable !"</p><p class="mt-6 text-xs text-gray-500">- Marie L.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Déverrouillage rapide et sans dommage. Merci !"</p><p class="mt-6 text-xs text-gray-500">- Jean T.</p></div>
+                <div class="bg-white p-6 rounded-3xl service-card fade-in">★★★★★<p class="italic text-sm mt-4">"Excellent lavage complet. Je recommande fortement."</p><p class="mt-6 text-xs text-gray-500">- Sophie D.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- PARTENAIRE -->
+        <!-- ==================== SECTION PARTENAIRE ==================== -->
     <section class="py-20 bg-zinc-950 border-t border-zinc-800">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-red-500 font-semibold tracking-widest mb-3">NOTRE PARTENAIRE</p>
-            <h2 class="heading-font text-4xl md:text-5xl font-bold mb-12 text-white">En collaboration avec</h2>
             
+            <p class="text-red-500 font-semibold tracking-widest mb-3">NOTRE PARTENAIRE</p>
+            <h2 class="heading-font text-4xl md:text-5xl font-bold mb-12">
+                En collaboration avec
+            </h2>
+    
+            <!-- Logo centré -->
             <div class="flex justify-center mb-10">
                 <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank" 
                    class="group inline-block p-8 bg-zinc-900 border border-zinc-700 rounded-3xl hover:border-red-600 transition-all duration-300">
-                    <img src="Images/logo-partenaire.jpeg" alt="Mon Auto Mécanique" class="h-20 md:h-28 w-auto mx-auto transition-transform group-hover:scale-105">
+                    <img src="Images/logo-partenaire.jpeg" 
+                         alt="Nom du Partenaire" 
+                         class="h-20 md:h-28 w-auto mx-auto transition-transform group-hover:scale-105">
                 </a>
             </div>
-
+    
             <p class="max-w-2xl mx-auto text-zinc-400 text-lg">
                 Nous travaillons en étroite collaboration avec <strong class="text-white">Mon auto mécanique</strong> 
-                pour vous offrir un service de mécanique automobile de qualité et un service fiable chez vous.
+                pour vous offrir in service de mécanique automobile de qualité et un service fiable chez vous.
             </p>
-
+    
             <div class="mt-10">
                 <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank"
-                   class="inline-flex items-center gap-3 bg-zinc-900 hover:bg-red-600 border border-zinc-700 hover:border-red-600 px-8 py-4 rounded-2xl transition-all duration-300 text-white">
+                   class="inline-flex items-center gap-3 bg-zinc-900 hover:bg-red-600 border border-zinc-700 hover:border-red-600 px-8 py-4 rounded-2xl transition-all duration-300">
                     Découvrir leur site
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
@@ -503,27 +498,40 @@
 
     <!-- CONTACT -->
     <section id="contact" class="py-20 bg-gray-900 text-white fade-in">
-        <div class="max-w-5xl mx-auto px-6 text-center">
+        <div class="max-w-5xl mx-auto px-5 text-center">
             <h2 class="text-4xl font-semibold mb-4">Nous contacter</h2>
             <p class="text-gray-400 mb-12">Réponse rapide par téléphone, texto, courriel ou Instagram</p>
-            
+    
+            <!-- 4 Icônes côte à côte -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <a href="tel:8736623813" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105">
-                    <div class="text-2xl mb-4 transition-transform group-hover:scale-110">📞</div>
-                    <span class="font-medium">Téléphone</span>
-                </a>
-                <a href="sms:8196623813" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105">
-                    <div class="text-2xl mb-4 transition-transform group-hover:scale-110">💬</div>
-                    <span class="font-medium">Texto</span>
-                </a>
-                <a href="mailto:info.shineautomobile@gmail.com" class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105">
-                    <div class="text-2xl mb-4 transition-transform group-hover:scale-110">✉️</div>
-                    <span class="font-medium">Email</span>
-                </a>
-                <a href="https://www.instagram.com/shineautomobile_?igsh=aHlzajRhc3lldXQw" target="_blank"
+                
+                <!-- Téléphone -->
+                <a href="tel:8736623813" 
                    class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl mb-4 transition-transform group-hover:scale-110">📞</div>
+                    <span class="font-small">Téléphone</span>
+                </a>
+    
+                <!-- Texto -->
+                <a href="sms:8196623813" 
+                   class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl mb-4 transition-transform group-hover:scale-110">💬</div>
+                    <span class="font-small">Texto</span>
+                </a>
+    
+                <!-- Courriel -->
+                <a href="mailto:info.shineautomobile@gmail.com" 
+                   class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl mb-4 transition-transform group-hover:scale-110">✉️</div>
+                    <span class="font-small">Email</span>
+                </a>
+    
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/shineautomobile_?igsh=aHlzajRhc3lldXQw" 
+                   target="_blank"
+                   class="group flex flex-col items-center bg-white/10 hover:bg-white/20 p-8 rounded-3xl transition-all duration-300 hover:scale-105 min-w-[170px]">
                     <img src="Images/instagram.jpeg" class="w-8 h-8 mb-4 transition-transform group-hover:scale-110">
-                    <span class="font-medium">Instagram</span>
+                    <span class="font-smal">Instagram</span>
                 </a>
             </div>
         </div>
@@ -531,18 +539,22 @@
 
     <!-- WhatsApp Flottant -->
     <a href="https://wa.me/18736623813" target="_blank" 
-       class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl hover:scale-110 transition-all z-50">
+       class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl hover:scale-110 transition z-50">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <!-- CARTE GPS -->
     <section class="py-12 bg-black">
         <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-center text-2xl font-semibold mb-8 text-white">Nous intervenons à Sherbrooke et environs</h3>
+            <h3 class="text-center text-2xl font-semibold mb-8">Nous intervenons à Sherbrooke et environs</h3>
             <div class="rounded-3xl overflow-hidden shadow-2xl border border-zinc-800">
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45155.012057629!2d-71.9325!3d45.4000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92a5d9d8b0c0f%3A0x4b8f8e9f5d8e8f8e!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1744800000000"
-                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
                 </iframe>
             </div>
         </div>
@@ -550,7 +562,7 @@
 
     <!-- FOOTER -->
     <footer class="bg-gray-900 text-white py-12 fade-in">
-        <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="max-w-7xl mx-auto px-5 text-center">
             <p class="text-2xl font-semibold">ShineAutomobile</p>
             <p class="mt-2 text-sm opacity-75">Lavage auto à domicile en Estrie</p>
             <p class="mt-8 text-sm">Sherbrooke • Magog • Bromptonville • Windsor • Waterville • Saint-Denis-de-Brompton • Orford • Ascot Corner • Ayer's Cliff • Waterloo • Coaticook • Richmond • Danville • East Angus • Cookshire-Eaton</p>
@@ -562,10 +574,11 @@
     </footer>
 
     <script>
-        // Observer pour animations
+        // Observer pour toutes les animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
+                    // Délai progressif pour les catégories
                     if (entry.target.classList.contains('category-card')) {
                         setTimeout(() => {
                             entry.target.classList.add('visible');
@@ -575,8 +588,12 @@
                     }
                 }
             });
-        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+        }, { 
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        });
 
+        // Observer toutes les sections et cartes
         document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .category-card').forEach(el => {
             observer.observe(el);
         });
@@ -587,9 +604,15 @@
 
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+            
             const icon = menuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
         });
     </script>
 </body>
