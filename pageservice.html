@@ -999,7 +999,6 @@
 
     // ── TOTAL ──
     function updateTotal() {
-        state.discountApplied = false;
         state.finalTotal = state.selectedPrice * state.qty;
         document.getElementById('totalAmount').textContent = state.finalTotal > 0 ? state.finalTotal + '$' : '—';
         document.getElementById('originalAmount').classList.add('hidden');
@@ -1013,7 +1012,6 @@
         const msgEl = document.getElementById('promoMsg');
         const base = state.selectedPrice * state.qty;
 
-        state.discountApplied = false;
         document.getElementById('originalAmount').classList.add('hidden');
         document.getElementById('discountBadge').classList.add('hidden');
 
@@ -1027,7 +1025,6 @@
                 const s = new Date(2026, 5, 1), e = new Date(2026, 5, 10);
                 if (d >= s && d <= e) {
                     state.finalTotal = Math.round(base * 0.9);
-                    state.discountApplied = true;
                     document.getElementById('originalAmount').textContent = base + '$';
                     document.getElementById('originalAmount').classList.remove('hidden');
                     document.getElementById('discountBadge').classList.remove('hidden');
@@ -1087,7 +1084,6 @@
             return;
         }
 
-        // Build summary
         const model = document.getElementById('vehicleModel').value;
         document.getElementById('summaryContent').innerHTML = `
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px;">
@@ -1107,41 +1103,22 @@
         goToStep(3);
     }
 
-    // ── SUBMIT (VERSION CORRIGÉE) ──
+    // ── SUBMIT (Version simplifiée et plus fiable) ──
     document.getElementById('submissionForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Mise à jour finale des champs cachés avant envoi
+        // Mise à jour finale des champs cachés
         document.getElementById('serviceHidden').value = state.selectedService || '';
         document.getElementById('nbVoituresHidden').value = state.qty;
-        
+
         const currentTotal = state.finalTotal > 0 ? state.finalTotal : (state.selectedPrice * state.qty);
         document.getElementById('montantHidden').value = currentTotal + '$';
 
         const btn = document.getElementById('submitBtn');
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
-
-        // Envoi réel
-        fetch(this.action, {
-            method: 'POST',
-            body: new FormData(this)
-        })
-        .then(() => {
-            showSuccess();
-        })
-        .catch(() => {
-            // En cas d'erreur réseau, on affiche quand même le succès (FormSubmit est fiable)
-            showSuccess();
-        });
+        
+        // On laisse le formulaire faire le submit normalement vers FormSubmit
+        // (pas de e.preventDefault() ici)
     });
-
-    function showSuccess() {
-        document.getElementById('submissionForm').classList.add('hidden');
-        document.getElementById('successMessage').classList.remove('hidden');
-        document.getElementById('stepsBar').classList.add('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
     // ── INIT ──
     window.onload = function() {
