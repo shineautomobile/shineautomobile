@@ -73,7 +73,8 @@
             padding: 16px 20px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text);
             outline: none; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
         }
-        .field input:focus, .field select:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); background: rgba(0,229,255,0.02); }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); background: rgba(0,229,255,0.02); }
+        .field textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
 
         .vehicle-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
         .vtab { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all 0.2s; background: transparent; }
@@ -126,7 +127,6 @@
         .qty-display { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: #fff; min-width: 40px; text-align: center; }
         .qty-label { font-size: 14px; color: var(--text-muted); }
 
-        /* SUCCESS */
         .success-card { background: var(--surface); border: 1px solid rgba(0,229,255,0.25); border-radius: 24px; padding: 56px 40px; text-align: center; }
         .success-icon { font-size: 56px; margin-bottom: 24px; }
         .success-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #fff; margin-bottom: 12px; }
@@ -156,7 +156,7 @@
         <p class="page-sub">ShineAutomobile — Lavage auto à domicile</p>
     </div>
 
-    <div class="notice">
+    <div class="notice" id="mainNotice">
         <i class="fa-solid fa-triangle-exclamation text-xs flex-shrink-0"></i>
         Des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke.
     </div>
@@ -167,7 +167,6 @@
         <div class="step-dot" data-step="3"><div class="step-circle">3</div><div class="step-label">Confirmer</div></div>
     </div>
 
-    <!-- FORMULAIRE -->
     <form id="submissionForm">
 
         <!-- STEP 1 -->
@@ -281,7 +280,11 @@
                 <div class="field"><label>Nom complet *</label><input type="text" id="nom" placeholder="Jean Tremblay"></div>
                 <div class="field"><label>Numéro de téléphone *</label><input type="tel" id="telephone" placeholder="873-662-3813"></div>
                 <div class="field"><label>Adresse domicile *</label><input type="text" id="adresse" placeholder="123 rue Principale, Sherbrooke, QC"></div>
-                <div class="field"><label>Date souhaitée *</label><input type="date" id="maDate"></div>
+                <div class="field"><label>Date souhaitée *</label><input type="date" id="maDate" min="2026-06-01"></div>
+                <div class="field">
+                    <label>Note / Commentaire <span style="color:var(--text-dim); font-size:10px; text-transform:none; letter-spacing:0; font-weight:400;">(optionnel)</span></label>
+                    <textarea id="noteClient" rows="4" placeholder="Ex: Véhicule très sale, présence d'animaux, accès par la ruelle..."></textarea>
+                </div>
             </div>
 
             <div style="display:flex; gap:12px;">
@@ -422,7 +425,6 @@
     function applyPromoCode() {
         const code = document.getElementById('promoCode').value.trim().toUpperCase();
         const msgEl = document.getElementById('promoMsg');
-
         if (code === 'SHINE10') {
             state.promoApplied = true;
             updateTotal();
@@ -452,6 +454,8 @@
         }
 
         const model = document.getElementById('vehicleModel').value;
+        const note = document.getElementById('noteClient').value.trim();
+
         document.getElementById('summaryContent').innerHTML = `
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px;">
                 <span style="color:var(--text-dim)">Service</span><span style="color:#fff">${state.selectedService}</span>
@@ -461,6 +465,7 @@
                 <span style="color:var(--text-dim)">Téléphone</span><span style="color:#fff">${tel}</span>
                 <span style="color:var(--text-dim)">Adresse</span><span style="color:#fff">${adr}</span>
                 <span style="color:var(--text-dim)">Date</span><span style="color:#fff">${date}</span>
+                ${note ? `<span style="color:var(--text-dim)">Note</span><span style="color:#fff">${note}</span>` : ''}
             </div>`;
 
         updateTotal();
@@ -470,17 +475,13 @@
     function goToStep(n) {
         document.querySelectorAll('#step1, #step2, #step3').forEach(s => s.classList.add('hidden'));
         document.getElementById('step' + n).classList.remove('hidden');
-
-        // Mettre à jour la barre de progression
         document.querySelectorAll('.step-dot').forEach(dot => {
             dot.classList.remove('active');
             if (parseInt(dot.dataset.step) <= n) dot.classList.add('active');
         });
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ✅ CORRECTION PRINCIPALE : soumission via fetch() au lieu d'un submit HTML classique
     async function submitForm() {
         const btn = document.getElementById('submitBtn');
         btn.disabled = true;
@@ -498,7 +499,8 @@
             nom: document.getElementById('nom').value.trim(),
             telephone: document.getElementById('telephone').value.trim(),
             adresse: document.getElementById('adresse').value.trim(),
-            date: document.getElementById('maDate').value
+            date: document.getElementById('maDate').value,
+            note_client: document.getElementById('noteClient').value.trim() || 'Aucune note'
         };
 
         try {
@@ -511,10 +513,9 @@
             const data = await response.json();
 
             if (data.success) {
-                // Cacher le formulaire et les steps, afficher le succès
                 document.getElementById('submissionForm').classList.add('hidden');
                 document.getElementById('stepsBar').classList.add('hidden');
-                document.querySelector('.notice').classList.add('hidden');
+                document.getElementById('mainNotice').classList.add('hidden');
                 document.getElementById('successMessage').classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
