@@ -35,9 +35,16 @@
             background-size: 60px 60px;
         }
 
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 0; opacity: 0.4;
+        }
+
         .wrap { max-width: 740px; margin: 0 auto; padding: 48px 24px 80px; position: relative; z-index: 1; }
 
-        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 48px; transition: color 0.2s; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 48px; transition: color 0.2s; text-decoration: none; }
         .back-link:hover { color: var(--cyan); }
 
         .page-header { text-align: center; margin-bottom: 56px; }
@@ -52,19 +59,21 @@
 
         .steps-bar { display: flex; align-items: center; gap: 0; margin-bottom: 48px; }
         .step-dot { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; position: relative; }
-        .step-dot:not(:last-child)::after { content: ''; position: absolute; top: 16px; left: 50%; right: -50%; height: 1px; background: var(--border); }
+        .step-dot:not(:last-child)::after { content: ''; position: absolute; top: 16px; left: 50%; right: -50%; height: 1px; background: var(--border); z-index: 0; }
         .step-dot.active:not(:last-child)::after { background: var(--cyan); }
-        .step-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-muted); position: relative; z-index: 1; }
+        .step-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-muted); position: relative; z-index: 1; transition: all 0.3s; }
         .step-dot.active .step-circle { background: var(--cyan); border-color: var(--cyan); color: var(--dark); box-shadow: 0 0 16px rgba(0,229,255,0.3); }
+        .step-label { font-size: 11px; color: var(--text-dim); }
+        .step-dot.active .step-label { color: var(--cyan); }
 
         .field { margin-bottom: 24px; }
         .field label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
-
         .field input, .field select, .field textarea {
             width: 100%; background: var(--dark-2); border: 1px solid var(--border); border-radius: 12px;
-            padding: 16px 20px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text); outline: none;
+            padding: 16px 20px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text);
+            outline: none; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
         }
-        .field input:focus, .field select:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); }
+        .field input:focus, .field select:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); background: rgba(0,229,255,0.02); }
 
         .vehicle-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
         .vtab { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all 0.2s; background: transparent; }
@@ -74,7 +83,7 @@
         .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         @media (max-width: 500px) { .service-grid { grid-template-columns: 1fr; } }
 
-        .service-option { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: all 0.2s; background: var(--dark-2); }
+        .service-option { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16,1,0.3,1); background: var(--dark-2); }
         .service-option:hover { border-color: var(--border-hover); background: rgba(0,229,255,0.03); }
         .service-option.selected { border-color: var(--cyan); background: rgba(0,229,255,0.06); box-shadow: 0 0 0 1px var(--cyan); }
 
@@ -83,30 +92,55 @@
         .service-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
 
         .forfait-option { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: all 0.2s; background: var(--dark-2); display: flex; align-items: center; justify-content: space-between; }
+        .forfait-option:hover { border-color: var(--border-hover); background: rgba(0,229,255,0.03); }
         .forfait-option.selected { border-color: var(--cyan); background: rgba(0,229,255,0.06); box-shadow: 0 0 0 1px var(--cyan); }
         .forfait-tier { font-size: 13px; color: var(--text-muted); }
         .forfait-p { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--cyan); }
 
-        .total-block { background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(0,180,210,0.04)); border: 1px solid var(--border-hover); border-radius: 16px; padding: 28px 32px; }
+        .total-block { background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(0,180,210,0.04)); border: 1px solid var(--border-hover); border-radius: 16px; padding: 28px 32px; position: relative; overflow: hidden; margin-bottom: 16px; }
+        .total-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
         .total-amount { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 52px; color: var(--cyan); letter-spacing: -0.04em; line-height: 1; }
+        .total-original { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-dim); text-decoration: line-through; margin-left: 12px; align-self: flex-end; padding-bottom: 4px; }
+        .discount-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.25); border-radius: 6px; padding: 5px 10px; font-size: 12px; color: var(--cyan); }
 
         .promo-row { display: flex; gap: 10px; }
-        .promo-row input { flex: 1; background: var(--dark-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; color: var(--text); text-transform: uppercase; }
-        .promo-apply { background: var(--cyan); color: var(--dark); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; padding: 14px 22px; border-radius: 10px; border: none; cursor: pointer; }
+        .promo-row input { flex: 1; background: var(--dark-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; color: var(--text); text-transform: uppercase; outline: none; }
+        .promo-row input:focus { border-color: var(--cyan); }
+        .promo-apply { background: var(--cyan); color: var(--dark); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; padding: 14px 22px; border-radius: 10px; border: none; cursor: pointer; white-space: nowrap; }
+        .promo-success { margin-top: 10px; font-size: 13px; color: #4ade80; }
+        .promo-error { margin-top: 10px; font-size: 13px; color: #f87171; }
 
         .submit-btn {
             width: 100%; background: var(--cyan); color: var(--dark); font-family: 'Syne', sans-serif; font-weight: 800;
             font-size: 16px; letter-spacing: 0.08em; padding: 20px; border-radius: 14px; border: none; cursor: pointer;
-            transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1); display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .submit-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,229,255,0.25); }
-        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         .hidden { display: none !important; }
 
         .qty-row { display: flex; align-items: center; gap: 16px; }
-        .qty-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .qty-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .qty-btn:hover { border-color: var(--cyan); color: var(--cyan); }
         .qty-display { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: #fff; min-width: 40px; text-align: center; }
+        .qty-label { font-size: 14px; color: var(--text-muted); }
+
+        /* SUCCESS */
+        .success-card { background: var(--surface); border: 1px solid rgba(0,229,255,0.25); border-radius: 24px; padding: 56px 40px; text-align: center; }
+        .success-icon { font-size: 56px; margin-bottom: 24px; }
+        .success-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #fff; margin-bottom: 12px; }
+        .success-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+        .success-notice { background: rgba(0,229,255,0.06); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; font-size: 13px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6; }
+        .back-home { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan); color: var(--dark); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; padding: 14px 28px; border-radius: 12px; text-decoration: none; transition: all 0.2s; }
+        .back-home:hover { background: #fff; }
+
+        @media (max-width: 600px) {
+            .card { padding: 24px 20px; }
+            .total-amount { font-size: 40px; }
+            .wrap { padding: 32px 16px 60px; }
+            .success-card { padding: 40px 24px; }
+        }
     </style>
 </head>
 <body>
@@ -133,27 +167,19 @@
         <div class="step-dot" data-step="3"><div class="step-circle">3</div><div class="step-label">Confirmer</div></div>
     </div>
 
-    <!-- ==================== FORMULAIRE (Web3Forms) ==================== -->
-    <form id="submissionForm" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a">
-        <input type="hidden" name="subject" value="Nouvelle demande de rendez-vous - ShineAutomobile">
-        <input type="hidden" name="from_name" value="ShineAutomobile">
-
-        <input type="hidden" name="service" id="serviceHidden">
-        <input type="hidden" name="montant_total" id="montantHidden">
-        <input type="hidden" name="code_promo" id="promoHidden" value="">
-        <input type="hidden" name="nombre_voitures" id="nbVoituresHidden" value="1">
+    <!-- FORMULAIRE -->
+    <form id="submissionForm">
 
         <!-- STEP 1 -->
         <div id="step1">
             <div class="card">
                 <div class="card-title">Type de service</div>
                 <div class="vehicle-tabs">
-                    <button type="button" class="vtab active" data-vehicle="sedan" onclick="switchVehicle('sedan', this)">Sedan</button>
-                    <button type="button" class="vtab" data-vehicle="suv" onclick="switchVehicle('suv', this)">VUS</button>
-                    <button type="button" class="vtab" data-vehicle="van" onclick="switchVehicle('van', this)">Van</button>
-                    <button type="button" class="vtab" data-vehicle="pickup" onclick="switchVehicle('pickup', this)">Pickup</button>
-                    <button type="button" class="vtab" data-vehicle="forfait" onclick="switchVehicle('forfait', this)">Forfaits</button>
+                    <button type="button" class="vtab active" onclick="switchVehicle('sedan', this)">Sedan</button>
+                    <button type="button" class="vtab" onclick="switchVehicle('suv', this)">VUS</button>
+                    <button type="button" class="vtab" onclick="switchVehicle('van', this)">Van</button>
+                    <button type="button" class="vtab" onclick="switchVehicle('pickup', this)">Pickup</button>
+                    <button type="button" class="vtab" onclick="switchVehicle('forfait', this)">Forfaits</button>
                 </div>
 
                 <!-- Sedan -->
@@ -178,9 +204,51 @@
                     <div class="service-option" data-service="Shampoing des Sièges SUV" data-price="50" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">50$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
                 </div>
 
-                <!-- Van, Pickup et Forfaits sont inclus de la même façon -->
-                <!-- (Pour ne pas rendre le message trop long, je les ai omis ici, mais ils sont identiques à ton code original) -->
+                <!-- Van -->
+                <div id="services-van" class="service-grid hidden">
+                    <div class="service-option" data-service="Lavage Extérieur Van" data-price="50" onclick="selectService(this)"><div class="service-name">Lavage Extérieur</div><div class="service-price">50$</div><div class="service-desc">Nettoyage complet extérieur</div></div>
+                    <div class="service-option" data-service="Lavage Extérieur Plus Van" data-price="60" onclick="selectService(this)"><div class="service-name">Lavage Extérieur Plus</div><div class="service-price">60$</div><div class="service-desc">Extérieur + finition détaillée</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Régulier Van" data-price="100" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">100$</div><div class="service-desc">Aspirateur + surfaces</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Super Van" data-price="150" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Super</div><div class="service-price">150$</div><div class="service-desc">Intérieur complet premium</div></div>
+                    <div class="service-option" data-service="Lavage Complet Régulier Van" data-price="150" data-eligible="true" onclick="selectService(this)"><div class="service-name">Lavage Complet Régulier</div><div class="service-price">150$</div><div class="service-desc">Extérieur + intérieur régulier</div></div>
+                    <div class="service-option" data-service="Lavage Complet Super Van" data-price="200" onclick="selectService(this)"><div class="service-name">Lavage Complet Super</div><div class="service-price">200$</div><div class="service-desc">Extérieur + intérieur premium</div></div>
+                    <div class="service-option" data-service="Shampoing des Sièges Van" data-price="75" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">75$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
+                </div>
 
+                <!-- Pickup -->
+                <div id="services-pickup" class="service-grid hidden">
+                    <div class="service-option" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectService(this)"><div class="service-name">Lavage Extérieur</div><div class="service-price">50$</div><div class="service-desc">Nettoyage complet extérieur</div></div>
+                    <div class="service-option" data-service="Lavage Extérieur Plus Pickup" data-price="60" onclick="selectService(this)"><div class="service-name">Lavage Extérieur Plus</div><div class="service-price">60$</div><div class="service-desc">Extérieur + finition détaillée</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Régulier Pickup" data-price="100" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">100$</div><div class="service-desc">Aspirateur + surfaces</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Super Pickup" data-price="150" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Super</div><div class="service-price">150$</div><div class="service-desc">Intérieur complet premium</div></div>
+                    <div class="service-option" data-service="Lavage Complet Régulier Pickup" data-price="150" data-eligible="true" onclick="selectService(this)"><div class="service-name">Lavage Complet Régulier</div><div class="service-price">150$</div><div class="service-desc">Extérieur + intérieur régulier</div></div>
+                    <div class="service-option" data-service="Lavage Complet Super Pickup" data-price="200" onclick="selectService(this)"><div class="service-name">Lavage Complet Super</div><div class="service-price">200$</div><div class="service-desc">Extérieur + intérieur premium</div></div>
+                    <div class="service-option" data-service="Shampoing des Sièges Pickup" data-price="50" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">50$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
+                </div>
+
+                <!-- Forfaits -->
+                <div id="services-forfait" class="hidden" style="flex-direction:column; gap:10px;">
+                    <div class="forfait-option" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Extérieur</div><div class="forfait-tier">2 à 4 voitures</div></div>
+                        <div class="forfait-p">30$<span style="font-size:14px;font-weight:400;">/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Extérieur</div><div class="forfait-tier">5 à 10 voitures</div></div>
+                        <div class="forfait-p">25$<span style="font-size:14px;font-weight:400;">/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Complet</div><div class="forfait-tier">2 voitures</div></div>
+                        <div class="forfait-p">95$<span style="font-size:14px;font-weight:400;">/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Complet</div><div class="forfait-tier">3 à 4 voitures</div></div>
+                        <div class="forfait-p">90$<span style="font-size:14px;font-weight:400;">/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Complet</div><div class="forfait-tier">5 voitures et plus</div></div>
+                        <div class="forfait-p">80$<span style="font-size:14px;font-weight:400;">/voit.</span></div>
+                    </div>
+                </div>
             </div>
 
             <div class="card">
@@ -197,7 +265,7 @@
                 <div class="card-title">Modèle du véhicule</div>
                 <div class="field">
                     <label>Marque et modèle *</label>
-                    <input type="text" id="vehicleModel" placeholder="Ex: Toyota Camry 2022" required>
+                    <input type="text" id="vehicleModel" placeholder="Ex: Toyota Camry 2022">
                 </div>
             </div>
 
@@ -206,14 +274,55 @@
             </button>
         </div>
 
-        <!-- STEP 2 et STEP 3 restent comme dans ton code original -->
-        <!-- ... (ajoute tes step2 et step3 ici) ... -->
+        <!-- STEP 2 -->
+        <div id="step2" class="hidden">
+            <div class="card">
+                <div class="card-title">Vos coordonnées</div>
+                <div class="field"><label>Nom complet *</label><input type="text" id="nom" placeholder="Jean Tremblay"></div>
+                <div class="field"><label>Numéro de téléphone *</label><input type="tel" id="telephone" placeholder="873-662-3813"></div>
+                <div class="field"><label>Adresse domicile *</label><input type="text" id="adresse" placeholder="123 rue Principale, Sherbrooke, QC"></div>
+                <div class="field"><label>Date souhaitée *</label><input type="date" id="maDate" min="2026-06-01"></div>
+            </div>
 
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="goToStep(1)" style="flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text-muted); font-family:'Syne',sans-serif; font-weight:700; font-size:14px; padding:18px; border-radius:14px; cursor:pointer;">← Retour</button>
+                <button type="button" class="submit-btn" style="flex:2;" onclick="goToStep3()">Continuer <i class="fa-solid fa-arrow-right text-sm"></i></button>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
         <div id="step3" class="hidden">
-            <!-- Résumé, Code promo, Total... -->
-            <button type="submit" class="submit-btn" id="submitBtn">
-                Envoyer la demande <i class="fa-solid fa-paper-plane text-sm"></i>
-            </button>
+            <div class="card">
+                <div class="card-title">Résumé de la réservation</div>
+                <div id="summaryContent" style="font-size:14px; color:var(--text-muted); line-height:2;"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Code promo</div>
+                <div class="promo-row">
+                    <input type="text" id="promoCode" maxlength="10" placeholder="EX: SHINE10">
+                    <button type="button" class="promo-apply" onclick="applyPromoCode()">Appliquer</button>
+                </div>
+                <div id="promoMsg"></div>
+            </div>
+
+            <div class="total-block">
+                <div class="total-label">Total estimé</div>
+                <div style="display:flex; align-items:baseline; gap:4px;">
+                    <div class="total-amount" id="totalAmount">—</div>
+                    <div class="hidden total-original" id="originalAmount"></div>
+                </div>
+                <div id="discountBadge" class="discount-badge hidden">
+                    <i class="fa-solid fa-check text-xs"></i> 10% de rabais appliqué
+                </div>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="goToStep(2)" style="flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text-muted); font-family:'Syne',sans-serif; font-weight:700; font-size:14px; padding:18px; border-radius:14px; cursor:pointer;">← Retour</button>
+                <button type="button" class="submit-btn" style="flex:2;" id="submitBtn" onclick="submitForm()">
+                    Envoyer la demande <i class="fa-solid fa-paper-plane text-sm"></i>
+                </button>
+            </div>
         </div>
     </form>
 
@@ -237,10 +346,15 @@
 
 <script>
     let state = {
+        vehicle: 'sedan',
         selectedService: null,
         selectedPrice: 0,
+        isEligible: false,
+        isForfait: false,
         qty: 1,
-        finalTotal: 0
+        baseTotal: 0,
+        finalTotal: 0,
+        promoApplied: false
     };
 
     function switchVehicle(v, btn) {
@@ -254,6 +368,7 @@
             const el = document.getElementById('services-' + id);
             if (el) el.classList.add('hidden');
         });
+
         const forfaitEl = document.getElementById('services-forfait');
         if (v === 'forfait') {
             forfaitEl.classList.remove('hidden');
@@ -265,6 +380,7 @@
             if (el) el.classList.remove('hidden');
         }
         document.querySelectorAll('.service-option, .forfait-option').forEach(o => o.classList.remove('selected'));
+        updateTotal();
     }
 
     function selectService(el) {
@@ -272,25 +388,55 @@
         el.classList.add('selected');
         state.selectedService = el.dataset.service;
         state.selectedPrice = parseInt(el.dataset.price);
+        state.isEligible = el.dataset.eligible === 'true';
+        state.isForfait = el.dataset.forfait === 'true';
+        state.promoApplied = false;
+        document.getElementById('promoMsg').innerHTML = '';
+        document.getElementById('promoCode').value = '';
         updateTotal();
     }
 
     function changeQty(d) {
         state.qty = Math.max(1, Math.min(10, state.qty + d));
         document.getElementById('qtyDisplay').textContent = state.qty;
-        document.getElementById('nbVoituresHidden').value = state.qty;
         updateTotal();
     }
 
     function updateTotal() {
-        state.finalTotal = state.selectedPrice * state.qty;
-        document.getElementById('totalAmount').textContent = state.finalTotal > 0 ? state.finalTotal + '$' : '—';
+        state.baseTotal = state.selectedPrice * state.qty;
+        state.finalTotal = state.promoApplied ? Math.round(state.baseTotal * 0.9) : state.baseTotal;
+        document.getElementById('totalAmount').textContent = state.baseTotal > 0 ? state.finalTotal + '$' : '—';
+
+        const origEl = document.getElementById('originalAmount');
+        const badge = document.getElementById('discountBadge');
+        if (state.promoApplied && state.baseTotal > 0) {
+            origEl.textContent = state.baseTotal + '$';
+            origEl.classList.remove('hidden');
+            badge.classList.remove('hidden');
+        } else {
+            origEl.classList.add('hidden');
+            badge.classList.add('hidden');
+        }
+    }
+
+    function applyPromoCode() {
+        const code = document.getElementById('promoCode').value.trim().toUpperCase();
+        const msgEl = document.getElementById('promoMsg');
+
+        if (code === 'SHINE10') {
+            state.promoApplied = true;
+            updateTotal();
+            msgEl.innerHTML = '<div class="promo-success"><i class="fa-solid fa-check"></i> Code appliqué avec succès ! −10%</div>';
+        } else {
+            state.promoApplied = false;
+            updateTotal();
+            msgEl.innerHTML = '<div class="promo-error"><i class="fa-solid fa-xmark"></i> Code promo invalide.</div>';
+        }
     }
 
     function goToStep2() {
         if (!state.selectedService) { alert('Veuillez sélectionner un service.'); return; }
         if (!document.getElementById('vehicleModel').value.trim()) { alert('Veuillez entrer le modèle de votre véhicule.'); return; }
-        document.getElementById('serviceHidden').value = state.selectedService;
         goToStep(2);
     }
 
@@ -317,38 +463,71 @@
                 <span style="color:var(--text-dim)">Date</span><span style="color:#fff">${date}</span>
             </div>`;
 
-        const currentTotal = state.finalTotal || (state.selectedPrice * state.qty);
-        document.getElementById('totalAmount').textContent = currentTotal + '$';
-        document.getElementById('montantHidden').value = currentTotal + '$';
+        updateTotal();
         goToStep(3);
     }
 
     function goToStep(n) {
         document.querySelectorAll('#step1, #step2, #step3').forEach(s => s.classList.add('hidden'));
         document.getElementById('step' + n).classList.remove('hidden');
+
+        // Mettre à jour la barre de progression
+        document.querySelectorAll('.step-dot').forEach(dot => {
+            dot.classList.remove('active');
+            if (parseInt(dot.dataset.step) <= n) dot.classList.add('active');
+        });
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ==================== BOUTON ENVOYER ====================
-    document.getElementById('submissionForm').addEventListener('submit', function() {
-        // Mise à jour finale des champs cachés
-        document.getElementById('serviceHidden').value = state.selectedService || '';
-        document.getElementById('nbVoituresHidden').value = state.qty;
-
-        const currentTotal = state.finalTotal || (state.selectedPrice * state.qty || 0);
-        document.getElementById('montantHidden').value = currentTotal + '$';
-
+    // ✅ CORRECTION PRINCIPALE : soumission via fetch() au lieu d'un submit HTML classique
+    async function submitForm() {
         const btn = document.getElementById('submitBtn');
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
-        }
-        // Pas de preventDefault() → Web3Forms reçoit le formulaire normalement
-    });
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
 
-    window.onload = function() {
-        // Ton code d'initialisation si tu as un paramètre ?service=...
-    };
+        const payload = {
+            access_key: 'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',
+            subject: 'Nouvelle demande de rendez-vous - ShineAutomobile',
+            from_name: 'ShineAutomobile',
+            service: state.selectedService || '',
+            montant_total: state.finalTotal + '$',
+            code_promo: document.getElementById('promoCode').value.trim().toUpperCase() || '',
+            nombre_voitures: state.qty,
+            modele_vehicule: document.getElementById('vehicleModel').value.trim(),
+            nom: document.getElementById('nom').value.trim(),
+            telephone: document.getElementById('telephone').value.trim(),
+            adresse: document.getElementById('adresse').value.trim(),
+            date: document.getElementById('maDate').value
+        };
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Cacher le formulaire et les steps, afficher le succès
+                document.getElementById('submissionForm').classList.add('hidden');
+                document.getElementById('stepsBar').classList.add('hidden');
+                document.querySelector('.notice').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                alert('Une erreur est survenue. Veuillez réessayer ou nous appeler au 873-662-3813.');
+                btn.disabled = false;
+                btn.innerHTML = 'Envoyer la demande <i class="fa-solid fa-paper-plane text-sm"></i>';
+            }
+        } catch (err) {
+            alert('Erreur de connexion. Veuillez réessayer ou nous appeler au 873-662-3813.');
+            btn.disabled = false;
+            btn.innerHTML = 'Envoyer la demande <i class="fa-solid fa-paper-plane text-sm"></i>';
+        }
+    }
 </script>
 </body>
 </html>
