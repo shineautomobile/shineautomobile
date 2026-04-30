@@ -44,9 +44,81 @@
 
         .wrap { max-width: 740px; margin: 0 auto; padding: 48px 24px 80px; position: relative; z-index: 1; }
 
-        /* Tous les styles restent identiques à ton code original */
-        /* (Je garde tes styles tels quels pour ne pas alourdir) */
-        /* ... [Tous tes styles sont conservés tels quels] ... */
+        /* === Tous tes styles originaux (conservés) === */
+        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 48px; transition: color 0.2s; }
+        .back-link:hover { color: var(--cyan); }
+
+        .page-header { text-align: center; margin-bottom: 56px; }
+        .page-label { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan); background: rgba(0,229,255,0.08); padding: 6px 14px; border-radius: 6px; margin-bottom: 20px; }
+        .page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(36px, 6vw, 58px); letter-spacing: -0.03em; color: #fff; line-height: 1; }
+        .page-sub { font-size: 15px; color: var(--text-muted); margin-top: 14px; }
+
+        .notice { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2); border-radius: 12px; padding: 14px 20px; font-size: 13px; color: #fbbf24; margin-bottom: 32px; display: flex; align-items: center; gap: 10px; }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px; margin-bottom: 16px; }
+        .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 24px; }
+
+        .steps-bar { display: flex; align-items: center; gap: 0; margin-bottom: 48px; }
+        .step-dot { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; position: relative; }
+        .step-dot:not(:last-child)::after { content: ''; position: absolute; top: 16px; left: 50%; right: -50%; height: 1px; background: var(--border); z-index: 0; }
+        .step-dot.active:not(:last-child)::after { background: var(--cyan); }
+        .step-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-muted); position: relative; z-index: 1; transition: all 0.3s; }
+        .step-dot.active .step-circle { background: var(--cyan); border-color: var(--cyan); color: var(--dark); box-shadow: 0 0 16px rgba(0,229,255,0.3); }
+        .step-dot.done .step-circle { background: rgba(0,229,255,0.1); border-color: var(--cyan); color: var(--cyan); }
+        .step-label { font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; }
+        .step-dot.active .step-label { color: var(--cyan); }
+
+        .field { margin-bottom: 24px; }
+        .field label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+
+        .field input, .field select, .field textarea {
+            width: 100%; background: var(--dark-2); border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px 20px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text);
+            outline: none; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+        }
+        .field input:focus, .field select:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); background: rgba(0,229,255,0.02); }
+
+        .vehicle-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .vtab { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all 0.2s; background: transparent; }
+        .vtab:hover { border-color: var(--border-hover); color: #fff; }
+        .vtab.active { background: var(--cyan); color: var(--dark); border-color: var(--cyan); }
+
+        .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        @media (max-width: 500px) { .service-grid { grid-template-columns: 1fr; } }
+
+        .service-option { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16,1,0.3,1); background: var(--dark-2); }
+        .service-option:hover { border-color: var(--border-hover); background: rgba(0,229,255,0.03); }
+        .service-option.selected { border-color: var(--cyan); background: rgba(0,229,255,0.06); box-shadow: 0 0 0 1px var(--cyan); }
+
+        .service-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .service-price { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--cyan); }
+        .service-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+
+        .forfait-option { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: all 0.2s; background: var(--dark-2); display: flex; align-items: center; justify-content: space-between; }
+        .forfait-option.selected { border-color: var(--cyan); background: rgba(0,229,255,0.06); box-shadow: 0 0 0 1px var(--cyan); }
+        .forfait-tier { font-size: 13px; color: var(--text-muted); }
+        .forfait-p { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--cyan); }
+
+        .total-block { background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(0,180,210,0.04)); border: 1px solid var(--border-hover); border-radius: 16px; padding: 28px 32px; position: relative; overflow: hidden; }
+        .total-amount { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 52px; color: var(--cyan); letter-spacing: -0.04em; line-height: 1; }
+
+        .promo-row { display: flex; gap: 10px; }
+        .promo-row input { flex: 1; background: var(--dark-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; color: var(--text); text-transform: uppercase; }
+        .promo-apply { background: var(--cyan); color: var(--dark); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; padding: 14px 22px; border-radius: 10px; border: none; cursor: pointer; }
+
+        .submit-btn {
+            width: 100%; background: var(--cyan); color: var(--dark); font-family: 'Syne', sans-serif; font-weight: 800; 
+            font-size: 16px; letter-spacing: 0.08em; padding: 20px; border-radius: 14px; border: none; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1); display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .submit-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,229,255,0.25); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .hidden { display: none !important; }
+
+        .qty-row { display: flex; align-items: center; gap: 16px; }
+        .qty-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .qty-display { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: #fff; min-width: 40px; text-align: center; }
     </style>
 </head>
 <body>
@@ -56,44 +128,29 @@
         <i class="fa-solid fa-arrow-left text-xs"></i> Retour à l'accueil
     </a>
 
-    <!-- HEADER -->
     <div class="page-header">
         <div class="page-label">Réservation</div>
         <h1 class="page-title">Prendre<br>Rendez-vous</h1>
         <p class="page-sub">ShineAutomobile — Lavage auto à domicile</p>
     </div>
 
-    <!-- NOTICE -->
     <div class="notice">
         <i class="fa-solid fa-triangle-exclamation text-xs flex-shrink-0"></i>
         Des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke.
     </div>
 
-    <!-- STEPS -->
     <div class="steps-bar" id="stepsBar">
-        <div class="step-dot active" data-step="1">
-            <div class="step-circle">1</div>
-            <div class="step-label">Service</div>
-        </div>
-        <div class="step-dot" data-step="2">
-            <div class="step-circle">2</div>
-            <div class="step-label">Infos</div>
-        </div>
-        <div class="step-dot" data-step="3">
-            <div class="step-circle">3</div>
-            <div class="step-label">Confirmer</div>
-        </div>
+        <div class="step-dot active" data-step="1"><div class="step-circle">1</div><div class="step-label">Service</div></div>
+        <div class="step-dot" data-step="2"><div class="step-circle">2</div><div class="step-label">Infos</div></div>
+        <div class="step-dot" data-step="3"><div class="step-circle">3</div><div class="step-label">Confirmer</div></div>
     </div>
 
-    <!-- ==================== FORMULAIRE MODIFIÉ (Web3Forms) ==================== -->
+    <!-- ==================== FORMULAIRE COMPLET (Web3Forms) ==================== -->
     <form id="submissionForm" action="https://api.web3forms.com/submit" method="POST">
-        
-        <!-- Clé Web3Forms -->
         <input type="hidden" name="access_key" value="dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a">
         <input type="hidden" name="subject" value="Nouvelle demande de rendez-vous - ShineAutomobile">
         <input type="hidden" name="from_name" value="ShineAutomobile">
 
-        <!-- Champs cachés -->
         <input type="hidden" name="service" id="serviceHidden">
         <input type="hidden" name="montant_total" id="montantHidden">
         <input type="hidden" name="code_promo" id="promoHidden" value="">
@@ -111,40 +168,76 @@
                     <button type="button" class="vtab" data-vehicle="forfait" onclick="switchVehicle('forfait', this)">Forfaits</button>
                 </div>
 
-                <!-- Services Sedan -->
+                <!-- Sedan -->
                 <div id="services-sedan" class="service-grid">
-                    <div class="service-option" data-service="Lavage Extérieur Sedan" data-price="40" onclick="selectService(this)">
-                        <div class="service-name">Lavage Extérieur</div><div class="service-price">40$</div><div class="service-desc">Nettoyage complet extérieur</div>
-                    </div>
-                    <div class="service-option" data-service="Lavage Extérieur Plus Sedan" data-price="50" onclick="selectService(this)">
-                        <div class="service-name">Lavage Extérieur Plus</div><div class="service-price">50$</div><div class="service-desc">Extérieur + finition détaillée</div>
-                    </div>
-                    <div class="service-option" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectService(this)">
-                        <div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">75$</div><div class="service-desc">Aspirateur + surfaces</div>
-                    </div>
-                    <div class="service-option" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectService(this)">
-                        <div class="service-name">Lavage Intérieur Super</div><div class="service-price">125$</div><div class="service-desc">Intérieur complet premium</div>
-                    </div>
-                    <div class="service-option" data-service="Lavage Complet Régulier Sedan" data-price="100" data-eligible="true" onclick="selectService(this)">
-                        <div class="service-name">Lavage Complet Régulier</div><div class="service-price">100$</div><div class="service-desc">Extérieur + intérieur régulier</div>
-                    </div>
-                    <div class="service-option" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectService(this)">
-                        <div class="service-name">Lavage Complet Super</div><div class="service-price">175$</div><div class="service-desc">Extérieur + intérieur premium</div>
-                    </div>
-                    <div class="service-option" data-service="Shampoing des Sièges Sedan" data-price="50" onclick="selectService(this)">
-                        <div class="service-name">Shampoing des Sièges</div><div class="service-price">50$</div><div class="service-desc">Nettoyage profond des sièges</div>
-                    </div>
+                    <div class="service-option" data-service="Lavage Extérieur Sedan" data-price="40" onclick="selectService(this)"><div class="service-name">Lavage Extérieur</div><div class="service-price">40$</div><div class="service-desc">Nettoyage complet extérieur</div></div>
+                    <div class="service-option" data-service="Lavage Extérieur Plus Sedan" data-price="50" onclick="selectService(this)"><div class="service-name">Lavage Extérieur Plus</div><div class="service-price">50$</div><div class="service-desc">Extérieur + finition détaillée</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">75$</div><div class="service-desc">Aspirateur + surfaces</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Super</div><div class="service-price">125$</div><div class="service-desc">Intérieur complet premium</div></div>
+                    <div class="service-option" data-service="Lavage Complet Régulier Sedan" data-price="100" data-eligible="true" onclick="selectService(this)"><div class="service-name">Lavage Complet Régulier</div><div class="service-price">100$</div><div class="service-desc">Extérieur + intérieur régulier</div></div>
+                    <div class="service-option" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectService(this)"><div class="service-name">Lavage Complet Super</div><div class="service-price">175$</div><div class="service-desc">Extérieur + intérieur premium</div></div>
+                    <div class="service-option" data-service="Shampoing des Sièges Sedan" data-price="50" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">50$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
                 </div>
 
-                <!-- Services SUV, Van, Pickup et Forfaits (identiques à ton code) -->
-                <!-- Je les ai inclus tous pour que ce soit complet -->
-                <div id="services-suv" class="service-grid hidden"> ... (mêmes options que dans ton code) </div>
-                <div id="services-van" class="service-grid hidden"> ... </div>
-                <div id="services-pickup" class="service-grid hidden"> ... </div>
-                <div id="services-forfait" class="hidden" style="display:none; flex-direction:column; gap:10px;"> ... </div>
+                <!-- SUV -->
+                <div id="services-suv" class="service-grid hidden">
+                    <div class="service-option" data-service="Lavage Extérieur SUV" data-price="40" onclick="selectService(this)"><div class="service-name">Lavage Extérieur</div><div class="service-price">40$</div><div class="service-desc">Nettoyage complet extérieur</div></div>
+                    <div class="service-option" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectService(this)"><div class="service-name">Lavage Extérieur Plus</div><div class="service-price">50$</div><div class="service-desc">Extérieur + finition détaillée</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Régulier SUV" data-price="80" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">80$</div><div class="service-desc">Aspirateur + surfaces</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Super</div><div class="service-price">130$</div><div class="service-desc">Intérieur complet premium</div></div>
+                    <div class="service-option" data-service="Lavage Complet Régulier SUV" data-price="115" data-eligible="true" onclick="selectService(this)"><div class="service-name">Lavage Complet Régulier</div><div class="service-price">115$</div><div class="service-desc">Extérieur + intérieur régulier</div></div>
+                    <div class="service-option" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectService(this)"><div class="service-name">Lavage Complet Super</div><div class="service-price">180$</div><div class="service-desc">Extérieur + intérieur premium</div></div>
+                    <div class="service-option" data-service="Shampoing des Sièges SUV" data-price="50" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">50$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
+                </div>
+
+                <!-- Van -->
+                <div id="services-van" class="service-grid hidden">
+                    <div class="service-option" data-service="Lavage Extérieur Van" data-price="50" onclick="selectService(this)"><div class="service-name">Lavage Extérieur</div><div class="service-price">50$</div><div class="service-desc">Nettoyage complet extérieur</div></div>
+                    <div class="service-option" data-service="Lavage Extérieur Plus Van" data-price="60" onclick="selectService(this)"><div class="service-name">Lavage Extérieur Plus</div><div class="service-price">60$</div><div class="service-desc">Extérieur + finition détaillée</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Régulier Van" data-price="100" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">100$</div><div class="service-desc">Aspirateur + surfaces</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Super Van" data-price="150" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Super</div><div class="service-price">150$</div><div class="service-desc">Intérieur complet premium</div></div>
+                    <div class="service-option" data-service="Lavage Complet Régulier Van" data-price="150" data-eligible="true" onclick="selectService(this)"><div class="service-name">Lavage Complet Régulier</div><div class="service-price">150$</div><div class="service-desc">Extérieur + intérieur régulier</div></div>
+                    <div class="service-option" data-service="Lavage Complet Super Van" data-price="200" onclick="selectService(this)"><div class="service-name">Lavage Complet Super</div><div class="service-price">200$</div><div class="service-desc">Extérieur + intérieur premium</div></div>
+                    <div class="service-option" data-service="Shampoing des Sièges Van" data-price="75" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">75$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
+                </div>
+
+                <!-- Pickup -->
+                <div id="services-pickup" class="service-grid hidden">
+                    <div class="service-option" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectService(this)"><div class="service-name">Lavage Extérieur</div><div class="service-price">50$</div><div class="service-desc">Nettoyage complet extérieur</div></div>
+                    <div class="service-option" data-service="Lavage Extérieur Plus Pickup" data-price="60" onclick="selectService(this)"><div class="service-name">Lavage Extérieur Plus</div><div class="service-price">60$</div><div class="service-desc">Extérieur + finition détaillée</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Régulier Pickup" data-price="100" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Régulier</div><div class="service-price">100$</div><div class="service-desc">Aspirateur + surfaces</div></div>
+                    <div class="service-option" data-service="Lavage Intérieur Super Pickup" data-price="150" onclick="selectService(this)"><div class="service-name">Lavage Intérieur Super</div><div class="service-price">150$</div><div class="service-desc">Intérieur complet premium</div></div>
+                    <div class="service-option" data-service="Lavage Complet Régulier Pickup" data-price="150" data-eligible="true" onclick="selectService(this)"><div class="service-name">Lavage Complet Régulier</div><div class="service-price">150$</div><div class="service-desc">Extérieur + intérieur régulier</div></div>
+                    <div class="service-option" data-service="Lavage Complet Super Pickup" data-price="200" onclick="selectService(this)"><div class="service-name">Lavage Complet Super</div><div class="service-price">200$</div><div class="service-desc">Extérieur + intérieur premium</div></div>
+                    <div class="service-option" data-service="Shampoing des Sièges Pickup" data-price="50" onclick="selectService(this)"><div class="service-name">Shampoing des Sièges</div><div class="service-price">50$</div><div class="service-desc">Nettoyage profond des sièges</div></div>
+                </div>
+
+                <!-- Forfaits -->
+                <div id="services-forfait" class="hidden" style="display:none; flex-direction:column; gap:10px;">
+                    <div class="forfait-option" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Extérieur</div><div class="forfait-tier">2 à 4 voitures</div></div>
+                        <div class="forfait-p">30$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Extérieur</div><div class="forfait-tier">5 à 10 voitures</div></div>
+                        <div class="forfait-p">25$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Complet</div><div class="forfait-tier">2 voitures</div></div>
+                        <div class="forfait-p">95$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Complet</div><div class="forfait-tier">3 à 4 voitures</div></div>
+                        <div class="forfait-p">90$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectService(this)">
+                        <div><div class="service-name">Forfait Complet</div><div class="forfait-tier">5 voitures et plus</div></div>
+                        <div class="forfait-p">80$<span>/voit.</span></div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Nombre de véhicules + Modèle -->
+            <!-- Nombre de véhicules -->
             <div class="card">
                 <div class="card-title">Nombre de véhicules</div>
                 <div class="qty-row">
@@ -155,6 +248,7 @@
                 </div>
             </div>
 
+            <!-- Modèle véhicule -->
             <div class="card">
                 <div class="card-title">Modèle du véhicule</div>
                 <div class="field">
@@ -168,32 +262,78 @@
             </button>
         </div>
 
-        <!-- STEP 2 et STEP 3 restent identiques à ton code original -->
-        <!-- (Je les ai gardés tels quels) -->
-
         <!-- STEP 2 -->
         <div id="step2" class="hidden">
-            <!-- ... ton contenu step2 ... -->
+            <div class="card">
+                <div class="card-title">Vos coordonnées</div>
+                <div class="field"><label>Nom complet *</label><input type="text" name="nom" id="nom" required placeholder="Jean Tremblay"></div>
+                <div class="field"><label>Numéro de téléphone *</label><input type="tel" name="telephone" id="telephone" required placeholder="873-662-3813"></div>
+                <div class="field"><label>Adresse domicile *</label><input type="text" name="adresse" id="adresse" required placeholder="123 rue Principale, Sherbrooke, QC"></div>
+                <div class="field"><label>Date souhaitée *</label><input type="date" name="date" id="maDate" required min="2026-06-01"></div>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:0;">
+                <button type="button" onclick="goToStep(1)" style="flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text-muted); font-family:'Syne',sans-serif; font-weight:700; font-size:14px; padding:18px; border-radius:14px; cursor:pointer;">← Retour</button>
+                <button type="button" class="submit-btn" style="flex:2; margin-top:0;" onclick="goToStep3()">Continuer <i class="fa-solid fa-arrow-right text-sm"></i></button>
+            </div>
         </div>
 
         <!-- STEP 3 -->
         <div id="step3" class="hidden">
-            <!-- ... ton contenu step3 avec résumé, promo, total et bouton submit ... -->
-            <button type="submit" class="submit-btn" style="flex:2; margin-top:0;" id="submitBtn">
-                Envoyer la demande <i class="fa-solid fa-paper-plane text-sm"></i>
-            </button>
+            <div class="card" id="summaryCard">
+                <div class="card-title">Résumé de la réservation</div>
+                <div id="summaryContent" style="font-size:14px; color:var(--text-muted); line-height:2;"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Code promo</div>
+                <div class="promo-row">
+                    <input type="text" id="promoCode" maxlength="10" placeholder="EX: SHINE10">
+                    <button type="button" class="promo-apply" onclick="applyPromoCode()">Appliquer</button>
+                </div>
+                <div id="promoMsg"></div>
+            </div>
+
+            <div class="total-block" style="margin-bottom:16px;">
+                <div class="total-label">Total estimé</div>
+                <div style="display:flex; align-items:baseline; gap:4px;">
+                    <div class="total-amount" id="totalAmount">—</div>
+                    <div class="total-original hidden" id="originalAmount"></div>
+                </div>
+                <div id="discountBadge" class="discount-badge hidden">
+                    <i class="fa-solid fa-check text-xs"></i> 10% de rabais appliqué
+                </div>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="button" onclick="goToStep(2)" style="flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text-muted); font-family:'Syne',sans-serif; font-weight:700; font-size:14px; padding:18px; border-radius:14px; cursor:pointer;">← Retour</button>
+                <button type="submit" class="submit-btn" style="flex:2; margin-top:0;" id="submitBtn">
+                    Envoyer la demande <i class="fa-solid fa-paper-plane text-sm"></i>
+                </button>
+            </div>
         </div>
     </form>
 
     <!-- SUCCESS -->
     <div id="successMessage" class="hidden">
-        <!-- Ton message de succès -->
+        <div class="success-card">
+            <div class="success-icon">✅</div>
+            <div class="success-title">Demande envoyée !</div>
+            <div class="success-sub">Votre demande a bien été reçue. Vous serez contacté dans les prochaines 24 heures.</div>
+            <div class="success-notice">
+                <strong>Note :</strong> Si vous n'avez pas de nouvelles dans les <strong>24 prochaines heures</strong>,
+                veuillez nous appeler au <strong style="color:var(--cyan)">873-662-3813</strong>.
+            </div>
+            <a href="index.html" class="back-home">
+                <i class="fa-solid fa-arrow-left text-xs"></i> Retour à l'accueil
+            </a>
+        </div>
     </div>
 
 </div>
 
 <script>
-    // SCRIPT COMPLET - Prêt à l'emploi
+    // ── STATE ──
     let state = {
         step: 1,
         vehicle: 'sedan',
@@ -234,4 +374,155 @@
 
     function selectService(el) {
         document.querySelectorAll('.service-option, .forfait-option').forEach(o => o.classList.remove('selected'));
-        el.classList
+        el.classList.add('selected');
+        state.selectedService = el.dataset.service;
+        state.selectedPrice = parseInt(el.dataset.price);
+        state.isEligible = el.dataset.eligible === 'true';
+        state.isForfait = el.dataset.forfait === 'true';
+        updateTotal();
+    }
+
+    function changeQty(d) {
+        state.qty = Math.max(1, Math.min(10, state.qty + d));
+        document.getElementById('qtyDisplay').textContent = state.qty;
+        document.getElementById('nbVoituresHidden').value = state.qty;
+        updateTotal();
+    }
+
+    function updateTotal() {
+        state.finalTotal = state.selectedPrice * state.qty;
+        document.getElementById('totalAmount').textContent = state.finalTotal > 0 ? state.finalTotal + '$' : '—';
+        document.getElementById('originalAmount').classList.add('hidden');
+        document.getElementById('discountBadge').classList.add('hidden');
+    }
+
+    function applyPromoCode() {
+        const code = document.getElementById('promoCode').value.trim().toUpperCase();
+        const dateStr = document.getElementById('maDate').value;
+        const msgEl = document.getElementById('promoMsg');
+        const base = state.selectedPrice * state.qty;
+
+        document.getElementById('originalAmount').classList.add('hidden');
+        document.getElementById('discountBadge').classList.add('hidden');
+
+        if (code === 'SHINE10') {
+            if (!state.isEligible) {
+                msgEl.innerHTML = '<div class="promo-error">⚠ Le code SHINE10 est valide uniquement sur les Lavage Complet Régulier.</div>';
+            } else if (!dateStr) {
+                msgEl.innerHTML = '<div class="promo-error">⚠ Sélectionnez une date pour appliquer le code.</div>';
+            } else {
+                const d = new Date(dateStr);
+                const s = new Date(2026, 5, 1), e = new Date(2026, 5, 10);
+                if (d >= s && d <= e) {
+                    state.finalTotal = Math.round(base * 0.9);
+                    document.getElementById('originalAmount').textContent = base + '$';
+                    document.getElementById('originalAmount').classList.remove('hidden');
+                    document.getElementById('discountBadge').classList.remove('hidden');
+                    document.getElementById('totalAmount').textContent = state.finalTotal + '$';
+                    document.getElementById('promoHidden').value = code;
+                    msgEl.innerHTML = '<div class="promo-success">✓ Code appliqué avec succès !</div>';
+                } else {
+                    msgEl.innerHTML = '<div class="promo-error">⚠ Le code SHINE10 est valide uniquement du 1er au 10 juin 2026.</div>';
+                }
+            }
+        } else {
+            msgEl.innerHTML = '<div class="promo-error">⚠ Code promo invalide.</div>';
+        }
+        document.getElementById('montantHidden').value = state.finalTotal + '$';
+    }
+
+    function updateStepsBar(step) {
+        document.querySelectorAll('.step-dot').forEach(dot => {
+            const n = parseInt(dot.dataset.step);
+            dot.classList.remove('active', 'done');
+            if (n === step) dot.classList.add('active');
+            else if (n < step) dot.classList.add('done');
+        });
+    }
+
+    function goToStep(n) {
+        document.querySelectorAll('#step1, #step2, #step3').forEach(s => s.classList.add('hidden'));
+        document.getElementById('step' + n).classList.remove('hidden');
+        state.step = n;
+        updateStepsBar(n);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToStep2() {
+        if (!state.selectedService) { alert('Veuillez sélectionner un service.'); return; }
+        if (!document.getElementById('vehicleModel').value.trim()) { alert('Veuillez entrer le modèle de votre véhicule.'); return; }
+        document.getElementById('serviceHidden').value = state.selectedService;
+        goToStep(2);
+    }
+
+    function goToStep3() {
+        const nom = document.getElementById('nom').value.trim();
+        const tel = document.getElementById('telephone').value.trim();
+        const adr = document.getElementById('adresse').value.trim();
+        const date = document.getElementById('maDate').value;
+
+        if (!nom || !tel || !adr || !date) {
+            alert('Veuillez remplir tous les champs obligatoires.');
+            return;
+        }
+
+        const model = document.getElementById('vehicleModel').value;
+        document.getElementById('summaryContent').innerHTML = `
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px;">
+                <span style="color:var(--text-dim)">Service</span><span style="color:#fff">${state.selectedService}</span>
+                <span style="color:var(--text-dim)">Véhicule</span><span style="color:#fff">${model}</span>
+                <span style="color:var(--text-dim)">Quantité</span><span style="color:#fff">${state.qty} véhicule(s)</span>
+                <span style="color:var(--text-dim)">Nom</span><span style="color:#fff">${nom}</span>
+                <span style="color:var(--text-dim)">Téléphone</span><span style="color:#fff">${tel}</span>
+                <span style="color:var(--text-dim)">Adresse</span><span style="color:#fff">${adr}</span>
+                <span style="color:var(--text-dim)">Date</span><span style="color:#fff">${date}</span>
+            </div>`;
+
+        const currentTotal = state.finalTotal > 0 ? state.finalTotal : state.selectedPrice * state.qty;
+        document.getElementById('totalAmount').textContent = currentTotal + '$';
+        document.getElementById('montantHidden').value = currentTotal + '$';
+
+        goToStep(3);
+    }
+
+    // Bouton Envoyer fonctionnel avec Web3Forms
+    document.getElementById('submissionForm').addEventListener('submit', function() {
+        document.getElementById('serviceHidden').value = state.selectedService || '';
+        document.getElementById('nbVoituresHidden').value = state.qty;
+
+        const currentTotal = state.finalTotal > 0 ? state.finalTotal : (state.selectedPrice * state.qty || 0);
+        document.getElementById('montantHidden').value = currentTotal + '$';
+
+        const btn = document.getElementById('submitBtn');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
+        }
+    });
+
+    // INIT
+    window.onload = function() {
+        const serviceFromUrl = new URLSearchParams(window.location.search).get('service');
+        if (serviceFromUrl) {
+            if (serviceFromUrl.includes('Forfait')) {
+                switchVehicle('forfait', document.querySelector('[data-vehicle="forfait"]'));
+                const match = document.querySelector(`[data-service="${serviceFromUrl}"]`);
+                if (match) selectService(match);
+            } else {
+                ['Sedan','SUV','Van','Pickup'].forEach(v => {
+                    if (serviceFromUrl.includes(v)) {
+                        const tab = document.querySelector(`[data-vehicle="${v.toLowerCase()}"]`);
+                        if (tab) switchVehicle(v.toLowerCase(), tab);
+                    }
+                });
+                const match = document.querySelector(`[data-service="${serviceFromUrl}"]`);
+                if (match) { 
+                    selectService(match); 
+                    match.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+                }
+            }
+        }
+    };
+</script>
+</body>
+</html>
