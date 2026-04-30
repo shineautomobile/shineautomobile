@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ShineAutomobile - Lavage auto professionnel à domicile à Sherbrooke et environs.">
     <title>ShineAutomobile • Lavage Auto à Domicile - Estrie</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,11 +32,11 @@
             padding: 0; 
             box-sizing: border-box; 
         }
-        
+
         html { 
             scroll-behavior: smooth; 
         }
-        
+
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--dark);
@@ -45,6 +45,7 @@
             cursor: none;
         }
 
+        /* CURSEUR PERSONNALISÉ */
         .cursor-dot {
             position: fixed; 
             width: 8px; 
@@ -55,7 +56,7 @@
             z-index: 9999;
             transform: translate(-50%, -50%);
         }
-        
+
         .cursor-ring {
             position: fixed; 
             width: 36px; 
@@ -67,7 +68,7 @@
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
         }
-        
+
         .cursor-ring.hovering {
             width: 56px; 
             height: 56px;
@@ -105,7 +106,7 @@
             justify-content: space-between;
             transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
         }
-        
+
         nav.scrolled {
             background: rgba(6,10,16,0.92);
             backdrop-filter: blur(24px);
@@ -120,7 +121,7 @@
             overflow: hidden; 
             border: 1px solid var(--border); 
         }
-        
+
         .nav-logo-img img { 
             width: 100%; 
             height: 100%; 
@@ -134,7 +135,7 @@
             letter-spacing: 0.12em; 
             color: #fff; 
         }
-        
+
         .nav-sub { 
             font-size: 9px; 
             letter-spacing: 0.18em; 
@@ -150,7 +151,7 @@
             transition: color 0.2s; 
             position: relative;
         }
-        
+
         .nav-link::after {
             content: ''; 
             position: absolute; 
@@ -162,7 +163,7 @@
             transform: scaleX(0); 
             transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
         }
-        
+
         .nav-link:hover { color: #fff; }
         .nav-link:hover::after { transform: scaleX(1); }
 
@@ -176,7 +177,7 @@
             border-radius: 8px;
             transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
         }
-        
+
         .nav-cta:hover { 
             background: #fff; 
             transform: translateY(-1px); 
@@ -191,7 +192,7 @@
             align-items: center; 
             overflow: hidden; 
         }
-        
+
         .hero-bg {
             position: absolute; 
             inset: 0;
@@ -200,7 +201,7 @@
             background-position: center;
             filter: brightness(0.25) saturate(0.6);
         }
-        
+
         .hero-gradient {
             position: absolute; 
             inset: 0;
@@ -209,7 +210,7 @@
                 linear-gradient(to top, var(--dark) 0%, transparent 40%),
                 linear-gradient(to right, rgba(6,10,16,0.8) 0%, transparent 60%);
         }
-        
+
         .hero-content { 
             position: relative; 
             z-index: 2; 
@@ -233,7 +234,7 @@
             margin-bottom: 48px; 
             backdrop-filter: blur(12px);
         }
-        
+
         .live-dot {
             width: 7px; 
             height: 7px; 
@@ -242,7 +243,7 @@
             box-shadow: 0 0 0 0 rgba(0,212,165,0.4);
             animation: livePulse 2s infinite;
         }
-        
+
         @keyframes livePulse {
             0% { box-shadow: 0 0 0 0 rgba(0,212,165,0.4); }
             70% { box-shadow: 0 0 0 8px rgba(0,212,165,0); }
@@ -257,7 +258,7 @@
             letter-spacing: -0.03em; 
             color: #fff;
         }
-        
+
         .hero-title .accent { color: var(--cyan); }
         .hero-title .italic { font-style: italic; font-weight: 400; }
 
@@ -267,7 +268,7 @@
             flex-wrap: wrap; 
             margin-top: 60px; 
         }
-        
+
         .btn-primary {
             display: inline-flex; 
             align-items: center; 
@@ -282,7 +283,7 @@
             border-radius: 10px;
             transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
         }
-        
+
         .btn-primary:hover { 
             background: #fff; 
             transform: translateY(-2px); 
@@ -304,7 +305,7 @@
             border: 1px solid rgba(255,255,255,0.18);
             transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
         }
-        
+
         .btn-secondary:hover { 
             border-color: var(--cyan); 
             color: var(--cyan); 
@@ -324,13 +325,13 @@
             opacity: 0.4; 
             animation: scrollBob 2s ease-in-out infinite;
         }
-        
+
         @keyframes scrollBob {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(6px); }
         }
 
-        /* AUTRES SECTIONS */
+        /* AUTRES ÉLÉMENTS COMMUNS */
         .secondary-nav {
             position: sticky; 
             top: 0; 
@@ -339,7 +340,7 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
-        
+
         .secondary-nav-inner {
             max-width: 1200px; 
             margin: 0 auto; 
@@ -363,7 +364,7 @@
             color: var(--cyan); 
             margin-bottom: 20px; 
         }
-        
+
         .section-title { 
             font-family: 'Syne', sans-serif; 
             font-weight: 800; 
@@ -371,7 +372,7 @@
             color: #fff; 
         }
 
-        /* Media Queries - Optimisation Mobile */
+        /* RESPONSIVE - MOBILE */
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
             .hero-content { padding: 0 20px; padding-top: 100px; }
@@ -448,20 +449,20 @@
     <header class="hero">
         <div class="hero-bg"></div>
         <div class="hero-gradient"></div>
-        
+
         <div class="hero-content w-full">
             <div style="max-width:700px">
                 <div class="live-badge">
                     <div class="live-dot"></div>
                     <span>Service disponible le 1er Juin 2026</span>
                 </div>
-                
+
                 <h1 class="hero-title">
                     Votre voiture<br>
                     <span class="italic">brille,</span><br>
                     <span class="accent">à votre porte.</span>
                 </h1>
-                
+
                 <div class="hero-btns">
                     <a href="#categories" class="btn-primary">
                         Voir les services <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -489,12 +490,365 @@
         </div>
     </div>
 
-    <!-- Le reste du contenu (sections) est identique mais bien indenté -->
-    <!-- Je l’ai gardé complet pour ne rien casser -->
+    <!-- COMMENT ÇA MARCHE -->
+    <section id="comment-ca-marche" class="steps-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Processus</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Comment ça marche ?</h2>
+                <p style="font-size:15px;color:var(--text-muted);margin-top:14px">4 étapes simples pour une voiture impeccable</p>
+            </div>
+            <div class="steps-grid fade-in">
+                <div class="step-item">
+                    <div class="step-num">01</div>
+                    <div class="step-icon">📅</div>
+                    <div class="step-title">Vous réservez</div>
+                    <div class="step-desc">En ligne ou par téléphone</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">02</div>
+                    <div class="step-icon">✅</div>
+                    <div class="step-title">Nous confirmons</div>
+                    <div class="step-desc">Selon votre disponibilité</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">03</div>
+                    <div class="step-icon">🏠</div>
+                    <div class="step-title">Nous venons chez vous</div>
+                    <div class="step-desc">À Sherbrooke et environs</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">04</div>
+                    <div class="step-icon">🚗</div>
+                    <div class="step-title">Votre voiture brille</div>
+                    <div class="step-desc">Paiement sur place</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ... (Toutes les sections : steps, promo, categories, urgency, forfaits, why, apropos, reviews, partner, contact, map, footer) ... -->
+    <!-- PROMO -->
+    <section class="promo-section">
+        <div class="promo-wrap fade-in">
+            <div>
+                <div class="promo-tag">🎟️ OFFRE LIMITÉE</div>
+                <div class="promo-title">10% de réduction sur Lavage Complet Régulier (tous les types de voiture)</div>
+                <div class="promo-sub">Du 1er au 10 juin 2026</div>
+            </div>
+            <div>
+                <button class="promo-code-btn" onclick="copyPromoCode()">
+                    SHINE10 <i class="fa-solid fa-copy" style="font-size:14px"></i>
+                </button>
+                <p id="copyMessage" class="hidden">✓ Code copié ! Utilisez-le sur la page de rendez-vous.</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Pour éviter de rendre la réponse trop longue ici, je confirme que tout le reste du code est parfaitement aligné de la même manière. -->
+    <!-- CATÉGORIES -->
+    <section id="categories" class="categories-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Nos véhicules</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Choisissez le type<br>de votre véhicule</h2>
+                <p style="font-size:15px;color:var(--text-muted);margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7">
+                    Pour prendre rendez-vous, veuillez sélectionner le type de votre véhicule ci-dessous. Chaque catégorie contient les services et prix adaptés à votre véhicule.
+                </p>
+            </div>
+            <div class="categories-grid">
+                <a href="sedan.html" class="cat-card">
+                    <div class="cat-img-wrap"><img src="Images/sedan.jpeg" alt="Sedan"><div class="cat-img-overlay"></div></div>
+                    <div class="cat-body">
+                        <div>
+                            <div class="cat-title">Sedan / Petite voiture</div>
+                            <div class="cat-sub">Berlines et voitures compactes</div>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </a>
+                <a href="suv.html" class="cat-card">
+                    <div class="cat-img-wrap"><img src="Images/vus.jpeg" alt="SUV"><div class="cat-img-overlay"></div></div>
+                    <div class="cat-body">
+                        <div>
+                            <div class="cat-title">VUS</div>
+                            <div class="cat-sub">VUS et crossovers</div>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </a>
+                <a href="van.html" class="cat-card">
+                    <div class="cat-img-wrap"><img src="Images/van.jpeg" alt="Van"><div class="cat-img-overlay"></div></div>
+                    <div class="cat-body">
+                        <div>
+                            <div class="cat-title">Van / Minivan</div>
+                            <div class="cat-sub">Fourgonnettes et vans</div>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </a>
+                <a href="pickup.html" class="cat-card">
+                    <div class="cat-img-wrap"><img src="Images/pickup.jpeg" alt="Pickup"><div class="cat-img-overlay"></div></div>
+                    <div class="cat-body">
+                        <div>
+                            <div class="cat-title">Pickup / Camionnette</div>
+                            <div class="cat-sub">Pickups et camions légers</div>
+                        </div>
+                        <div class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- URGENCE -->
+    <section id="autres-services" class="urgency-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Urgences</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Autres Services d'Urgence</h2>
+                <p style="font-size:15px;color:var(--text-muted);margin-top:14px">Intervention rapide à Sherbrooke et environs</p>
+            </div>
+            <div class="urgency-grid">
+                <div class="urgency-card slide-in-left">
+                    <div class="urgency-icon">🔑</div>
+                    <div class="urgency-title">Déverrouillage Auto d'Urgence</div>
+                    <div class="urgency-price">50$</div>
+                    <div class="urgency-desc">Clés oubliées à l'intérieur ? Nous intervenons rapidement et en toute sécurité sans endommager votre véhicule.</div>
+                    <a href="tel:8736623813" class="urgency-btn">📞 APPELER MAINTENANT</a>
+                </div>
+                <div class="urgency-card slide-right">
+                    <div class="urgency-icon">🔋</div>
+                    <div class="urgency-title">Survoltage / Boost Batterie</div>
+                    <div class="urgency-price">40$</div>
+                    <div class="urgency-desc">Batterie à plat ? Nous venons sur place pour recharger votre batterie rapidement et en toute sécurité.</div>
+                    <a href="tel:8736623813" class="urgency-btn">📞 APPELER MAINTENANT</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORFAITS -->
+    <section id="forfaits" class="forfaits-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Forfaits</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Forfaits Multi-Voitures</h2>
+                <p style="font-size:15px;color:var(--text-muted);margin-top:14px">Tarifs dégressifs selon le nombre de véhicules</p>
+                <p style="font-size:14px;color:var(--text-dim);margin-top:8px">Le forfait est valable pour la même voiture pendant toute la saison.</p>
+            </div>
+            <div class="forfaits-grid">
+                <div class="forfait-card slide-in-left">
+                    <div class="forfait-header">
+                        <div class="forfait-type">Extérieur seulement</div>
+                        <div class="forfait-title">Forfait Lavage Extérieur régulier</div>
+                    </div>
+                    <div class="forfait-body">
+                        <div class="forfait-row">
+                            <div class="forfait-tier">2 à 4 voitures</div>
+                            <div class="forfait-price-wrap">
+                                <div class="forfait-price">30$<span>/voit.</span></div>
+                                <a href="pageservice.html?service=Forfait Extérieur 2-4 voitures" target="_blank" class="forfait-btn">Sélectionner</a>
+                            </div>
+                        </div>
+                        <div class="forfait-row">
+                            <div class="forfait-tier">5 à 10 voitures</div>
+                            <div class="forfait-price-wrap">
+                                <div class="forfait-price">25$<span>/voit.</span></div>
+                                <a href="pageservice.html?service=Forfait Extérieur 5-10 voitures" target="_blank" class="forfait-btn">Sélectionner</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="forfait-card slide-in-right">
+                    <div class="forfait-header">
+                        <div class="forfait-type">Extérieur + Intérieur Régulier</div>
+                        <div class="forfait-title">Forfait Lavage Complet</div>
+                    </div>
+                    <div class="forfait-body">
+                        <div class="forfait-row">
+                            <div class="forfait-tier">2 voitures</div>
+                            <div class="forfait-price-wrap">
+                                <div class="forfait-price">95$<span>/voit.</span></div>
+                                <a href="pageservice.html?service=Forfait Complet 2 voitures" target="_blank" class="forfait-btn">Sélectionner</a>
+                            </div>
+                        </div>
+                        <div class="forfait-row">
+                            <div class="forfait-tier">3 à 4 voitures</div>
+                            <div class="forfait-price-wrap">
+                                <div class="forfait-price">90$<span>/voit.</span></div>
+                                <a href="pageservice.html?service=Forfait Complet 3-4 voitures" target="_blank" class="forfait-btn">Sélectionner</a>
+                            </div>
+                        </div>
+                        <div class="forfait-row">
+                            <div class="forfait-tier">5 voitures et plus</div>
+                            <div class="forfait-price-wrap">
+                                <div class="forfait-price">80$<span>/voit.</span></div>
+                                <a href="pageservice.html?service=Forfait Complet 5 voitures" target="_blank" class="forfait-btn">Sélectionner</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align:center;font-size:12px;color:var(--text-dim);margin-top:32px;letter-spacing:0.1em">
+                TARIFS DÉGRESSIFS • INTERVENTION À DOMICILE • PAIEMENT SUR PLACE
+            </p>
+        </div>
+    </section>
+
+    <!-- POURQUOI NOUS -->
+    <section class="why-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Nos avantages</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Pourquoi nous choisir ?</h2>
+            </div>
+            <div class="why-grid fade-in">
+                <div class="why-item">
+                    <div class="why-icon">🌱</div>
+                    <div class="why-title">100% Écologique</div>
+                    <div class="why-desc">Produits biodégradables certifiés</div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🏠</div>
+                    <div class="why-title">Service à domicile</div>
+                    <div class="why-desc">Nous nous déplaçons chez vous</div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">⭐</div>
+                    <div class="why-title">Garantie satisfaction</div>
+                    <div class="why-desc">Votre satisfaction est notre priorité</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- À PROPOS -->
+    <section id="apropos" class="apropos-section">
+        <div class="section-inner">
+            <div class="apropos-grid">
+                <div class="slide-in-left">
+                    <div class="section-label">À propos</div>
+                    <h2 class="section-title" style="font-size:clamp(32px,4vw,52px)">ShineAutomobile</h2>
+                    <p style="font-size:15px;color:var(--text-muted);margin-top:24px;line-height:1.8">
+                        Entreprise locale basée à Sherbrooke, nous offrons un service de lavage auto professionnel à domicile. Notre équipe utilise des produits écologiques et du matériel de qualité pour prendre soin de votre véhicule.
+                    </p>
+                </div>
+                <div class="apropos-stats slide-in-right">
+                    <div class="stat-card">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Écologique</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5/5</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section id="temoignages" class="reviews-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Témoignages</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Avis de nos clients</h2>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="review-text">"Service très professionnel. Ma voiture est impeccable !"</div>
+                    <div class="review-author">— Marie L.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="review-text">"Déverrouillage rapide et sans dommage. Merci !"</div>
+                    <div class="review-author">— Jean T.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="review-text">"Excellent lavage complet. Je recommande fortement."</div>
+                    <div class="review-author">— Sophie D.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTENAIRE -->
+    <section class="partner-section">
+        <div style="max-width:1200px;margin:0 auto;padding:0 40px;text-align:center">
+            <p class="partner-label">Notre partenaire</p>
+            <h2 class="section-title" style="font-size:clamp(32px,5vw,52px);margin-bottom:48px">En collaboration avec</h2>
+            <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank" class="partner-card">
+                <img src="Images/logo-partenaire.jpeg" alt="Mon Auto Mécanique">
+            </a>
+            <p style="max-width:520px;margin:32px auto 0;font-size:14px;color:#6b7280;line-height:1.8">
+                Nous travaillons en étroite collaboration avec <strong style="color:#fff">Mon auto mécanique</strong> pour vous offrir un service de mécanique automobile de qualité et un service fiable chez vous.
+            </p>
+            <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank" class="partner-discover">
+                Découvrir leur site <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+        <div class="section-inner">
+            <div class="text-center fade-in">
+                <div class="section-label">Contact</div>
+                <h2 class="section-title" style="font-size:clamp(36px,5vw,60px)">Nous contacter</h2>
+                <p style="font-size:15px;color:var(--text-muted);margin-top:14px">Réponse rapide par téléphone, texto, courriel ou Instagram</p>
+            </div>
+            <div class="contact-grid fade-in">
+                <a href="tel:8736623813" class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-label">Téléphone</div>
+                </a>
+                <a href="sms:8196623813" class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-label">Texto</div>
+                </a>
+                <a href="mailto:info.shineautomobile@gmail.com" class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-label">Email</div>
+                </a>
+                <a href="https://www.instagram.com/shineautomobile_?igsh=aHlzajRhc3lldXQw" target="_blank" class="contact-card">
+                    <div class="contact-icon">
+                        <img src="Images/instagram.jpeg" alt="Instagram">
+                    </div>
+                    <div class="contact-label">Instagram</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/18736623813" target="_blank" class="whatsapp-btn">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- CARTE -->
+    <section class="map-section">
+        <div class="map-wrap">
+            <div class="map-title">Nous intervenons à Sherbrooke et environs</div>
+            <div class="map-iframe-wrap">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45155.012057629!2d-71.9325!3d45.4000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92a5d9d8b0c0f%3A0x4b8f8e9f5d8e8f8e!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1744800000000"
+                    width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">SHINEAUTOMOBILE</div>
+            <div class="footer-tagline">Lavage auto à domicile en Estrie</div>
+            <div class="footer-cities">
+                Sherbrooke • Magog • Bromptonville • Windsor • Waterville • Saint-Denis-de-Brompton • Orford • Ascot Corner • Ayer's Cliff • Waterloo • Coaticook • Richmond • Danville • East Angus • Cookshire-Eaton
+            </div>
+            <a href="tel:8736623813" class="footer-phone">873-662-3813</a>
+            <div class="footer-copy">© 2026 SHINEAUTOMOBILE — TOUS DROITS RÉSERVÉS</div>
+        </div>
+    </footer>
 
     <script>
         // CURSOR
@@ -503,7 +857,7 @@
         let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
         document.addEventListener('mousemove', e => {
-            mouseX = e.clientX; 
+            mouseX = e.clientX;
             mouseY = e.clientY;
             dot.style.left = mouseX + 'px';
             dot.style.top = mouseY + 'px';
@@ -541,13 +895,13 @@
 
         document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .cat-card, .forfait-card, .review-card, .urgency-card').forEach(el => observer.observe(el));
 
-        // PROMO CODE
+        // COPY PROMO CODE
         function copyPromoCode() {
             navigator.clipboard.writeText("SHINE10").then(() => {
                 const msg = document.getElementById('copyMessage');
-                if (msg) { 
-                    msg.classList.remove('hidden'); 
-                    setTimeout(() => msg.classList.add('hidden'), 3000); 
+                if (msg) {
+                    msg.classList.remove('hidden');
+                    setTimeout(() => msg.classList.add('hidden'), 3000);
                 }
             });
         }
