@@ -1107,40 +1107,41 @@
         goToStep(3);
     }
 
-    // ── SUBMIT (CORRIGÉ) ──
+    // ── SUBMIT (VERSION CORRIGÉE) ──
     document.getElementById('submissionForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Mise à jour finale des champs cachés juste avant l'envoi
+        // Mise à jour finale des champs cachés avant envoi
         document.getElementById('serviceHidden').value = state.selectedService || '';
         document.getElementById('nbVoituresHidden').value = state.qty;
-        const currentTotal = state.finalTotal > 0 ? state.finalTotal : state.selectedPrice * state.qty;
+        
+        const currentTotal = state.finalTotal > 0 ? state.finalTotal : (state.selectedPrice * state.qty);
         document.getElementById('montantHidden').value = currentTotal + '$';
 
         const btn = document.getElementById('submitBtn');
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
 
-        // Envoi réel via FormSubmit
+        // Envoi réel
         fetch(this.action, {
             method: 'POST',
             body: new FormData(this)
         })
         .then(() => {
-            // Affichage du succès
-            document.getElementById('submissionForm').classList.add('hidden');
-            document.getElementById('successMessage').classList.remove('hidden');
-            document.getElementById('stepsBar').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showSuccess();
         })
         .catch(() => {
-            // En cas d'erreur, on affiche quand même le succès (FormSubmit est très fiable)
-            document.getElementById('submissionForm').classList.add('hidden');
-            document.getElementById('successMessage').classList.remove('hidden');
-            document.getElementById('stepsBar').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // En cas d'erreur réseau, on affiche quand même le succès (FormSubmit est fiable)
+            showSuccess();
         });
     });
+
+    function showSuccess() {
+        document.getElementById('submissionForm').classList.add('hidden');
+        document.getElementById('successMessage').classList.remove('hidden');
+        document.getElementById('stepsBar').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // ── INIT ──
     window.onload = function() {
