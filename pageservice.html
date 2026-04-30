@@ -22,8 +22,15 @@
             --text-dim: #3d546b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html { 
+            scroll-behavior: smooth; 
+        }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -38,45 +45,78 @@
 
         body::before {
             content: '';
-            position: fixed; inset: 0;
+            position: fixed; 
+            inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 0; opacity: 0.4;
+            pointer-events: none; 
+            z-index: 0; 
+            opacity: 0.4;
         }
 
-        .wrap { max-width: 740px; margin: 0 auto; padding: 48px 24px 80px; position: relative; z-index: 1; }
+        .wrap { 
+            max-width: 740px; 
+            margin: 0 auto; 
+            padding: 48px 24px 80px; 
+            position: relative; 
+            z-index: 1; 
+        }
 
         /* BACK LINK */
         .back-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px;
+            font-size: 13px; 
+            color: var(--text-muted); 
+            letter-spacing: 0.04em;
             margin-bottom: 48px;
             transition: color 0.2s;
         }
         .back-link:hover { color: var(--cyan); }
 
         /* HEADER */
-        .page-header { text-align: center; margin-bottom: 56px; }
+        .page-header { 
+            text-align: center; 
+            margin-bottom: 56px; 
+        }
         .page-label {
             display: inline-block;
-            font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-            color: var(--cyan); background: rgba(0,229,255,0.08);
-            padding: 6px 14px; border-radius: 6px; margin-bottom: 20px;
+            font-size: 10px; 
+            font-weight: 600; 
+            letter-spacing: 0.22em; 
+            text-transform: uppercase;
+            color: var(--cyan); 
+            background: rgba(0,229,255,0.08);
+            padding: 6px 14px; 
+            border-radius: 6px; 
+            margin-bottom: 20px;
         }
         .page-title {
-            font-family: 'Syne', sans-serif; font-weight: 800;
-            font-size: clamp(36px, 6vw, 58px); letter-spacing: -0.03em; color: #fff;
+            font-family: 'Syne', sans-serif; 
+            font-weight: 800;
+            font-size: clamp(36px, 6vw, 58px); 
+            letter-spacing: -0.03em; 
+            color: #fff;
             line-height: 1;
         }
-        .page-sub { font-size: 15px; color: var(--text-muted); margin-top: 14px; }
+        .page-sub { 
+            font-size: 15px; 
+            color: var(--text-muted); 
+            margin-top: 14px; 
+        }
 
         /* NOTICE */
         .notice {
             background: rgba(251,191,36,0.06);
             border: 1px solid rgba(251,191,36,0.2);
-            border-radius: 12px; padding: 14px 20px;
-            font-size: 13px; color: #fbbf24;
+            border-radius: 12px; 
+            padding: 14px 20px;
+            font-size: 13px; 
+            color: #fbbf24;
             margin-bottom: 32px;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
         }
 
         /* CARD */
@@ -88,59 +128,101 @@
             margin-bottom: 16px;
         }
         .card-title {
-            font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
-            letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan);
+            font-family: 'Syne', sans-serif; 
+            font-weight: 700; 
+            font-size: 13px;
+            letter-spacing: 0.14em; 
+            text-transform: uppercase; 
+            color: var(--cyan);
             margin-bottom: 24px;
         }
 
         /* STEPS INDICATOR */
         .steps-bar {
-            display: flex; align-items: center; gap: 0;
+            display: flex; 
+            align-items: center; 
+            gap: 0;
             margin-bottom: 48px;
         }
         .step-dot {
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 8px;
             flex: 1;
             position: relative;
         }
         .step-dot:not(:last-child)::after {
             content: '';
             position: absolute;
-            top: 16px; left: 50%; right: -50%;
+            top: 16px; 
+            left: 50%; 
+            right: -50%;
             height: 1px;
             background: var(--border);
             z-index: 0;
         }
-        .step-dot.active:not(:last-child)::after { background: var(--cyan); }
+        .step-dot.active:not(:last-child)::after { 
+            background: var(--cyan); 
+        }
         .step-circle {
-            width: 32px; height: 32px; border-radius: 50%;
-            background: var(--surface-2); border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
-            color: var(--text-muted); position: relative; z-index: 1;
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%;
+            background: var(--surface-2); 
+            border: 1px solid var(--border);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-family: 'Syne', sans-serif; 
+            font-size: 12px; 
+            font-weight: 700;
+            color: var(--text-muted); 
+            position: relative; 
+            z-index: 1;
             transition: all 0.3s;
         }
         .step-dot.active .step-circle {
-            background: var(--cyan); border-color: var(--cyan);
-            color: var(--dark); box-shadow: 0 0 16px rgba(0,229,255,0.3);
+            background: var(--cyan); 
+            border-color: var(--cyan);
+            color: var(--dark); 
+            box-shadow: 0 0 16px rgba(0,229,255,0.3);
         }
         .step-dot.done .step-circle {
-            background: rgba(0,229,255,0.1); border-color: var(--cyan);
+            background: rgba(0,229,255,0.1); 
+            border-color: var(--cyan);
             color: var(--cyan);
         }
-        .step-label { font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; }
-        .step-dot.active .step-label { color: var(--cyan); }
-
-        /* FORM ELEMENTS */
-        .field { margin-bottom: 24px; }
-        .field:last-child { margin-bottom: 0; }
-        .field label {
-            display: block; font-size: 12px; font-weight: 500;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--text-muted); margin-bottom: 10px;
+        .step-label { 
+            font-size: 10px; 
+            letter-spacing: 0.1em; 
+            color: var(--text-dim); 
+            text-transform: uppercase; 
+        }
+        .step-dot.active .step-label { 
+            color: var(--cyan); 
         }
 
-        .field input, .field select, .field textarea {
+        /* FORM ELEMENTS */
+        .field { 
+            margin-bottom: 24px; 
+        }
+        .field:last-child { 
+            margin-bottom: 0; 
+        }
+        .field label {
+            display: block; 
+            font-size: 12px; 
+            font-weight: 500;
+            letter-spacing: 0.1em; 
+            text-transform: uppercase;
+            color: var(--text-muted); 
+            margin-bottom: 10px;
+        }
+
+        .field input, 
+        .field select, 
+        .field textarea {
             width: 100%;
             background: var(--dark-2);
             border: 1px solid var(--border);
@@ -152,26 +234,48 @@
             outline: none;
             transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
             appearance: none;
-            -webkit-appearance: none;
         }
-        .field input::placeholder { color: var(--text-dim); }
-        .field input:focus, .field select:focus {
+        .field input::placeholder { 
+            color: var(--text-dim); 
+        }
+        .field input:focus, 
+        .field select:focus {
             border-color: var(--cyan);
             box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
             background: rgba(0,229,255,0.02);
         }
-        .field select option { background: #0c1220; color: var(--text); }
-        .field select option:disabled { color: var(--text-dim); font-style: italic; }
+        .field select option { 
+            background: #0c1220; 
+            color: var(--text); 
+        }
+        .field select option:disabled { 
+            color: var(--text-dim); 
+            font-style: italic; 
+        }
 
-        .field-row { display: grid; grid-template-columns: 1fr 2fr; gap: 14px; }
-        @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+        .field-row { 
+            display: grid; 
+            grid-template-columns: 1fr 2fr; 
+            gap: 14px; 
+        }
+        @media (max-width: 600px) { 
+            .field-row { 
+                grid-template-columns: 1fr; 
+            } 
+        }
 
         /* SELECT ARROW */
-        .select-wrap { position: relative; }
+        .select-wrap { 
+            position: relative; 
+        }
         .select-wrap::after {
             content: '';
-            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-            width: 0; height: 0;
+            position: absolute; 
+            right: 18px; 
+            top: 50%; 
+            transform: translateY(-50%);
+            width: 0; 
+            height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
             border-top: 5px solid var(--text-muted);
@@ -180,155 +284,365 @@
 
         /* SERVICE PICKER */
         .vehicle-tabs {
-            display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 20px; 
+            flex-wrap: wrap;
         }
         .vtab {
-            font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
-            letter-spacing: 0.08em; padding: 8px 16px; border-radius: 8px;
-            border: 1px solid var(--border); color: var(--text-muted);
-            cursor: pointer; transition: all 0.2s; background: transparent;
+            font-family: 'Syne', sans-serif; 
+            font-size: 12px; 
+            font-weight: 600;
+            letter-spacing: 0.08em; 
+            padding: 8px 16px; 
+            border-radius: 8px;
+            border: 1px solid var(--border); 
+            color: var(--text-muted);
+            cursor: pointer; 
+            transition: all 0.2s; 
+            background: transparent;
         }
-        .vtab:hover { border-color: var(--border-hover); color: #fff; }
-        .vtab.active { background: var(--cyan); color: var(--dark); border-color: var(--cyan); }
+        .vtab:hover { 
+            border-color: var(--border-hover); 
+            color: #fff; 
+        }
+        .vtab.active { 
+            background: var(--cyan); 
+            color: var(--dark); 
+            border-color: var(--cyan); 
+        }
 
         .service-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px;
         }
-        @media (max-width: 500px) { .service-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 500px) { 
+            .service-grid { 
+                grid-template-columns: 1fr; 
+            } 
+        }
 
         .service-option {
-            border: 1px solid var(--border); border-radius: 12px;
-            padding: 16px 18px; cursor: pointer;
+            border: 1px solid var(--border); 
+            border-radius: 12px;
+            padding: 16px 18px; 
+            cursor: pointer;
             transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
             background: var(--dark-2);
         }
-        .service-option:hover { border-color: var(--border-hover); background: rgba(0,229,255,0.03); }
+        .service-option:hover { 
+            border-color: var(--border-hover); 
+            background: rgba(0,229,255,0.03); 
+        }
         .service-option.selected {
             border-color: var(--cyan);
             background: rgba(0,229,255,0.06);
             box-shadow: 0 0 0 1px var(--cyan);
         }
-        .service-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-        .service-price { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--cyan); }
-        .service-desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+        .service-name { 
+            font-family: 'Syne', sans-serif; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: #fff; 
+            margin-bottom: 4px; 
+        }
+        .service-price { 
+            font-family: 'Syne', sans-serif; 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: var(--cyan); 
+        }
+        .service-desc { 
+            font-size: 11px; 
+            color: var(--text-dim); 
+            margin-top: 4px; 
+            line-height: 1.5; 
+        }
 
         /* FORFAITS */
         .forfait-option {
-            border: 1px solid var(--border); border-radius: 12px;
-            padding: 16px 18px; cursor: pointer;
+            border: 1px solid var(--border); 
+            border-radius: 12px;
+            padding: 16px 18px; 
+            cursor: pointer;
             transition: all 0.2s;
             background: var(--dark-2);
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
         }
-        .forfait-option:hover { border-color: var(--border-hover); }
-        .forfait-option.selected { border-color: var(--cyan); background: rgba(0,229,255,0.06); box-shadow: 0 0 0 1px var(--cyan); }
-        .forfait-tier { font-size: 13px; color: var(--text-muted); }
-        .forfait-p { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--cyan); }
-        .forfait-p span { font-size: 12px; font-weight: 400; color: var(--text-dim); }
+        .forfait-option:hover { 
+            border-color: var(--border-hover); 
+        }
+        .forfait-option.selected { 
+            border-color: var(--cyan); 
+            background: rgba(0,229,255,0.06); 
+            box-shadow: 0 0 0 1px var(--cyan); 
+        }
+        .forfait-tier { 
+            font-size: 13px; 
+            color: var(--text-muted); 
+        }
+        .forfait-p { 
+            font-family: 'Syne', sans-serif; 
+            font-weight: 800; 
+            font-size: 20px; 
+            color: var(--cyan); 
+        }
+        .forfait-p span { 
+            font-size: 12px; 
+            font-weight: 400; 
+            color: var(--text-dim); 
+        }
 
         /* TOTAL BLOCK */
         .total-block {
             background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(0,180,210,0.04));
             border: 1px solid var(--border-hover);
-            border-radius: 16px; padding: 28px 32px;
-            position: relative; overflow: hidden;
+            border-radius: 16px; 
+            padding: 28px 32px;
+            position: relative; 
+            overflow: hidden;
         }
         .total-block::before {
             content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 1px;
             background: linear-gradient(90deg, transparent, var(--cyan), transparent);
         }
-        .total-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-        .total-amount { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 52px; color: var(--cyan); letter-spacing: -0.04em; line-height: 1; }
-        .total-original { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 22px; color: var(--text-dim); text-decoration: line-through; margin-left: 12px; }
+        .total-label { 
+            font-size: 12px; 
+            letter-spacing: 0.12em; 
+            text-transform: uppercase; 
+            color: var(--text-muted); 
+            margin-bottom: 8px; 
+        }
+        .total-amount { 
+            font-family: 'Syne', sans-serif; 
+            font-weight: 800; 
+            font-size: 52px; 
+            color: var(--cyan); 
+            letter-spacing: -0.04em; 
+            line-height: 1; 
+        }
+        .total-original { 
+            font-family: 'Syne', sans-serif; 
+            font-weight: 600; 
+            font-size: 22px; 
+            color: var(--text-dim); 
+            text-decoration: line-through; 
+            margin-left: 12px; 
+        }
         .discount-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(0,212,165,0.1); border: 1px solid rgba(0,212,165,0.3);
-            color: #00D4A5; font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
-            padding: 5px 12px; border-radius: 20px; margin-top: 10px;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px;
+            background: rgba(0,212,165,0.1); 
+            border: 1px solid rgba(0,212,165,0.3);
+            color: #00D4A5; 
+            font-size: 12px; 
+            font-weight: 600; 
+            letter-spacing: 0.06em;
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            margin-top: 10px;
         }
 
         /* PROMO INPUT */
-        .promo-row { display: flex; gap: 10px; }
+        .promo-row { 
+            display: flex; 
+            gap: 10px; 
+        }
         .promo-row input {
-            flex: 1; background: var(--dark-2); border: 1px solid var(--border);
-            border-radius: 10px; padding: 14px 18px;
-            font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
-            letter-spacing: 0.12em; color: var(--text); outline: none;
+            flex: 1; 
+            background: var(--dark-2); 
+            border: 1px solid var(--border);
+            border-radius: 10px; 
+            padding: 14px 18px;
+            font-family: 'Syne', sans-serif; 
+            font-size: 16px; 
+            font-weight: 700;
+            letter-spacing: 0.12em; 
+            color: var(--text); 
+            outline: none;
             text-transform: uppercase;
             transition: all 0.2s;
         }
-        .promo-row input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); }
-        .promo-apply {
-            background: var(--cyan); color: var(--dark);
-            font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
-            letter-spacing: 0.08em; padding: 14px 22px; border-radius: 10px;
-            border: none; cursor: pointer;
-            transition: all 0.2s; white-space: nowrap;
+        .promo-row input:focus { 
+            border-color: var(--cyan); 
+            box-shadow: 0 0 0 3px rgba(0,229,255,0.08); 
         }
-        .promo-apply:hover { background: #fff; transform: scale(1.02); }
+        .promo-apply {
+            background: var(--cyan); 
+            color: var(--dark);
+            font-family: 'Syne', sans-serif; 
+            font-weight: 700; 
+            font-size: 13px;
+            letter-spacing: 0.08em; 
+            padding: 14px 22px; 
+            border-radius: 10px;
+            border: none; 
+            cursor: pointer;
+            transition: all 0.2s; 
+            white-space: nowrap;
+        }
+        .promo-apply:hover { 
+            background: #fff; 
+            transform: scale(1.02); 
+        }
 
-        .promo-error { font-size: 12px; color: #f59e0b; margin-top: 10px; letter-spacing: 0.04em; }
-        .promo-success { font-size: 12px; color: #00D4A5; margin-top: 10px; letter-spacing: 0.04em; }
+        .promo-error { 
+            font-size: 12px; 
+            color: #f59e0b; 
+            margin-top: 10px; 
+            letter-spacing: 0.04em; 
+        }
+        .promo-success { 
+            font-size: 12px; 
+            color: #00D4A5; 
+            margin-top: 10px; 
+            letter-spacing: 0.04em; 
+        }
 
         /* SUBMIT BTN */
         .submit-btn {
-            width: 100%; background: var(--cyan); color: var(--dark);
-            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px;
-            letter-spacing: 0.08em; padding: 20px; border-radius: 14px;
-            border: none; cursor: pointer;
+            width: 100%; 
+            background: var(--cyan); 
+            color: var(--dark);
+            font-family: 'Syne', sans-serif; 
+            font-weight: 800; 
+            font-size: 16px;
+            letter-spacing: 0.08em; 
+            padding: 20px; 
+            border-radius: 14px;
+            border: none; 
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
             margin-top: 24px;
         }
-        .submit-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,229,255,0.25); }
-        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .submit-btn:hover { 
+            background: #fff; 
+            transform: translateY(-2px); 
+            box-shadow: 0 16px 40px rgba(0,229,255,0.25); 
+        }
+        .submit-btn:disabled { 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+            transform: none; 
+        }
 
         /* SUCCESS */
         .success-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 24px; padding: 64px 48px; text-align: center;
+            background: var(--surface); 
+            border: 1px solid var(--border);
+            border-radius: 24px; 
+            padding: 64px 48px; 
+            text-align: center;
         }
         .success-icon {
-            width: 80px; height: 80px; border-radius: 50%;
-            background: rgba(0,212,165,0.1); border: 1px solid rgba(0,212,165,0.3);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 36px; margin: 0 auto 32px;
+            width: 80px; 
+            height: 80px; 
+            border-radius: 50%;
+            background: rgba(0,212,165,0.1); 
+            border: 1px solid rgba(0,212,165,0.3);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 36px; 
+            margin: 0 auto 32px;
         }
-        .success-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 36px; color: #fff; margin-bottom: 16px; }
-        .success-sub { font-size: 15px; color: var(--text-muted); line-height: 1.7; max-width: 400px; margin: 0 auto 32px; }
+        .success-title { 
+            font-family: 'Syne', sans-serif; 
+            font-weight: 800; 
+            font-size: 36px; 
+            color: #fff; 
+            margin-bottom: 16px; 
+        }
+        .success-sub { 
+            font-size: 15px; 
+            color: var(--text-muted); 
+            line-height: 1.7; 
+            max-width: 400px; 
+            margin: 0 auto 32px; 
+        }
         .success-notice {
-            background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2);
-            border-radius: 12px; padding: 20px 24px; text-align: left;
-            font-size: 13px; color: #fbbf24; margin-bottom: 36px;
+            background: rgba(251,191,36,0.06); 
+            border: 1px solid rgba(251,191,36,0.2);
+            border-radius: 12px; 
+            padding: 20px 24px; 
+            text-align: left;
+            font-size: 13px; 
+            color: #fbbf24; 
+            margin-bottom: 36px;
         }
         .back-home {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: var(--cyan); color: var(--dark);
-            font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
-            letter-spacing: 0.06em; padding: 16px 32px; border-radius: 12px;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px;
+            background: var(--cyan); 
+            color: var(--dark);
+            font-family: 'Syne', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
+            letter-spacing: 0.06em; 
+            padding: 16px 32px; 
+            border-radius: 12px;
             transition: all 0.3s;
         }
-        .back-home:hover { background: #fff; transform: translateY(-2px); }
+        .back-home:hover { 
+            background: #fff; 
+            transform: translateY(-2px); 
+        }
 
-        /* HIDDEN */
-        .hidden { display: none !important; }
+        .hidden { 
+            display: none !important; 
+        }
 
         /* VEHICLE COUNT */
-        .qty-row { display: flex; align-items: center; gap: 16px; }
+        .qty-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+        }
         .qty-btn {
-            width: 40px; height: 40px; border-radius: 10px;
-            background: var(--surface-2); border: 1px solid var(--border);
-            color: var(--text); font-size: 18px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s; flex-shrink: 0;
+            width: 40px; 
+            height: 40px; 
+            border-radius: 10px;
+            background: var(--surface-2); 
+            border: 1px solid var(--border);
+            color: var(--text); 
+            font-size: 18px; 
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: all 0.2s; 
+            flex-shrink: 0;
         }
-        .qty-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+        .qty-btn:hover { 
+            border-color: var(--cyan); 
+            color: var(--cyan); 
+        }
         .qty-display {
-            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: #fff;
-            min-width: 40px; text-align: center;
+            font-family: 'Syne', sans-serif; 
+            font-weight: 800; 
+            font-size: 28px; 
+            color: #fff;
+            min-width: 40px; 
+            text-align: center;
         }
-        .qty-label { font-size: 13px; color: var(--text-muted); }
+        .qty-label { 
+            font-size: 13px; 
+            color: var(--text-muted); 
+        }
 
         @media (max-width: 600px) {
             .card { padding: 24px 20px; }
@@ -385,7 +699,6 @@
 
         <!-- ─── STEP 1 ─── -->
         <div id="step1">
-
             <!-- TYPE DE SERVICE -->
             <div class="card">
                 <div class="card-title">Type de service</div>
@@ -469,11 +782,41 @@
                 </div>
 
                 <div id="services-forfait" class="hidden" style="display:none; flex-direction:column; gap:10px;">
-                    <div class="forfait-option" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectService(this)"><div><div class="service-name">Forfait Extérieur</div><div class="forfait-tier">2 à 4 voitures</div></div><div class="forfait-p">30$<span>/voit.</span></div></div>
-                    <div class="forfait-option" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectService(this)"><div><div class="service-name">Forfait Extérieur</div><div class="forfait-tier">5 à 10 voitures</div></div><div class="forfait-p">25$<span>/voit.</span></div></div>
-                    <div class="forfait-option" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectService(this)"><div><div class="service-name">Forfait Complet</div><div class="forfait-tier">2 voitures</div></div><div class="forfait-p">95$<span>/voit.</span></div></div>
-                    <div class="forfait-option" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectService(this)"><div><div class="service-name">Forfait Complet</div><div class="forfait-tier">3 à 4 voitures</div></div><div class="forfait-p">90$<span>/voit.</span></div></div>
-                    <div class="forfait-option" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectService(this)"><div><div class="service-name">Forfait Complet</div><div class="forfait-tier">5 voitures et plus</div></div><div class="forfait-p">80$<span>/voit.</span></div></div>
+                    <div class="forfait-option" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectService(this)">
+                        <div>
+                            <div class="service-name">Forfait Extérieur</div>
+                            <div class="forfait-tier">2 à 4 voitures</div>
+                        </div>
+                        <div class="forfait-p">30$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectService(this)">
+                        <div>
+                            <div class="service-name">Forfait Extérieur</div>
+                            <div class="forfait-tier">5 à 10 voitures</div>
+                        </div>
+                        <div class="forfait-p">25$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectService(this)">
+                        <div>
+                            <div class="service-name">Forfait Complet</div>
+                            <div class="forfait-tier">2 voitures</div>
+                        </div>
+                        <div class="forfait-p">95$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectService(this)">
+                        <div>
+                            <div class="service-name">Forfait Complet</div>
+                            <div class="forfait-tier">3 à 4 voitures</div>
+                        </div>
+                        <div class="forfait-p">90$<span>/voit.</span></div>
+                    </div>
+                    <div class="forfait-option" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectService(this)">
+                        <div>
+                            <div class="service-name">Forfait Complet</div>
+                            <div class="forfait-tier">5 voitures et plus</div>
+                        </div>
+                        <div class="forfait-p">80$<span>/voit.</span></div>
+                    </div>
                 </div>
             </div>
 
@@ -536,7 +879,6 @@
 
         <!-- ─── STEP 3 ─── -->
         <div id="step3" class="hidden">
-
             <!-- RÉSUMÉ -->
             <div class="card" id="summaryCard">
                 <div class="card-title">Résumé de la réservation</div>
@@ -739,6 +1081,7 @@
         const tel = document.getElementById('telephone').value.trim();
         const adr = document.getElementById('adresse').value.trim();
         const date = document.getElementById('maDate').value;
+
         if (!nom || !tel || !adr || !date) {
             alert('Veuillez remplir tous les champs obligatoires.');
             return;
@@ -786,13 +1129,11 @@
     window.onload = function() {
         const serviceFromUrl = new URLSearchParams(window.location.search).get('service');
         if (serviceFromUrl) {
-            // Auto-select forfait if applicable
             if (serviceFromUrl.includes('Forfait')) {
                 switchVehicle('forfait', document.querySelector('[data-vehicle="forfait"]'));
                 const match = document.querySelector(`[data-service="${serviceFromUrl}"]`);
                 if (match) selectService(match);
             } else {
-                // detect vehicle type
                 ['Sedan','SUV','Van','Pickup'].forEach(v => {
                     if (serviceFromUrl.includes(v)) {
                         const tab = document.querySelector(`[data-vehicle="${v.toLowerCase()}"]`);
@@ -800,7 +1141,10 @@
                     }
                 });
                 const match = document.querySelector(`[data-service="${serviceFromUrl}"]`);
-                if (match) { selectService(match); match.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                if (match) { 
+                    selectService(match); 
+                    match.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+                }
             }
         }
     };
