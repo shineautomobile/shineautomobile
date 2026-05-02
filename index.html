@@ -3,1951 +3,1802 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShineAutomobile • 2040 — Lavage Auto Nouvelle Génération</title>
+<title>SHINE — Lavage Auto Sherbrooke</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;500;600;700;800&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-/* ═══════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════ */
 :root {
-  --ink:     #04060d;
-  --ink2:    #080c18;
-  --panel:   rgba(255,255,255,0.028);
-  --panelB:  rgba(255,255,255,0.055);
-  --b0:      rgba(255,255,255,0.06);
-  --b1:      rgba(120,210,255,0.18);
-  --b2:      rgba(120,210,255,0.45);
-  --aqua:    #22d3f2;
-  --aquaD:   #0ea5c9;
-  --lime:    #a3f542;
-  --rose:    #ff3c6f;
-  --amber:   #ffb830;
-  --txt:     #deeaf8;
-  --muted:   rgba(200,225,255,0.42);
-  --faint:   rgba(200,225,255,0.18);
-  --mono:    'DM Mono', monospace;
-  --ox:      'Oxanium', sans-serif;
-  --bc:      'Barlow Condensed', sans-serif;
+  --blk: #0a0a0a;
+  --wht: #f5f0e8;
+  --yel: #d4f000;
+  --red: #ff2d2d;
+  --gry: #888;
+  --anton: 'Anton', sans-serif;
+  --bask: 'Libre Baskerville', serif;
+  --mono: 'IBM Plex Mono', monospace;
 }
 
-/* ═══════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════ */
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;overflow-x:hidden;}
-body{
-  font-family: var(--ox);
-  background: var(--ink);
-  color: var(--txt);
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
+
+body {
+  background: var(--wht);
+  color: var(--blk);
+  font-family: var(--bask);
   overflow-x: hidden;
   cursor: none;
 }
-a{text-decoration:none;color:inherit;}
-button{cursor:none;font-family:inherit;}
 
-/* ═══════════════════════════════════════
-   CANVAS WORLD BG
-═══════════════════════════════════════ */
-#world-canvas{
-  position:fixed;inset:0;z-index:0;
-  pointer-events:none;
-}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: none; }
+img { display: block; }
 
-/* ═══════════════════════════════════════
-   CUSTOM CURSOR
-═══════════════════════════════════════ */
-#cursor-core{
-  position:fixed;z-index:9999;pointer-events:none;
-  width:12px;height:12px;
-  background:var(--aqua);
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  transition:transform 0.08s, width 0.3s, height 0.3s, background 0.3s;
-  mix-blend-mode:screen;
-}
-#cursor-ring{
-  position:fixed;z-index:9998;pointer-events:none;
-  width:44px;height:44px;
-  border:1px solid rgba(34,211,242,0.5);
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-}
-#cursor-ring.expand{
-  width:80px;height:80px;
-  border-color:var(--aqua);
-  background:rgba(34,211,242,0.04);
-}
-#cursor-label{
-  position:fixed;z-index:9997;pointer-events:none;
-  font-family:var(--mono);font-size:9px;letter-spacing:0.15em;
-  color:var(--aqua);white-space:nowrap;
-  transform:translate(28px,-50%);
-  opacity:0;transition:opacity 0.2s;
-}
-#cursor-label.show{opacity:1;}
-
-/* ═══════════════════════════════════════
-   LOADING SCREEN
-═══════════════════════════════════════ */
-#loader{
-  position:fixed;inset:0;z-index:9000;
-  background:var(--ink);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:32px;
-  transition:opacity 0.8s, visibility 0.8s;
-}
-#loader.done{opacity:0;visibility:hidden;}
-.loader-logo{
-  font-family:var(--bc);font-size:64px;font-weight:900;
-  letter-spacing:0.06em;color:#fff;
-  line-height:1;
-}
-.loader-bar-wrap{
-  width:280px;height:1px;background:rgba(255,255,255,0.1);position:relative;
-}
-.loader-bar{
-  height:100%;background:var(--aqua);
-  width:0%;transition:width 0.05s linear;
-  box-shadow:0 0 12px var(--aqua);
-}
-.loader-pct{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.2em;
-  color:var(--aqua);text-align:center;
-}
-.loader-status{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.15em;
-  color:var(--muted);
-}
-
-/* ═══════════════════════════════════════
-   SCROLLING TICKER
-═══════════════════════════════════════ */
-.ticker-wrap{
-  position:relative;z-index:10;
-  background:var(--aqua);
-  overflow:hidden;padding:10px 0;
-}
-.ticker-inner{
-  display:flex;gap:0;
-  animation:tickerRoll 25s linear infinite;
-  width:max-content;
-}
-.ticker-item{
-  font-family:var(--bc);font-size:13px;font-weight:700;
-  letter-spacing:0.18em;color:var(--ink);
-  padding:0 40px;white-space:nowrap;
-}
-.ticker-dot{color:rgba(0,0,0,0.3);margin-right:0;}
-@keyframes tickerRoll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-/* ═══════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:28px 64px;
-  transition:all 0.5s cubic-bezier(0.16,1,0.3,1);
-}
-nav.stuck{
-  background:rgba(4,6,13,0.88);
-  backdrop-filter:blur(40px) saturate(1.4);
-  padding:16px 64px;
-  border-bottom:1px solid var(--b0);
-}
-.nav-id{display:flex;align-items:center;gap:16px;}
-.nav-emblem{
-  position:relative;
-  width:42px;height:42px;
-}
-.nav-emblem svg{width:100%;height:100%;}
-.nav-wordmark{
-  font-family:var(--bc);font-size:18px;font-weight:800;
-  letter-spacing:0.18em;color:#fff;line-height:1;
-}
-.nav-tagline{
-  font-family:var(--mono);font-size:8px;letter-spacing:0.2em;
-  color:var(--faint);margin-top:2px;
-}
-.nav-links{display:flex;gap:44px;}
-.n-link{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.14em;
-  color:var(--muted);transition:color 0.25s;position:relative;
-}
-.n-link::after{
-  content:'';position:absolute;bottom:-4px;left:0;right:0;
-  height:1px;background:var(--aqua);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-.n-link:hover{color:var(--aqua);}
-.n-link:hover::after{transform:scaleX(1);}
-.nav-actions{display:flex;align-items:center;gap:16px;}
-.nav-phone{
-  font-family:var(--mono);font-size:12px;letter-spacing:0.1em;
-  color:var(--muted);border:1px solid var(--b0);
-  padding:8px 18px;border-radius:4px;
-  transition:all 0.3s;
-}
-.nav-phone:hover{color:var(--aqua);border-color:var(--b1);}
-.nav-book{
-  font-family:var(--bc);font-size:13px;font-weight:700;
-  letter-spacing:0.14em;color:var(--ink);
-  background:var(--aqua);padding:10px 24px;border-radius:4px;
-  transition:all 0.3s;
-  box-shadow:0 0 24px rgba(34,211,242,0.35);
-}
-.nav-book:hover{background:#fff;box-shadow:0 0 40px rgba(34,211,242,0.6);transform:translateY(-1px);}
-#mob-btn{display:none;background:none;border:none;color:var(--muted);font-size:22px;}
-#mob-drawer{
-  display:none;position:absolute;top:100%;left:0;right:0;
-  background:rgba(4,6,13,0.97);backdrop-filter:blur(30px);
-  border-bottom:1px solid var(--b0);padding:32px 40px;
-  flex-direction:column;gap:28px;
-}
-#mob-drawer.open{display:flex;}
-#mob-drawer .n-link{font-size:16px;}
-
-/* ═══════════════════════════════════════
-   HERO — FULL SCREEN CINEMATIC
-═══════════════════════════════════════ */
-.hero{
-  position:relative;min-height:100vh;
-  display:flex;flex-direction:column;
-  overflow:hidden;z-index:2;
-}
-.hero-photo{
-  position:absolute;inset:0;
-  background-image:url('Images/photo.jpeg');
-  background-size:cover;background-position:center;
-  filter:brightness(0.18) saturate(0.3);
-  transform:scale(1.05);
-  animation:heroZoom 20s ease-out forwards;
-}
-@keyframes heroZoom{to{transform:scale(1);}}
-.hero-vignette{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 70% 60% at 15% 80%,rgba(34,211,242,0.07) 0%,transparent 60%),
-    linear-gradient(to bottom, rgba(4,6,13,0.3) 0%, transparent 30%, transparent 60%, var(--ink) 100%),
-    linear-gradient(to right, rgba(4,6,13,0.6) 0%, transparent 50%);
-}
-
-/* Hero main content */
-.hero-stage{
-  position:relative;z-index:3;
-  flex:1;display:flex;align-items:flex-end;
-  padding:0 64px 80px;
-  padding-top:160px;
-}
-.hero-left{max-width:720px;}
-
-/* Live chip */
-.live-chip{
-  display:inline-flex;align-items:center;gap:10px;
-  border:1px solid rgba(34,211,242,0.2);
-  background:rgba(34,211,242,0.05);
-  padding:7px 18px;border-radius:2px;
-  margin-bottom:40px;
-  backdrop-filter:blur(12px);
-}
-.live-pip{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--lime);
-  box-shadow:0 0 0 0 rgba(163,245,66,0.4);
-  animation:pip 2s infinite;
-}
-@keyframes pip{
-  0%{box-shadow:0 0 0 0 rgba(163,245,66,0.6);}
-  70%{box-shadow:0 0 0 10px transparent;}
-  100%{box-shadow:0 0 0 0 transparent;}
-}
-.live-txt{font-family:var(--mono);font-size:10px;letter-spacing:0.22em;color:var(--aqua);}
-
-/* Giant headline */
-.hero-h1{
-  font-family:var(--bc);
-  font-weight:900;
-  font-size:clamp(72px,10.5vw,168px);
-  line-height:0.87;
-  letter-spacing:0.01em;
-  color:#fff;
-}
-.hero-h1 em{font-style:italic;font-weight:300;color:rgba(255,255,255,0.4);}
-.hero-h1 .aqua{color:var(--aqua);}
-
-.hero-desc{
-  font-family:var(--ox);font-size:15px;font-weight:300;
-  letter-spacing:0.06em;color:var(--muted);
-  line-height:1.9;margin-top:32px;max-width:480px;
-}
-
-.hero-ctas{display:flex;gap:14px;margin-top:48px;flex-wrap:wrap;}
-.cta-primary{
-  display:inline-flex;align-items:center;gap:12px;
-  font-family:var(--bc);font-size:15px;font-weight:800;
-  letter-spacing:0.14em;color:var(--ink);
-  background:var(--aqua);
-  padding:18px 40px;border-radius:3px;
-  box-shadow:0 0 40px rgba(34,211,242,0.4);
-  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
-  position:relative;overflow:hidden;
-}
-.cta-primary::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
-  transform:translateX(-100%);transition:transform 0.5s;
-}
-.cta-primary:hover::before{transform:translateX(0);}
-.cta-primary:hover{transform:translateY(-3px);box-shadow:0 24px 60px rgba(34,211,242,0.5);}
-.cta-ghost{
-  display:inline-flex;align-items:center;gap:12px;
-  font-family:var(--bc);font-size:15px;font-weight:700;
-  letter-spacing:0.12em;color:#fff;
-  padding:17px 40px;border-radius:3px;
-  border:1px solid var(--b1);
-  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-.cta-ghost:hover{border-color:var(--aqua);color:var(--aqua);background:rgba(34,211,242,0.05);transform:translateY(-3px);}
-
-/* Right panel — floating HUD */
-.hero-hud{
-  position:absolute;right:64px;top:50%;transform:translateY(-50%);
-  z-index:3;display:flex;flex-direction:column;gap:12px;
-  opacity:0;animation:hudIn 1s 1.8s forwards cubic-bezier(0.16,1,0.3,1);
-}
-@keyframes hudIn{from{opacity:0;transform:translateY(-40%);} to{opacity:1;transform:translateY(-50%);}}
-.hud-card{
-  width:200px;
-  background:rgba(4,6,13,0.7);
-  backdrop-filter:blur(24px);
-  border:1px solid var(--b0);
-  border-left:2px solid var(--aqua);
-  padding:18px 20px;
-  border-radius:0 6px 6px 0;
-}
-.hud-label{font-family:var(--mono);font-size:8px;letter-spacing:0.25em;color:var(--muted);}
-.hud-val{font-family:var(--bc);font-size:28px;font-weight:900;color:var(--aqua);letter-spacing:0.04em;line-height:1.1;margin-top:4px;}
-.hud-sub{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;color:var(--faint);margin-top:2px;}
-
-/* Hero bottom bar */
-.hero-bottom{
-  position:relative;z-index:3;
-  display:flex;align-items:stretch;
-  border-top:1px solid var(--b0);
-  background:rgba(4,6,13,0.75);
-  backdrop-filter:blur(32px);
-}
-.hero-stat{
-  flex:1;padding:28px 40px;
-  border-right:1px solid var(--b0);
-  display:flex;flex-direction:column;gap:4px;
-  transition:background 0.3s;
-}
-.hero-stat:last-child{border-right:none;}
-.hero-stat:hover{background:rgba(34,211,242,0.04);}
-.hs-val{font-family:var(--bc);font-size:36px;font-weight:900;color:#fff;letter-spacing:0.02em;line-height:1;}
-.hs-val span{color:var(--aqua);}
-.hs-label{font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--muted);}
-
-/* ═══════════════════════════════════════
-   SECTION COMMON
-═══════════════════════════════════════ */
-section{position:relative;z-index:2;}
-.wrap{max-width:1280px;margin:0 auto;padding:0 64px;}
-
-.s-eye{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.35em;
-  color:var(--aqua);text-transform:uppercase;
-  display:flex;align-items:center;gap:14px;margin-bottom:18px;
-}
-.s-eye::before{content:'';width:28px;height:1px;background:var(--aqua);}
-.s-eye::after{content:'';width:28px;height:1px;background:var(--aqua);opacity:0.3;}
-
-.s-title{
-  font-family:var(--bc);font-weight:900;
-  font-size:clamp(44px,5.5vw,88px);
-  line-height:0.87;letter-spacing:0.01em;color:#fff;
-}
-.s-title em{color:var(--aqua);font-style:normal;}
-.s-body{
-  font-size:14px;letter-spacing:0.06em;color:var(--muted);
-  line-height:1.9;max-width:540px;margin-top:20px;
-}
-
-/* ═══════════════════════════════════════
-   PROCESS — DIAGONAL TIMELINE
-═══════════════════════════════════════ */
-.process-section{padding:160px 0;background:var(--ink2);}
-.process-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;}
-
-.timeline{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:0;margin-top:100px;
-  position:relative;
-}
-.timeline::after{
-  content:'';
-  position:absolute;top:52px;left:12%;right:12%;height:1px;
-  background:linear-gradient(90deg,
-    transparent 0%,
-    var(--aqua) 20%,
-    var(--aqua) 80%,
-    transparent 100%
-  );
-  opacity:0.2;
-}
-.tl-step{
-  padding:0 24px;
-  display:flex;flex-direction:column;align-items:center;
-  text-align:center;
-  opacity:0;transform:translateY(40px);
-  transition:opacity 0.7s,transform 0.7s;
-}
-.tl-step.show{opacity:1;transform:translateY(0);}
-
-.tl-node{
-  position:relative;
-  width:104px;height:104px;
-  border-radius:50%;
-  border:1px solid var(--b1);
-  background:radial-gradient(circle at 40% 35%,rgba(34,211,242,0.08),rgba(4,6,13,0.95));
-  display:flex;align-items:center;justify-content:center;
-  font-size:38px;
-  margin-bottom:36px;
-  transition:all 0.4s;
-}
-.tl-step:hover .tl-node{
-  border-color:var(--aqua);
-  box-shadow:0 0 60px rgba(34,211,242,0.25),inset 0 0 30px rgba(34,211,242,0.06);
-  transform:scale(1.06);
-}
-.tl-idx{
-  position:absolute;top:-8px;right:-8px;
-  font-family:var(--mono);font-size:10px;font-weight:500;
-  background:var(--aqua);color:var(--ink);
-  width:26px;height:26px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  letter-spacing:0;
-}
-.tl-name{
-  font-family:var(--bc);font-size:18px;font-weight:700;
-  letter-spacing:0.1em;color:#fff;margin-bottom:10px;
-}
-.tl-desc{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.07em;
-  color:var(--muted);line-height:1.7;
-}
-
-/* ═══════════════════════════════════════
-   PROMO BAND — HOLOGRAPHIC STRIP
-═══════════════════════════════════════ */
-.promo-strip{
-  position:relative;z-index:2;
-  margin:0 64px;
-  border-radius:16px;overflow:hidden;
-  border:1px solid rgba(34,211,242,0.25);
-  background:linear-gradient(135deg,
-    rgba(34,211,242,0.06) 0%,
-    rgba(8,12,24,0.98) 40%,
-    rgba(163,245,66,0.04) 100%
-  );
-}
-.promo-strip::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--aqua),var(--lime),transparent);
-  opacity:0.6;
-}
-.promo-strip::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--lime),var(--aqua),transparent);
-  opacity:0.3;
-}
-.promo-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:32px;padding:44px 56px;flex-wrap:wrap;
-}
-.promo-badge{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.3em;
-  color:var(--amber);background:rgba(255,184,48,0.1);
-  border:1px solid rgba(255,184,48,0.25);
-  padding:5px 14px;border-radius:2px;
-  display:inline-block;margin-bottom:14px;
-}
-.promo-h{
-  font-family:var(--bc);font-size:30px;font-weight:900;
-  letter-spacing:0.04em;color:#fff;
-}
-.promo-sub{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.1em;
-  color:var(--muted);margin-top:6px;
-}
-.promo-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
-.code-pill{
-  display:flex;align-items:center;gap:0;
-  border:1px solid rgba(34,211,242,0.3);border-radius:6px;
-  overflow:hidden;
-}
-.code-text{
-  font-family:var(--bc);font-size:28px;font-weight:900;
-  letter-spacing:0.14em;color:var(--aqua);
-  padding:16px 28px;
-  background:rgba(34,211,242,0.05);
-}
-.code-copy{
-  padding:16px 24px;
-  background:var(--aqua);border:none;
-  font-family:var(--bc);font-size:13px;font-weight:700;
-  letter-spacing:0.1em;color:var(--ink);
-  transition:all 0.25s;white-space:nowrap;
-}
-.code-copy:hover{background:#fff;}
-.copy-confirm{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.15em;
-  color:var(--lime);
-  opacity:0;transition:opacity 0.3s;
-}
-.copy-confirm.show{opacity:1;}
-.promo-date{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.18em;
-  color:var(--faint);
-}
-
-/* ═══════════════════════════════════════
-   VEHICLE SELECTOR — IMMERSIVE PANELS
-═══════════════════════════════════════ */
-.vehicles-section{padding:160px 0;}
-.vehicles-head{margin-bottom:80px;}
-.vehicle-panels{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  height:580px;gap:3px;
-  border-radius:12px;overflow:hidden;
-}
-.v-panel{
-  position:relative;overflow:hidden;
-  transition:flex 0.7s cubic-bezier(0.16,1,0.3,1);
-  cursor:none;text-decoration:none;
-}
-.v-panel img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;
-  filter:brightness(0.3) saturate(0.4);
-  transition:filter 0.7s,transform 0.9s cubic-bezier(0.16,1,0.3,1);
-}
-.v-panel:hover img{filter:brightness(0.4) saturate(0.9);transform:scale(1.08);}
-.v-panel-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(4,6,13,0.98) 0%,transparent 55%);
-  transition:background 0.5s;
-}
-.v-panel:hover .v-panel-overlay{
-  background:linear-gradient(to top,rgba(4,6,13,1) 0%,rgba(34,211,242,0.04) 100%);
-}
-.v-panel-line{
-  position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--aqua);
-  transform:scaleX(0);
-  transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
-}
-.v-panel:hover .v-panel-line{transform:scaleX(1);}
-.v-panel-content{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:36px 28px;
-}
-.v-cat{
-  font-family:var(--mono);font-size:8px;letter-spacing:0.3em;
-  color:var(--aqua);margin-bottom:8px;
-  opacity:0;transform:translateY(10px);
-  transition:opacity 0.4s,transform 0.4s;
-}
-.v-panel:hover .v-cat{opacity:1;transform:translateY(0);}
-.v-name{
-  font-family:var(--bc);font-size:32px;font-weight:900;
-  letter-spacing:0.04em;color:#fff;line-height:1;
-}
-.v-sub{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.12em;
-  color:var(--muted);margin-top:6px;
-}
-.v-arrow{
-  position:absolute;top:24px;right:24px;
-  width:40px;height:40px;
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:rgba(255,255,255,0.4);
-  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-.v-panel:hover .v-arrow{
-  border-color:var(--aqua);color:var(--aqua);
-  background:rgba(34,211,242,0.1);
-  transform:rotate(-45deg);
-  box-shadow:0 0 20px rgba(34,211,242,0.3);
-}
-/* Mobile fallback for panels */
-.v-panel-grid{display:none;}
-
-/* ═══════════════════════════════════════
-   URGENCY — SPLIT GLASS CARDS
-═══════════════════════════════════════ */
-.urgency-section{padding:160px 0;background:var(--ink2);}
-.urg-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:3px;margin-top:80px;
-  border-radius:12px;overflow:hidden;
-  border:1px solid var(--b0);
-}
-.urg-card{
-  position:relative;overflow:hidden;
-  background:var(--panel);
-  padding:68px 56px;
-  transition:all 0.5s cubic-bezier(0.16,1,0.3,1);
-  opacity:0;transform:translateX(-30px);
-}
-.urg-card:nth-child(2){transform:translateX(30px);}
-.urg-card.show{opacity:1;transform:translateX(0);}
-.urg-card::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:var(--aqua);opacity:0;transition:opacity 0.4s;
-}
-.urg-card:hover::before{opacity:1;}
-.urg-card:hover{background:rgba(34,211,242,0.03);}
-/* Floating number watermark */
-.urg-num{
-  position:absolute;right:32px;top:24px;
-  font-family:var(--bc);font-size:120px;font-weight:900;
-  color:rgba(255,255,255,0.025);line-height:1;
-  pointer-events:none;
-  transition:color 0.4s;
-}
-.urg-card:hover .urg-num{color:rgba(34,211,242,0.04);}
-.urg-icon{font-size:56px;margin-bottom:32px;display:block;}
-.urg-title{
-  font-family:var(--bc);font-size:26px;font-weight:700;
-  letter-spacing:0.08em;color:#fff;margin-bottom:28px;
-}
-.urg-price{
-  font-family:var(--bc);font-size:84px;font-weight:900;
-  color:var(--aqua);letter-spacing:-0.02em;line-height:0.9;
-  margin-bottom:28px;
-  text-shadow:0 0 80px rgba(34,211,242,0.4);
-}
-.urg-desc{
-  font-size:14px;letter-spacing:0.05em;color:var(--muted);
-  line-height:1.9;margin-bottom:48px;max-width:360px;
-}
-.urg-call{
-  display:inline-flex;align-items:center;gap:14px;
-  border:1px solid rgba(34,211,242,0.3);color:var(--aqua);
-  padding:16px 32px;border-radius:3px;
-  font-family:var(--bc);font-size:16px;font-weight:700;letter-spacing:0.12em;
-  transition:all 0.35s;
-}
-.urg-call:hover{
-  background:var(--aqua);color:var(--ink);border-color:var(--aqua);
-  box-shadow:0 0 40px rgba(34,211,242,0.4);transform:translateY(-2px);
-}
-
-/* ═══════════════════════════════════════
-   FORFAITS — DATA TABLE AESTHETIC
-═══════════════════════════════════════ */
-.forfaits-section{padding:160px 0;}
-.forfaits-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:16px;margin-top:80px;
-}
-.ff-card{
-  border:1px solid var(--b0);border-radius:12px;
-  overflow:hidden;
-  opacity:0;transform:translateY(30px);
-  transition:opacity 0.7s,transform 0.7s,border-color 0.3s;
-}
-.ff-card.show{opacity:1;transform:translateY(0);}
-.ff-card:hover{border-color:rgba(34,211,242,0.2);}
-.ff-head{
-  padding:40px 48px 32px;
-  background:rgba(255,255,255,0.02);
-  border-bottom:1px solid var(--b0);
-  position:relative;overflow:hidden;
-}
-.ff-head::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--aqua),transparent);
-  opacity:0.4;
-}
-.ff-type{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.28em;
-  color:var(--aqua);margin-bottom:10px;
-}
-.ff-title{
-  font-family:var(--bc);font-size:24px;font-weight:800;
-  letter-spacing:0.06em;color:#fff;
-}
-.ff-body{padding:0 48px 48px;}
-.ff-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.04);
-  gap:12px;flex-wrap:wrap;
-}
-.ff-row:last-child{border-bottom:none;}
-.ff-tier{
-  font-family:var(--mono);font-size:12px;letter-spacing:0.08em;
-  color:var(--muted);
-}
-.ff-right{display:flex;align-items:center;gap:20px;}
-.ff-price{
-  font-family:var(--bc);font-size:32px;font-weight:900;
-  color:var(--aqua);letter-spacing:0.02em;
-}
-.ff-price sub{font-family:var(--mono);font-size:10px;color:var(--faint);font-weight:400;}
-.ff-pick{
-  font-family:var(--bc);font-size:13px;font-weight:700;
-  letter-spacing:0.12em;color:var(--ink);
-  background:var(--aqua);padding:9px 20px;border-radius:3px;
-  transition:all 0.2s;white-space:nowrap;
-}
-.ff-pick:hover{background:#fff;transform:scale(1.04);}
-.ff-note{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.15em;
-  color:var(--faint);text-align:center;margin-top:24px;
-}
-
-/* ═══════════════════════════════════════
-   WHY — ICON GRID
-═══════════════════════════════════════ */
-.why-section{padding:160px 0;background:var(--ink2);}
-.why-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:3px;margin-top:80px;
-  border-radius:12px;overflow:hidden;
-}
-.why-card{
-  background:var(--panel);padding:64px 48px;text-align:center;
-  border-right:1px solid var(--b0);
-  transition:background 0.35s;
-  position:relative;overflow:hidden;
-}
-.why-card:last-child{border-right:none;}
-.why-card-glow{
-  position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);
-  width:160px;height:160px;border-radius:50%;
-  background:var(--aqua);
-  filter:blur(70px);opacity:0;transition:opacity 0.5s;
-  pointer-events:none;
-}
-.why-card:hover .why-card-glow{opacity:0.06;}
-.why-card:hover{background:rgba(34,211,242,0.03);}
-.why-ico{font-size:52px;margin-bottom:28px;display:block;}
-.why-t{
-  font-family:var(--bc);font-size:20px;font-weight:700;
-  letter-spacing:0.1em;color:#fff;margin-bottom:12px;
-}
-.why-d{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.07em;
-  color:var(--muted);line-height:1.8;
-}
-
-/* ═══════════════════════════════════════
-   ABOUT — ASYMMETRIC LAYOUT
-═══════════════════════════════════════ */
-.about-section{padding:160px 0;}
-.about-grid{
-  display:grid;grid-template-columns:1.1fr 0.9fr;
-  gap:100px;align-items:center;
-}
-.about-text .s-body{max-width:100%;font-size:15px;line-height:2;}
-
-/* Feature list */
-.about-features{
-  display:flex;flex-direction:column;gap:0;
-  margin-top:48px;
-  border:1px solid var(--b0);border-radius:8px;overflow:hidden;
-}
-.ab-feat{
-  display:flex;align-items:center;gap:20px;
-  padding:20px 28px;border-bottom:1px solid var(--b0);
-  transition:background 0.3s;
-}
-.ab-feat:last-child{border-bottom:none;}
-.ab-feat:hover{background:rgba(34,211,242,0.04);}
-.ab-feat-ico{font-size:20px;flex-shrink:0;}
-.ab-feat-txt{
-  font-family:var(--mono);font-size:12px;letter-spacing:0.1em;
-  color:var(--muted);
-}
-.ab-feat-val{
-  margin-left:auto;
-  font-family:var(--bc);font-size:16px;font-weight:700;
-  color:var(--aqua);letter-spacing:0.06em;
-}
-
-/* Stats side */
-.about-stats{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;
-}
-.as-card{
-  background:var(--panel);border:1px solid var(--b0);
-  border-radius:10px;padding:40px 30px;
-  text-align:center;transition:all 0.4s;
-  position:relative;overflow:hidden;
-}
-.as-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 120%,rgba(34,211,242,0.08),transparent 70%);
-  opacity:0;transition:opacity 0.4s;
-}
-.as-card:hover::before{opacity:1;}
-.as-card:hover{border-color:rgba(34,211,242,0.2);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,0.5);}
-.as-val{
-  font-family:var(--bc);font-size:52px;font-weight:900;
-  color:var(--aqua);letter-spacing:-0.02em;line-height:1;
-  text-shadow:0 0 40px rgba(34,211,242,0.4);
-}
-.as-label{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.22em;
-  color:var(--muted);margin-top:8px;
-}
-.as-card.wide{
-  grid-column:span 2;
-  padding:32px 30px;
-}
-.as-wide-val{
-  font-family:var(--bc);font-size:36px;font-weight:900;color:#fff;
-  letter-spacing:0.02em;margin-bottom:4px;
-}
-.as-wide-sub{
-  font-family:var(--bc);font-size:18px;color:var(--muted);
-  letter-spacing:0.06em;
-}
-
-/* ═══════════════════════════════════════
-   REVIEWS — CARD CAROUSEL STYLE
-═══════════════════════════════════════ */
-.reviews-section{padding:160px 0;background:var(--ink2);}
-.reviews-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:16px;margin-top:80px;
-}
-.rv-card{
-  background:var(--panel);border:1px solid var(--b0);
-  border-radius:12px;padding:48px 40px;
-  transition:all 0.4s;
-  opacity:0;transform:translateY(30px);
-  position:relative;overflow:hidden;
-}
-.rv-card.show{opacity:1;transform:translateY(0);}
-.rv-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--aqua),transparent);
-  opacity:0;transition:opacity 0.4s;
-}
-.rv-card:hover::before{opacity:1;}
-.rv-card:hover{border-color:rgba(34,211,242,0.18);transform:translateY(-6px);box-shadow:0 40px 80px rgba(0,0,0,0.5);}
-.rv-stars{display:flex;gap:4px;margin-bottom:28px;}
-.rv-stars span{color:var(--amber);font-size:16px;}
-.rv-quote{
-  font-size:15px;letter-spacing:0.04em;color:var(--muted);
-  line-height:1.85;font-style:italic;margin-bottom:32px;
-}
-.rv-quote::before{content:'"';color:var(--aqua);font-size:28px;line-height:0;vertical-align:-8px;margin-right:4px;font-style:normal;}
-.rv-author{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.2em;
-  color:var(--faint);
-}
-
-/* ═══════════════════════════════════════
-   PARTNER — FULL-WIDTH FEATURE
-═══════════════════════════════════════ */
-.partner-section{padding:100px 0;background:#000;border-top:1px solid rgba(255,255,255,0.03);}
-.partner-box{
-  max-width:1280px;margin:0 auto;padding:0 64px;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-}
-.partner-chip{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.35em;
-  color:#ef4444;background:rgba(239,68,68,0.08);
-  border:1px solid rgba(239,68,68,0.2);
-  padding:6px 18px;border-radius:2px;
-  display:inline-block;margin-bottom:24px;
-}
-.partner-card-a{
-  display:flex;flex-direction:column;align-items:center;gap:32px;
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:20px;padding:64px 80px;
-  margin-top:48px;
-  transition:all 0.5s;
-  max-width:700px;
-}
-.partner-card-a:hover{
-  border-color:rgba(239,68,68,0.3);
-  background:rgba(239,68,68,0.03);
-  transform:translateY(-6px);
-  box-shadow:0 50px 100px rgba(0,0,0,0.6);
-}
-.partner-card-a img{height:100px;width:auto;max-width:100%;}
-.partner-desc{
-  font-size:14px;letter-spacing:0.05em;color:var(--muted);
-  line-height:1.9;max-width:420px;
-}
-.partner-desc strong{color:#fff;}
-.partner-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  border:1px solid rgba(255,255,255,0.1);color:#fff;
-  padding:14px 32px;border-radius:4px;
-  font-family:var(--bc);font-size:14px;font-weight:700;letter-spacing:0.12em;
-  transition:all 0.3s;
-}
-.partner-btn:hover{background:#ef4444;border-color:#ef4444;transform:translateY(-2px);}
-
-/* ═══════════════════════════════════════
-   CONTACT — GLOWING GRID
-═══════════════════════════════════════ */
-.contact-section{padding:160px 0;background:var(--ink2);}
-.contact-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:12px;margin-top:80px;
-}
-.ct-card{
-  background:var(--panel);border:1px solid var(--b0);
-  border-radius:12px;padding:48px 24px;
-  display:flex;flex-direction:column;align-items:center;gap:20px;
-  text-align:center;transition:all 0.4s;
-  opacity:0;transform:translateY(30px);
-  text-decoration:none;position:relative;overflow:hidden;
-}
-.ct-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 100%,rgba(34,211,242,0.1),transparent 60%);
-  opacity:0;transition:opacity 0.5s;
-}
-.ct-card.show{opacity:1;transform:translateY(0);}
-.ct-card:hover::before{opacity:1;}
-.ct-card:hover{
-  border-color:rgba(34,211,242,0.25);
-  transform:translateY(-8px);
-  box-shadow:0 40px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(34,211,242,0.1);
-}
-.ct-ico{
-  width:72px;height:72px;
-  border:1px solid var(--b0);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;
-  transition:all 0.4s;
-  position:relative;z-index:1;
-}
-.ct-card:hover .ct-ico{
-  border-color:var(--aqua);
-  box-shadow:0 0 30px rgba(34,211,242,0.25);
-  background:rgba(34,211,242,0.08);
-}
-.ct-label{
-  font-family:var(--bc);font-size:16px;font-weight:700;
-  letter-spacing:0.14em;color:#fff;
-  position:relative;z-index:1;
-}
-.ct-hint{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.15em;
-  color:var(--faint);position:relative;z-index:1;
-}
-
-/* ═══════════════════════════════════════
-   MAP SECTION
-═══════════════════════════════════════ */
-.map-section{padding:80px 64px;background:var(--ink);}
-.map-wrap{max-width:1280px;margin:0 auto;}
-.map-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:32px;flex-wrap:wrap;gap:16px;
-}
-.map-title{
-  font-family:var(--bc);font-size:20px;font-weight:700;
-  letter-spacing:0.12em;color:#fff;
-}
-.map-tag{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.18em;
-  color:var(--aqua);
-}
-.map-frame{
-  border-radius:12px;overflow:hidden;
-  border:1px solid var(--b0);
-  filter:grayscale(1) invert(0.82) hue-rotate(180deg) brightness(0.75);
-  opacity:0.65;
-}
-
-/* ═══════════════════════════════════════
-   ZONE COVERAGE DISPLAY
-═══════════════════════════════════════ */
-.zone-section{padding:0 64px 80px;background:var(--ink);}
-.zone-wrap{max-width:1280px;margin:0 auto;}
-.zone-cities{
-  display:flex;flex-wrap:wrap;gap:8px;
-}
-.zone-pill{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.12em;
-  color:var(--muted);
-  border:1px solid var(--b0);
-  padding:7px 16px;border-radius:100px;
-  transition:all 0.25s;
-}
-.zone-pill:hover{border-color:var(--b1);color:var(--aqua);}
-
-/* ═══════════════════════════════════════
-   WHATSAPP FLOAT
-═══════════════════════════════════════ */
-.sms-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: #25D366; /* Vert WhatsApp-like, tu peux changer */
-  color: white;
+/* ─── CURSOR ─── */
+#dot {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 12px; height: 12px;
+  background: var(--blk);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 9999;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  transform: translate(-50%,-50%);
+  transition: transform .1s, background .2s, width .2s, height .2s;
+  mix-blend-mode: multiply;
 }
+#dot.big { width: 60px; height: 60px; background: var(--yel); }
 
-.sms-float:hover {
-  transform: scale(1.1);
-  background-color: #20c157;
-  color: white;
-}
-
-/* Optionnel : petit label au survol */
-.sms-float::after {
-  content: attr(data-label);
-  position: absolute;
-  right: 70px;
-  background: #333;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 14px;
-  white-space: nowrap;
-  opacity: 0;
+/* ─── NOISE TEXTURE ─── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9000;
   pointer-events: none;
-  transition: all 0.3s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.6;
 }
 
-.sms-float:hover::after {
-  opacity: 1;
-  right: 75px;
+/* ─── LOADER ─── */
+#ldr {
+  position: fixed; inset: 0; z-index: 8000;
+  background: var(--blk);
+  display: flex; align-items: center; justify-content: center;
+  transition: clip-path .8s cubic-bezier(.77,0,.18,1);
+  clip-path: inset(0 0 0 0);
 }
-/* ═══════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
-footer{
-  background:#000;
-  border-top:1px solid rgba(255,255,255,0.04);
-  padding:100px 64px 56px;
+#ldr.out { clip-path: inset(0 0 100% 0); }
+.ldr-inner {
+  text-align: center;
 }
-.footer-grid{
-  max-width:1280px;margin:0 auto;
-  display:grid;grid-template-columns:1fr auto 1fr;
-  gap:60px;align-items:center;
+.ldr-pct {
+  font-family: var(--anton);
+  font-size: clamp(100px, 20vw, 200px);
+  color: var(--wht);
+  line-height: 1;
+  letter-spacing: -.02em;
+  transition: all .05s;
 }
-.footer-left{}
-.footer-brand{
-  font-family:var(--bc);font-size:22px;font-weight:900;
-  letter-spacing:0.22em;color:#fff;
+.ldr-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .3em;
+  color: var(--yel);
+  margin-top: 8px;
 }
-.footer-tag{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.2em;
-  color:var(--faint);margin-top:6px;
+.ldr-bar { width: 200px; height: 2px; background: rgba(255,255,255,.1); margin: 20px auto 0; }
+.ldr-fill { height: 100%; background: var(--yel); width: 0%; transition: width .05s; }
+
+/* ─── MARQUEE ─── */
+.marquee-wrap {
+  background: var(--blk);
+  overflow: hidden;
+  position: relative; z-index: 10;
+  border-bottom: 4px solid var(--yel);
 }
-.footer-center{text-align:center;}
-.footer-phone{
-  font-family:var(--bc);font-size:38px;font-weight:900;
-  letter-spacing:0.06em;color:var(--aqua);
-  text-shadow:0 0 30px rgba(34,211,242,0.4);
+.marquee-inner {
+  display: flex; width: max-content;
+  animation: mq 18s linear infinite;
 }
-.footer-right{text-align:right;}
-.footer-links{
-  display:flex;flex-direction:column;gap:14px;align-items:flex-end;
+.mq-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .25em;
+  color: var(--wht);
+  padding: 13px 40px;
+  white-space: nowrap;
 }
-.footer-link{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.14em;
-  color:var(--faint);transition:color 0.2s;
+.mq-sep { color: var(--yel); }
+@keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: stretch;
+  border-bottom: 2px solid var(--blk);
+  background: var(--wht);
+  transition: top .4s;
 }
-.footer-link:hover{color:var(--aqua);}
-.footer-copy{
-  max-width:1280px;margin:60px auto 0;
-  padding-top:32px;
-  border-top:1px solid rgba(255,255,255,0.04);
-  display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:12px;
+nav.hidden { top: -100px; }
+.nav-brand {
+  display: flex; align-items: center;
+  padding: 0 32px;
+  border-right: 2px solid var(--blk);
+  background: var(--blk);
 }
-.footer-copy span{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.18em;
-  color:var(--faint);
+.nav-brand-txt {
+  font-family: var(--anton);
+  font-size: 22px;
+  letter-spacing: .1em;
+  color: var(--wht);
+  line-height: 1;
+}
+.nav-brand-txt span { color: var(--yel); }
+.nav-links {
+  display: flex;
+  border-right: 2px solid var(--blk);
+}
+.nlink {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--blk);
+  padding: 0 24px;
+  display: flex; align-items: center;
+  border-right: 1px solid rgba(0,0,0,.12);
+  transition: background .2s, color .2s;
+}
+.nlink:last-child { border-right: none; }
+.nlink:hover { background: var(--blk); color: var(--yel); }
+.nav-cta {
+  margin-left: auto;
+  display: flex; align-items: center;
+}
+.nav-tel {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .1em; color: var(--blk);
+  padding: 0 24px;
+  border-left: 2px solid var(--blk);
+  display: flex; align-items: center;
+  height: 100%;
+  transition: background .2s;
+}
+.nav-tel:hover { background: var(--yel); }
+.nav-book {
+  font-family: var(--anton); font-size: 14px; letter-spacing: .1em;
+  color: var(--blk);
+  background: var(--yel);
+  padding: 0 32px;
+  display: flex; align-items: center;
+  border-left: 2px solid var(--blk);
+  height: 100%;
+  transition: background .2s, color .2s;
+}
+.nav-book:hover { background: var(--blk); color: var(--yel); }
+#mob-btn { display: none; background: none; border: none; font-size: 22px; padding: 0 20px; }
+#mob-menu {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--blk); border-bottom: 4px solid var(--yel);
+  flex-direction: column;
+}
+#mob-menu.open { display: flex; }
+#mob-menu .nlink {
+  color: var(--wht); border-right: none; border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 20px 32px; font-size: 13px;
+}
+#mob-menu .nlink:hover { background: var(--yel); color: var(--blk); }
+
+/* ─── HERO ─── */
+.hero {
+  padding-top: 60px; /* nav height */
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid var(--blk);
 }
 
-/* ═══════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════ */
-.fade-up{opacity:0;transform:translateY(44px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1);}
-.fade-up.show{opacity:1;transform:translateY(0);}
-.fade-left{opacity:0;transform:translateX(-44px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s;}
-.fade-left.show{opacity:1;transform:translateX(0);}
-.fade-right{opacity:0;transform:translateX(44px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s;}
-.fade-right.show{opacity:1;transform:translateX(0);}
+/* Big diagonal split */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 60px - 80px);
+  position: relative;
+}
+.hero-split::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: var(--blk);
+  transform: rotate(4deg) scaleY(1.1);
+  transform-origin: top;
+  z-index: 2;
+}
 
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media(max-width:1024px){
-  nav{padding:20px 32px;}
-  nav.stuck{padding:14px 32px;}
-  .nav-links{display:none;}
-  #mob-btn{display:block;}
-  .wrap{padding:0 32px;}
-  .hero-stage{padding:0 32px 60px;padding-top:140px;}
-  .hero-hud{display:none;}
-  .hero-stat{padding:20px 24px;}
-  .hs-val{font-size:28px;}
-  .promo-strip{margin:0 32px;}
-  .map-section{padding:80px 32px;}
-  .zone-section{padding:0 32px 80px;}
-  footer{padding:80px 32px 48px;}
-  .footer-grid{grid-template-columns:1fr;text-align:center;gap:32px;}
-  .footer-links{align-items:center;}
-  .footer-right{text-align:center;}
-  .footer-copy{padding:0 32px;}
+/* LEFT — massive type */
+.hero-left {
+  padding: 60px 56px 60px 72px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 1;
+  background: var(--wht);
 }
-@media(max-width:768px){
-  .hero-h1{font-size:clamp(60px,15vw,100px);}
-  .hero-stat{flex:0 0 50%;border-bottom:1px solid var(--b0);}
-  .hero-bottom{flex-wrap:wrap;}
-  .timeline{grid-template-columns:1fr 1fr;}
-  .timeline::after{display:none;}
-  .vehicle-panels{display:none;}
-  .v-panel-grid{
-    display:grid;grid-template-columns:1fr 1fr;
-    gap:12px;margin-top:80px;
-  }
-  .v-panel-mobile{
-    position:relative;border-radius:10px;overflow:hidden;
-    aspect-ratio:16/10;text-decoration:none;display:block;
-  }
-  .v-panel-mobile img{width:100%;height:100%;object-fit:cover;filter:brightness(0.35) saturate(0.5);}
-  .v-panel-mobile-content{
-    position:absolute;bottom:0;left:0;right:0;padding:20px;
-    background:linear-gradient(to top,rgba(4,6,13,0.95),transparent);
-  }
-  .v-panel-mobile .v-name{font-size:22px;}
-  .v-panel-mobile .v-sub{font-size:9px;}
-  .urg-grid{grid-template-columns:1fr;}
-  .urg-card{transform:translateY(30px)!important;padding:48px 36px;}
-  .forfaits-grid{grid-template-columns:1fr;}
-  .why-grid{grid-template-columns:1fr;}
-  .why-card{border-right:none;border-bottom:1px solid var(--b0);}
-  .why-card:last-child{border-bottom:none;}
-  .reviews-grid{grid-template-columns:1fr;}
-  .about-grid{grid-template-columns:1fr;gap:60px;}
-  .contact-grid{grid-template-columns:1fr 1fr;}
-  .ff-head{padding:32px 28px 24px;}
-  .ff-body{padding:0 28px 36px;}
-  .promo-inner{padding:32px 28px;}
-  .promo-right{align-items:flex-start;}
+.hero-kicker {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .4em; color: var(--gry);
+  margin-bottom: 32px;
+  display: flex; align-items: center; gap: 12px;
 }
-@media(max-width:480px){
-  .hero-ctas{flex-direction:column;}
-  .cta-primary,.cta-ghost{width:100%;justify-content:center;}
-  .v-panel-grid{grid-template-columns:1fr;}
-  .contact-grid{grid-template-columns:1fr 1fr;}
-  .hero-stat{flex:0 0 100%;}
-  .timeline{grid-template-columns:1fr;}
+.hero-kicker::before {
+  content: ''; display: block;
+  width: 32px; height: 2px; background: var(--blk);
+}
+.hero-h1 {
+  font-family: var(--anton);
+  font-size: clamp(80px, 11vw, 160px);
+  line-height: .88;
+  letter-spacing: -.01em;
+  color: var(--blk);
+}
+.hero-h1 .outline {
+  -webkit-text-stroke: 2px var(--blk);
+  color: transparent;
+}
+.hero-h1 .yel { color: var(--yel); -webkit-text-stroke: 0; background: var(--blk); padding: 0 8px; }
+
+.hero-sub {
+  font-family: var(--bask); font-size: 16px; font-style: italic;
+  color: var(--gry); line-height: 1.8;
+  max-width: 360px; margin-top: 32px;
+}
+.hero-actions {
+  display: flex; gap: 12px; margin-top: 48px; flex-wrap: wrap;
+}
+.btn-solid {
+  font-family: var(--anton); font-size: 14px; letter-spacing: .12em;
+  color: var(--blk); background: var(--yel);
+  padding: 18px 40px;
+  border: 3px solid var(--blk);
+  display: inline-flex; align-items: center; gap: 12px;
+  transition: all .2s;
+  position: relative;
+}
+.btn-solid::after {
+  content: ''; position: absolute;
+  bottom: -5px; right: -5px;
+  width: 100%; height: 100%;
+  border: 3px solid var(--blk);
+  background: transparent;
+  z-index: -1;
+  transition: all .2s;
+}
+.btn-solid:hover { transform: translate(-3px,-3px); }
+.btn-solid:hover::after { transform: translate(3px,3px); }
+
+.btn-ghost {
+  font-family: var(--anton); font-size: 14px; letter-spacing: .12em;
+  color: var(--blk);
+  padding: 18px 40px;
+  border: 3px solid var(--blk);
+  display: inline-flex; align-items: center; gap: 12px;
+  transition: all .2s;
+  position: relative; background: transparent;
+}
+.btn-ghost::after {
+  content: ''; position: absolute;
+  bottom: -5px; right: -5px;
+  width: 100%; height: 100%;
+  border: 3px solid var(--blk);
+  background: transparent;
+  z-index: -1; transition: all .2s;
+}
+.btn-ghost:hover { background: var(--blk); color: var(--yel); transform: translate(-3px,-3px); }
+.btn-ghost:hover::after { transform: translate(3px,3px); }
+
+/* RIGHT — photo with overlays */
+.hero-right {
+  position: relative; overflow: hidden;
+  background: #111;
+}
+.hero-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  opacity: .6;
+  transform: scale(1.03);
+  animation: slow-zoom 20s ease-out forwards;
+}
+@keyframes slow-zoom { to { transform: scale(1); } }
+.hero-photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(212,240,0,.15) 0%, transparent 60%);
+  mix-blend-mode: screen;
+}
+/* Floating stat pill on photo */
+.hero-tag {
+  position: absolute;
+  top: 40px; left: -2px;
+  background: var(--yel);
+  border: 3px solid var(--blk);
+  padding: 14px 24px;
+  z-index: 5;
+}
+.hero-tag-num {
+  font-family: var(--anton); font-size: 36px;
+  color: var(--blk); line-height: 1;
+}
+.hero-tag-label {
+  font-family: var(--mono); font-size: 8px;
+  font-weight: 700; letter-spacing: .25em;
+  color: var(--blk);
+}
+.hero-tag2 {
+  position: absolute;
+  bottom: 40px; right: -2px;
+  background: var(--blk);
+  border: 3px solid var(--blk);
+  padding: 14px 24px; z-index: 5;
+  text-align: right;
+}
+.hero-tag2 .hero-tag-num { color: var(--yel); }
+.hero-tag2 .hero-tag-label { color: rgba(255,255,255,.6); }
+
+/* Scanning line animation on photo */
+.scan-line {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--yel), transparent);
+  opacity: .4;
+  animation: scan 5s ease-in-out infinite;
+  z-index: 4;
+}
+@keyframes scan {
+  0% { top: -2px; opacity: 0; }
+  10% { opacity: .4; }
+  90% { opacity: .4; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* HERO BOTTOM — stats bar */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 4px solid var(--blk);
+}
+.hst {
+  padding: 24px 40px;
+  border-right: 3px solid var(--blk);
+  display: flex; align-items: center; gap: 20px;
+  transition: background .2s;
+}
+.hst:last-child { border-right: none; }
+.hst:hover { background: var(--blk); }
+.hst:hover .hst-n, .hst:hover .hst-l { color: var(--yel); }
+.hst-n {
+  font-family: var(--anton); font-size: 42px;
+  line-height: 1; letter-spacing: -.01em;
+  transition: color .2s;
+}
+.hst-l {
+  font-family: var(--mono); font-size: 9px;
+  font-weight: 700; letter-spacing: .2em;
+  color: var(--gry); line-height: 1.4;
+  transition: color .2s;
+}
+
+/* ─── SECTION BASE ─── */
+section { position: relative; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 72px; }
+
+.s-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .4em; color: var(--gry);
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px;
+}
+.s-label::before {
+  content: attr(data-n);
+  font-family: var(--mono); font-size: 9px;
+  background: var(--blk); color: var(--yel);
+  padding: 3px 8px;
+}
+.s-title {
+  font-family: var(--anton);
+  font-size: clamp(52px,6.5vw,100px);
+  line-height: .88; letter-spacing: -.01em;
+  color: var(--blk);
+}
+.s-title .yel { color: var(--yel); background: var(--blk); padding: 0 8px; }
+.s-title .outline {
+  -webkit-text-stroke: 2px var(--blk);
+  color: transparent;
+}
+.s-body {
+  font-family: var(--bask); font-size: 15px; font-style: italic;
+  color: var(--gry); line-height: 1.9; max-width: 500px;
+  margin-top: 20px;
+}
+
+/* ─── FADE ANIMATIONS ─── */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal-l { opacity: 0; transform: translateX(-40px); transition: opacity .8s, transform .8s cubic-bezier(.16,1,.3,1); }
+.reveal-l.in { opacity: 1; transform: none; }
+.reveal-r { opacity: 0; transform: translateX(40px); transition: opacity .8s, transform .8s cubic-bezier(.16,1,.3,1); }
+.reveal-r.in { opacity: 1; transform: none; }
+
+/* ─── PROCESS ─── */
+.process-section {
+  padding: 0;
+  border-bottom: 4px solid var(--blk);
+}
+.process-head {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 4px solid var(--blk);
+}
+.ph-left {
+  padding: 80px 72px;
+  border-right: 4px solid var(--blk);
+}
+.ph-right {
+  padding: 80px 72px;
+  display: flex; align-items: flex-end;
+}
+.process-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.step-box {
+  padding: 56px 40px;
+  border-right: 3px solid var(--blk);
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s, transform .6s, background .25s;
+}
+.step-box.in { opacity: 1; transform: none; }
+.step-box:last-child { border-right: none; }
+.step-box:hover { background: var(--blk); }
+.step-box:hover .step-num, .step-box:hover .step-name, .step-box:hover .step-desc { color: var(--wht); }
+.step-box:hover .step-ico { filter: none; }
+.step-num {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .3em; color: var(--gry);
+  margin-bottom: 24px;
+}
+.step-ico { font-size: 48px; margin-bottom: 24px; display: block; }
+.step-name {
+  font-family: var(--anton); font-size: 20px;
+  letter-spacing: .05em; color: var(--blk);
+  margin-bottom: 12px;
+}
+.step-desc {
+  font-family: var(--bask); font-size: 13px; font-style: italic;
+  color: var(--gry); line-height: 1.7;
+}
+/* Big watermark number */
+.step-box-bg {
+  position: absolute; bottom: -30px; right: -10px;
+  font-family: var(--anton); font-size: 120px;
+  color: rgba(0,0,0,.04); line-height: 1;
+  pointer-events: none;
+}
+.step-box:hover .step-box-bg { color: rgba(255,255,255,.04); }
+
+/* ─── PROMO ─── */
+.promo-section {
+  background: var(--blk);
+  border-bottom: 4px solid var(--yel);
+  overflow: hidden; position: relative;
+}
+.promo-inner {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0;
+}
+.promo-text { padding: 60px 72px; }
+.promo-eyebrow {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .4em; color: var(--yel);
+  margin-bottom: 16px;
+}
+.promo-headline {
+  font-family: var(--anton);
+  font-size: clamp(36px,4.5vw,68px);
+  line-height: .9; letter-spacing: -.01em;
+  color: var(--wht);
+}
+.promo-headline em { color: var(--yel); font-style: normal; }
+.promo-detail {
+  font-family: var(--mono); font-size: 11px;
+  color: rgba(255,255,255,.4); margin-top: 12px;
+  letter-spacing: .1em;
+}
+.promo-code-block {
+  background: var(--yel);
+  padding: 60px 72px;
+  display: flex; flex-direction: column; gap: 16px;
+  align-items: flex-start;
+  border-left: 4px solid var(--yel);
+  position: relative;
+}
+.promo-code-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .35em; color: var(--blk); opacity: .6;
+}
+.promo-code-val {
+  font-family: var(--anton); font-size: 52px;
+  letter-spacing: .06em; color: var(--blk);
+  line-height: 1;
+}
+.promo-code-btn {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .2em; color: var(--blk);
+  background: transparent; border: 2px solid var(--blk);
+  padding: 10px 24px; cursor: none;
+  transition: all .2s;
+}
+.promo-code-btn:hover { background: var(--blk); color: var(--yel); }
+.promo-confirm {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--blk); opacity: 0;
+  transition: opacity .3s; letter-spacing: .15em;
+}
+.promo-confirm.on { opacity: 1; }
+/* Scrolling BG text */
+.promo-bg-text {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  left: 0; right: 0;
+  font-family: var(--anton); font-size: 200px;
+  color: rgba(255,255,255,.025); white-space: nowrap;
+  letter-spacing: -.02em; pointer-events: none;
+  animation: drift 20s linear infinite;
+}
+@keyframes drift { from{transform:translateY(-50%) translateX(0)} to{transform:translateY(-50%) translateX(-30%)} }
+
+/* ─── VEHICLES ─── */
+.vehicles-section {
+  border-bottom: 4px solid var(--blk);
+}
+.veh-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 4px solid var(--blk);
+}
+.veh-hl { padding: 80px 72px; border-right: 4px solid var(--blk); }
+.veh-hr { padding: 80px 72px; display: flex; flex-direction: column; justify-content: flex-end; }
+
+.veh-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.veh-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-right: 3px solid var(--blk);
+  display: block;
+  text-decoration: none;
+  background: #111;
+  cursor: none;
+}
+.veh-card:last-child { border-right: none; }
+.veh-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.15);
+  transition: transform .8s cubic-bezier(.16,1,.3,1), filter .6s;
+}
+.veh-card:hover .veh-img {
+  transform: scale(1.08);
+  filter: grayscale(.4) contrast(1.1);
+}
+.veh-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(0,0,0,.2) 50%, transparent 100%);
+}
+.veh-card:hover .veh-overlay {
+  background: linear-gradient(to top, rgba(10,10,10,.98) 0%, rgba(212,240,0,.06) 100%);
+}
+/* Yellow top accent line */
+.veh-line {
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--yel);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+.veh-card:hover .veh-line { transform: scaleX(1); }
+.veh-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 32px 28px;
+}
+.veh-cat {
+  font-family: var(--mono); font-size: 8px; font-weight: 700;
+  letter-spacing: .35em; color: var(--yel);
+  margin-bottom: 8px;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .35s, transform .35s;
+}
+.veh-card:hover .veh-cat { opacity: 1; transform: none; }
+.veh-name {
+  font-family: var(--anton); font-size: 36px;
+  letter-spacing: .02em; color: var(--wht);
+  line-height: 1;
+}
+.veh-sub {
+  font-family: var(--mono); font-size: 10px;
+  color: rgba(255,255,255,.4); margin-top: 6px;
+  letter-spacing: .1em;
+}
+.veh-arrow {
+  position: absolute; top: 20px; right: 20px;
+  width: 40px; height: 40px;
+  border: 2px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.3); font-size: 16px;
+  transition: all .35s;
+}
+.veh-card:hover .veh-arrow {
+  border-color: var(--yel); color: var(--yel);
+  background: rgba(212,240,0,.1);
+  transform: rotate(-45deg);
+}
+
+/* Mobile vehicles */
+.veh-mob { display: none; }
+.veh-mob-card {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 3px solid var(--blk);
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+  min-height: 180px;
+  background: #111;
+}
+.veh-mob-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1); opacity: .6;
+}
+.veh-mob-info {
+  padding: 28px 28px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  background: var(--blk);
+}
+.veh-mob-name { font-family: var(--anton); font-size: 28px; color: var(--wht); }
+.veh-mob-sub { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,.4); letter-spacing: .12em; margin-top: 4px; }
+
+/* ─── URGENCES ─── */
+.urgences-section {
+  border-bottom: 4px solid var(--blk);
+}
+.urg-header {
+  padding: 80px 72px;
+  border-bottom: 4px solid var(--blk);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: end;
+}
+.urg-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.urg-card {
+  padding: 72px 72px;
+  border-right: 4px solid var(--blk);
+  position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s, transform .7s, background .25s;
+}
+.urg-card.in { opacity: 1; transform: none; }
+.urg-card:last-child { border-right: none; }
+.urg-card:hover { background: var(--blk); }
+.urg-card:hover .urg-title,
+.urg-card:hover .urg-desc,
+.urg-card:hover .urg-num { color: var(--wht); }
+.urg-card:hover .urg-price { color: var(--yel); }
+.urg-card:hover .urg-btn { background: var(--yel); color: var(--blk); border-color: var(--yel); }
+.urg-big-num {
+  position: absolute; top: -20px; right: 32px;
+  font-family: var(--anton); font-size: 180px;
+  color: rgba(0,0,0,.04); line-height: 1;
+  pointer-events: none; transition: color .25s;
+}
+.urg-card:hover .urg-big-num { color: rgba(255,255,255,.04); }
+.urg-ico { font-size: 60px; margin-bottom: 28px; display: block; }
+.urg-num {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .35em; color: var(--gry);
+  margin-bottom: 16px;
+}
+.urg-title {
+  font-family: var(--anton); font-size: 22px;
+  letter-spacing: .04em; color: var(--blk);
+  margin-bottom: 20px; line-height: 1.1;
+}
+.urg-price {
+  font-family: var(--anton); font-size: 96px;
+  letter-spacing: -.03em; line-height: .9;
+  color: var(--blk); margin-bottom: 24px;
+  transition: color .25s;
+}
+.urg-desc {
+  font-family: var(--bask); font-size: 14px; font-style: italic;
+  color: var(--gry); line-height: 1.9;
+  margin-bottom: 40px; max-width: 320px;
+}
+.urg-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--anton); font-size: 14px; letter-spacing: .1em;
+  color: var(--blk); background: transparent;
+  border: 3px solid var(--blk);
+  padding: 16px 32px;
+  transition: all .25s;
+  position: relative;
+}
+.urg-btn::after {
+  content: ''; position: absolute;
+  bottom: -4px; right: -4px;
+  width: 100%; height: 100%;
+  border: 3px solid var(--blk);
+  z-index: -1; transition: all .25s;
+}
+.urg-btn:hover::after { transform: translate(4px,4px); }
+
+/* ─── FORFAITS ─── */
+.forfaits-section {
+  border-bottom: 4px solid var(--blk);
+}
+.ff-header {
+  padding: 80px 72px;
+  border-bottom: 4px solid var(--blk);
+}
+.ff-table {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.ff-col {
+  border-right: 4px solid var(--blk);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s, transform .7s;
+}
+.ff-col.in { opacity: 1; transform: none; }
+.ff-col:last-child { border-right: none; }
+.ff-col-head {
+  padding: 40px 56px;
+  border-bottom: 3px solid var(--blk);
+  background: var(--blk);
+}
+.ff-type {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .3em; color: var(--yel); margin-bottom: 8px;
+}
+.ff-name {
+  font-family: var(--anton); font-size: 20px;
+  color: var(--wht); letter-spacing: .04em;
+}
+.ff-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 56px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  gap: 16px; flex-wrap: wrap;
+  transition: background .2s;
+}
+.ff-row:last-child { border-bottom: none; }
+.ff-row:hover { background: rgba(212,240,0,.15); }
+.ff-tier {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: .1em; color: var(--gry);
+}
+.ff-right { display: flex; align-items: center; gap: 20px; }
+.ff-price {
+  font-family: var(--anton); font-size: 40px;
+  color: var(--blk); letter-spacing: -.01em;
+}
+.ff-price sub { font-family: var(--mono); font-size: 10px; color: var(--gry); }
+.ff-pick {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .15em; color: var(--blk);
+  background: var(--yel); border: 2px solid var(--blk);
+  padding: 10px 20px; white-space: nowrap;
+  transition: all .2s;
+}
+.ff-pick:hover { background: var(--blk); color: var(--yel); }
+.ff-footnote {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .25em; color: var(--gry);
+  text-align: center; padding: 24px;
+  border-top: 3px solid var(--blk);
+}
+
+/* ─── WHY ─── */
+.why-section {
+  border-bottom: 4px solid var(--blk);
+  background: var(--blk);
+}
+.why-header { padding: 80px 72px; border-bottom: 4px solid rgba(255,255,255,.08); }
+.why-header .s-title { color: var(--wht); }
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+.why-card {
+  padding: 64px 56px;
+  border-right: 3px solid rgba(255,255,255,.08);
+  text-align: left;
+  position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.why-card:last-child { border-right: none; }
+.why-card:hover { background: rgba(212,240,0,.06); }
+.why-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--yel); transform: scaleX(0); transform-origin: left;
+  transition: transform .4s cubic-bezier(.16,1,.3,1);
+}
+.why-card:hover::before { transform: scaleX(1); }
+.why-ico { font-size: 56px; margin-bottom: 32px; display: block; }
+.why-t {
+  font-family: var(--anton); font-size: 22px;
+  letter-spacing: .06em; color: var(--wht);
+  margin-bottom: 16px;
+}
+.why-d {
+  font-family: var(--bask); font-size: 14px; font-style: italic;
+  color: rgba(255,255,255,.45); line-height: 1.85;
+}
+
+/* ─── ABOUT ─── */
+.about-section {
+  border-bottom: 4px solid var(--blk);
+}
+.about-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.about-left {
+  padding: 100px 72px;
+  border-right: 4px solid var(--blk);
+}
+.about-feats {
+  margin-top: 48px;
+  border: 3px solid var(--blk);
+}
+.ab-feat {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 2px solid var(--blk);
+  transition: background .2s;
+}
+.ab-feat:last-child { border-bottom: none; }
+.ab-feat:hover { background: var(--yel); }
+.ab-ico { font-size: 18px; }
+.ab-txt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--blk); }
+.ab-val { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--blk); }
+
+.about-right {
+  display: grid; grid-template-rows: 1fr 1fr;
+}
+.ab-stat {
+  padding: 80px 64px;
+  border-bottom: 4px solid var(--blk);
+  display: flex; flex-direction: column; justify-content: center;
+  transition: background .25s;
+}
+.ab-stat:last-child { border-bottom: none; }
+.ab-stat:hover { background: var(--blk); }
+.ab-stat:hover .ab-stat-val,
+.ab-stat:hover .ab-stat-label { color: var(--yel); }
+.ab-stat-val {
+  font-family: var(--anton); font-size: 88px;
+  letter-spacing: -.03em; line-height: .9;
+  color: var(--blk); transition: color .25s;
+}
+.ab-stat-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .3em; color: var(--gry);
+  margin-top: 16px; transition: color .25s;
+}
+
+/* ─── REVIEWS ─── */
+.reviews-section {
+  border-bottom: 4px solid var(--blk);
+  background: var(--wht);
+}
+.rv-header { padding: 80px 72px; border-bottom: 4px solid var(--blk); }
+.rv-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+.rv-card {
+  padding: 56px 48px;
+  border-right: 3px solid var(--blk);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s, transform .7s, background .25s;
+}
+.rv-card.in { opacity: 1; transform: none; }
+.rv-card:last-child { border-right: none; }
+.rv-card:hover { background: var(--blk); }
+.rv-card:hover .rv-quote, .rv-card:hover .rv-author { color: var(--wht); }
+.rv-stars { display: flex; gap: 4px; margin-bottom: 28px; }
+.rv-star { font-size: 18px; color: var(--yel); }
+.rv-quote {
+  font-family: var(--bask); font-size: 15px; font-style: italic;
+  color: #444; line-height: 1.85;
+  margin-bottom: 32px; transition: color .25s;
+}
+.rv-quote::before {
+  content: '"';
+  font-size: 40px; line-height: 0; vertical-align: -14px;
+  color: var(--yel); margin-right: 4px; font-style: normal;
+}
+.rv-author {
+  font-family: var(--mono); font-size: 9px;
+  font-weight: 700; letter-spacing: .3em;
+  color: var(--gry); transition: color .25s;
+}
+
+/* ─── PARTNER ─── */
+.partner-section {
+  border-bottom: 4px solid var(--blk);
+  background: var(--blk);
+}
+.partner-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.partner-left {
+  padding: 100px 72px;
+  border-right: 4px solid rgba(255,255,255,.08);
+}
+.partner-left .s-title { color: var(--wht); }
+.partner-left .s-title .yel { background: var(--yel); color: var(--blk); }
+.partner-left .s-body { color: rgba(255,255,255,.45); }
+.partner-right {
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px;
+}
+.partner-card {
+  display: flex; flex-direction: column; align-items: center; gap: 28px;
+  border: 3px solid rgba(255,255,255,.1);
+  padding: 56px 48px;
+  text-decoration: none;
+  transition: all .35s;
+  position: relative;
+}
+.partner-card::after {
+  content: ''; position: absolute;
+  bottom: -5px; right: -5px;
+  width: 100%; height: 100%;
+  border: 3px solid var(--yel);
+  z-index: -1; transition: all .3s;
+}
+.partner-card:hover::after { transform: translate(6px,6px); }
+.partner-card:hover { border-color: var(--yel); }
+.partner-card img { height: 80px; width: auto; filter: brightness(.9); }
+.partner-desc {
+  font-family: var(--bask); font-size: 13px; font-style: italic;
+  color: rgba(255,255,255,.45); line-height: 1.8; text-align: center; max-width: 320px;
+}
+.partner-desc strong { color: var(--wht); font-style: normal; }
+.partner-link {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .2em; color: var(--blk);
+  background: var(--yel); padding: 12px 28px; border: 2px solid var(--yel);
+  transition: all .2s;
+}
+.partner-link:hover { background: transparent; color: var(--yel); }
+
+/* ─── CONTACT ─── */
+.contact-section { border-bottom: 4px solid var(--blk); }
+.ct-header {
+  padding: 80px 72px;
+  border-bottom: 4px solid var(--blk);
+}
+.ct-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+.ct-card {
+  padding: 48px 32px;
+  border-right: 3px solid var(--blk);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+  text-decoration: none;
+  transition: background .2s;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s, transform .7s, background .2s;
+}
+.ct-card.in { opacity: 1; transform: none; }
+.ct-card:last-child { border-right: none; }
+.ct-card:hover { background: var(--blk); }
+.ct-card:hover .ct-label, .ct-card:hover .ct-hint { color: var(--wht); }
+.ct-card:hover .ct-ico-wrap { border-color: var(--yel); background: var(--yel); }
+.ct-ico-wrap {
+  width: 60px; height: 60px;
+  border: 3px solid var(--blk);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; transition: all .25s;
+}
+.ct-label {
+  font-family: var(--anton); font-size: 18px;
+  letter-spacing: .06em; color: var(--blk);
+  transition: color .2s;
+}
+.ct-hint {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .12em; color: var(--gry);
+  transition: color .2s;
+}
+
+/* ─── MAP ─── */
+.map-section { border-bottom: 4px solid var(--blk); background: var(--blk); }
+.map-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 72px;
+  border-bottom: 3px solid rgba(255,255,255,.08);
+}
+.map-title {
+  font-family: var(--anton); font-size: 16px; letter-spacing: .15em; color: var(--wht);
+}
+.map-tag {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .25em; color: var(--yel);
+}
+.map-frame {
+  filter: grayscale(1) invert(0.9) hue-rotate(180deg) brightness(.65);
+  opacity: .75;
+}
+
+/* ─── ZONES ─── */
+.zone-section {
+  padding: 32px 72px 48px;
+  border-bottom: 4px solid var(--blk);
+  background: var(--blk);
+}
+.zone-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.zpill {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .18em; color: rgba(255,255,255,.4);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 7px 16px;
+  transition: all .2s; cursor: default;
+}
+.zpill:hover { border-color: var(--yel); color: var(--yel); background: rgba(212,240,0,.05); }
+
+/* ─── SMS FLOAT ─── */
+.sms-float {
+  position: fixed; bottom: 24px; right: 24px; z-index: 8000;
+  width: 60px; height: 60px;
+  background: var(--yel); color: var(--blk);
+  border: 3px solid var(--blk);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; text-decoration: none;
+  transition: all .25s;
+  box-shadow: 4px 4px 0 var(--blk);
+}
+.sms-float:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--blk); background: var(--blk); color: var(--yel); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--blk);
+  border-top: 4px solid var(--yel);
+}
+.footer-top {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 3px solid rgba(255,255,255,.06);
+}
+.ft-col {
+  padding: 64px 56px;
+  border-right: 3px solid rgba(255,255,255,.06);
+}
+.ft-col:last-child { border-right: none; }
+.footer-brand {
+  font-family: var(--anton); font-size: 28px;
+  letter-spacing: .18em; color: var(--wht); margin-bottom: 8px;
+}
+.footer-tag {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: .22em; color: rgba(255,255,255,.25);
+}
+.footer-phone {
+  font-family: var(--anton); font-size: 40px;
+  letter-spacing: .04em; color: var(--yel);
+  display: block; margin-top: 8px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 12px; padding-top: 0; }
+.flink {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .22em; color: rgba(255,255,255,.3);
+  transition: color .2s; padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.flink:hover { color: var(--yel); }
+.footer-copy {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 56px;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy span {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .22em; color: rgba(255,255,255,.2);
+}
+.footer-copy span.hi { color: var(--yel); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .container, .map-head, .zone-section,
+  .hero-left, .ph-left, .ph-right,
+  .veh-hl, .veh-hr, .urg-header,
+  .ff-header, .why-header, .rv-header,
+  .about-left, .partner-left, .ct-header,
+  .promo-text, .promo-code-block { padding-left: 40px; padding-right: 40px; }
+  nav .nav-links { display: none; }
+  #mob-btn { display: flex; align-items: center; }
+  .hero-split { grid-template-columns: 1fr; }
+  .hero-split::after { display: none; }
+  .hero-right { min-height: 50vw; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .process-head { grid-template-columns: 1fr; }
+  .ph-left { border-right: none; border-bottom: 4px solid var(--blk); }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+  .veh-header { grid-template-columns: 1fr; }
+  .veh-hl { border-right: none; border-bottom: 4px solid var(--blk); }
+  .veh-grid { display: none; }
+  .veh-mob { display: block; }
+  .urg-header { grid-template-columns: 1fr; gap: 32px; }
+  .urg-grid { grid-template-columns: 1fr; }
+  .urg-card { border-right: none; border-bottom: 4px solid var(--blk); }
+  .urg-card:last-child { border-bottom: none; }
+  .ff-table { grid-template-columns: 1fr; }
+  .ff-col { border-right: none; border-bottom: 4px solid var(--blk); }
+  .why-grid { grid-template-columns: 1fr; }
+  .why-card { border-right: none; border-bottom: 3px solid rgba(255,255,255,.08); }
+  .about-inner { grid-template-columns: 1fr; }
+  .about-left { border-right: none; border-bottom: 4px solid var(--blk); }
+  .about-right { grid-template-rows: auto auto; grid-template-columns: 1fr 1fr; }
+  .ab-stat { border-bottom: none; border-right: 4px solid var(--blk); }
+  .ab-stat:last-child { border-right: none; }
+  .rv-grid { grid-template-columns: 1fr; }
+  .rv-card { border-right: none; border-bottom: 3px solid var(--blk); }
+  .partner-inner { grid-template-columns: 1fr; }
+  .partner-left { border-right: none; border-bottom: 4px solid rgba(255,255,255,.08); }
+  .ct-grid { grid-template-columns: 1fr 1fr; }
+  .ct-card:nth-child(2) { border-right: none; }
+  .ct-card:nth-child(3) { border-top: 3px solid var(--blk); }
+  .ct-card:nth-child(4) { border-top: 3px solid var(--blk); border-right: none; }
+  .footer-top { grid-template-columns: 1fr; }
+  .ft-col { border-right: none; border-bottom: 3px solid rgba(255,255,255,.06); padding: 48px 40px; }
+  .promo-inner { grid-template-columns: 1fr; }
+  .promo-code-block { border-left: none; border-top: 4px solid var(--yel); }
+  .footer-copy { padding: 24px 40px; }
+  .map-head { padding: 20px 40px; }
+}
+@media (max-width: 600px) {
+  .hero-stats { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  .process-grid { grid-template-columns: 1fr; }
+  .ab-stat-val { font-size: 64px; }
+  .about-right { grid-template-columns: 1fr; }
+  .ab-stat { border-right: none; border-bottom: 4px solid var(--blk); }
+  .ct-grid { grid-template-columns: 1fr; }
+  .ct-card { border-right: none; border-bottom: 3px solid var(--blk); }
 }
 </style>
 </head>
 <body>
 
-<!-- CANVAS BACKGROUND -->
-<canvas id="world-canvas"></canvas>
-
-<!-- CUSTOM CURSOR -->
-<div id="cursor-core"></div>
-<div id="cursor-ring"></div>
-<div id="cursor-label"></div>
+<div id="dot"></div>
 
 <!-- LOADER -->
-<div id="loader">
-  <div class="loader-logo">SHINE</div>
-  <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
-  <div class="loader-pct" id="loader-pct">0%</div>
-  <div class="loader-status" id="loader-status">INITIALISATION DU SYSTÈME...</div>
-</div>
-
-<!-- ════════════════ TICKER ════════════════ -->
-<div class="ticker-wrap" style="position:relative;z-index:10;margin-top:0;">
-  <div class="ticker-inner" id="ticker">
-    <span class="ticker-item">✦ LAVAGE AUTO À DOMICILE</span>
-    <span class="ticker-item">✦ SHERBROOKE & ENVIRONS</span>
-    <span class="ticker-item">✦ 100% ÉCOLOGIQUE</span>
-    <span class="ticker-item">✦ SERVICE D'URGENCE</span>
-    <span class="ticker-item">✦ GARANTIE SATISFACTION</span>
-    <span class="ticker-item">✦ PROMO : SHINE10 → -10%</span>
-    <span class="ticker-item">✦ LAVAGE AUTO À DOMICILE</span>
-    <span class="ticker-item">✦ SHERBROOKE & ENVIRONS</span>
-    <span class="ticker-item">✦ 100% ÉCOLOGIQUE</span>
-    <span class="ticker-item">✦ SERVICE D'URGENCE</span>
-    <span class="ticker-item">✦ GARANTIE SATISFACTION</span>
-    <span class="ticker-item">✦ PROMO : SHINE10 → -10%</span>
+<div id="ldr">
+  <div class="ldr-inner">
+    <div class="ldr-pct" id="ldr-pct">0</div>
+    <div class="ldr-label">SYSTÈME EN LIGNE</div>
+    <div class="ldr-bar"><div class="ldr-fill" id="ldr-fill"></div></div>
   </div>
 </div>
 
-<!-- ════════════════ NAV ════════════════ -->
+<!-- MARQUEE -->
+<div class="marquee-wrap" style="position:relative;z-index:20;">
+  <div class="marquee-inner">
+    <span class="mq-item">LAVAGE AUTO À DOMICILE</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">SHERBROOKE & ENVIRONS</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">100% ÉCOLOGIQUE</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">PROMO : SHINE10 → −10%</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">GARANTIE SATISFACTION</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">873-662-3813</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">LAVAGE AUTO À DOMICILE</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">SHERBROOKE & ENVIRONS</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">100% ÉCOLOGIQUE</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">PROMO : SHINE10 → −10%</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">GARANTIE SATISFACTION</span>
+    <span class="mq-item mq-sep">◆</span>
+    <span class="mq-item">873-662-3813</span>
+    <span class="mq-item mq-sep">◆</span>
+  </div>
+</div>
+
+<!-- NAV -->
 <nav id="nav">
-  <div class="nav-id">
-    <div class="nav-emblem">
-      <svg viewBox="0 0 42 42" fill="none">
-        <rect x="1" y="1" width="40" height="40" rx="8" stroke="rgba(34,211,242,0.3)" stroke-width="1"/>
-        <rect x="5" y="5" width="32" height="32" rx="5" fill="rgba(34,211,242,0.06)"/>
-        <path d="M21 10L30 16V26L21 32L12 26V16L21 10Z" stroke="rgba(34,211,242,0.7)" stroke-width="1" fill="none"/>
-        <circle cx="21" cy="21" r="3" fill="rgba(34,211,242,0.9)"/>
-      </svg>
-    </div>
-    <div>
-      <div class="nav-wordmark">SHINEAUTOMOBILE</div>
-      <div class="nav-tagline">LAVAGE AUTO • SHERBROOKE • </div>
-    </div>
+  <div class="nav-brand">
+    <div class="nav-brand-txt">SHINE<span>★</span></div>
   </div>
   <div class="nav-links">
-    <a href="#vehicules" class="n-link">Services</a>
-    <a href="#forfaits" class="n-link">Forfaits</a>
-    <a href="#urgences" class="n-link">Urgences</a>
-    <a href="#apropos" class="n-link">À propos</a>
-    <a href="#contact" class="n-link">Contact</a>
+    <a href="#vehicules" class="nlink">Services</a>
+    <a href="#forfaits" class="nlink">Forfaits</a>
+    <a href="#urgences" class="nlink">Urgences</a>
+    <a href="#apropos" class="nlink">À propos</a>
+    <a href="#contact" class="nlink">Contact</a>
   </div>
-  <div class="nav-actions">
-    <a href="tel:8736623813" class="nav-phone">📞</a>
-    <a href="pageservice.html" target="_blank" class="nav-book">RÉSERVER</a>
-    <button id="mob-btn" onclick="toggleMob()"><i class="fa-solid fa-bars"></i></button>
+  <div class="nav-cta">
+    <a href="tel:8736623813" class="nav-tel">873-662-3813</a>
+    <a href="pageservice.html" target="_blank" class="nav-book">RÉSERVER →</a>
+    <button id="mob-btn" onclick="toggleMob()">☰</button>
   </div>
-  <div id="mob-drawer">
-    <a href="#vehicules" class="n-link" onclick="toggleMob()">Services</a>
-    <a href="#forfaits" class="n-link" onclick="toggleMob()">Forfaits</a>
-    <a href="#urgences" class="n-link" onclick="toggleMob()">Urgences</a>
-    <a href="#apropos" class="n-link" onclick="toggleMob()">À propos</a>
-    <a href="#contact" class="n-link" onclick="toggleMob()">Contact</a>
-    <a href="tel:8736623813" style="color:var(--aqua);font-family:var(--mono);font-size:14px;letter-spacing:0.1em;">873-662-3813</a>
-    <a href="pageservice.html" target="_blank" class="nav-book" style="text-align:center;">RÉSERVER</a>
+  <div id="mob-menu">
+    <a href="#vehicules" class="nlink" onclick="toggleMob()">Services</a>
+    <a href="#forfaits" class="nlink" onclick="toggleMob()">Forfaits</a>
+    <a href="#urgences" class="nlink" onclick="toggleMob()">Urgences</a>
+    <a href="#apropos" class="nlink" onclick="toggleMob()">À propos</a>
+    <a href="#contact" class="nlink" onclick="toggleMob()">Contact</a>
+    <a href="tel:8736623813" class="nlink" style="color:var(--yel)">873-662-3813</a>
+    <a href="pageservice.html" target="_blank" class="nlink" style="background:var(--yel);color:var(--blk)">RÉSERVER →</a>
   </div>
 </nav>
 
-<!-- ════════════════ HERO ════════════════ -->
+<!-- HERO -->
 <header class="hero">
-  <div class="hero-photo"></div>
-  <div class="hero-vignette"></div>
-
-  <div class="hero-stage">
+  <div class="hero-split">
     <div class="hero-left">
-      <div class="live-chip">
-        <div class="live-pip"></div>
-        <span class="live-txt">SERVICE DISPONIBLE </span>
+      <div class="hero-kicker">
+        <div class="s-label" data-n="2040" style="margin-bottom:0">SERVICE ACTIF · SHERBROOKE</div>
       </div>
       <h1 class="hero-h1">
         VOTRE<br>
-        VOITURE<br>
-        <em>brille,</em><br>
-        <span class="aqua">CHEZ VOUS.</span>
+        <span class="outline">AUTO</span><br>
+        BRILLE<br>
+        <span class="yel">CHEZ VOUS.</span>
       </h1>
-      <p class="hero-desc">
-        Lavage automobile professionnel à domicile. Produits 100% écologiques, intervention à Sherbrooke et environs.
+      <p class="hero-sub">
+        Lavage automobile professionnel à domicile. Produits écologiques, intervention rapide, résultat garanti.
       </p>
-      <div class="hero-ctas">
-        <a href="#vehicules" class="cta-primary">
-          Explorer les services <i class="fa-solid fa-arrow-right" style="font-size:12px"></i>
-        </a>
-        <a href="pageservice.html" target="_blank" class="cta-ghost">
-          Prendre rendez-vous <i class="fa-solid fa-calendar" style="font-size:12px"></i>
-        </a>
+      <div class="hero-actions">
+        <a href="#vehicules" class="btn-solid">Explorer les services →</a>
+        <a href="pageservice.html" target="_blank" class="btn-ghost">Prendre RDV ↗</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="Images/photo.jpeg" alt="Shine Automobile" class="hero-photo">
+      <div class="hero-photo-overlay"></div>
+      <div class="scan-line"></div>
+      <div class="hero-tag">
+        <div class="hero-tag-num">15+</div>
+        <div class="hero-tag-label">VILLES DESSERVIES</div>
+      </div>
+      <div class="hero-tag2">
+        <div class="hero-tag-num">5★</div>
+        <div class="hero-tag-label">SATISFACTION</div>
       </div>
     </div>
   </div>
-
-  <!-- HUD floater -->
-  <div class="hero-hud">
-    <div class="hud-card">
-      <div class="hud-label">ZONE DE SERVICE</div>
-      <div class="hud-val">15+</div>
-      <div class="hud-sub">VILLES DESSERVIES</div>
+  <div class="hero-stats">
+    <div class="hst">
+      <div class="hst-n">100%</div>
+      <div class="hst-l">ÉCOLOGIQUE<br>CERTIFIÉ</div>
     </div>
-    <div class="hud-card">
-      <div class="hud-label">SATISFACTION</div>
-      <div class="hud-val">5.0<span style="font-size:18px;color:rgba(34,211,242,0.6)">/5</span></div>
-      <div class="hud-sub">NOTE MOYENNE</div>
+    <div class="hst">
+      <div class="hst-n">5/5</div>
+      <div class="hst-l">NOTE<br>MOYENNE</div>
     </div>
-  </div>
-
-  <!-- Bottom stats bar -->
-  <div class="hero-bottom">
-    <div class="hero-stat">
-      <div class="hs-val">100<span>%</span></div>
-      <div class="hs-label">ÉCOLOGIQUE</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hs-val">5<span>/5</span></div>
-      <div class="hs-label">SATISFACTION</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hs-val">4<span> TYPES</span></div>
-      <div class="hs-label">DE VÉHICULES</div>
+    <div class="hst">
+      <div class="hst-n">4</div>
+      <div class="hst-l">TYPES DE<br>VÉHICULES</div>
     </div>
   </div>
 </header>
 
-<!-- ════════════════ PROCESS ════════════════ -->
+<!-- PROCESS -->
 <section class="process-section">
-  <div class="wrap">
-    <div class="process-head fade-up">
-      <div>
-        <div class="s-eye">Processus</div>
-        <h2 class="s-title">COMMENT<br>ÇA <em>MARCHE</em></h2>
-      </div>
-      <p class="s-body">Quatre étapes simples pour un résultat impeccable, sans que vous n'ayez à quitter votre domicile.</p>
+  <div class="process-head">
+    <div class="ph-left reveal-l">
+      <div class="s-label" data-n="01">Processus</div>
+      <h2 class="s-title">COMMENT<br>ÇA <span class="yel">MARCHE</span></h2>
     </div>
-    <div class="timeline">
-      <div class="tl-step">
-        <div class="tl-node">📅<div class="tl-idx">01</div></div>
-        <div class="tl-name">VOUS RÉSERVEZ</div>
-        <div class="tl-desc">En ligne ou par téléphone, en quelques secondes</div>
-      </div>
-      <div class="tl-step">
-        <div class="tl-node">✅<div class="tl-idx">02</div></div>
-        <div class="tl-name">ON CONFIRME</div>
-        <div class="tl-desc">Selon vos disponibilités, rapidement</div>
-      </div>
-      <div class="tl-step">
-        <div class="tl-node">🏠<div class="tl-idx">03</div></div>
-        <div class="tl-name">ON VIENT</div>
-        <div class="tl-desc">À Sherbrooke et environs, directement chez vous</div>
-      </div>
-      <div class="tl-step">
-        <div class="tl-node">✨<div class="tl-idx">04</div></div>
-        <div class="tl-name">VOTRE AUTO BRILLE</div>
-        <div class="tl-desc">Paiement sur place, résultat garanti</div>
-      </div>
+    <div class="ph-right reveal-r">
+      <p class="s-body">Quatre étapes simples pour un résultat impeccable — sans quitter votre domicile.</p>
+    </div>
+  </div>
+  <div class="process-grid">
+    <div class="step-box">
+      <div class="step-box-bg">1</div>
+      <div class="step-num">— 01 —</div>
+      <span class="step-ico">📅</span>
+      <div class="step-name">VOUS RÉSERVEZ</div>
+      <div class="step-desc">En ligne ou par téléphone, en quelques secondes.</div>
+    </div>
+    <div class="step-box" style="transition-delay:.1s">
+      <div class="step-box-bg">2</div>
+      <div class="step-num">— 02 —</div>
+      <span class="step-ico">✅</span>
+      <div class="step-name">ON CONFIRME</div>
+      <div class="step-desc">Selon vos disponibilités, rapidement.</div>
+    </div>
+    <div class="step-box" style="transition-delay:.2s">
+      <div class="step-box-bg">3</div>
+      <div class="step-num">— 03 —</div>
+      <span class="step-ico">🏠</span>
+      <div class="step-name">ON VIENT CHEZ VOUS</div>
+      <div class="step-desc">Sherbrooke & environs — directement chez vous.</div>
+    </div>
+    <div class="step-box" style="transition-delay:.3s">
+      <div class="step-box-bg">4</div>
+      <div class="step-num">— 04 —</div>
+      <span class="step-ico">✨</span>
+      <div class="step-name">VOTRE AUTO BRILLE</div>
+      <div class="step-desc">Paiement sur place. Résultat garanti.</div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ PROMO ════════════════ -->
-<div class="promo-strip fade-up">
+<!-- PROMO -->
+<section class="promo-section">
+  <div class="promo-bg-text">SHINE10 — 10% OFF — SHINE10 — 10% OFF — SHINE10</div>
   <div class="promo-inner">
-    <div>
-      <div class="promo-badge">OFFRE LIMITÉE</div>
-      <div class="promo-h">10% DE RÉDUCTION — LAVAGE COMPLET</div>
-      <div class="promo-sub">Du 1er au 10 juin 2026 · Tous types de véhicules · Lavage Complet Régulier</div>
+    <div class="promo-text reveal">
+      <div class="promo-eyebrow">OFFRE LIMITÉE · 1 AU 10 JUIN 2026</div>
+      <div class="promo-headline">10% <em>DE RÉDUCTION</em><br>LAVAGE COMPLET</div>
+      <div class="promo-detail">Tous types de véhicules · Valide jusqu'au 10.06.2026</div>
     </div>
-    <div class="promo-right">
-      <div class="code-pill">
-        <div class="code-text">SHINE10</div>
-        <button class="code-copy" onclick="copyPromo()">COPIER LE CODE <i class="fa-solid fa-copy"></i></button>
-      </div>
-      <div class="copy-confirm" id="copy-confirm">✓ Code copié dans le presse-papier</div>
-      <div class="promo-date">Valide jusqu'au 10.06.2026</div>
+    <div class="promo-code-block">
+      <div class="promo-code-label">VOTRE CODE PROMO</div>
+      <div class="promo-code-val">SHINE10</div>
+      <button class="promo-code-btn" onclick="copyCode()">COPIER LE CODE ↗</button>
+      <div class="promo-confirm" id="promo-confirm">✓ Copié dans le presse-papier</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ════════════════ VEHICLES ════════════════ -->
+<!-- VEHICLES -->
 <section id="vehicules" class="vehicles-section">
-  <div class="wrap">
-    <div class="vehicles-head fade-up">
-      <div class="s-eye">Véhicules</div>
-      <h2 class="s-title">CHOISISSEZ<br>VOTRE <em>TYPE</em></h2>
-      <p class="s-body">Sélectionnez le type de votre véhicule pour accéder aux services et tarifs adaptés. Chaque catégorie est pensée pour votre véhicule spécifique.</p>
+  <div class="veh-header">
+    <div class="veh-hl reveal-l">
+      <div class="s-label" data-n="02">Véhicules</div>
+      <h2 class="s-title">CHOISISSEZ<br>VOTRE <span class="yel">TYPE</span></h2>
+    </div>
+    <div class="veh-hr reveal-r">
+      <p class="s-body">Sélectionnez votre véhicule. Chaque catégorie a ses services et tarifs adaptés.</p>
     </div>
   </div>
-
-  <!-- Desktop panels -->
-  <div class="vehicle-panels">
-    <a href="sedan.html" class="v-panel" data-label="SEDAN">
-      <div class="v-panel-line"></div>
-      <img src="Images/sedan.jpeg" alt="Sedan">
-      <div class="v-panel-overlay"></div>
-      <div class="v-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="v-panel-content">
-        <div class="v-cat">CATÉGORIE 01</div>
-        <div class="v-name">SEDAN</div>
-        <div class="v-sub">Berlines & voitures compactes</div>
+  <!-- Desktop -->
+  <div class="veh-grid">
+    <a href="sedan.html" class="veh-card">
+      <div class="veh-line"></div>
+      <img src="Images/sedan.jpeg" alt="Sedan" class="veh-img">
+      <div class="veh-overlay"></div>
+      <div class="veh-arrow">↗</div>
+      <div class="veh-info">
+        <div class="veh-cat">CATÉGORIE 01</div>
+        <div class="veh-name">SEDAN</div>
+        <div class="veh-sub">Berlines & compactes</div>
       </div>
     </a>
-    <a href="suv.html" class="v-panel" data-label="VUS">
-      <div class="v-panel-line"></div>
-      <img src="Images/vus.jpeg" alt="SUV">
-      <div class="v-panel-overlay"></div>
-      <div class="v-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="v-panel-content">
-        <div class="v-cat">CATÉGORIE 02</div>
-        <div class="v-name">VUS</div>
-        <div class="v-sub">VUS & crossovers</div>
+    <a href="suv.html" class="veh-card">
+      <div class="veh-line"></div>
+      <img src="Images/vus.jpeg" alt="VUS" class="veh-img">
+      <div class="veh-overlay"></div>
+      <div class="veh-arrow">↗</div>
+      <div class="veh-info">
+        <div class="veh-cat">CATÉGORIE 02</div>
+        <div class="veh-name">VUS</div>
+        <div class="veh-sub">VUS & crossovers</div>
       </div>
     </a>
-    <a href="van.html" class="v-panel" data-label="VAN">
-      <div class="v-panel-line"></div>
-      <img src="Images/van.jpeg" alt="Van">
-      <div class="v-panel-overlay"></div>
-      <div class="v-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="v-panel-content">
-        <div class="v-cat">CATÉGORIE 03</div>
-        <div class="v-name">VAN</div>
-        <div class="v-sub">Fourgonnettes & minivans</div>
+    <a href="van.html" class="veh-card">
+      <div class="veh-line"></div>
+      <img src="Images/van.jpeg" alt="Van" class="veh-img">
+      <div class="veh-overlay"></div>
+      <div class="veh-arrow">↗</div>
+      <div class="veh-info">
+        <div class="veh-cat">CATÉGORIE 03</div>
+        <div class="veh-name">VAN</div>
+        <div class="veh-sub">Fourgonnettes & minivans</div>
       </div>
     </a>
-    <a href="pickup.html" class="v-panel" data-label="PICKUP">
-      <div class="v-panel-line"></div>
-      <img src="Images/pickup.jpeg" alt="Pickup">
-      <div class="v-panel-overlay"></div>
-      <div class="v-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="v-panel-content">
-        <div class="v-cat">CATÉGORIE 04</div>
-        <div class="v-name">PICKUP</div>
-        <div class="v-sub">Camionnettes & camions légers</div>
+    <a href="pickup.html" class="veh-card">
+      <div class="veh-line"></div>
+      <img src="Images/pickup.jpeg" alt="Pickup" class="veh-img">
+      <div class="veh-overlay"></div>
+      <div class="veh-arrow">↗</div>
+      <div class="veh-info">
+        <div class="veh-cat">CATÉGORIE 04</div>
+        <div class="veh-name">PICKUP</div>
+        <div class="veh-sub">Camionnettes & camions</div>
       </div>
     </a>
   </div>
-
-  <!-- Mobile grid -->
-  <div class="v-panel-grid wrap">
-    <a href="sedan.html" class="v-panel-mobile">
+  <!-- Mobile -->
+  <div class="veh-mob">
+    <a href="sedan.html" class="veh-mob-card">
       <img src="Images/sedan.jpeg" alt="Sedan">
-      <div class="v-panel-mobile-content">
-        <div class="v-name">SEDAN</div>
-        <div class="v-sub">Berlines & compactes</div>
+      <div class="veh-mob-info">
+        <div class="veh-mob-name">SEDAN</div>
+        <div class="veh-mob-sub">Berlines & compactes</div>
       </div>
     </a>
-    <a href="suv.html" class="v-panel-mobile">
-      <img src="Images/vus.jpeg" alt="SUV">
-      <div class="v-panel-mobile-content">
-        <div class="v-name">VUS</div>
-        <div class="v-sub">VUS & crossovers</div>
+    <a href="suv.html" class="veh-mob-card">
+      <img src="Images/vus.jpeg" alt="VUS">
+      <div class="veh-mob-info">
+        <div class="veh-mob-name">VUS</div>
+        <div class="veh-mob-sub">VUS & crossovers</div>
       </div>
     </a>
-    <a href="van.html" class="v-panel-mobile">
+    <a href="van.html" class="veh-mob-card">
       <img src="Images/van.jpeg" alt="Van">
-      <div class="v-panel-mobile-content">
-        <div class="v-name">VAN</div>
-        <div class="v-sub">Fourgonnettes & minivans</div>
+      <div class="veh-mob-info">
+        <div class="veh-mob-name">VAN</div>
+        <div class="veh-mob-sub">Fourgonnettes</div>
       </div>
     </a>
-    <a href="pickup.html" class="v-panel-mobile">
+    <a href="pickup.html" class="veh-mob-card">
       <img src="Images/pickup.jpeg" alt="Pickup">
-      <div class="v-panel-mobile-content">
-        <div class="v-name">PICKUP</div>
-        <div class="v-sub">Camionnettes & camions</div>
+      <div class="veh-mob-info">
+        <div class="veh-mob-name">PICKUP</div>
+        <div class="veh-mob-sub">Camionnettes</div>
       </div>
     </a>
   </div>
 </section>
 
-<!-- ════════════════ URGENCY ════════════════ -->
-<section id="urgences" class="urgency-section">
-  <div class="wrap">
-    <div class="fade-up">
-      <div class="s-eye">Urgences</div>
-      <h2 class="s-title">SERVICES<br><em>D'URGENCE</em></h2>
-      <p class="s-body">Intervention rapide à Sherbrooke et environs. Appelez-nous maintenant.</p>
+<!-- URGENCES -->
+<section id="urgences" class="urgences-section">
+  <div class="urg-header">
+    <div class="reveal-l">
+      <div class="s-label" data-n="03">Urgences</div>
+      <h2 class="s-title">SERVICES<br><span class="outline">D'URGENCE</span></h2>
     </div>
-    <div class="urg-grid">
-      <div class="urg-card">
-        <div class="urg-num">01</div>
-        <div class="urg-icon">🔑</div>
-        <div class="urg-title">DÉVERROUILLAGE AUTO D'URGENCE</div>
-        <div class="urg-price">50$</div>
-        <div class="urg-desc">Clés oubliées à l'intérieur ? Nous intervenons rapidement et en toute sécurité, sans endommager votre véhicule. Disponible à toute heure.</div>
-        <a href="tel:8736623813" class="urg-call">
-          <i class="fa-solid fa-phone"></i> APPELER MAINTENANT
-        </a>
-      </div>
-      <div class="urg-card">
-        <div class="urg-num">02</div>
-        <div class="urg-icon">🔋</div>
-        <div class="urg-title">SURVOLTAGE / BOOST BATTERIE</div>
-        <div class="urg-price">40$</div>
-        <div class="urg-desc">Batterie à plat ? Nous venons sur place pour recharger votre batterie rapidement et en toute sécurité. Intervention garantie.</div>
-        <a href="tel:8736623813" class="urg-call">
-          <i class="fa-solid fa-phone"></i> APPELER MAINTENANT
-        </a>
-      </div>
+    <div class="reveal-r">
+      <p class="s-body">Intervention rapide à Sherbrooke et environs. Disponible maintenant — appelez.</p>
+    </div>
+  </div>
+  <div class="urg-grid">
+    <div class="urg-card">
+      <div class="urg-big-num">01</div>
+      <span class="urg-ico">🔑</span>
+      <div class="urg-num">— 01 —</div>
+      <div class="urg-title">DÉVERROUILLAGE AUTO D'URGENCE</div>
+      <div class="urg-price">50$</div>
+      <div class="urg-desc">Clés oubliées à l'intérieur ? Intervention rapide et sécurisée, sans endommager votre véhicule. Toute heure.</div>
+      <a href="tel:8736623813" class="urg-btn">📞 APPELER MAINTENANT</a>
+    </div>
+    <div class="urg-card" style="transition-delay:.15s">
+      <div class="urg-big-num">02</div>
+      <span class="urg-ico">🔋</span>
+      <div class="urg-num">— 02 —</div>
+      <div class="urg-title">SURVOLTAGE / BOOST BATTERIE</div>
+      <div class="urg-price">40$</div>
+      <div class="urg-desc">Batterie à plat ? Nous venons sur place pour recharger rapidement et en toute sécurité. Garantie.</div>
+      <a href="tel:8736623813" class="urg-btn">📞 APPELER MAINTENANT</a>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ FORFAITS ════════════════ -->
+<!-- FORFAITS -->
 <section id="forfaits" class="forfaits-section">
-  <div class="wrap">
-    <div class="fade-up">
-      <div class="s-eye">Forfaits</div>
-      <h2 class="s-title">FORFAITS<br><em>MULTI-VOITURES</em></h2>
-      <p class="s-body">Tarifs dégressifs selon le nombre de véhicules. Le forfait est valable pour la même voiture pendant toute la saison.</p>
-    </div>
-    <div class="forfaits-grid">
-      <div class="ff-card">
-        <div class="ff-head">
-          <div class="ff-type">Extérieur seulement</div>
-          <div class="ff-title">FORFAIT LAVAGE EXTÉRIEUR RÉGULIER</div>
-        </div>
-        <div class="ff-body">
-          <div class="ff-row">
-            <div class="ff-tier">2 à 4 voitures</div>
-            <div class="ff-right">
-              <div class="ff-price">30$<sub>/voit.</sub></div>
-              <a href="pageservice.html?service=Forfait+Extérieur+2-4" target="_blank" class="ff-pick">Sélectionner</a>
-            </div>
-          </div>
-          <div class="ff-row">
-            <div class="ff-tier">5 à 10 voitures</div>
-            <div class="ff-right">
-              <div class="ff-price">25$<sub>/voit.</sub></div>
-              <a href="pageservice.html?service=Forfait+Extérieur+5-10" target="_blank" class="ff-pick">Sélectionner</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ff-card" style="transition-delay:0.12s">
-        <div class="ff-head">
-          <div class="ff-type">Extérieur + Intérieur Régulier</div>
-          <div class="ff-title">FORFAIT LAVAGE COMPLET</div>
-        </div>
-        <div class="ff-body">
-          <div class="ff-row">
-            <div class="ff-tier">2 voitures</div>
-            <div class="ff-right">
-              <div class="ff-price">95$<sub>/voit.</sub></div>
-              <a href="pageservice.html?service=Forfait+Complet+2" target="_blank" class="ff-pick">Sélectionner</a>
-            </div>
-          </div>
-          <div class="ff-row">
-            <div class="ff-tier">3 à 4 voitures</div>
-            <div class="ff-right">
-              <div class="ff-price">90$<sub>/voit.</sub></div>
-              <a href="pageservice.html?service=Forfait+Complet+3-4" target="_blank" class="ff-pick">Sélectionner</a>
-            </div>
-          </div>
-          <div class="ff-row">
-            <div class="ff-tier">5 voitures et plus</div>
-            <div class="ff-right">
-              <div class="ff-price">80$<sub>/voit.</sub></div>
-              <a href="pageservice.html?service=Forfait+Complet+5+" target="_blank" class="ff-pick">Sélectionner</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="ff-note">TARIFS DÉGRESSIFS · INTERVENTION À DOMICILE · PAIEMENT SUR PLACE</div>
+  <div class="ff-header reveal">
+    <div class="s-label" data-n="04">Forfaits</div>
+    <h2 class="s-title">FORFAITS <span class="yel">MULTI</span><br><span class="outline">VOITURES</span></h2>
+    <p class="s-body">Tarifs dégressifs. Le forfait est valable pour la même voiture toute la saison.</p>
   </div>
+  <div class="ff-table">
+    <div class="ff-col">
+      <div class="ff-col-head">
+        <div class="ff-type">Extérieur seulement</div>
+        <div class="ff-name">LAVAGE EXTÉRIEUR RÉGULIER</div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-tier">2 à 4 voitures</div>
+        <div class="ff-right">
+          <div class="ff-price">30$<sub>/voit.</sub></div>
+          <a href="pageservice.html?service=Forfait+Extérieur+2-4" target="_blank" class="ff-pick">Choisir</a>
+        </div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-tier">5 à 10 voitures</div>
+        <div class="ff-right">
+          <div class="ff-price">25$<sub>/voit.</sub></div>
+          <a href="pageservice.html?service=Forfait+Extérieur+5-10" target="_blank" class="ff-pick">Choisir</a>
+        </div>
+      </div>
+    </div>
+    <div class="ff-col" style="transition-delay:.12s">
+      <div class="ff-col-head">
+        <div class="ff-type">Extérieur + Intérieur Régulier</div>
+        <div class="ff-name">LAVAGE COMPLET</div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-tier">2 voitures</div>
+        <div class="ff-right">
+          <div class="ff-price">95$<sub>/voit.</sub></div>
+          <a href="pageservice.html?service=Forfait+Complet+2" target="_blank" class="ff-pick">Choisir</a>
+        </div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-tier">3 à 4 voitures</div>
+        <div class="ff-right">
+          <div class="ff-price">90$<sub>/voit.</sub></div>
+          <a href="pageservice.html?service=Forfait+Complet+3-4" target="_blank" class="ff-pick">Choisir</a>
+        </div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-tier">5 voitures et plus</div>
+        <div class="ff-right">
+          <div class="ff-price">80$<sub>/voit.</sub></div>
+          <a href="pageservice.html?service=Forfait+Complet+5+" target="_blank" class="ff-pick">Choisir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ff-footnote">TARIFS DÉGRESSIFS · INTERVENTION À DOMICILE · PAIEMENT SUR PLACE</div>
 </section>
 
-<!-- ════════════════ WHY ════════════════ -->
+<!-- WHY -->
 <section class="why-section">
-  <div class="wrap">
-    <div class="fade-up">
-      <div class="s-eye">Avantages</div>
-      <h2 class="s-title">POURQUOI NOUS<br><em>CHOISIR</em></h2>
+  <div class="why-header reveal">
+    <div class="s-label" data-n="05" style="color:rgba(255,255,255,.4)">Avantages</div>
+    <h2 class="s-title">POURQUOI <span class="yel">NOUS</span><br>CHOISIR</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-ico">🌱</span>
+      <div class="why-t">100% ÉCOLOGIQUE</div>
+      <div class="why-d">Produits biodégradables certifiés, respectueux de l'environnement et de votre véhicule.</div>
     </div>
-    <div class="why-grid fade-up">
-      <div class="why-card">
-        <div class="why-card-glow"></div>
-        <span class="why-ico">🌱</span>
-        <div class="why-t">100% ÉCOLOGIQUE</div>
-        <div class="why-d">Produits biodégradables certifiés, respectueux de l'environnement et de votre véhicule</div>
-      </div>
-      <div class="why-card">
-        <div class="why-card-glow"></div>
-        <span class="why-ico">🏠</span>
-        <div class="why-t">SERVICE À DOMICILE</div>
-        <div class="why-d">Nous nous déplaçons directement chez vous. Zéro perte de temps, zéro déplacement</div>
-      </div>
-      <div class="why-card">
-        <div class="why-card-glow"></div>
-        <span class="why-ico">⭐</span>
-        <div class="why-t">GARANTIE SATISFACTION</div>
-        <div class="why-d">Votre satisfaction totale est notre priorité absolue. Résultat impeccable ou on revient</div>
-      </div>
+    <div class="why-card">
+      <span class="why-ico">🏠</span>
+      <div class="why-t">SERVICE À DOMICILE</div>
+      <div class="why-d">Nous nous déplaçons directement chez vous. Zéro perte de temps, zéro déplacement.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-ico">⭐</span>
+      <div class="why-t">GARANTIE SATISFACTION</div>
+      <div class="why-d">Résultat impeccable ou on revient. Votre satisfaction est notre priorité absolue.</div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ ABOUT ════════════════ -->
+<!-- ABOUT -->
 <section id="apropos" class="about-section">
-  <div class="wrap">
-    <div class="about-grid">
-      <div class="fade-left">
-        <div class="s-eye">À propos</div>
-        <h2 class="s-title">SHINE<br><em>AUTOMOBILE</em></h2>
-        <p class="s-body">Entreprise locale basée à Sherbrooke, nous offrons un service de lavage auto professionnel à domicile. Notre équipe utilise des produits écologiques et du matériel de qualité pour prendre soin de votre véhicule.</p>
-        <div class="about-features">
-          <div class="ab-feat">
-            <span class="ab-feat-ico">🌿</span>
-            <span class="ab-feat-txt">Produits biodégradables</span>
-            <span class="ab-feat-val">CERTIFIÉ</span>
-          </div>
-          <div class="ab-feat">
-            <span class="ab-feat-ico">📍</span>
-            <span class="ab-feat-txt">Zone de service</span>
-            <span class="ab-feat-val">15+ VILLES</span>
-          </div>
-          <div class="ab-feat">
-            <span class="ab-feat-ico">⚡</span>
-            <span class="ab-feat-txt">Urgences disponibles</span>
-          </div>
-          <div class="ab-feat">
-            <span class="ab-feat-ico">💳</span>
-            <span class="ab-feat-txt">Mode de paiement</span>
-            <span class="ab-feat-val">SUR PLACE</span>
-          </div>
-          <div class="ab-feat">
-            <span class="ab-feat-ico">🚗</span>
-            <span class="ab-feat-txt">Types de véhicules</span>
-            <span class="ab-feat-val">4 CATÉGORIES</span>
-          </div>
-        </div>
+  <div class="about-inner">
+    <div class="about-left reveal-l">
+      <div class="s-label" data-n="06">À propos</div>
+      <h2 class="s-title">SHINE<br><span class="outline">AUTOMOBILE</span></h2>
+      <p class="s-body">Entreprise locale basée à Sherbrooke, nous offrons un service de lavage auto professionnel à domicile. Produits écologiques, matériel de qualité, résultat garanti.</p>
+      <div class="about-feats">
+        <div class="ab-feat"><span class="ab-ico">🌿</span><span class="ab-txt">Produits biodégradables</span><span class="ab-val">CERTIFIÉ</span></div>
+        <div class="ab-feat"><span class="ab-ico">📍</span><span class="ab-txt">Zone de service</span><span class="ab-val">15+ VILLES</span></div>
+        <div class="ab-feat"><span class="ab-ico">⚡</span><span class="ab-txt">Urgences</span><span class="ab-val">DISPONIBLE</span></div>
+        <div class="ab-feat"><span class="ab-ico">💳</span><span class="ab-txt">Paiement</span><span class="ab-val">SUR PLACE</span></div>
+        <div class="ab-feat"><span class="ab-ico">🚗</span><span class="ab-txt">Types de véhicules</span><span class="ab-val">4 CATÉGORIES</span></div>
       </div>
-      <div class="about-stats fade-right">
-        <div class="as-card">
-          <div class="as-val">100%</div>
-          <div class="as-label">ÉCOLOGIQUE</div>
-        </div>
-        <div class="as-card">
-          <div class="as-val">5/5</div>
-          <div class="as-label">SATISFACTION</div>
-        </div>
-        <div class="as-card wide">
-          <div class="as-wide-val">Sherbrooke</div>
-          <div class="as-wide-sub">& 15+ villes en Estrie</div>
-          <div class="as-label" style="margin-top:10px">ZONE D'INTERVENTION</div>
-        </div>
+    </div>
+    <div class="about-right reveal-r">
+      <div class="ab-stat">
+        <div class="ab-stat-val">100%</div>
+        <div class="ab-stat-label">PRODUITS ÉCOLOGIQUES</div>
+      </div>
+      <div class="ab-stat">
+        <div class="ab-stat-val">5★</div>
+        <div class="ab-stat-label">SATISFACTION GARANTIE</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ REVIEWS ════════════════ -->
+<!-- REVIEWS -->
 <section id="temoignages" class="reviews-section">
-  <div class="wrap">
-    <div class="fade-up">
-      <div class="s-eye">Témoignages</div>
-      <h2 class="s-title">AVIS DE NOS<br><em>CLIENTS</em></h2>
+  <div class="rv-header reveal">
+    <div class="s-label" data-n="07">Témoignages</div>
+    <h2 class="s-title">AVIS DE NOS<br><span class="yel">CLIENTS</span></h2>
+  </div>
+  <div class="rv-grid">
+    <div class="rv-card">
+      <div class="rv-stars"><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span></div>
+      <div class="rv-quote">Service très professionnel. Ma voiture est impeccable ! Je recommande à tout mon entourage sans hésitation.</div>
+      <div class="rv-author">— MARIE L. · SHERBROOKE</div>
     </div>
-    <div class="reviews-grid">
-      <div class="rv-card">
-        <div class="rv-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <div class="rv-quote">Service très professionnel. Ma voiture est impeccable ! Je recommande à tout mon entourage sans hésitation.</div>
-        <div class="rv-author">— MARIE L. · SHERBROOKE</div>
-      </div>
-      <div class="rv-card" style="transition-delay:0.1s">
-        <div class="rv-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <div class="rv-quote">Déverrouillage rapide et sans dommage. Intervention en moins de 20 minutes. Merci infiniment !</div>
-        <div class="rv-author">— JEAN T. · MAGOG</div>
-      </div>
-      <div class="rv-card" style="transition-delay:0.2s">
-        <div class="rv-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <div class="rv-quote">Excellent lavage complet. L'équipe est ponctuelle, professionnelle et les résultats sont bluffants.</div>
-        <div class="rv-author">— SOPHIE D. · ORFORD</div>
-      </div>
+    <div class="rv-card" style="transition-delay:.1s">
+      <div class="rv-stars"><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span></div>
+      <div class="rv-quote">Déverrouillage rapide et sans dommage. Intervention en moins de 20 minutes. Merci infiniment !</div>
+      <div class="rv-author">— JEAN T. · MAGOG</div>
+    </div>
+    <div class="rv-card" style="transition-delay:.2s">
+      <div class="rv-stars"><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span><span class="rv-star">★</span></div>
+      <div class="rv-quote">Excellent lavage complet. L'équipe est ponctuelle, professionnelle et les résultats sont bluffants.</div>
+      <div class="rv-author">— SOPHIE D. · ORFORD</div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ PARTNER ════════════════ -->
+<!-- PARTNER -->
 <section class="partner-section">
-  <div class="partner-box">
-    <div class="partner-chip">PARTENAIRE OFFICIEL</div>
-    <h2 class="s-title fade-up">EN COLLABORATION<br><em>AVEC</em></h2>
-    <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank" class="partner-card-a fade-up">
-      <img src="Images/logo-partenaire.jpeg" alt="Mon Auto Mécanique">
-      <p class="partner-desc">Nous travaillons en étroite collaboration avec <strong>Mon Auto Mécanique</strong> pour vous offrir un service de mécanique automobile de qualité et fiable, directement chez vous.</p>
-      <div class="partner-btn">Découvrir leur site <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i></div>
+  <div class="partner-inner">
+    <div class="partner-left reveal-l">
+      <div class="s-label" data-n="08" style="color:rgba(255,255,255,.3)">Partenaire</div>
+      <h2 class="s-title">EN COLLAB<br>AVEC <span class="yel">EUX</span></h2>
+      <p class="s-body">Nous travaillons avec Mon Auto Mécanique pour vous offrir un service complet — lavage et mécanique — à domicile.</p>
+    </div>
+    <div class="partner-right reveal-r">
+      <a href="https://monautomecanique.github.io/.com/index.html#categories" target="_blank" class="partner-card">
+        <img src="Images/logo-partenaire.jpeg" alt="Mon Auto Mécanique">
+        <p class="partner-desc">Service de mécanique automobile de qualité, <strong>directement chez vous.</strong></p>
+        <div class="partner-link">Visiter le site ↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="ct-header reveal">
+    <div class="s-label" data-n="09">Contact</div>
+    <h2 class="s-title">NOUS<br><span class="yel">CONTACTER</span></h2>
+    <p class="s-body">Réponse rapide garantie. Choisissez votre canal.</p>
+  </div>
+  <div class="ct-grid">
+    <a href="tel:8736623813" class="ct-card">
+      <div class="ct-ico-wrap">📞</div>
+      <div class="ct-label">TÉLÉPHONE</div>
+      <div class="ct-hint">873-662-3813</div>
+    </a>
+    <a href="sms:8196623813" class="ct-card" style="transition-delay:.08s">
+      <div class="ct-ico-wrap">💬</div>
+      <div class="ct-label">TEXTO</div>
+      <div class="ct-hint">Réponse rapide</div>
+    </a>
+    <a href="mailto:info.shineautomobile@gmail.com" class="ct-card" style="transition-delay:.16s">
+      <div class="ct-ico-wrap">✉️</div>
+      <div class="ct-label">EMAIL</div>
+      <div class="ct-hint">info.shineautomobile@gmail.com</div>
+    </a>
+    <a href="https://www.instagram.com/shineautomobile_" target="_blank" class="ct-card" style="transition-delay:.24s">
+      <div class="ct-ico-wrap"><img src="Images/instagram.jpeg" alt="Instagram" style="width:26px;height:26px;border-radius:4px;object-fit:cover;"></div>
+      <div class="ct-label">INSTAGRAM</div>
+      <div class="ct-hint">@shineautomobile_</div>
     </a>
   </div>
 </section>
 
-<!-- ════════════════ CONTACT ════════════════ -->
-<section id="contact" class="contact-section">
-  <div class="wrap">
-    <div class="fade-up">
-      <div class="s-eye">Contact</div>
-      <h2 class="s-title">NOUS<br><em>CONTACTER</em></h2>
-      <p class="s-body">Réponse rapide garantie. Choisissez votre canal de communication préféré.</p>
-    </div>
-    <div class="contact-grid">
-      <a href="tel:8736623813" class="ct-card" data-label="APPELER">
-        <div class="ct-ico">📞</div>
-        <div class="ct-label">TÉLÉPHONE</div>
-        <div class="ct-hint">873-662-3813</div>
-      </a>
-      <a href="sms:8196623813" class="ct-card" data-label="TEXTER" style="transition-delay:0.08s">
-        <div class="ct-ico">💬</div>
-        <div class="ct-label">TEXTO</div>
-        <div class="ct-hint">Réponse rapide</div>
-      </a>
-      <a href="mailto:info.shineautomobile@gmail.com" class="ct-card" data-label="ÉCRIRE" style="transition-delay:0.16s">
-        <div class="ct-ico">✉️</div>
-        <div class="ct-label">EMAIL</div>
-        <div class="ct-hint">info.shineautomobile@gmail.com</div>
-      </a>
-      <a href="https://www.instagram.com/shineautomobile_" target="_blank" class="ct-card" data-label="SUIVRE" style="transition-delay:0.24s">
-        <div class="ct-ico"><img src="Images/instagram.jpeg" alt="Instagram" style="width:28px;height:28px;border-radius:6px;object-fit:cover;"></div>
-        <div class="ct-label">INSTAGRAM</div>
-        <div class="ct-hint">@shineautomobile_</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════ MAP ════════════════ -->
+<!-- MAP -->
 <section class="map-section">
-  <div class="map-wrap">
-    <div class="map-header">
-      <div class="map-title">Zone d'intervention</div>
-      <div class="map-tag">SHERBROOKE & ENVIRONS • ESTRIE</div>
-    </div>
-    <div class="map-frame">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45155.012057629!2d-71.9325!3d45.4000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92a5d9d8b0c0f%3A0x4b8f8e9f5d8e8f8e!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1744800000000"
-        width="100%" height="260" style="border:0;display:block;" allowfullscreen loading="lazy"></iframe>
-    </div>
+  <div class="map-head">
+    <div class="map-title">Zone d'intervention</div>
+    <div class="map-tag">SHERBROOKE & ENVIRONS · ESTRIE</div>
+  </div>
+  <div class="map-frame">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45155.012057629!2d-71.9325!3d45.4000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92a5d9d8b0c0f%3A0x4b8f8e9f5d8e8f8e!2sSherbrooke%2C%20QC!5e0!3m2!1sfr!2sca!4v1744800000000"
+      width="100%" height="280" style="border:0;display:block;" allowfullscreen loading="lazy"></iframe>
   </div>
 </section>
 
-<!-- ════════════════ ZONE COVERAGE ════════════════ -->
+<!-- ZONE -->
 <section class="zone-section">
-  <div class="zone-wrap">
-    <div class="zone-cities">
-      <span class="zone-pill">Sherbrooke</span>
-      <span class="zone-pill">Magog</span>
-      <span class="zone-pill">Bromptonville</span>
-      <span class="zone-pill">Windsor</span>
-      <span class="zone-pill">Waterville</span>
-      <span class="zone-pill">Saint-Denis-de-Brompton</span>
-      <span class="zone-pill">Orford</span>
-      <span class="zone-pill">Ascot Corner</span>
-      <span class="zone-pill">Ayer's Cliff</span>
-      <span class="zone-pill">Waterloo</span>
-      <span class="zone-pill">Coaticook</span>
-      <span class="zone-pill">Richmond</span>
-      <span class="zone-pill">Danville</span>
-      <span class="zone-pill">East Angus</span>
-      <span class="zone-pill">Cookshire-Eaton</span>
-    </div>
+  <div class="zone-pills">
+    <span class="zpill">Sherbrooke</span><span class="zpill">Magog</span><span class="zpill">Bromptonville</span>
+    <span class="zpill">Windsor</span><span class="zpill">Waterville</span><span class="zpill">Saint-Denis-de-Brompton</span>
+    <span class="zpill">Orford</span><span class="zpill">Ascot Corner</span><span class="zpill">Ayer's Cliff</span>
+    <span class="zpill">Waterloo</span><span class="zpill">Coaticook</span><span class="zpill">Richmond</span>
+    <span class="zpill">Danville</span><span class="zpill">East Angus</span><span class="zpill">Cookshire-Eaton</span>
   </div>
 </section>
 
-<!-- WHATSAPP -->
-<!-- Bouton SMS flottant -->
-<a href="sms:18736623813" target="_blank" class="sms-float" data-label="SMS">
-  <i class="fa-solid fa-message"></i>
-</a>
+<!-- SMS FLOAT -->
+<a href="sms:18736623813" class="sms-float" title="SMS">💬</a>
 
-<!-- ════════════════ FOOTER ════════════════ -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-left">
+  <div class="footer-top">
+    <div class="ft-col">
       <div class="footer-brand">SHINEAUTOMOBILE</div>
-      <div class="footer-tag">LAVAGE AUTO NOUVELLE GÉNÉRATION · SHERBROOKE · 2040</div>
+      <div class="footer-tag">LAVAGE AUTO · SHERBROOKE · 2040</div>
     </div>
-    <div class="footer-center">
+    <div class="ft-col">
+      <div class="footer-tag" style="margin-bottom:6px">TÉLÉPHONE</div>
       <a href="tel:8736623813" class="footer-phone">873-662-3813</a>
     </div>
-    <div class="footer-right">
+    <div class="ft-col">
       <div class="footer-links">
-        <a href="#vehicules" class="footer-link">Services</a>
-        <a href="#forfaits" class="footer-link">Forfaits</a>
-        <a href="#urgences" class="footer-link">Urgences</a>
-        <a href="#contact" class="footer-link">Contact</a>
-        <a href="https://www.instagram.com/shineautomobile_" target="_blank" class="footer-link">Instagram</a>
+        <a href="#vehicules" class="flink">Services →</a>
+        <a href="#forfaits" class="flink">Forfaits →</a>
+        <a href="#urgences" class="flink">Urgences →</a>
+        <a href="#contact" class="flink">Contact →</a>
+        <a href="https://www.instagram.com/shineautomobile_" target="_blank" class="flink">Instagram →</a>
       </div>
     </div>
   </div>
   <div class="footer-copy">
-    <span>© 2040 SHINEAUTOMOBILE — TOUS DROITS RÉSERVÉS</span>
+    <span>© 2040 SHINEAUTOMOBILE</span>
     <span>SHERBROOKE, QUÉBEC, CANADA</span>
-    <span style="color:var(--aqua)">873-662-3813</span>
+    <span class="hi">873-662-3813</span>
   </div>
 </footer>
 
-<!-- ════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════ -->
 <script>
-/* ── CANVAS PARTICLE FIELD ── */
+/* CURSOR */
+const dot = document.getElementById('dot');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px';
+  dot.style.top = my + 'px';
+});
+document.querySelectorAll('a, button, .hst, .why-card, .rv-card, .urg-card, .step-box, .ab-feat, .zpill').forEach(el => {
+  el.addEventListener('mouseenter', () => dot.classList.add('big'));
+  el.addEventListener('mouseleave', () => dot.classList.remove('big'));
+});
+
+/* LOADER — wipe up */
 (function(){
-  const canvas = document.getElementById('world-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [], lines = [];
-  const PARTICLE_COUNT = 80;
-
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  class Particle {
-    constructor(){this.reset(true);}
-    reset(init){
-      this.x = Math.random()*W;
-      this.y = init ? Math.random()*H : H+10;
-      this.vx = (Math.random()-0.5)*0.3;
-      this.vy = -Math.random()*0.4-0.1;
-      this.size = Math.random()*1.5+0.3;
-      this.alpha = Math.random()*0.5+0.1;
-      this.life = 0;
-      this.maxLife = Math.random()*400+200;
-      this.color = Math.random()>0.7?'34,211,242':'200,225,255';
-    }
-    update(){
-      this.x+=this.vx; this.y+=this.vy; this.life++;
-      if(this.life>this.maxLife||this.y<-10) this.reset(false);
-    }
-    draw(){
-      const t=this.life/this.maxLife;
-      const a = this.alpha*(t<0.1?t/0.1:t>0.9?(1-t)/0.1:1);
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${this.color},${a})`;
-      ctx.fill();
-    }
-  }
-
-  for(let i=0;i<PARTICLE_COUNT;i++) particles.push(new Particle());
-
-  // Grid lines
-  function drawGrid(){
-    const gridSize=80, scrollY=window.scrollY*0.1;
-    ctx.strokeStyle='rgba(34,211,242,0.025)';
-    ctx.lineWidth=1;
-    for(let x=0;x<W;x+=gridSize){
-      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
-    }
-    for(let y=(-scrollY%gridSize);y<H;y+=gridSize){
-      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
-    }
-  }
-
-  // Connection lines between close particles
-  function drawConnections(){
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x;
-        const dy=particles[i].y-particles[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<120){
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle=`rgba(34,211,242,${0.04*(1-d/120)})`;
-          ctx.lineWidth=1;
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    drawGrid();
-    drawConnections();
-    particles.forEach(p=>{p.update();p.draw();});
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
-
-/* ── LOADER ── */
-(function(){
-  const bar = document.getElementById('loader-bar');
-  const pct = document.getElementById('loader-pct');
-  const status = document.getElementById('loader-status');
-  const statuses = [
-    'INITIALISATION...','CHARGEMENT DU SYSTÈME...','CONNEXION ÉTABLIE...','BIENVENUE.'
-  ];
-  let p=0;
-  const iv = setInterval(()=>{
-    p += Math.random()*4+1;
-    if(p>=100) p=100;
-    bar.style.width=p+'%';
-    pct.textContent=Math.round(p)+'%';
-    status.textContent=statuses[Math.floor(p/34)];
-    if(p>=100){
+  const fill = document.getElementById('ldr-fill');
+  const pct  = document.getElementById('ldr-pct');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += Math.random() * 6 + 2;
+    if(p >= 100) p = 100;
+    fill.style.width = p + '%';
+    pct.textContent = Math.round(p);
+    if(p >= 100){
       clearInterval(iv);
-      setTimeout(()=>document.getElementById('loader').classList.add('done'),400);
+      setTimeout(() => document.getElementById('ldr').classList.add('out'), 300);
     }
-  },40);
+  }, 30);
 })();
 
-/* ── CURSOR ── */
-const cCore = document.getElementById('cursor-core');
-const cRing = document.getElementById('cursor-ring');
-const cLabel = document.getElementById('cursor-label');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX; my=e.clientY;
-  cCore.style.left=mx+'px'; cCore.style.top=my+'px';
-  cLabel.style.left=mx+'px'; cLabel.style.top=my+'px';
-});
-(function ring(){ rx+=(mx-rx)*0.08; ry+=(my-ry)*0.08;
-  cRing.style.left=rx+'px'; cRing.style.top=ry+'px';
-  requestAnimationFrame(ring);
-})();
-document.querySelectorAll('a,button,.v-panel,.ct-card,.urg-card,.ff-card,.rv-card,.as-card,.ab-feat,.wa-float,.zone-pill').forEach(el=>{
-  const lbl = el.dataset.label||'';
-  el.addEventListener('mouseenter',()=>{
-    cRing.classList.add('expand');
-    if(lbl){cLabel.textContent=lbl;cLabel.classList.add('show');}
-  });
-  el.addEventListener('mouseleave',()=>{
-    cRing.classList.remove('expand');
-    cLabel.classList.remove('show');
-  });
+/* NAV hide/show on scroll */
+let lastY = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  const y = window.scrollY;
+  nav.classList.toggle('hidden', y > lastY && y > 120);
+  lastY = y;
 });
 
-/* ── NAVBAR SCROLL ── */
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('stuck',scrollY>60);
-});
-
-/* ── SCROLL ANIMATIONS ── */
-const obs = new IntersectionObserver((entries)=>{
-  entries.forEach((e,i)=>{
+/* SCROLL REVEAL */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
     if(e.isIntersecting){
-      const delay = ['rv-card','ct-card','tl-step','urg-card','ff-card'].some(c=>e.target.classList.contains(c))
-        ? i*90 : 0;
-      setTimeout(()=>e.target.classList.add('show'), delay);
+      const isCard = ['rv-card','ct-card','urg-card','ff-col','step-box'].some(c => e.target.classList.contains(c));
+      setTimeout(() => e.target.classList.add('in'), isCard ? i * 80 : 0);
     }
   });
-},{threshold:0.08,rootMargin:'0px 0px -60px 0px'});
-document.querySelectorAll('.fade-up,.fade-left,.fade-right,.tl-step,.urg-card,.ff-card,.rv-card,.ct-card').forEach(el=>obs.observe(el));
+}, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.rv-card,.ct-card,.urg-card,.ff-col,.step-box').forEach(el => obs.observe(el));
 
-/* ── PROMO COPY ── */
-function copyPromo(){
-  navigator.clipboard.writeText('SHINE10').then(()=>{
-    const c=document.getElementById('copy-confirm');
-    c.classList.add('show');
-    setTimeout(()=>c.classList.remove('show'),3000);
+/* PROMO COPY */
+function copyCode(){
+  navigator.clipboard.writeText('SHINE10').then(() => {
+    const c = document.getElementById('promo-confirm');
+    c.classList.add('on');
+    setTimeout(() => c.classList.remove('on'), 3000);
   });
 }
 
-/* ── MOBILE MENU ── */
+/* MOBILE MENU */
 function toggleMob(){
-  const d=document.getElementById('mob-drawer');
-  d.classList.toggle('open');
-  document.querySelector('#mob-btn i').className=d.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  const m = document.getElementById('mob-menu');
+  m.classList.toggle('open');
+  document.getElementById('mob-btn').textContent = m.classList.contains('open') ? '✕' : '☰';
 }
-</script>
 
+/* VEHICLE PHOTO PARALLAX */
+document.querySelectorAll('.veh-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - 0.5) * 16;
+    const y = ((e.clientY - r.top)  / r.height - 0.5) * 16;
+    const img = card.querySelector('.veh-img');
+    if(img) img.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    const img = card.querySelector('.veh-img');
+    if(img) img.style.transform = '';
+  });
+});
+</script>
 </body>
 </html>
