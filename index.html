@@ -999,18 +999,51 @@ section{position:relative;z-index:2;}
 /* ═══════════════════════════════════════
    WHATSAPP FLOAT
 ═══════════════════════════════════════ */
-.wa-float{
-  position:fixed;bottom:40px;right:40px;z-index:800;
-  width:64px;height:64px;
-  background:#25D366;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;color:#fff;
-  box-shadow:0 8px 40px rgba(37,211,102,0.55);
-  transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
-  text-decoration:none;
+.sms-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366; /* Vert WhatsApp-like, tu peux changer */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
-.wa-float:hover{transform:scale(1.12) translateY(-4px);box-shadow:0 20px 60px rgba(37,211,102,0.7);}
 
+.sms-float:hover {
+  transform: scale(1.1);
+  background-color: #20c157;
+  color: white;
+}
+
+/* Optionnel : petit label au survol */
+.sms-float::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 70px;
+  background: #333;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.sms-float:hover::after {
+  opacity: 1;
+  right: 75px;
+}
 /* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
@@ -1713,10 +1746,8 @@ footer{
 </section>
 
 <!-- WHATSAPP -->
-<a href="sms:18736623813?body=Bonjour,%20je%20vous%20contacte%20depuis%20votre%20site." 
-   target="_blank" 
-   class="sms-float" 
-   data-label="SMS">
+<!-- Bouton SMS flottant -->
+<a href="sms:18736623813" target="_blank" class="sms-float" data-label="SMS">
   <i class="fa-solid fa-message"></i>
 </a>
 
