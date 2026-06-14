@@ -1,1128 +1,1285 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Réserver — ShineAutomobile</title>
-  <meta name="description" content="Réservez votre lavage automobile à domicile à Sherbrooke et en Estrie. Service professionnel, produits écologiques." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prendre Rendez-vous — ShineAutomobile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+```
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root {
+    --aqua:       #22d3f2;
+    --aqua-dim:   rgba(34,211,242,0.12);
+    --aqua-glow:  rgba(34,211,242,0.25);
+    --dark:       #060a10;
+    --dark2:      #0c1220;
+    --surface:    #0f1929;
+    --surface2:   #162035;
+    --border:     rgba(34,211,242,0.12);
+    --border-h:   rgba(34,211,242,0.35);
+    --txt:        #e8eef8;
+    --muted:      #6b82a0;
+    --dim:        #3d546b;
+    --green:      #4ade80;
+    --red:        #f87171;
+    --amber:      #fbbf24;
+    --bc:         'Barlow Condensed', sans-serif;
+    --dm:         'DM Sans', sans-serif;
+}
 
-    :root {
-      --bg:         #0C0F14;
-      --surface:    #141820;
-      --surface2:   #1C2230;
-      --border:     rgba(255,255,255,0.08);
-      --border-act: rgba(255,200,80,0.45);
+/* ═══════════════ RESET ═══════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 
-      --gold:       #FFB800;
-      --gold-light: #FFD055;
-      --gold-dim:   rgba(255,184,0,0.12);
-      --mint:       #2DD4A7;
-      --mint-dim:   rgba(45,212,167,0.12);
+body {
+    font-family: var(--dm);
+    background: var(--dark);
+    color: var(--txt);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+}
 
-      --white:      #FFFFFF;
-      --text:       rgba(255,255,255,0.88);
-      --muted:      rgba(255,255,255,0.45);
-      --subtle:     rgba(255,255,255,0.15);
+/* ═══════════════ CANVAS ═══════════════ */
+#bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
 
-      --radius:     16px;
-      --radius-sm:  10px;
-      --shadow:     0 8px 32px rgba(0,0,0,0.4);
-      --shadow-gold: 0 8px 32px rgba(255,184,0,0.2);
-    }
+/* ═══════════════ CURSOR ═══════════════ */
+#cur-dot {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--aqua);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width .25s, height .25s, background .25s;
+    mix-blend-mode: screen;
+}
+#cur-ring {
+    position: fixed;
+    width: 38px; height: 38px;
+    border: 1px solid rgba(34,211,242,.45);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: width .35s cubic-bezier(.16,1,.3,1), height .35s cubic-bezier(.16,1,.3,1), border-color .25s;
+}
+#cur-ring.big {
+    width: 64px; height: 64px;
+    border-color: var(--aqua);
+    background: rgba(34,211,242,.04);
+}
 
-    html { scroll-behavior: smooth; }
+/* ═══════════════ WRAP ═══════════════ */
+.wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+    position: relative;
+    z-index: 2;
+}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+/* ═══════════════ BACK LINK ═══════════════ */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--bc);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 48px;
+    text-decoration: none;
+    transition: color .2s;
+}
+.back-link:hover { color: var(--aqua); }
 
-    /* ── AMBIENT GLOW ── */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -300px; left: 50%;
-      transform: translateX(-50%);
-      width: 900px; height: 600px;
-      background: radial-gradient(ellipse, rgba(255,184,0,0.06) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
+/* ═══════════════ PAGE HEADER ═══════════════ */
+.page-header { text-align:center; margin-bottom:52px; }
+.page-label {
+    display: inline-block;
+    font-family: var(--bc);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    background: var(--aqua-dim);
+    padding: 6px 16px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+}
+.page-title {
+    font-family: var(--bc);
+    font-weight: 900;
+    font-size: clamp(52px,9vw,80px);
+    letter-spacing: -.01em;
+    color: #fff;
+    line-height: .92;
+    text-transform: uppercase;
+}
+.page-title em { color: var(--aqua); font-style:italic; }
+.page-sub { font-size:14px; color:var(--muted); margin-top:12px; letter-spacing:.04em; }
 
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(12,15,20,0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 clamp(16px, 5vw, 48px);
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      gap: 20px;
-    }
-    .nav-back {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color .2s;
-    }
-    .nav-back:hover { color: var(--text); }
-    .nav-back svg { transition: transform .2s; }
-    .nav-back:hover svg { transform: translateX(-3px); }
+/* ═══════════════ NOTICE ═══════════════ */
+.notice {
+    background: rgba(251,191,36,.06);
+    border: 1px solid rgba(251,191,36,.22);
+    border-radius: 12px;
+    padding: 13px 18px;
+    font-size: 13px;
+    color: var(--amber);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .logo-mark {
-      width: 36px; height: 36px;
-      background: var(--gold);
-      border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 14px;
-      color: var(--bg);
-    }
-    .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--white); }
+/* ═══════════════ STEPS BAR ═══════════════ */
+.steps-bar { display:flex; align-items:center; margin-bottom:44px; }
+.step-dot { display:flex; flex-direction:column; align-items:center; gap:7px; flex:1; position:relative; }
+.step-dot:not(:last-child)::after {
+    content:'';
+    position:absolute;
+    top:15px; left:55%; right:-55%;
+    height:1px;
+    background: var(--border);
+    z-index:0;
+    transition: background .4s;
+}
+.step-dot.done:not(:last-child)::after { background: var(--aqua); }
+.step-circle {
+    width:30px; height:30px;
+    border-radius:50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--bc);
+    font-size:13px; font-weight:700;
+    color: var(--muted);
+    position:relative; z-index:1;
+    transition: all .35s;
+}
+.step-dot.active .step-circle {
+    background: var(--aqua);
+    border-color: var(--aqua);
+    color: var(--dark);
+    box-shadow: 0 0 18px var(--aqua-glow);
+}
+.step-dot.done .step-circle {
+    background: rgba(34,211,242,.15);
+    border-color: var(--aqua);
+    color: var(--aqua);
+}
+.step-label { font-family:var(--bc); font-size:11px; letter-spacing:.1em; color:var(--dim); transition:color .3s; }
+.step-dot.active .step-label { color:var(--aqua); }
+.step-dot.done .step-label   { color:var(--muted); }
 
-    .nav-phone {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 600; color: var(--gold);
-      text-decoration: none;
-      padding: 7px 14px; border-radius: 8px;
-      border: 1px solid rgba(255,184,0,0.25);
-      transition: all .2s;
-    }
-    .nav-phone:hover { background: var(--gold-dim); border-color: var(--gold); }
+/* ═══════════════ STEP TRANSITION ═══════════════ */
+.step-panel {
+    animation: stepIn .45s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes stepIn {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+.hidden { display:none !important; }
 
-    /* ── LAYOUT ── */
-    .page-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 48px);
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 40px;
-      align-items: start;
-      position: relative;
-      z-index: 1;
-    }
-    @media (max-width: 900px) {
-      .page-wrap { grid-template-columns: 1fr; }
-    }
+/* ═══════════════ CARD ═══════════════ */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 14px;
+    transition: border-color .3s;
+}
+.card-title {
+    font-family: var(--bc);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 22px;
+}
 
-    /* ── LEFT COLUMN ── */
-    .page-header { margin-bottom: 36px; }
-    .page-eyebrow {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .page-eyebrow::before {
-      content: '';
-      width: 20px; height: 2px;
-      background: var(--gold);
-      border-radius: 2px;
-    }
-    .page-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(30px, 4vw, 46px);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: var(--white);
-      margin-bottom: 14px;
-    }
-    .page-title em {
-      font-style: normal;
-      color: var(--gold-light);
-    }
-    .page-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 480px; }
+/* ═══════════════ VEHICLE TABS ═══════════════ */
+.vtabs { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+.vtab {
+    font-family: var(--bc);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: transparent;
+    cursor: none;
+    transition: all .2s;
+}
+.vtab:hover { border-color: var(--border-h); color:#fff; }
+.vtab.active { background:var(--aqua); color:var(--dark); border-color:var(--aqua); }
 
-    /* Progress steps */
-    .steps-bar {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 40px;
-    }
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-    }
-    .step-num {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700;
-      color: var(--muted);
-      transition: all .3s;
-      flex-shrink: 0;
-    }
-    .step-item.active .step-num {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: var(--bg);
-      box-shadow: 0 0 0 4px rgba(255,184,0,0.2);
-    }
-    .step-item.done .step-num {
-      background: var(--mint);
-      border-color: var(--mint);
-      color: var(--bg);
-    }
-    .step-label { font-size: 13px; font-weight: 600; color: var(--muted); transition: color .3s; }
-    .step-item.active .step-label { color: var(--white); }
-    .step-item.done .step-label { color: var(--mint); }
-    .step-line { flex: 1; height: 2px; background: var(--border); margin: 0 12px; transition: background .3s; border-radius: 2px; }
-    .step-line.done { background: var(--mint); }
+/* ═══════════════ SERVICE GRID ═══════════════ */
+.svc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media(max-width:500px) { .svc-grid { grid-template-columns:1fr; } }
 
-    /* ── FORM CARD ── */
-    .form-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-    }
+.svc-opt {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: none;
+    transition: all .2s cubic-bezier(.16,1,.3,1);
+    background: var(--dark2);
+    position: relative;
+    overflow: hidden;
+}
+.svc-opt::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0;
+    height:2px;
+    background: var(--aqua);
+    transform: scaleX(0);
+    transition: transform .3s;
+}
+.svc-opt:hover { border-color:var(--border-h); background:rgba(34,211,242,.03); }
+.svc-opt:hover::before { transform:scaleX(1); }
+.svc-opt.selected {
+    border-color: var(--aqua);
+    background: rgba(34,211,242,.07);
+    box-shadow: 0 0 0 1px var(--aqua);
+}
+.svc-opt.selected::before { transform:scaleX(1); }
+.svc-name { font-family:var(--bc); font-size:14px; font-weight:700; color:#fff; margin-bottom:3px; letter-spacing:.04em; }
+.svc-price { font-family:var(--bc); font-size:22px; font-weight:900; color:var(--aqua); letter-spacing:-.01em; }
+.svc-desc { font-size:11px; color:var(--dim); margin-top:4px; line-height:1.5; }
 
-    /* Step panels */
-    .form-step { display: none; padding: 36px; }
-    .form-step.active { display: block; animation: fadeIn .35s ease; }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+/* ═══════════════ FORFAIT OPTIONS ═══════════════ */
+.ff-opt {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: none;
+    transition: all .2s;
+    background: var(--dark2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.ff-opt:hover { border-color:var(--border-h); background:rgba(34,211,242,.03); }
+.ff-opt.selected { border-color:var(--aqua); background:rgba(34,211,242,.07); box-shadow:0 0 0 1px var(--aqua); }
+.ff-tier { font-size:13px; color:var(--muted); }
+.ff-price { font-family:var(--bc); font-weight:900; font-size:22px; color:var(--aqua); letter-spacing:-.01em; white-space:nowrap; }
+.ff-note-tag {
+    display:inline-block;
+    font-family:var(--bc);
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--muted);
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:2px 8px;
+    margin-top:4px;
+}
 
-    .step-heading {
-      font-family: 'Syne', sans-serif;
-      font-size: 19px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .step-heading .sh-icon {
-      width: 36px; height: 36px;
-      background: var(--gold-dim);
-      border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
+/* Clear button */
+.clear-btn {
+    display:none;
+    align-items:center;
+    gap:6px;
+    font-family:var(--bc);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.1em;
+    color:var(--muted);
+    background:none;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:6px 14px;
+    cursor:none;
+    margin-top:14px;
+    transition:all .2s;
+}
+.clear-btn.show { display:inline-flex; }
+.clear-btn:hover { color:var(--red); border-color:rgba(248,113,113,.3); }
 
-    /* Field groups */
-    .field-group { margin-bottom: 20px; }
-    .field-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .field-group label span { color: var(--gold); margin-left: 2px; }
+/* ═══════════════ QTY ═══════════════ */
+.qty-row { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.qty-btn {
+    width:40px; height:40px;
+    border-radius:10px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    color:var(--txt);
+    font-size:20px;
+    cursor:none;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .2s;
+    line-height:1;
+}
+.qty-btn:hover { border-color:var(--aqua); color:var(--aqua); }
+.qty-num {
+    font-family:var(--bc);
+    font-weight:900;
+    font-size:32px;
+    color:#fff;
+    min-width:44px;
+    text-align:center;
+}
+.qty-label { font-size:13px; color:var(--muted); }
+.qty-subtotal {
+    font-family:var(--bc);
+    font-size:16px;
+    font-weight:700;
+    color:var(--aqua);
+    margin-left:auto;
+}
 
-    input[type="text"],
-    input[type="tel"],
-    input[type="date"],
-    select,
-    textarea {
-      width: 100%;
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 13px 16px;
-      font-size: 15px;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      transition: border-color .2s, box-shadow .2s, background .2s;
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-    input[type="text"]::placeholder,
-    input[type="tel"]::placeholder,
-    textarea::placeholder { color: var(--muted); }
-    input[type="text"]:focus,
-    input[type="tel"]:focus,
-    input[type="date"]:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(255,184,0,0.12);
-      background: var(--surface2);
-    }
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(0.5);
-      cursor: pointer;
-    }
-    select { cursor: pointer; }
-    select option { background: #1C2230; color: var(--white); }
+/* ═══════════════ FIELDS ═══════════════ */
+.field { margin-bottom:22px; }
+.field label {
+    display:block;
+    font-family:var(--bc);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:9px;
+}
+.field input, .field textarea {
+    width:100%;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-family: var(--dm);
+    font-size: 15px;
+    color: var(--txt);
+    outline: none;
+    transition: all .2s cubic-bezier(.16,1,.3,1);
+}
+.field input:focus, .field textarea:focus {
+    border-color: var(--aqua);
+    box-shadow: 0 0 0 3px rgba(34,211,242,.08);
+    background: rgba(34,211,242,.02);
+}
+.field textarea { resize:vertical; min-height:100px; line-height:1.6; }
 
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media (max-width: 640px) { .field-row { grid-template-columns: 1fr; } }
+/* ═══════════════ CRÉNEAU BUTTONS ═══════════════ */
+.creneau-btns { display:flex; gap:10px; flex-wrap:wrap; }
+.creneau-btn {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--bc);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.06em;
+    padding:11px 20px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    color:var(--muted);
+    background:var(--dark2);
+    cursor:none;
+    transition:all .2s;
+}
+.creneau-btn:hover { border-color:var(--border-h); color:#fff; }
+.creneau-btn.active { background:var(--aqua-dim); border-color:var(--aqua); color:var(--aqua); }
 
-    /* Vehicle type cards */
-    .vehicle-picker {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    @media (max-width: 480px) { .vehicle-picker { grid-template-columns: 1fr 1fr; } }
+/* ═══════════════ PROMO ═══════════════ */
+.promo-row { display:flex; gap:10px; }
+.promo-row input {
+    flex:1;
+    background:var(--dark2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:13px 18px;
+    font-family:var(--bc);
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.14em;
+    color:var(--txt);
+    text-transform:uppercase;
+    outline:none;
+    transition:border-color .2s;
+}
+.promo-row input:focus { border-color:var(--aqua); }
+.promo-row input::placeholder { font-size:15px; letter-spacing:.06em; color:var(--dim); }
+.promo-apply {
+    background:var(--aqua);
+    color:var(--dark);
+    font-family:var(--bc);
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:.1em;
+    padding:13px 22px;
+    border-radius:10px;
+    border:none;
+    cursor:none;
+    transition:all .2s;
+    white-space:nowrap;
+}
+.promo-apply:hover { background:#fff; }
+.promo-hint { font-size:12px; color:var(--dim); margin-bottom:14px; }
+.promo-hint strong { color:var(--muted); }
+.promo-success { margin-top:9px; font-size:13px; color:var(--green); display:flex; align-items:center; gap:6px; }
+.promo-error   { margin-top:9px; font-size:13px; color:var(--red); display:flex; align-items:center; gap:6px; }
 
-    .veh-btn {
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 8px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: all .2s;
-      color: var(--muted);
-    }
-    .veh-btn:hover { border-color: var(--subtle); color: var(--text); }
-    .veh-btn.selected {
-      border-color: var(--gold);
-      background: var(--gold-dim);
-      color: var(--white);
-      box-shadow: 0 0 0 3px rgba(255,184,0,0.12);
-    }
-    .veh-btn .veh-icon { font-size: 26px; display: block; margin-bottom: 6px; }
-    .veh-btn .veh-label { font-size: 12px; font-weight: 700; }
+/* ═══════════════ TOTAL ═══════════════ */
+.total-block {
+    background: linear-gradient(135deg, rgba(34,211,242,.08), rgba(14,165,233,.04));
+    border: 1px solid var(--border-h);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 14px;
+}
+.total-meta {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:6px;
+}
+.total-label { font-family:var(--bc); font-size:11px; letter-spacing:.18em; color:var(--muted); text-transform:uppercase; }
+.total-per-tag {
+    font-family:var(--bc);
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--dim);
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:3px 10px;
+}
+.total-row { display:flex; align-items:baseline; gap:12px; }
+.total-amount {
+    font-family:var(--bc);
+    font-weight:900;
+    font-size:56px;
+    color:var(--aqua);
+    letter-spacing:-.03em;
+    line-height:1;
+    transition:all .3s;
+}
+.total-original {
+    font-family:var(--bc);
+    font-size:26px;
+    font-weight:600;
+    color:var(--dim);
+    text-decoration:line-through;
+    padding-bottom:4px;
+}
+.discount-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:10px;
+    background:rgba(34,211,242,.1);
+    border:1px solid rgba(34,211,242,.25);
+    border-radius:6px;
+    padding:5px 12px;
+    font-family:var(--bc);
+    font-size:12px;
+    letter-spacing:.08em;
+    color:var(--aqua);
+}
 
-    /* Service cards */
-    .service-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .service-option {
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      transition: all .2s;
-    }
-    .service-option:hover { border-color: var(--subtle); background: rgba(255,255,255,0.04); }
-    .service-option.selected {
-      border-color: var(--gold);
-      background: var(--gold-dim);
-    }
-    .svc-name { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
-    .svc-desc { font-size: 12px; color: var(--muted); }
-    .svc-price {
-      font-family: 'Syne', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--gold);
-      white-space: nowrap;
-    }
-    .service-check {
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      flex-shrink: 0;
-      transition: all .2s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .service-option.selected .service-check {
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-    .service-option.selected .service-check::after {
-      content: '✓';
-      font-size: 11px;
-      color: var(--bg);
-      font-weight: 700;
-    }
+/* ═══════════════ SUMMARY ═══════════════ */
+.summary-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3px 20px;
+    font-size:14px;
+    line-height:2;
+}
+.summary-key { color:var(--dim); }
+.summary-val { color:#fff; font-weight:500; }
 
-    /* Qty selector */
-    .qty-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      width: fit-content;
-    }
-    .qty-btn {
-      width: 44px; height: 48px;
-      background: none; border: none;
-      color: var(--muted); font-size: 20px; cursor: pointer;
-      transition: color .2s, background .2s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .qty-btn:hover { color: var(--gold); background: var(--gold-dim); }
-    .qty-val {
-      min-width: 48px; text-align: center;
-      font-family: 'Syne', sans-serif;
-      font-size: 18px; font-weight: 700;
-      color: var(--white);
-      border-left: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      padding: 0 8px; height: 48px; display: flex; align-items: center; justify-content: center;
-    }
+/* ═══════════════ BUTTONS ═══════════════ */
+.btn-primary {
+    width:100%;
+    background:var(--aqua);
+    color:var(--dark);
+    font-family:var(--bc);
+    font-weight:900;
+    font-size:17px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:18px;
+    border-radius:14px;
+    border:none;
+    cursor:none;
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.btn-primary:hover { background:#fff; transform:translateY(-2px); box-shadow:0 16px 40px var(--aqua-glow); }
+.btn-primary:disabled { opacity:.35; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn-back {
+    flex:1;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    color:var(--muted);
+    font-family:var(--bc);
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:.08em;
+    padding:18px;
+    border-radius:14px;
+    cursor:none;
+    transition:all .2s;
+}
+.btn-back:hover { border-color:var(--border-h); color:#fff; }
+.btn-row { display:flex; gap:12px; }
 
-    /* Promo code */
-    .promo-row {
-      display: flex; gap: 10px;
-    }
-    .promo-row input { flex: 1; }
-    .btn-promo {
-      padding: 0 20px;
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--muted);
-      font-size: 13px; font-weight: 600;
-      cursor: pointer;
-      transition: all .2s;
-      white-space: nowrap;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-promo:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
-    .promo-feedback { font-size: 12px; margin-top: 6px; }
-    .promo-ok { color: var(--mint); }
-    .promo-err { color: #FF6B6B; }
+/* ═══════════════ SUCCESS ═══════════════ */
+.success-card {
+    background:var(--surface);
+    border:1px solid rgba(34,211,242,.25);
+    border-radius:24px;
+    padding:56px 40px;
+    text-align:center;
+    animation: stepIn .5s cubic-bezier(.16,1,.3,1);
+}
+.success-icon { font-size:60px; margin-bottom:20px; }
+.success-title { font-family:var(--bc); font-weight:900; font-size:44px; color:#fff; letter-spacing:-.01em; margin-bottom:10px; text-transform:uppercase; }
+.success-sub { font-size:15px; color:var(--muted); margin-bottom:24px; line-height:1.7; }
+.success-notice {
+    background:rgba(34,211,242,.06);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 20px;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:28px;
+    line-height:1.7;
+}
+.success-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn-home {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--aqua); color:var(--dark);
+    font-family:var(--bc); font-weight:800; font-size:15px; letter-spacing:.1em;
+    padding:13px 28px; border-radius:12px; text-decoration:none; transition:all .2s;
+}
+.btn-home:hover { background:#fff; }
+.btn-another {
+    display:inline-flex; align-items:center; gap:8px;
+    background:transparent; color:var(--muted);
+    font-family:var(--bc); font-weight:700; font-size:15px; letter-spacing:.1em;
+    padding:13px 28px; border-radius:12px; border:1px solid var(--border);
+    cursor:none; transition:all .2s;
+}
+.btn-another:hover { border-color:var(--border-h); color:#fff; }
 
-    /* Navigation buttons */
-    .btn-row {
-      display: flex; gap: 12px; align-items: center; margin-top: 28px;
-    }
-    .btn-next {
-      flex: 1;
-      background: var(--gold);
-      color: var(--bg);
-      border: none;
-      padding: 15px 28px;
-      border-radius: 12px;
-      font-family: 'Syne', sans-serif;
-      font-size: 15px; font-weight: 700;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all .2s;
-    }
-    .btn-next:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: var(--shadow-gold); }
-    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:600px) {
+    .card { padding:22px 18px; }
+    .total-amount { font-size:42px; }
+    .wrap { padding:32px 16px 80px; }
+    .success-card { padding:40px 20px; }
+    .success-title { font-size:34px; }
+    .creneau-btns { gap:8px; }
+}
+</style>
+```
 
-    .btn-prev {
-      padding: 15px 20px;
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      color: var(--muted);
-      font-size: 14px; font-weight: 600;
-      cursor: pointer;
-      display: flex; align-items: center; gap: 6px;
-      transition: all .2s;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-prev:hover { border-color: var(--subtle); color: var(--text); }
-
-    .btn-submit {
-      flex: 1;
-      background: var(--gold);
-      color: var(--bg);
-      border: none;
-      padding: 16px 28px;
-      border-radius: 12px;
-      font-family: 'Syne', sans-serif;
-      font-size: 15px; font-weight: 700;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all .2s;
-    }
-    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: var(--shadow-gold); }
-
-    /* ── RIGHT COLUMN — SUMMARY ── */
-    .summary-col { position: sticky; top: 84px; }
-
-    .summary-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-    }
-    .summary-header {
-      background: linear-gradient(135deg, rgba(255,184,0,0.12), rgba(255,184,0,0.04));
-      border-bottom: 1px solid var(--border);
-      padding: 24px 28px;
-    }
-    .summary-header h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px; font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      margin-bottom: 4px;
-    }
-    .summary-header p { font-size: 13px; color: var(--muted); }
-
-    .summary-body { padding: 24px 28px; }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      gap: 12px;
-    }
-    .summary-row:last-of-type { border-bottom: none; }
-    .sr-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
-    .sr-val { font-size: 14px; font-weight: 600; color: var(--text); text-align: right; }
-    .sr-val.empty { color: var(--muted); font-weight: 400; font-style: italic; font-size: 13px; }
-
-    .summary-total {
-      background: var(--gold-dim);
-      border: 1px solid rgba(255,184,0,0.2);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .total-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); }
-    .total-amount {
-      font-family: 'Syne', sans-serif;
-      font-size: 28px; font-weight: 800;
-      color: var(--gold-light);
-    }
-    .total-note { font-size: 11px; color: var(--muted); margin-top: 4px; text-align: right; }
-
-    .summary-footer { padding: 20px 28px; border-top: 1px solid var(--border); }
-    .guarantee-badge {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--mint-dim);
-      border: 1px solid rgba(45,212,167,0.2);
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 13px; font-weight: 600; color: var(--mint);
-    }
-
-    /* Info note */
-    .info-note {
-      background: rgba(255,184,0,0.07);
-      border: 1px solid rgba(255,184,0,0.18);
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 13px; color: rgba(255,184,0,0.85);
-      margin-bottom: 24px;
-      display: flex; gap: 10px; align-items: flex-start;
-    }
-    .info-note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-
-    /* ── SUCCESS STATE ── */
-    .success-state {
-      display: none;
-      text-align: center;
-      padding: 64px 36px;
-    }
-    .success-state.show { display: block; animation: fadeIn .4s ease; }
-    .success-check {
-      width: 72px; height: 72px;
-      background: var(--mint-dim);
-      border: 2px solid var(--mint);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 32px;
-      margin: 0 auto 24px;
-    }
-    .success-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 24px; font-weight: 800;
-      color: var(--white); margin-bottom: 12px;
-    }
-    .success-sub { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
-    .success-warn {
-      background: var(--gold-dim);
-      border: 1px solid rgba(255,184,0,0.2);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin: 24px auto 0;
-      max-width: 340px;
-      font-size: 14px; color: var(--gold-light);
-      line-height: 1.6;
-    }
-    .success-warn strong { color: var(--gold); }
-    .btn-home {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--gold); color: var(--bg);
-      padding: 14px 28px; border-radius: 12px;
-      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
-      text-decoration: none; margin-top: 28px;
-      transition: all .2s;
-    }
-    .btn-home:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-    /* Divider */
-    .divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-    /* Textarea */
-    textarea { resize: vertical; min-height: 80px; }
-
-    /* Custom date for dark */
-    input[type="date"] { color-scheme: dark; }
-
-    /* Loading spinner */
-    .spinner {
-      display: inline-block;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(12,15,20,0.3);
-      border-top-color: var(--bg);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="https://shineautomobile.github.io/shineautomobile/index.html" class="nav-back">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      Retour
-    </a>
-    <a href="https://shineautomobile.github.io/shineautomobile/index.html" class="nav-logo">
-      <div class="logo-mark">SA</div>
-      <div class="logo-text">ShineAutomobile</div>
-    </a>
-    <a href="tel:8736623813" class="nav-phone">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.29-1.29a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      873-662-3813
-    </a>
-  </div>
-</nav>
+<!-- CANVAS BG -->
 
-<!-- PAGE -->
-<div class="page-wrap">
+<canvas id="bg-canvas"></canvas>
 
-  <!-- LEFT: FORM -->
-  <div>
-    <div class="page-header">
-      <p class="page-eyebrow">Réservation en ligne</p>
-      <h1 class="page-title">Prenez votre<br><em>rendez-vous</em></h1>
-      <p class="page-sub">On se déplace chez vous. Remplissez le formulaire en 3 étapes rapides.</p>
-    </div>
+<!-- CUSTOM CURSOR -->
 
-    <!-- Progress -->
-    <div class="steps-bar">
-      <div class="step-item active" id="prog-1">
-        <div class="step-num">1</div>
-        <div class="step-label">Véhicule</div>
-      </div>
-      <div class="step-line" id="line-1"></div>
-      <div class="step-item" id="prog-2">
-        <div class="step-num">2</div>
-        <div class="step-label">Coordonnées</div>
-      </div>
-      <div class="step-line" id="line-2"></div>
-      <div class="step-item" id="prog-3">
-        <div class="step-num">3</div>
-        <div class="step-label">Confirmation</div>
-      </div>
-    </div>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
 
-    <!-- FORM CARD -->
-    <div class="form-card" id="form-card">
+<div class="wrap">
 
-      <!-- STEP 1: Véhicule & service -->
-      <div class="form-step active" id="step-1">
-        <div class="step-heading">
-          <span class="sh-icon">🚗</span>
-          Votre véhicule & service
-        </div>
+```
+<a href="index.html" class="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
+</a>
 
-        <div class="field-group">
-          <label>Type de véhicule <span>*</span></label>
-          <div class="vehicle-picker">
-            <div class="veh-btn" data-veh="sedan" onclick="selectVeh(this)">
-              <span class="veh-icon">🚗</span>
-              <span class="veh-label">Sedan</span>
-            </div>
-            <div class="veh-btn" data-veh="suv" onclick="selectVeh(this)">
-              <span class="veh-icon">🚙</span>
-              <span class="veh-label">VUS</span>
-            </div>
-            <div class="veh-btn" data-veh="van" onclick="selectVeh(this)">
-              <span class="veh-icon">🚐</span>
-              <span class="veh-label">Van</span>
-            </div>
-            <div class="veh-btn" data-veh="pickup" onclick="selectVeh(this)">
-              <span class="veh-icon">🛻</span>
-              <span class="veh-label">Pickup</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="field-group" id="service-section" style="display:none">
-          <label>Service souhaité <span>*</span></label>
-          <div class="service-grid" id="service-list"></div>
-        </div>
-
-        <div class="field-group" id="qty-section" style="display:none">
-          <label>Nombre de véhicules</label>
-          <div class="qty-wrap">
-            <button class="qty-btn" onclick="changeQty(-1)">−</button>
-            <div class="qty-val" id="qty-display">1</div>
-            <button class="qty-btn" onclick="changeQty(1)">+</button>
-          </div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-next" id="btn-next-1" onclick="goStep(2)" disabled>
-            Continuer
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP 2: Coordonnées -->
-      <div class="form-step" id="step-2">
-        <div class="step-heading">
-          <span class="sh-icon">👤</span>
-          Vos coordonnées
-        </div>
-
-        <div class="field-group">
-          <label>Nom complet <span>*</span></label>
-          <input type="text" id="f-nom" placeholder="Jean Tremblay" oninput="updateSummary()" />
-        </div>
-
-        <div class="field-row">
-          <div class="field-group">
-            <label>Téléphone <span>*</span></label>
-            <input type="tel" id="f-tel" placeholder="819-555-0123" oninput="updateSummary()" />
-          </div>
-          <div class="field-group">
-            <label>Date souhaitée <span>*</span></label>
-            <input type="date" id="f-date" oninput="updateSummary()" />
-          </div>
-        </div>
-
-        <div class="field-group">
-          <label>Adresse domicile <span>*</span></label>
-          <input type="text" id="f-adresse" placeholder="123 Rue des Érables, Sherbrooke, QC" oninput="updateSummary()" />
-        </div>
-
-        <div class="field-group">
-          <label>Marque & modèle(s) du / des véhicule(s)</label>
-          <input type="text" id="f-modele" placeholder="ex: Honda Civic 2019, Toyota RAV4 2022" oninput="updateSummary()" />
-        </div>
-
-        <div class="field-group">
-          <label>Code promo</label>
-          <div class="promo-row">
-            <input type="text" id="f-promo" placeholder="SHINE10" />
-            <button class="btn-promo" onclick="applyPromo()">Appliquer</button>
-          </div>
-          <div id="promo-feedback" class="promo-feedback"></div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-prev" onclick="goStep(1)">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Retour
-          </button>
-          <button class="btn-next" id="btn-next-2" onclick="goStep(3)">
-            Continuer
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP 3: Confirmation -->
-      <div class="form-step" id="step-3">
-        <div class="step-heading">
-          <span class="sh-icon">✅</span>
-          Confirmer la réservation
-        </div>
-
-        <div class="info-note">
-          <span class="info-note-icon">ℹ️</span>
-          <span>Des frais supplémentaires peuvent s'appliquer pour les services hors Sherbrooke. Vous serez contacté pour confirmer.</span>
-        </div>
-
-        <!-- Recap inline -->
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:24px;">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:16px;">Récapitulatif</div>
-          <div class="summary-row"><span class="sr-label">Véhicule</span><span class="sr-val" id="conf-veh">—</span></div>
-          <div class="summary-row"><span class="sr-label">Service</span><span class="sr-val" id="conf-svc">—</span></div>
-          <div class="summary-row"><span class="sr-label">Quantité</span><span class="sr-val" id="conf-qty">—</span></div>
-          <div class="summary-row"><span class="sr-label">Client</span><span class="sr-val" id="conf-nom">—</span></div>
-          <div class="summary-row"><span class="sr-label">Téléphone</span><span class="sr-val" id="conf-tel">—</span></div>
-          <div class="summary-row"><span class="sr-label">Adresse</span><span class="sr-val" id="conf-adr">—</span></div>
-          <div class="summary-row"><span class="sr-label">Date</span><span class="sr-val" id="conf-date">—</span></div>
-        </div>
-
-        <div class="field-group">
-          <label>Note ou demande spéciale</label>
-          <textarea id="f-note" placeholder="Ex: accès par l'allée latérale, chien dans la cour…"></textarea>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-prev" onclick="goStep(2)">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Retour
-          </button>
-          <button class="btn-submit" id="btn-submit" onclick="submitForm()">
-            Envoyer la réservation
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- SUCCESS -->
-      <div class="success-state" id="success-state">
-        <div class="success-check">✅</div>
-        <div class="success-title">Merci pour votre réservation !</div>
-        <p class="success-sub">Votre demande a bien été envoyée.</p>
-        <p class="success-sub">Vous serez contacté dans les prochaines <strong style="color:var(--white)">24 heures</strong>.</p>
-        <div class="success-warn">
-          Si vous n'avez pas de nouvelles dans les 24 h, appelez-nous au<br>
-          <strong>873-662-3813</strong>
-        </div>
-        <a href="https://shineautomobile.github.io/shineautomobile/index.html" class="btn-home">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Retour à l'accueil
-        </a>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- RIGHT: SUMMARY -->
-  <div class="summary-col">
-    <div class="summary-card">
-      <div class="summary-header">
-        <h3>Votre sélection</h3>
-        <p>Récapitulatif en temps réel</p>
-      </div>
-      <div class="summary-body">
-        <div class="summary-row">
-          <span class="sr-label">Véhicule</span>
-          <span class="sr-val" id="sum-veh"><span class="empty">Non choisi</span></span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Service</span>
-          <span class="sr-val" id="sum-svc"><span class="empty">Non choisi</span></span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Quantité</span>
-          <span class="sr-val" id="sum-qty">1</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Date</span>
-          <span class="sr-val" id="sum-date"><span class="empty">Non choisie</span></span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Adresse</span>
-          <span class="sr-val" id="sum-adr"><span class="empty">Non renseignée</span></span>
-        </div>
-
-        <div class="summary-total">
-          <div>
-            <div class="total-label">Total estimé</div>
-            <div class="total-note">Paiement sur place</div>
-          </div>
-          <div>
-            <div class="total-amount" id="sum-total">—</div>
-            <div class="total-note" id="sum-promo-line" style="color:var(--mint);display:none"></div>
-          </div>
-        </div>
-      </div>
-      <div class="summary-footer">
-        <div class="guarantee-badge">
-          🌱 Satisfaction garantie ou on revient
-        </div>
-      </div>
-    </div>
-  </div>
-
+<div class="page-header">
+    <div class="page-label">Réservation</div>
+    <h1 class="page-title">Prendre<br><em>Rendez-vous</em></h1>
+    <p class="page-sub">ShineAutomobile · Lavage auto à domicile · Sherbrooke</p>
 </div>
 
-<script>
-  // ── DATA ──
-  const services = {
-    sedan: [
-      { id:'ext',     label:'Lavage Extérieur',       desc:'Carrosserie, jantes, vitres',   price:40  },
-      { id:'ext-plus',label:'Lavage Extérieur Plus',  desc:'Extérieur + cire de protection', price:50 },
-      { id:'int-reg', label:'Lavage Intérieur Régulier', desc:'Aspirateur + surfaces',       price:75  },
-      { id:'int-sup', label:'Lavage Intérieur Super', desc:'Complet + désinfection',         price:125 },
-      { id:'comp-reg',label:'Lavage Complet Régulier',desc:'Extérieur + intérieur standard', price:100 },
-      { id:'comp-sup',label:'Lavage Complet Super',   desc:'Extérieur + intérieur premium',  price:175 },
-      { id:'shampoo', label:'Shampoing des Sièges',   desc:'Nettoyage en profondeur',        price:50  },
-    ],
-    suv: [
-      { id:'ext',     label:'Lavage Extérieur',       desc:'Carrosserie, jantes, vitres',   price:40  },
-      { id:'ext-plus',label:'Lavage Extérieur Plus',  desc:'Extérieur + cire de protection', price:50 },
-      { id:'int-reg', label:'Lavage Intérieur Régulier', desc:'Aspirateur + surfaces',       price:80  },
-      { id:'int-sup', label:'Lavage Intérieur Super', desc:'Complet + désinfection',         price:130 },
-      { id:'comp-reg',label:'Lavage Complet Régulier',desc:'Extérieur + intérieur standard', price:115 },
-      { id:'comp-sup',label:'Lavage Complet Super',   desc:'Extérieur + intérieur premium',  price:180 },
-      { id:'shampoo', label:'Shampoing des Sièges',   desc:'Nettoyage en profondeur',        price:50  },
-    ],
-    van: [
-      { id:'ext',     label:'Lavage Extérieur',       desc:'Carrosserie, jantes, vitres',   price:50  },
-      { id:'ext-plus',label:'Lavage Extérieur Plus',  desc:'Extérieur + cire de protection', price:60 },
-      { id:'int-reg', label:'Lavage Intérieur Régulier', desc:'Aspirateur + surfaces',       price:100 },
-      { id:'int-sup', label:'Lavage Intérieur Super', desc:'Complet + désinfection',         price:150 },
-      { id:'comp-reg',label:'Lavage Complet Régulier',desc:'Extérieur + intérieur standard', price:150 },
-      { id:'comp-sup',label:'Lavage Complet Super',   desc:'Extérieur + intérieur premium',  price:200 },
-      { id:'shampoo', label:'Shampoing des Sièges',   desc:'Nettoyage en profondeur',        price:75  },
-    ],
-    pickup: [
-      { id:'ext',     label:'Lavage Extérieur',       desc:'Carrosserie, jantes, vitres',   price:50  },
-      { id:'ext-plus',label:'Lavage Extérieur Plus',  desc:'Extérieur + cire de protection', price:60 },
-      { id:'int-reg', label:'Lavage Intérieur Régulier', desc:'Aspirateur + surfaces',       price:100 },
-      { id:'int-sup', label:'Lavage Intérieur Super', desc:'Complet + désinfection',         price:150 },
-      { id:'comp-reg',label:'Lavage Complet Régulier',desc:'Extérieur + intérieur standard', price:150 },
-      { id:'comp-sup',label:'Lavage Complet Super',   desc:'Extérieur + intérieur premium',  price:200 },
-      { id:'shampoo', label:'Shampoing des Sièges',   desc:'Nettoyage en profondeur',        price:50  },
-    ],
-  };
+<div class="notice" id="mainNotice">
+    <i class="fa-solid fa-triangle-exclamation fa-sm"></i>
+    Des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke.
+</div>
 
-  const vehLabels = { sedan:'Sedan', suv:'VUS', van:'Van', pickup:'Pickup' };
-  const promoCodes = { 'SHINE10': 10, 'ECO15': 15 };
+<!-- STEPS -->
+<div class="steps-bar" id="stepsBar">
+    <div class="step-dot active" data-step="1">
+        <div class="step-circle" id="sc1">1</div>
+        <div class="step-label">Service</div>
+    </div>
+    <div class="step-dot" data-step="2">
+        <div class="step-circle" id="sc2">2</div>
+        <div class="step-label">Infos</div>
+    </div>
+    <div class="step-dot" data-step="3">
+        <div class="step-circle" id="sc3">3</div>
+        <div class="step-label">Confirmer</div>
+    </div>
+</div>
 
-  let state = {
-    veh: null,
-    svcId: null,
-    svcLabel: null,
-    svcPrice: 0,
-    qty: 1,
-    discount: 0,
-    promoCode: null,
-  };
+<form id="mainForm" autocomplete="off">
 
-  // ── VEH SELECT ──
-  function selectVeh(el) {
-    document.querySelectorAll('.veh-btn').forEach(b => b.classList.remove('selected'));
-    el.classList.add('selected');
-    state.veh = el.dataset.veh;
-    state.svcId = null; state.svcLabel = null; state.svcPrice = 0;
-    renderServices();
-    document.getElementById('service-section').style.display = 'block';
-    document.getElementById('qty-section').style.display = 'block';
-    document.getElementById('btn-next-1').disabled = true;
-    updateSummary();
-  }
+    <!-- ═══ STEP 1 ═══ -->
+    <div id="step1" class="step-panel">
 
-  function renderServices() {
-    const list = document.getElementById('service-list');
-    list.innerHTML = '';
-    (services[state.veh] || []).forEach(s => {
-      const div = document.createElement('div');
-      div.className = 'service-option';
-      div.dataset.id = s.id;
-      div.innerHTML = `
-        <div>
-          <div class="svc-name">${s.label}</div>
-          <div class="svc-desc">${s.desc}</div>
+        <div class="card">
+            <div class="card-title">Choisir un service</div>
+
+            <div class="vtabs" role="tablist" aria-label="Type de véhicule">
+                <button type="button" class="vtab active" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">Sedan</button>
+                <button type="button" class="vtab" onclick="switchVehicle('suv',this)" role="tab">VUS</button>
+                <button type="button" class="vtab" onclick="switchVehicle('van',this)" role="tab">Van</button>
+                <button type="button" class="vtab" onclick="switchVehicle('pickup',this)" role="tab">Pickup</button>
+                <button type="button" class="vtab" onclick="switchVehicle('forfait',this)" role="tab">Forfaits</button>
+            </div>
+
+            <!-- Sedan -->
+            <div id="g-sedan" class="svc-grid" role="group" aria-label="Services sedan">
+                <div class="svc-opt" data-service="Lavage Extérieur Sedan" data-price="40" onclick="selectSvc(this)" aria-label="Lavage Extérieur 40$"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" data-service="Lavage Extérieur Plus Sedan" data-price="50" onclick="selectSvc(this)" aria-label="Lavage Extérieur Plus 50$"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectSvc(this)" aria-label="Lavage Intérieur Régulier 75$"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">75$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectSvc(this)" aria-label="Lavage Intérieur Super 125$"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">125$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Régulier Sedan" data-price="100" onclick="selectSvc(this)" aria-label="Lavage Complet Régulier 100$"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectSvc(this)" aria-label="Lavage Complet Super 175$"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">175$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" data-service="Shampoing Sièges Sedan" data-price="50" onclick="selectSvc(this)" aria-label="Shampoing des Sièges 50$"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+            </div>
+
+            <!-- SUV -->
+            <div id="g-suv" class="svc-grid hidden" role="group" aria-label="Services VUS">
+                <div class="svc-opt" data-service="Lavage Extérieur SUV" data-price="40" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Régulier SUV" data-price="80" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">80$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">130$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Régulier SUV" data-price="115" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">115$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">180$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" data-service="Shampoing Sièges SUV" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+            </div>
+
+            <!-- Van -->
+            <div id="g-van" class="svc-grid hidden" role="group" aria-label="Services Van">
+                <div class="svc-opt" data-service="Lavage Extérieur Van" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" data-service="Lavage Extérieur Plus Van" data-price="60" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">60$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Régulier Van" data-price="100" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Super Van" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">150$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Régulier Van" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">150$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Super Van" data-price="200" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" data-service="Shampoing Sièges Van" data-price="75" onclick="selectSvc(this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">75$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+            </div>
+
+            <!-- Pickup -->
+            <div id="g-pickup" class="svc-grid hidden" role="group" aria-label="Services Pickup">
+                <div class="svc-opt" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" data-service="Lavage Extérieur Plus Pickup" data-price="60" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">60$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Régulier Pickup" data-price="100" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" data-service="Lavage Intérieur Super Pickup" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">150$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Régulier Pickup" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">150$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" data-service="Lavage Complet Super Pickup" data-price="200" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" data-service="Shampoing Sièges Pickup" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+            </div>
+
+            <!-- Forfaits -->
+            <div id="g-forfait" class="hidden" style="display:none;flex-direction:column;gap:10px;" role="group" aria-label="Forfaits multi-véhicules">
+                <div class="ff-opt" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectSvc(this)">
+                    <div><div class="svc-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
+                    <div class="ff-price">30$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
+                </div>
+                <div class="ff-opt" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectSvc(this)">
+                    <div><div class="svc-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
+                    <div class="ff-price">25$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
+                </div>
+                <div class="ff-opt" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectSvc(this)">
+                    <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">2 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
+                    <div class="ff-price">95$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
+                </div>
+                <div class="ff-opt" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectSvc(this)">
+                    <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
+                    <div class="ff-price">90$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
+                </div>
+                <div class="ff-opt" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectSvc(this)">
+                    <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
+                    <div class="ff-price">80$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
+                </div>
+            </div>
+
+            <!-- Clear button -->
+            <button type="button" class="clear-btn" id="clearBtn" onclick="clearSelection()">
+                <i class="fa-solid fa-xmark fa-sm"></i> Effacer la sélection
+            </button>
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div class="svc-price">${s.price}$</div>
-          <div class="service-check"></div>
-        </div>`;
-      div.onclick = () => selectService(div, s);
-      list.appendChild(div);
+
+        <div class="card">
+            <div class="card-title">Nombre de véhicules</div>
+            <div class="qty-row">
+                <button type="button" class="qty-btn" onclick="changeQty(-1)" aria-label="Diminuer">−</button>
+                <div class="qty-num" id="qtyDisplay" aria-live="polite">1</div>
+                <button type="button" class="qty-btn" onclick="changeQty(1)" aria-label="Augmenter">+</button>
+                <div class="qty-label">véhicule(s)</div>
+                <div class="qty-subtotal" id="qtySubtotal"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Modèle du véhicule</div>
+            <div class="field">
+                <label for="vehicleModel">Marque et modèle *</label>
+                <input type="text" id="vehicleModel" placeholder="Ex: Toyota Camry 2022" required aria-required="true" aria-label="Marque et modèle du véhicule">
+            </div>
+        </div>
+
+        <button type="button" class="btn-primary" id="btnStep1" onclick="goStep2()" disabled aria-label="Continuer vers l'étape 2">
+            Continuer <i class="fa-solid fa-arrow-right fa-sm"></i>
+        </button>
+    </div>
+
+    <!-- ═══ STEP 2 ═══ -->
+    <div id="step2" class="hidden">
+        <div class="card">
+            <div class="card-title">Vos coordonnées</div>
+
+            <div class="field">
+                <label for="nom">Nom complet *</label>
+                <input type="text" id="nom" placeholder="Jean Tremblay" required aria-required="true" aria-label="Votre nom complet">
+            </div>
+            <div class="field">
+                <label for="telephone">Numéro de téléphone *</label>
+                <input type="tel" id="telephone" placeholder="873-662-3813" required aria-required="true" aria-label="Votre numéro de téléphone">
+            </div>
+            <div class="field">
+                <label for="adresse">Adresse de service *</label>
+                <input type="text" id="adresse" placeholder="123 rue Principale, Sherbrooke, QC" required aria-required="true" aria-label="Adresse où effectuer le service">
+            </div>
+            <div class="field" style="max-width:230px">
+                <label for="maDate">Date souhaitée *</label>
+                <input type="date" id="maDate" required aria-required="true" aria-label="Date souhaitée pour le service">
+            </div>
+
+            <div class="field">
+                <label>Créneau préféré</label>
+                <div class="creneau-btns" role="group" aria-label="Créneau horaire">
+                    <button type="button" class="creneau-btn" data-creneau="Matin (8h–12h)" onclick="selectCreneau(this)">
+                        <i class="fa-solid fa-sun fa-sm"></i> Matin
+                    </button>
+                    <button type="button" class="creneau-btn" data-creneau="Après-midi (12h–17h)" onclick="selectCreneau(this)">
+                        <i class="fa-solid fa-cloud-sun fa-sm"></i> Après-midi
+                    </button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="noteClient">
+                    Note / Commentaire
+                    <span style="font-size:10px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--dim);margin-left:6px;">(optionnel)</span>
+                </label>
+                <textarea id="noteClient" rows="3" placeholder="Véhicule très sale, animaux, accès par la ruelle..." aria-label="Note ou commentaire optionnel"></textarea>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goStep(1)">← Retour</button>
+            <button type="button" class="btn-primary" style="flex:2" onclick="goStep3()" aria-label="Continuer vers la confirmation">
+                Continuer <i class="fa-solid fa-arrow-right fa-sm"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══ STEP 3 ═══ -->
+    <div id="step3" class="hidden">
+        <div class="card">
+            <div class="card-title">Résumé de votre réservation</div>
+            <div id="summaryContent" class="summary-grid"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Code promo</div>
+            <p class="promo-hint">Code <strong></strong></p>
+            <div class="promo-row">
+                <input type="text" id="promoCode" maxlength= aria-label="Code promo">
+                <button type="button" class="promo-apply" onclick="applyPromo()">Appliquer</button>
+            </div>
+            <div id="promoMsg"></div>
+        </div>
+
+        <div class="total-block">
+            <div class="total-meta">
+                <div class="total-label">Total estimé</div>
+                <div class="total-per-tag" id="totalPerTag">TOTAL</div>
+            </div>
+            <div class="total-row">
+                <div class="total-amount" id="totalAmount">—</div>
+                <div class="total-original hidden" id="originalAmount"></div>
+            </div>
+            <div class="discount-badge hidden" id="discountBadge">
+                <i class="fa-solid fa-check fa-xs"></i> Rabais de 10$ appliqué
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goStep(2)">← Retour</button>
+            <button type="button" class="btn-primary" style="flex:2" id="submitBtn" onclick="submitForm()">
+                Envoyer ma demande <i class="fa-solid fa-paper-plane fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<!-- SUCCESS -->
+<div id="successView" class="hidden">
+    <div class="success-card">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Demande<br>Envoyée !</div>
+        <div class="success-sub">Votre demande a bien été reçue.<br>Vous serez contacté dans les prochaines <strong>24 heures</strong>.</div>
+        <div class="success-notice">
+            Pas de nouvelles dans les 24h ? Appelez-nous au
+            <strong style="color:var(--aqua)">873-662-3813</strong> — on est là pour vous.
+        </div>
+        <div class="success-btns">
+            <a href="index.html" class="btn-home">
+                <i class="fa-solid fa-house fa-sm"></i> Retour à l'accueil
+            </a>
+            <button type="button" class="btn-another" onclick="resetAll()">
+                <i class="fa-solid fa-rotate-left fa-sm"></i> Nouvelle réservation
+            </button>
+        </div>
+    </div>
+</div>
+```
+
+</div><!-- /wrap -->
+
+<script>
+/* ══════════════════════════════════════
+   CANVAS PARTICLES
+══════════════════════════════════════ */
+(function() {
+    const cvs = document.getElementById('bg-canvas');
+    const ctx = cvs.getContext('2d');
+    let W, H, pts = [];
+    const N = 55;
+
+    function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class P {
+        constructor(init) { this.reset(init); }
+        reset(init) {
+            this.x  = Math.random() * W;
+            this.y  = init ? Math.random() * H : H + 10;
+            this.vx = (Math.random() - .5) * .25;
+            this.vy = -(Math.random() * .35 + .08);
+            this.r  = Math.random() * 1.4 + .2;
+            this.a  = Math.random() * .4 + .08;
+            this.life = 0;
+            this.max  = Math.random() * 350 + 180;
+        }
+        tick() {
+            this.x += this.vx; this.y += this.vy; this.life++;
+            if (this.life > this.max || this.y < -8) this.reset(false);
+        }
+        draw() {
+            const t = this.life / this.max;
+            const a = this.a * (t < .1 ? t / .1 : t > .9 ? (1 - t) / .1 : 1);
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(34,211,242,${a})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < N; i++) pts.push(new P(true));
+
+    function drawGrid() {
+        ctx.strokeStyle = 'rgba(34,211,242,.022)';
+        ctx.lineWidth = 1;
+        const g = 70;
+        for (let x = 0; x < W; x += g) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+        for (let y = 0; y < H; y += g) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    }
+
+    function drawLinks() {
+        for (let i = 0; i < pts.length; i++) {
+            for (let j = i + 1; j < pts.length; j++) {
+                const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+                const d  = Math.hypot(dx, dy);
+                if (d < 110) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[i].x, pts[i].y);
+                    ctx.lineTo(pts[j].x, pts[j].y);
+                    ctx.strokeStyle = `rgba(34,211,242,${.035 * (1 - d / 110)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    (function frame() {
+        ctx.clearRect(0, 0, W, H);
+        drawGrid();
+        drawLinks();
+        pts.forEach(p => { p.tick(); p.draw(); });
+        requestAnimationFrame(frame);
+    })();
+})();
+
+/* ══════════════════════════════════════
+   CURSOR
+══════════════════════════════════════ */
+const dot  = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+});
+(function loop() {
+    rx += (mx - rx) * .1; ry += (my - ry) * .1;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a, button, .svc-opt, .ff-opt, .creneau-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('big'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('big'));
+});
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+const PROMO_CODE   = 'SHINE10';
+const PROMO_AMOUNT = 10;
+const PROMO_MIN    = 100;
+
+let S = {
+    vehicle:    'sedan',
+    service:    null,
+    price:      0,
+    isForfait:  false,
+    qty:        1,
+    base:       0,
+    final:      0,
+    promo:      false,
+    creneau:    ''
+};
+
+/* ══════════════════════════════════════
+   VEHICLE SWITCH
+══════════════════════════════════════ */
+function switchVehicle(v, btn) {
+    S.vehicle = v;
+    S.service = null; S.price = 0; S.promo = false;
+    document.getElementById('promoMsg') && (document.getElementById('promoMsg').innerHTML = '');
+
+    document.querySelectorAll('.vtab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+
+    ['sedan','suv','van','pickup'].forEach(id => {
+        const el = document.getElementById('g-' + id);
+        if (el) el.classList.add('hidden');
     });
-  }
+    const ff = document.getElementById('g-forfait');
+    if (v === 'forfait') { ff.classList.remove('hidden'); ff.style.display = 'flex'; }
+    else { ff.classList.add('hidden'); ff.style.display = 'none'; document.getElementById('g-' + v)?.classList.remove('hidden'); }
 
-  function selectService(el, s) {
-    document.querySelectorAll('.service-option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.svc-opt, .ff-opt').forEach(o => o.classList.remove('selected'));
+    document.getElementById('clearBtn').classList.remove('show');
+    updateTotal(); updateContinueBtn();
+}
+
+/* ══════════════════════════════════════
+   SELECT SERVICE
+══════════════════════════════════════ */
+function selectSvc(el) {
+    document.querySelectorAll('.svc-opt, .ff-opt').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
-    state.svcId = s.id;
-    state.svcLabel = s.label;
-    state.svcPrice = s.price;
-    document.getElementById('btn-next-1').disabled = false;
-    updateSummary();
-  }
+    S.service   = el.dataset.service;
+    S.price     = parseInt(el.dataset.price);
+    S.isForfait = el.dataset.forfait === 'true';
+    S.promo     = false;
+    document.getElementById('promoMsg') && (document.getElementById('promoMsg').innerHTML = '');
+    if (document.getElementById('promoCode')) document.getElementById('promoCode').value = '';
+    document.getElementById('clearBtn').classList.add('show');
+    updateTotal(); updateContinueBtn();
+}
 
-  // ── QTY ──
-  function changeQty(delta) {
-    state.qty = Math.max(1, Math.min(10, state.qty + delta));
-    document.getElementById('qty-display').textContent = state.qty;
-    updateSummary();
-  }
+/* ══════════════════════════════════════
+   CLEAR SELECTION
+══════════════════════════════════════ */
+function clearSelection() {
+    document.querySelectorAll('.svc-opt, .ff-opt').forEach(o => o.classList.remove('selected'));
+    S.service = null; S.price = 0; S.promo = false;
+    document.getElementById('clearBtn').classList.remove('show');
+    updateTotal(); updateContinueBtn();
+}
 
-  // ── STEPS ──
-  function goStep(n) {
-    // Validate step 2 required fields
-    if (n === 3) {
-      const nom = document.getElementById('f-nom').value.trim();
-      const tel = document.getElementById('f-tel').value.trim();
-      const date = document.getElementById('f-date').value;
-      const adr = document.getElementById('f-adresse').value.trim();
-      if (!nom || !tel || !date || !adr) {
-        // Highlight empty fields
-        [['f-nom',nom],['f-tel',tel],['f-date',date],['f-adresse',adr]].forEach(([id,val]) => {
-          const el = document.getElementById(id);
-          if (!val) { el.style.borderColor='#FF6B6B'; el.focus(); }
-          else el.style.borderColor = '';
-        });
+/* ══════════════════════════════════════
+   CONTINUE BUTTON STATE
+══════════════════════════════════════ */
+function updateContinueBtn() {
+    const btn = document.getElementById('btnStep1');
+    btn.disabled = !S.service;
+}
+
+/* ══════════════════════════════════════
+   QUANTITY
+══════════════════════════════════════ */
+function changeQty(d) {
+    S.qty = Math.max(1, Math.min(10, S.qty + d));
+    document.getElementById('qtyDisplay').textContent = S.qty;
+    S.promo = false;
+    if (document.getElementById('promoMsg')) document.getElementById('promoMsg').innerHTML = '';
+    updateTotal();
+}
+
+/* ══════════════════════════════════════
+   TOTAL
+══════════════════════════════════════ */
+function updateTotal() {
+    S.base = S.price * S.qty;
+
+    if (S.promo && S.base >= PROMO_MIN) S.final = S.base - PROMO_AMOUNT;
+    else { S.final = S.base; S.promo = false; }
+
+    // Qty subtotal inline
+    const qSub = document.getElementById('qtySubtotal');
+    if (qSub) qSub.textContent = S.base > 0 ? `= ${S.base}$` : '';
+
+    // Per-vehicle tag
+    const tag = document.getElementById('totalPerTag');
+    if (tag) tag.textContent = S.isForfait ? 'PAR VÉHICULE × ' + S.qty : 'TOTAL';
+
+    const amtEl = document.getElementById('totalAmount');
+    if (amtEl) amtEl.textContent = S.base > 0 ? S.final + '$' : '—';
+
+    const origEl = document.getElementById('originalAmount');
+    const badge  = document.getElementById('discountBadge');
+    if (origEl && badge) {
+        if (S.promo && S.base > 0) {
+            origEl.textContent = S.base + '$'; origEl.classList.remove('hidden'); badge.classList.remove('hidden');
+        } else {
+            origEl.classList.add('hidden'); badge.classList.add('hidden');
+        }
+    }
+}
+
+/* ══════════════════════════════════════
+   PROMO
+══════════════════════════════════════ */
+function applyPromo() {
+    const code = document.getElementById('promoCode').value.trim().toUpperCase();
+    const msg  = document.getElementById('promoMsg');
+
+    if (code !== PROMO_CODE) {
+        S.promo = false; updateTotal();
+        msg.innerHTML = `<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Code promo invalide.</div>`;
         return;
-      }
-      fillConfirmation();
     }
+    if (S.base < PROMO_MIN) {
+        S.promo = false; updateTotal();
+        msg.innerHTML = `<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Ce code s'applique uniquement sur les services de ${PROMO_MIN}$ et plus.</div>`;
+        return;
+    }
+    S.promo = true; updateTotal();
+    msg.innerHTML = `<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué ! Vous économisez ${PROMO_AMOUNT}$.</div>`;
+}
 
-    // Progress
-    for (let i=1;i<=3;i++) {
-      const prog = document.getElementById('prog-'+i);
-      prog.classList.remove('active','done');
-      if (i < n) prog.classList.add('done');
-      else if (i === n) prog.classList.add('active');
-    }
-    for (let i=1;i<=2;i++) {
-      const line = document.getElementById('line-'+i);
-      line.classList.toggle('done', i < n);
-    }
+/* ══════════════════════════════════════
+   CRÉNEAU
+══════════════════════════════════════ */
+function selectCreneau(btn) {
+    document.querySelectorAll('.creneau-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S.creneau = btn.dataset.creneau;
+}
 
-    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-'+n).classList.add('active');
+/* ══════════════════════════════════════
+   STEP NAVIGATION
+══════════════════════════════════════ */
+function showStep(n) {
+    ['step1','step2','step3'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.classList.add('hidden');
+        el.classList.remove('step-panel');
+    });
+    const target = document.getElementById('step' + n);
+    target.classList.remove('hidden');
+    // trigger reflow for animation
+    void target.offsetWidth;
+    target.classList.add('step-panel');
+
+    document.querySelectorAll('.step-dot').forEach(dot => {
+        const s = parseInt(dot.dataset.step);
+        dot.classList.remove('active','done');
+        if (s === n) dot.classList.add('active');
+        else if (s < n) dot.classList.add('done');
+    });
+
+    // Check icon for done steps
+    document.querySelectorAll('.step-circle').forEach((c, i) => {
+        const step = i + 1;
+        if (step < n) c.innerHTML = '<i class="fa-solid fa-check fa-xs"></i>';
+        else c.textContent = step;
+    });
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+}
 
-  function fillConfirmation() {
-    const vehLabel = vehLabels[state.veh] || '—';
-    const dateStr = document.getElementById('f-date').value;
-    const dateFormatted = dateStr ? new Date(dateStr + 'T12:00:00').toLocaleDateString('fr-CA', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) : '—';
-    document.getElementById('conf-veh').textContent = vehLabel;
-    document.getElementById('conf-svc').textContent = state.svcLabel || '—';
-    document.getElementById('conf-qty').textContent = state.qty + (state.qty > 1 ? ' véhicules' : ' véhicule');
-    document.getElementById('conf-nom').textContent = document.getElementById('f-nom').value || '—';
-    document.getElementById('conf-tel').textContent = document.getElementById('f-tel').value || '—';
-    document.getElementById('conf-adr').textContent = document.getElementById('f-adresse').value || '—';
-    document.getElementById('conf-date').textContent = dateFormatted;
-  }
+function goStep2() {
+    if (!S.service) { alert('Veuillez sélectionner un service.'); return; }
+    if (!document.getElementById('vehicleModel').value.trim()) { alert('Veuillez entrer le modèle de votre véhicule.'); return; }
+    showStep(2);
+}
 
-  // ── PROMO ──
-  function applyPromo() {
-    const code = document.getElementById('f-promo').value.trim().toUpperCase();
-    const fb = document.getElementById('promo-feedback');
-    if (promoCodes[code]) {
-      state.discount = promoCodes[code];
-      state.promoCode = code;
-      fb.className = 'promo-feedback promo-ok';
-      fb.textContent = `✓ Code appliqué : -${state.discount}% sur le total`;
-      updateSummary();
-    } else {
-      state.discount = 0; state.promoCode = null;
-      fb.className = 'promo-feedback promo-err';
-      fb.textContent = 'Code invalide ou expiré.';
-      updateSummary();
-    }
-  }
+function goStep3() {
+    const nom  = document.getElementById('nom').value.trim();
+    const tel  = document.getElementById('telephone').value.trim();
+    const adr  = document.getElementById('adresse').value.trim();
+    const date = document.getElementById('maDate').value;
+    if (!nom || !tel || !adr || !date) { alert('Veuillez remplir tous les champs obligatoires.'); return; }
 
-  // ── SUMMARY ──
-  function updateSummary() {
-    const vehLabel = state.veh ? vehLabels[state.veh] : null;
-    const dateStr = document.getElementById('f-date')?.value;
-    const adr = document.getElementById('f-adresse')?.value.trim();
+    const model = document.getElementById('vehicleModel').value.trim();
+    const note  = document.getElementById('noteClient').value.trim();
 
-    document.getElementById('sum-veh').innerHTML = vehLabel
-      ? vehLabel
-      : '<span class="empty">Non choisi</span>';
+    document.getElementById('summaryContent').innerHTML = `
+        <span class="summary-key">Service</span><span class="summary-val">${S.service}</span>
+        <span class="summary-key">Véhicule</span><span class="summary-val">${model}</span>
+        <span class="summary-key">Quantité</span><span class="summary-val">${S.qty} véhicule(s)</span>
+        <span class="summary-key">Nom</span><span class="summary-val">${nom}</span>
+        <span class="summary-key">Téléphone</span><span class="summary-val">${tel}</span>
+        <span class="summary-key">Adresse</span><span class="summary-val">${adr}</span>
+        <span class="summary-key">Date</span><span class="summary-val">${date}</span>
+        ${S.creneau ? `<span class="summary-key">Créneau</span><span class="summary-val">${S.creneau}</span>` : ''}
+        ${note ? `<span class="summary-key">Note</span><span class="summary-val">${note}</span>` : ''}
+    `;
+    updateTotal();
+    showStep(3);
+}
 
-    document.getElementById('sum-svc').innerHTML = state.svcLabel
-      ? state.svcLabel
-      : '<span class="empty">Non choisi</span>';
+function goStep(n) {
+    if (n === 1) showStep(1);
+    else if (n === 2) showStep(2);
+}
 
-    document.getElementById('sum-qty').textContent = state.qty;
-
-    document.getElementById('sum-date').innerHTML = dateStr
-      ? new Date(dateStr + 'T12:00:00').toLocaleDateString('fr-CA', { day:'numeric', month:'long', year:'numeric' })
-      : '<span class="empty">Non choisie</span>';
-
-    document.getElementById('sum-adr').innerHTML = (adr && adr.length > 2)
-      ? adr
-      : '<span class="empty">Non renseignée</span>';
-
-    // Total
-    const base = state.svcPrice * state.qty;
-    if (base > 0) {
-      let total = base;
-      const promoLine = document.getElementById('sum-promo-line');
-      if (state.discount > 0) {
-        total = Math.round(base * (1 - state.discount / 100));
-        promoLine.style.display = 'block';
-        promoLine.textContent = `-${state.discount}% (${state.promoCode})`;
-      } else {
-        promoLine.style.display = 'none';
-      }
-      document.getElementById('sum-total').textContent = total + '$';
-    } else {
-      document.getElementById('sum-total').textContent = '—';
-    }
-  }
-
-  // ── SUBMIT ──
-  function submitForm() {
-    const btn = document.getElementById('btn-submit');
-    btn.innerHTML = '<span class="spinner"></span> Envoi en cours…';
+/* ══════════════════════════════════════
+   SUBMIT
+══════════════════════════════════════ */
+async function submitForm() {
+    const btn = document.getElementById('submitBtn');
     btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours…';
 
-    // Simulate API call
-    setTimeout(() => {
-      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('success-state').classList.add('show');
-      // Update progress — all done
-      for (let i=1;i<=3;i++) {
-        const prog = document.getElementById('prog-'+i);
-        prog.classList.remove('active');
-        prog.classList.add('done');
-      }
-      document.getElementById('line-1').classList.add('done');
-      document.getElementById('line-2').classList.add('done');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1500);
-  }
+    const payload = {
+        access_key:      'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',
+        subject:         'Nouvelle réservation — ShineAutomobile',
+        from_name:       'ShineAutomobile Réservation',
+        service:         S.service,
+        montant_base:    S.base + '$',
+        montant_final:   S.final + '$',
+        economies:       S.promo ? '-' + PROMO_AMOUNT + '$' : 'Aucun',
+        code_promo:      S.promo ? PROMO_CODE : '',
+        nombre_voitures: S.qty,
+        modele_vehicule: document.getElementById('vehicleModel').value.trim(),
+        nom:             document.getElementById('nom').value.trim(),
+        telephone:       document.getElementById('telephone').value.trim(),
+        adresse:         document.getElementById('adresse').value.trim(),
+        date:            document.getElementById('maDate').value,
+        creneau:         S.creneau || 'Non précisé',
+        note_client:     document.getElementById('noteClient').value.trim() || 'Aucune note',
+        botcheck:        ''  // Honeypot anti-spam
+    };
 
-  // Init min date = today
-  const today = new Date().toISOString().split('T')[0];
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('f-date').min = today;
-  });
+    try {
+        const res  = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            document.getElementById('mainForm').classList.add('hidden');
+            document.getElementById('stepsBar').classList.add('hidden');
+            document.getElementById('mainNotice').classList.add('hidden');
+            document.getElementById('successView').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            alert('Une erreur est survenue. Veuillez réessayer ou nous appeler au 873-662-3813.');
+            btn.disabled = false;
+            btn.innerHTML = 'Envoyer ma demande <i class="fa-solid fa-paper-plane fa-sm"></i>';
+        }
+    } catch(e) {
+        alert('Erreur de connexion. Appelez-nous au 873-662-3813.');
+        btn.disabled = false;
+        btn.innerHTML = 'Envoyer ma demande <i class="fa-solid fa-paper-plane fa-sm"></i>';
+    }
+}
+
+/* ══════════════════════════════════════
+   RESET (Nouvelle réservation)
+══════════════════════════════════════ */
+function resetAll() {
+    // Reset state
+    S = { vehicle:'sedan', service:null, price:0, isForfait:false, qty:1, base:0, final:0, promo:false, creneau:'' };
+
+    // Reset UI
+    document.getElementById('mainForm').classList.remove('hidden');
+    document.getElementById('stepsBar').classList.remove('hidden');
+    document.getElementById('mainNotice').classList.remove('hidden');
+    document.getElementById('successView').classList.add('hidden');
+
+    // Reset inputs
+    document.getElementById('vehicleModel').value = '';
+    document.getElementById('nom').value = '';
+    document.getElementById('telephone').value = '';
+    document.getElementById('adresse').value = '';
+    document.getElementById('maDate').value = '';
+    document.getElementById('noteClient').value = '';
+    if (document.getElementById('promoCode')) document.getElementById('promoCode').value = '';
+
+    // Reset service selections
+    document.querySelectorAll('.svc-opt, .ff-opt').forEach(o => o.classList.remove('selected'));
+    document.getElementById('clearBtn').classList.remove('show');
+    document.querySelectorAll('.creneau-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.vtab').forEach((t,i) => { t.classList.remove('active'); if(i===0) t.classList.add('active'); });
+    ['suv','van','pickup'].forEach(id => document.getElementById('g-'+id)?.classList.add('hidden'));
+    document.getElementById('g-sedan')?.classList.remove('hidden');
+    document.getElementById('g-forfait').classList.add('hidden');
+    document.getElementById('g-forfait').style.display = 'none';
+
+    updateTotal();
+    updateContinueBtn();
+    showStep(1);
+}
+
+/* Init */
+updateContinueBtn();
 </script>
 
 </body>
