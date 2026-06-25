@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-```
 <style>
 /* ═══════════════ TOKENS ═══════════════ */
 :root {
@@ -363,7 +362,7 @@ body {
     color:var(--muted);
     margin-bottom:9px;
 }
-.field input, .field textarea {
+.field input, .field textarea, .field select {
     width:100%;
     background: var(--dark2);
     border: 1px solid var(--border);
@@ -375,12 +374,73 @@ body {
     outline: none;
     transition: all .2s cubic-bezier(.16,1,.3,1);
 }
-.field input:focus, .field textarea:focus {
+.field input:focus, .field textarea:focus, .field select:focus {
     border-color: var(--aqua);
     box-shadow: 0 0 0 3px rgba(34,211,242,.08);
     background: rgba(34,211,242,.02);
 }
 .field textarea { resize:vertical; min-height:100px; line-height:1.6; }
+
+/* Additional options */
+.add-option {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    background: var(--dark2);
+}
+.add-option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.add-option-title {
+    font-family: var(--bc);
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+.add-option-price {
+    font-family: var(--bc);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--aqua);
+}
+.decont-options {
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+@media(max-width:600px) {
+    .decont-options { grid-template-columns: 1fr; }
+}
+.decont-opt {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    cursor: none;
+    transition: all .2s;
+    background: var(--surface2);
+}
+.decont-opt:hover {
+    border-color: var(--aqua);
+    background: rgba(34,211,242,.05);
+}
+.decont-opt.selected {
+    border-color: var(--aqua);
+    background: rgba(34,211,242,.1);
+    box-shadow: 0 0 0 1px var(--aqua);
+}
+.decont-opt .svc-name {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+.decont-opt .svc-price {
+    font-size: 18px;
+}
 
 /* ═══════════════ CRÉNEAU BUTTONS ═══════════════ */
 .creneau-btns { display:flex; gap:10px; flex-wrap:wrap; }
@@ -596,23 +656,18 @@ body {
     .creneau-btns { gap:8px; }
 }
 </style>
-```
-
 </head>
 <body>
 
 <!-- CANVAS BG -->
-
 <canvas id="bg-canvas"></canvas>
 
 <!-- CUSTOM CURSOR -->
-
 <div id="cur-dot"></div>
 <div id="cur-ring"></div>
 
 <div class="wrap">
 
-```
 <a href="index.html" class="back-link">
     <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
 </a>
@@ -777,7 +832,7 @@ body {
             </div>
             <div class="field" style="max-width:230px">
                 <label for="maDate">Date souhaitée *</label>
-                <input type="date" id="maDate" required aria-required="true" aria-label="Date souhaitée pour le service">
+                <input type="date" id="maDate" onchange="checkSameDay()" required aria-required="true" aria-label="Date souhaitée pour le service">
             </div>
 
             <div class="field">
@@ -789,6 +844,60 @@ body {
                     <button type="button" class="creneau-btn" data-creneau="Après-midi (12h–17h)" onclick="selectCreneau(this)">
                         <i class="fa-solid fa-cloud-sun fa-sm"></i> Après-midi
                     </button>
+                    <button type="button" class="creneau-btn" data-creneau="Pas de préférence" onclick="selectCreneau(this)">
+                        Pas de préférence
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nouvelles options -->
+            <div class="field">
+                <div class="add-option">
+                    <div class="add-option-header">
+                        <div>
+                            <label class="add-option-title">Décontamination complet extérieur</label>
+                        </div>
+                        <div class="add-option-price" id="decontTotal">+0$</div>
+                    </div>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <input type="radio" name="decont" value="non" onclick="toggleDecont(false)" checked> Non
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <input type="radio" name="decont" value="oui" onclick="toggleDecont(true)"> Oui
+                        </label>
+                    </div>
+                    <div class="decont-options" id="decontOptions">
+                        <div class="decont-opt" data-price="50" data-type="sedan" onclick="selectDecont(this)">
+                            <div class="svc-name">Sedan</div>
+                            <div class="svc-price">50$</div>
+                        </div>
+                        <div class="decont-opt" data-price="75" data-type="suv" onclick="selectDecont(this)">
+                            <div class="svc-name">VUS</div>
+                            <div class="svc-price">75$</div>
+                        </div>
+                        <div class="decont-opt" data-price="100" data-type="vanpickup" onclick="selectDecont(this)">
+                            <div class="svc-name">Pickup / Van</div>
+                            <div class="svc-price">100$</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="add-option">
+                    <div class="add-option-header">
+                        <label class="add-option-title">Présence de poils de chien</label>
+                        <div class="add-option-price" id="dogTotal">+0$</div>
+                    </div>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <input type="radio" name="doghair" value="non" onclick="toggleDogHair(false)" checked> Non
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <input type="radio" name="doghair" value="oui" onclick="toggleDogHair(true)"> Oui (+25$)
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -799,6 +908,11 @@ body {
                 </label>
                 <textarea id="noteClient" rows="3" placeholder="Véhicule très sale, animaux, accès par la ruelle..." aria-label="Note ou commentaire optionnel"></textarea>
             </div>
+        </div>
+
+        <div id="sameDayWarning" class="notice hidden" style="background:rgba(251,191,36,.1); border-color:rgba(251,191,36,.4);">
+            <i class="fa-solid fa-clock fa-sm"></i>
+            <strong>Réservation le jour même :</strong> Nous vous recommandons de nous appeler ou d’envoyer un texto au <strong>873-662-3813</strong> pour une réservation d’urgence. Les demandes le jour même peuvent ne pas être traitées (idéalement réserver au moins 24h à l’avance).
         </div>
 
         <div class="btn-row">
@@ -818,9 +932,9 @@ body {
 
         <div class="card">
             <div class="card-title">Code promo</div>
-            <p class="promo-hint">Code <strong></strong></p>
+            <p class="promo-hint">Code <strong>SHINE10</strong></p>
             <div class="promo-row">
-                <input type="text" id="promoCode" maxlength= aria-label="Code promo">
+                <input type="text" id="promoCode" maxlength="20" aria-label="Code promo">
                 <button type="button" class="promo-apply" onclick="applyPromo()">Appliquer</button>
             </div>
             <div id="promoMsg"></div>
@@ -869,7 +983,6 @@ body {
         </div>
     </div>
 </div>
-```
 
 </div><!-- /wrap -->
 
@@ -965,7 +1078,7 @@ document.addEventListener('mousemove', e => {
     ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
     requestAnimationFrame(loop);
 })();
-document.querySelectorAll('a, button, .svc-opt, .ff-opt, .creneau-btn').forEach(el => {
+document.querySelectorAll('a, button, .svc-opt, .ff-opt, .creneau-btn, .decont-opt').forEach(el => {
     el.addEventListener('mouseenter', () => ring.classList.add('big'));
     el.addEventListener('mouseleave', () => ring.classList.remove('big'));
 });
@@ -986,7 +1099,10 @@ let S = {
     base:       0,
     final:      0,
     promo:      false,
-    creneau:    ''
+    creneau:    '',
+    decontPrice: 0,
+    dogHairPrice: 0,
+    decontType: ''
 };
 
 /* ══════════════════════════════════════
@@ -1059,10 +1175,40 @@ function changeQty(d) {
 }
 
 /* ══════════════════════════════════════
+   ADDITIONAL OPTIONS
+══════════════════════════════════════ */
+function toggleDecont(enabled) {
+    const opts = document.getElementById('decontOptions');
+    if (enabled) {
+        opts.style.display = 'grid';
+    } else {
+        opts.style.display = 'none';
+        document.querySelectorAll('.decont-opt').forEach(o => o.classList.remove('selected'));
+        S.decontPrice = 0;
+        S.decontType = '';
+    }
+    updateTotal();
+}
+
+function selectDecont(el) {
+    document.querySelectorAll('.decont-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    S.decontPrice = parseInt(el.dataset.price);
+    S.decontType = el.dataset.type;
+    updateTotal();
+}
+
+function toggleDogHair(enabled) {
+    S.dogHairPrice = enabled ? 25 : 0;
+    updateTotal();
+}
+
+/* ══════════════════════════════════════
    TOTAL
 ══════════════════════════════════════ */
 function updateTotal() {
-    S.base = S.price * S.qty;
+    let extra = S.decontPrice + S.dogHairPrice;
+    S.base = (S.price * S.qty) + extra;
 
     if (S.promo && S.base >= PROMO_MIN) S.final = S.base - PROMO_AMOUNT;
     else { S.final = S.base; S.promo = false; }
@@ -1087,6 +1233,10 @@ function updateTotal() {
             origEl.classList.add('hidden'); badge.classList.add('hidden');
         }
     }
+
+    // Update add-on displays
+    document.getElementById('decontTotal').textContent = S.decontPrice > 0 ? `+${S.decontPrice}$` : '+0$';
+    document.getElementById('dogTotal').textContent = S.dogHairPrice > 0 ? `+${S.dogHairPrice}$` : '+0$';
 }
 
 /* ══════════════════════════════════════
@@ -1107,7 +1257,7 @@ function applyPromo() {
         return;
     }
     S.promo = true; updateTotal();
-    msg.innerHTML = `<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué ! Vous économisez ${PROMO_AMOUNT}$.</div>`;
+    msg.innerHTML = `<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué ! Vous économisez ${PROMO_AMOUNT}$.`;
 }
 
 /* ══════════════════════════════════════
@@ -1117,6 +1267,26 @@ function selectCreneau(btn) {
     document.querySelectorAll('.creneau-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     S.creneau = btn.dataset.creneau;
+}
+
+/* ══════════════════════════════════════
+   SAME DAY CHECK
+══════════════════════════════════════ */
+function checkSameDay() {
+    const dateInput = document.getElementById('maDate');
+    const warning = document.getElementById('sameDayWarning');
+    if (!dateInput.value) return;
+
+    const selectedDate = new Date(dateInput.value);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    selectedDate.setHours(0,0,0,0);
+
+    if (selectedDate.getTime() === today.getTime()) {
+        warning.classList.remove('hidden');
+    } else {
+        warning.classList.add('hidden');
+    }
 }
 
 /* ══════════════════════════════════════
@@ -1130,7 +1300,6 @@ function showStep(n) {
     });
     const target = document.getElementById('step' + n);
     target.classList.remove('hidden');
-    // trigger reflow for animation
     void target.offsetWidth;
     target.classList.add('step-panel');
 
@@ -1141,7 +1310,6 @@ function showStep(n) {
         else if (s < n) dot.classList.add('done');
     });
 
-    // Check icon for done steps
     document.querySelectorAll('.step-circle').forEach((c, i) => {
         const step = i + 1;
         if (step < n) c.innerHTML = '<i class="fa-solid fa-check fa-xs"></i>';
@@ -1167,10 +1335,15 @@ function goStep3() {
     const model = document.getElementById('vehicleModel').value.trim();
     const note  = document.getElementById('noteClient').value.trim();
 
+    let extraSummary = '';
+    if (S.decontPrice > 0) extraSummary += `<span class="summary-key">Décontamination</span><span class="summary-val">${S.decontType.toUpperCase()} (+${S.decontPrice}$)</span>`;
+    if (S.dogHairPrice > 0) extraSummary += `<span class="summary-key">Poils de chien</span><span class="summary-val">Oui (+25$)</span>`;
+
     document.getElementById('summaryContent').innerHTML = `
         <span class="summary-key">Service</span><span class="summary-val">${S.service}</span>
         <span class="summary-key">Véhicule</span><span class="summary-val">${model}</span>
         <span class="summary-key">Quantité</span><span class="summary-val">${S.qty} véhicule(s)</span>
+        ${extraSummary}
         <span class="summary-key">Nom</span><span class="summary-val">${nom}</span>
         <span class="summary-key">Téléphone</span><span class="summary-val">${tel}</span>
         <span class="summary-key">Adresse</span><span class="summary-val">${adr}</span>
@@ -1211,6 +1384,8 @@ async function submitForm() {
         adresse:         document.getElementById('adresse').value.trim(),
         date:            document.getElementById('maDate').value,
         creneau:         S.creneau || 'Non précisé',
+        decontamination: S.decontPrice > 0 ? `${S.decontType} (+${S.decontPrice}$)` : 'Non',
+        poils_chien:     S.dogHairPrice > 0 ? 'Oui (+25$)' : 'Non',
         note_client:     document.getElementById('noteClient').value.trim() || 'Aucune note',
         botcheck:        ''  // Honeypot anti-spam
     };
@@ -1246,13 +1421,27 @@ async function submitForm() {
 ══════════════════════════════════════ */
 function resetAll() {
     // Reset state
-    S = { vehicle:'sedan', service:null, price:0, isForfait:false, qty:1, base:0, final:0, promo:false, creneau:'' };
+    S = { 
+        vehicle:'sedan', 
+        service:null, 
+        price:0, 
+        isForfait:false, 
+        qty:1, 
+        base:0, 
+        final:0, 
+        promo:false, 
+        creneau:'', 
+        decontPrice: 0,
+        dogHairPrice: 0,
+        decontType: ''
+    };
 
     // Reset UI
     document.getElementById('mainForm').classList.remove('hidden');
     document.getElementById('stepsBar').classList.remove('hidden');
     document.getElementById('mainNotice').classList.remove('hidden');
     document.getElementById('successView').classList.add('hidden');
+    document.getElementById('sameDayWarning').classList.add('hidden');
 
     // Reset inputs
     document.getElementById('vehicleModel').value = '';
@@ -1272,6 +1461,12 @@ function resetAll() {
     document.getElementById('g-sedan')?.classList.remove('hidden');
     document.getElementById('g-forfait').classList.add('hidden');
     document.getElementById('g-forfait').style.display = 'none';
+
+    // Reset add-ons
+    document.querySelectorAll('input[name="decont"]').forEach(r => { if(r.value==='non') r.checked=true; });
+    document.querySelectorAll('input[name="doghair"]').forEach(r => { if(r.value==='non') r.checked=true; });
+    document.getElementById('decontOptions').style.display = 'none';
+    document.querySelectorAll('.decont-opt').forEach(o => o.classList.remove('selected'));
 
     updateTotal();
     updateContinueBtn();
