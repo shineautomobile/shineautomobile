@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-
+0<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prendre Rendez-vous — ShineAutomobile</title>
+    <title>Prendre Rendez-vous — Shine Automobile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════ TOKENS ═══════════════ */
 :root {
-    --aqua:       #22d3f2;
-    --aqua-dim:   rgba(34,211,242,0.12);
-    --aqua-glow:  rgba(34,211,242,0.25);
-    --dark:       #060a10;
-    --dark2:      #0c1220;
-    --surface:    #0f1929;
-    --surface2:   #162035;
-    --border:     rgba(34,211,242,0.12);
-    --border-h:   rgba(34,211,242,0.35);
+    --blue:       #1fb4e0;
+    --blue-dim:   rgba(31,180,224,0.10);
+    --blue-glow:  rgba(31,180,224,0.18);
+    --dark:       #070b12;
+    --dark2:      #0d141f;
+    --surface:    #101a29;
+    --surface2:   #16223400;
+    --surface2-fix: #16233a;
+    --border:     rgba(31,180,224,0.14);
+    --border-h:   rgba(31,180,224,0.38);
     --txt:        #e8eef8;
-    --muted:      #6b82a0;
-    --dim:        #3d546b;
+    --muted:      #7589a3;
+    --dim:        #45607c;
     --green:      #4ade80;
     --red:        #f87171;
     --amber:      #fbbf24;
@@ -40,43 +40,24 @@ body {
     color: var(--txt);
     min-height: 100vh;
     overflow-x: hidden;
-    cursor: none;
 }
 
-/* ═══════════════ CANVAS ═══════════════ */
+/* Visible keyboard focus everywhere (custom cursor removed for accessibility/usability) */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
+[role="tab"]:focus-visible, .svc-opt:focus-visible, .ff-opt:focus-visible, .decont-opt:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ═══════════════ CANVAS (subtle ambient background) ═══════════════ */
 #bg-canvas {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-}
-
-/* ═══════════════ CURSOR ═══════════════ */
-#cur-dot {
-    position: fixed;
-    width: 10px; height: 10px;
-    background: var(--aqua);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: width .25s, height .25s, background .25s;
-    mix-blend-mode: screen;
-}
-#cur-ring {
-    position: fixed;
-    width: 38px; height: 38px;
-    border: 1px solid rgba(34,211,242,.45);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: width .35s cubic-bezier(.16,1,.3,1), height .35s cubic-bezier(.16,1,.3,1), border-color .25s;
-}
-#cur-ring.big {
-    width: 64px; height: 64px;
-    border-color: var(--aqua);
-    background: rgba(34,211,242,.04);
 }
 
 /* ═══════════════ WRAP ═══════════════ */
@@ -102,7 +83,7 @@ body {
     text-decoration: none;
     transition: color .2s;
 }
-.back-link:hover { color: var(--aqua); }
+.back-link:hover, .back-link:focus-visible { color: var(--blue); }
 
 /* ═══════════════ PAGE HEADER ═══════════════ */
 .page-header { text-align:center; margin-bottom:52px; }
@@ -113,8 +94,8 @@ body {
     font-weight: 700;
     letter-spacing: .22em;
     text-transform: uppercase;
-    color: var(--aqua);
-    background: var(--aqua-dim);
+    color: var(--blue);
+    background: var(--blue-dim);
     padding: 6px 16px;
     border-radius: 6px;
     margin-bottom: 18px;
@@ -122,13 +103,13 @@ body {
 .page-title {
     font-family: var(--bc);
     font-weight: 900;
-    font-size: clamp(52px,9vw,80px);
+    font-size: clamp(48px,9vw,76px);
     letter-spacing: -.01em;
     color: #fff;
-    line-height: .92;
+    line-height: .94;
     text-transform: uppercase;
 }
-.page-title em { color: var(--aqua); font-style:italic; }
+.page-title em { color: var(--blue); font-style:italic; }
 .page-sub { font-size:14px; color:var(--muted); margin-top:12px; letter-spacing:.04em; }
 
 /* ═══════════════ NOTICE ═══════════════ */
@@ -157,11 +138,11 @@ body {
     z-index:0;
     transition: background .4s;
 }
-.step-dot.done:not(:last-child)::after { background: var(--aqua); }
+.step-dot.done:not(:last-child)::after { background: var(--blue); }
 .step-circle {
     width:30px; height:30px;
     border-radius:50%;
-    background: var(--surface2);
+    background: var(--surface2-fix);
     border: 1px solid var(--border);
     display:flex; align-items:center; justify-content:center;
     font-family: var(--bc);
@@ -171,26 +152,26 @@ body {
     transition: all .35s;
 }
 .step-dot.active .step-circle {
-    background: var(--aqua);
-    border-color: var(--aqua);
+    background: var(--blue);
+    border-color: var(--blue);
     color: var(--dark);
-    box-shadow: 0 0 18px var(--aqua-glow);
+    box-shadow: 0 0 16px var(--blue-glow);
 }
 .step-dot.done .step-circle {
-    background: rgba(34,211,242,.15);
-    border-color: var(--aqua);
-    color: var(--aqua);
+    background: rgba(31,180,224,.15);
+    border-color: var(--blue);
+    color: var(--blue);
 }
 .step-label { font-family:var(--bc); font-size:11px; letter-spacing:.1em; color:var(--dim); transition:color .3s; }
-.step-dot.active .step-label { color:var(--aqua); }
+.step-dot.active .step-label { color:var(--blue); }
 .step-dot.done .step-label   { color:var(--muted); }
 
 /* ═══════════════ STEP TRANSITION ═══════════════ */
 .step-panel {
-    animation: stepIn .45s cubic-bezier(.16,1,.3,1) forwards;
+    animation: stepIn .4s cubic-bezier(.16,1,.3,1) forwards;
 }
 @keyframes stepIn {
-    from { opacity:0; transform:translateY(20px); }
+    from { opacity:0; transform:translateY(16px); }
     to   { opacity:1; transform:translateY(0); }
 }
 .hidden { display:none !important; }
@@ -210,7 +191,7 @@ body {
     font-size: 13px;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--aqua);
+    color: var(--blue);
     margin-bottom: 22px;
 }
 
@@ -227,11 +208,11 @@ body {
     border: 1px solid var(--border);
     color: var(--muted);
     background: transparent;
-    cursor: none;
+    cursor: pointer;
     transition: all .2s;
 }
 .vtab:hover { border-color: var(--border-h); color:#fff; }
-.vtab.active { background:var(--aqua); color:var(--dark); border-color:var(--aqua); }
+.vtab.active { background:var(--blue); color:var(--dark); border-color:var(--blue); }
 
 /* ═══════════════ SERVICE GRID ═══════════════ */
 .svc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
@@ -241,7 +222,7 @@ body {
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px 18px;
-    cursor: none;
+    cursor: pointer;
     transition: all .2s cubic-bezier(.16,1,.3,1);
     background: var(--dark2);
     position: relative;
@@ -251,20 +232,20 @@ body {
     content:'';
     position:absolute; top:0; left:0; right:0;
     height:2px;
-    background: var(--aqua);
+    background: var(--blue);
     transform: scaleX(0);
     transition: transform .3s;
 }
-.svc-opt:hover { border-color:var(--border-h); background:rgba(34,211,242,.03); }
+.svc-opt:hover { border-color:var(--border-h); background:rgba(31,180,224,.03); }
 .svc-opt:hover::before { transform:scaleX(1); }
 .svc-opt.selected {
-    border-color: var(--aqua);
-    background: rgba(34,211,242,.07);
-    box-shadow: 0 0 0 1px var(--aqua);
+    border-color: var(--blue);
+    background: rgba(31,180,224,.07);
+    box-shadow: 0 0 0 1px var(--blue);
 }
 .svc-opt.selected::before { transform:scaleX(1); }
 .svc-name { font-family:var(--bc); font-size:14px; font-weight:700; color:#fff; margin-bottom:3px; letter-spacing:.04em; }
-.svc-price { font-family:var(--bc); font-size:22px; font-weight:900; color:var(--aqua); letter-spacing:-.01em; }
+.svc-price { font-family:var(--bc); font-size:22px; font-weight:900; color:var(--blue); letter-spacing:-.01em; }
 .svc-desc { font-size:11px; color:var(--dim); margin-top:4px; line-height:1.5; }
 
 /* ═══════════════ FORFAIT OPTIONS ═══════════════ */
@@ -272,7 +253,7 @@ body {
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px 20px;
-    cursor: none;
+    cursor: pointer;
     transition: all .2s;
     background: var(--dark2);
     display: flex;
@@ -280,17 +261,17 @@ body {
     justify-content: space-between;
     gap: 12px;
 }
-.ff-opt:hover { border-color:var(--border-h); background:rgba(34,211,242,.03); }
-.ff-opt.selected { border-color:var(--aqua); background:rgba(34,211,242,.07); box-shadow:0 0 0 1px var(--aqua); }
+.ff-opt:hover { border-color:var(--border-h); background:rgba(31,180,224,.03); }
+.ff-opt.selected { border-color:var(--blue); background:rgba(31,180,224,.07); box-shadow:0 0 0 1px var(--blue); }
 .ff-tier { font-size:13px; color:var(--muted); }
-.ff-price { font-family:var(--bc); font-weight:900; font-size:22px; color:var(--aqua); letter-spacing:-.01em; white-space:nowrap; }
+.ff-price { font-family:var(--bc); font-weight:900; font-size:22px; color:var(--blue); letter-spacing:-.01em; white-space:nowrap; }
 .ff-note-tag {
     display:inline-block;
     font-family:var(--bc);
     font-size:10px;
     letter-spacing:.12em;
     color:var(--muted);
-    background:var(--surface2);
+    background:var(--surface2-fix);
     border:1px solid var(--border);
     border-radius:4px;
     padding:2px 8px;
@@ -311,7 +292,7 @@ body {
     border:1px solid var(--border);
     border-radius:8px;
     padding:6px 14px;
-    cursor:none;
+    cursor:pointer;
     margin-top:14px;
     transition:all .2s;
 }
@@ -323,16 +304,16 @@ body {
 .qty-btn {
     width:40px; height:40px;
     border-radius:10px;
-    background:var(--surface2);
+    background:var(--surface2-fix);
     border:1px solid var(--border);
     color:var(--txt);
     font-size:20px;
-    cursor:none;
+    cursor:pointer;
     display:flex; align-items:center; justify-content:center;
     transition:all .2s;
     line-height:1;
 }
-.qty-btn:hover { border-color:var(--aqua); color:var(--aqua); }
+.qty-btn:hover { border-color:var(--blue); color:var(--blue); }
 .qty-num {
     font-family:var(--bc);
     font-weight:900;
@@ -346,7 +327,7 @@ body {
     font-family:var(--bc);
     font-size:16px;
     font-weight:700;
-    color:var(--aqua);
+    color:var(--blue);
     margin-left:auto;
 }
 
@@ -375,11 +356,20 @@ body {
     transition: all .2s cubic-bezier(.16,1,.3,1);
 }
 .field input:focus, .field textarea:focus, .field select:focus {
-    border-color: var(--aqua);
-    box-shadow: 0 0 0 3px rgba(34,211,242,.08);
-    background: rgba(34,211,242,.02);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(31,180,224,.08);
+    background: rgba(31,180,224,.02);
 }
 .field textarea { resize:vertical; min-height:100px; line-height:1.6; }
+.field input:invalid[data-touched="true"] { border-color: rgba(248,113,113,.5); }
+.field-error {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 
 /* Additional options */
 .add-option {
@@ -392,7 +382,8 @@ body {
 .add-option-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 12px;
     margin-bottom: 12px;
 }
 .add-option-title {
@@ -400,18 +391,39 @@ body {
     font-size: 14px;
     font-weight: 700;
     color: #fff;
+    letter-spacing: .02em;
+    line-height: 1.4;
 }
 .add-option-price {
     font-family: var(--bc);
     font-size: 18px;
     font-weight: 700;
-    color: var(--aqua);
+    color: var(--blue);
+    white-space: nowrap;
 }
+.radio-pair { display:flex; gap:18px; align-items:center; }
+.radio-pill {
+    display:flex; align-items:center; gap:8px;
+    font-family: var(--bc);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all .2s;
+}
+.radio-pill:hover { border-color: var(--border-h); color: #fff; }
+.radio-pill input { accent-color: var(--blue); cursor: pointer; }
+.radio-pill.checked { border-color: var(--blue); color: var(--blue); background: rgba(31,180,224,.06); }
+
 .decont-options {
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
-    margin-top: 12px;
+    margin-top: 14px;
 }
 @media(max-width:600px) {
     .decont-options { grid-template-columns: 1fr; }
@@ -421,18 +433,18 @@ body {
     border-radius: 10px;
     padding: 12px 14px;
     text-align: center;
-    cursor: none;
+    cursor: pointer;
     transition: all .2s;
-    background: var(--surface2);
+    background: var(--surface2-fix);
 }
 .decont-opt:hover {
-    border-color: var(--aqua);
-    background: rgba(34,211,242,.05);
+    border-color: var(--blue);
+    background: rgba(31,180,224,.05);
 }
 .decont-opt.selected {
-    border-color: var(--aqua);
-    background: rgba(34,211,242,.1);
-    box-shadow: 0 0 0 1px var(--aqua);
+    border-color: var(--blue);
+    background: rgba(31,180,224,.1);
+    box-shadow: 0 0 0 1px var(--blue);
 }
 .decont-opt .svc-name {
     font-size: 13px;
@@ -457,11 +469,11 @@ body {
     border:1px solid var(--border);
     color:var(--muted);
     background:var(--dark2);
-    cursor:none;
+    cursor:pointer;
     transition:all .2s;
 }
 .creneau-btn:hover { border-color:var(--border-h); color:#fff; }
-.creneau-btn.active { background:var(--aqua-dim); border-color:var(--aqua); color:var(--aqua); }
+.creneau-btn.active { background:var(--blue-dim); border-color:var(--blue); color:var(--blue); }
 
 /* ═══════════════ PROMO ═══════════════ */
 .promo-row { display:flex; gap:10px; }
@@ -480,10 +492,10 @@ body {
     outline:none;
     transition:border-color .2s;
 }
-.promo-row input:focus { border-color:var(--aqua); }
+.promo-row input:focus { border-color:var(--blue); }
 .promo-row input::placeholder { font-size:15px; letter-spacing:.06em; color:var(--dim); }
 .promo-apply {
-    background:var(--aqua);
+    background:var(--blue);
     color:var(--dark);
     font-family:var(--bc);
     font-weight:800;
@@ -492,19 +504,19 @@ body {
     padding:13px 22px;
     border-radius:10px;
     border:none;
-    cursor:none;
+    cursor:pointer;
     transition:all .2s;
     white-space:nowrap;
 }
 .promo-apply:hover { background:#fff; }
-.promo-hint { font-size:12px; color:var(--dim); margin-bottom:14px; }
+.promo-hint { font-size:12px; color:var(--dim); margin-bottom:14px; line-height:1.6; }
 .promo-hint strong { color:var(--muted); }
 .promo-success { margin-top:9px; font-size:13px; color:var(--green); display:flex; align-items:center; gap:6px; }
 .promo-error   { margin-top:9px; font-size:13px; color:var(--red); display:flex; align-items:center; gap:6px; }
 
 /* ═══════════════ TOTAL ═══════════════ */
 .total-block {
-    background: linear-gradient(135deg, rgba(34,211,242,.08), rgba(14,165,233,.04));
+    background: linear-gradient(135deg, rgba(31,180,224,.08), rgba(14,113,165,.04));
     border: 1px solid var(--border-h);
     border-radius: 18px;
     padding: 26px 30px;
@@ -522,7 +534,7 @@ body {
     font-size:10px;
     letter-spacing:.12em;
     color:var(--dim);
-    background:var(--surface2);
+    background:var(--surface2-fix);
     border:1px solid var(--border);
     border-radius:4px;
     padding:3px 10px;
@@ -532,7 +544,7 @@ body {
     font-family:var(--bc);
     font-weight:900;
     font-size:56px;
-    color:var(--aqua);
+    color:var(--blue);
     letter-spacing:-.03em;
     line-height:1;
     transition:all .3s;
@@ -550,14 +562,14 @@ body {
     align-items:center;
     gap:6px;
     margin-top:10px;
-    background:rgba(34,211,242,.1);
-    border:1px solid rgba(34,211,242,.25);
+    background:rgba(31,180,224,.1);
+    border:1px solid rgba(31,180,224,.25);
     border-radius:6px;
     padding:5px 12px;
     font-family:var(--bc);
     font-size:12px;
     letter-spacing:.08em;
-    color:var(--aqua);
+    color:var(--blue);
 }
 
 /* ═══════════════ SUMMARY ═══════════════ */
@@ -574,7 +586,7 @@ body {
 /* ═══════════════ BUTTONS ═══════════════ */
 .btn-primary {
     width:100%;
-    background:var(--aqua);
+    background:var(--blue);
     color:var(--dark);
     font-family:var(--bc);
     font-weight:900;
@@ -584,15 +596,15 @@ body {
     padding:18px;
     border-radius:14px;
     border:none;
-    cursor:none;
+    cursor:pointer;
     transition:all .3s cubic-bezier(.16,1,.3,1);
     display:flex; align-items:center; justify-content:center; gap:10px;
 }
-.btn-primary:hover { background:#fff; transform:translateY(-2px); box-shadow:0 16px 40px var(--aqua-glow); }
+.btn-primary:hover { background:#fff; transform:translateY(-2px); box-shadow:0 16px 36px var(--blue-glow); }
 .btn-primary:disabled { opacity:.35; cursor:not-allowed; transform:none; box-shadow:none; }
 .btn-back {
     flex:1;
-    background:var(--surface2);
+    background:var(--surface2-fix);
     border:1px solid var(--border);
     color:var(--muted);
     font-family:var(--bc);
@@ -601,7 +613,7 @@ body {
     letter-spacing:.08em;
     padding:18px;
     border-radius:14px;
-    cursor:none;
+    cursor:pointer;
     transition:all .2s;
 }
 .btn-back:hover { border-color:var(--border-h); color:#fff; }
@@ -610,17 +622,17 @@ body {
 /* ═══════════════ SUCCESS ═══════════════ */
 .success-card {
     background:var(--surface);
-    border:1px solid rgba(34,211,242,.25);
+    border:1px solid rgba(31,180,224,.25);
     border-radius:24px;
     padding:56px 40px;
     text-align:center;
     animation: stepIn .5s cubic-bezier(.16,1,.3,1);
 }
-.success-icon { font-size:60px; margin-bottom:20px; }
+.success-icon { font-size:52px; color:var(--blue); margin-bottom:20px; }
 .success-title { font-family:var(--bc); font-weight:900; font-size:44px; color:#fff; letter-spacing:-.01em; margin-bottom:10px; text-transform:uppercase; }
 .success-sub { font-size:15px; color:var(--muted); margin-bottom:24px; line-height:1.7; }
 .success-notice {
-    background:rgba(34,211,242,.06);
+    background:rgba(31,180,224,.06);
     border:1px solid var(--border);
     border-radius:12px;
     padding:16px 20px;
@@ -632,7 +644,7 @@ body {
 .success-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 .btn-home {
     display:inline-flex; align-items:center; gap:8px;
-    background:var(--aqua); color:var(--dark);
+    background:var(--blue); color:var(--dark);
     font-family:var(--bc); font-weight:800; font-size:15px; letter-spacing:.1em;
     padding:13px 28px; border-radius:12px; text-decoration:none; transition:all .2s;
 }
@@ -642,7 +654,7 @@ body {
     background:transparent; color:var(--muted);
     font-family:var(--bc); font-weight:700; font-size:15px; letter-spacing:.1em;
     padding:13px 28px; border-radius:12px; border:1px solid var(--border);
-    cursor:none; transition:all .2s;
+    cursor:pointer; transition:all .2s;
 }
 .btn-another:hover { border-color:var(--border-h); color:#fff; }
 
@@ -662,10 +674,6 @@ body {
 <!-- CANVAS BG -->
 <canvas id="bg-canvas"></canvas>
 
-<!-- CUSTOM CURSOR -->
-<div id="cur-dot"></div>
-<div id="cur-ring"></div>
-
 <div class="wrap">
 
 <a href="index.html" class="back-link">
@@ -675,7 +683,7 @@ body {
 <div class="page-header">
     <div class="page-label">Réservation</div>
     <h1 class="page-title">Prendre<br><em>Rendez-vous</em></h1>
-    <p class="page-sub">ShineAutomobile · Lavage auto à domicile · Sherbrooke</p>
+    <p class="page-sub">Shine Automobile · Lavage auto à domicile · Sherbrooke et région</p>
 </div>
 
 <div class="notice" id="mainNotice">
@@ -709,75 +717,75 @@ body {
 
             <div class="vtabs" role="tablist" aria-label="Type de véhicule">
                 <button type="button" class="vtab active" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">Sedan</button>
-                <button type="button" class="vtab" onclick="switchVehicle('suv',this)" role="tab">VUS</button>
-                <button type="button" class="vtab" onclick="switchVehicle('van',this)" role="tab">Van</button>
-                <button type="button" class="vtab" onclick="switchVehicle('pickup',this)" role="tab">Pickup</button>
-                <button type="button" class="vtab" onclick="switchVehicle('forfait',this)" role="tab">Forfaits</button>
+                <button type="button" class="vtab" onclick="switchVehicle('suv',this)" aria-selected="false" role="tab">VUS</button>
+                <button type="button" class="vtab" onclick="switchVehicle('van',this)" aria-selected="false" role="tab">Van</button>
+                <button type="button" class="vtab" onclick="switchVehicle('pickup',this)" aria-selected="false" role="tab">Pickup</button>
+                <button type="button" class="vtab" onclick="switchVehicle('forfait',this)" aria-selected="false" role="tab">Forfaits</button>
             </div>
 
             <!-- Sedan -->
             <div id="g-sedan" class="svc-grid" role="group" aria-label="Services sedan">
-                <div class="svc-opt" data-service="Lavage Extérieur Sedan" data-price="40" onclick="selectSvc(this)" aria-label="Lavage Extérieur 40$"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-                <div class="svc-opt" data-service="Lavage Extérieur Plus Sedan" data-price="50" onclick="selectSvc(this)" aria-label="Lavage Extérieur Plus 50$"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectSvc(this)" aria-label="Lavage Intérieur Régulier 75$"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">75$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectSvc(this)" aria-label="Lavage Intérieur Super 125$"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">125$</div><div class="svc-desc">Intérieur complet premium</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Régulier Sedan" data-price="100" onclick="selectSvc(this)" aria-label="Lavage Complet Régulier 100$"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectSvc(this)" aria-label="Lavage Complet Super 175$"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">175$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-                <div class="svc-opt" data-service="Shampoing Sièges Sedan" data-price="50" onclick="selectSvc(this)" aria-label="Shampoing des Sièges 50$"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Sedan" data-price="40" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Lavage Extérieur 40$"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Sedan" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Lavage Extérieur Plus 50$"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Lavage Intérieur Régulier 75$"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">75$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Lavage Intérieur Super 125$"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">125$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Sedan" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Lavage Complet Régulier 100$"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Lavage Complet Super 175$"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">175$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Sedan" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)" aria-label="Shampoing des Sièges 50$"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
             </div>
 
             <!-- SUV -->
             <div id="g-suv" class="svc-grid hidden" role="group" aria-label="Services VUS">
-                <div class="svc-opt" data-service="Lavage Extérieur SUV" data-price="40" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-                <div class="svc-opt" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Régulier SUV" data-price="80" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">80$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">130$</div><div class="svc-desc">Intérieur complet premium</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Régulier SUV" data-price="115" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">115$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">180$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-                <div class="svc-opt" data-service="Shampoing Sièges SUV" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur SUV" data-price="40" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier SUV" data-price="80" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">80$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">130$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier SUV" data-price="115" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">115$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">180$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges SUV" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
             </div>
 
             <!-- Van -->
             <div id="g-van" class="svc-grid hidden" role="group" aria-label="Services Van">
-                <div class="svc-opt" data-service="Lavage Extérieur Van" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-                <div class="svc-opt" data-service="Lavage Extérieur Plus Van" data-price="60" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">60$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Régulier Van" data-price="100" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Super Van" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">150$</div><div class="svc-desc">Intérieur complet premium</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Régulier Van" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">150$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Super Van" data-price="200" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-                <div class="svc-opt" data-service="Shampoing Sièges Van" data-price="75" onclick="selectSvc(this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">75$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Van" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Van" data-price="60" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">60$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Van" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Van" data-price="150" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">150$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Van" data-price="150" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">150$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Van" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Van" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">75$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
             </div>
 
             <!-- Pickup -->
             <div id="g-pickup" class="svc-grid hidden" role="group" aria-label="Services Pickup">
-                <div class="svc-opt" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-                <div class="svc-opt" data-service="Lavage Extérieur Plus Pickup" data-price="60" onclick="selectSvc(this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">60$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Régulier Pickup" data-price="100" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-                <div class="svc-opt" data-service="Lavage Intérieur Super Pickup" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">150$</div><div class="svc-desc">Intérieur complet premium</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Régulier Pickup" data-price="150" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">150$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-                <div class="svc-opt" data-service="Lavage Complet Super Pickup" data-price="200" onclick="selectSvc(this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-                <div class="svc-opt" data-service="Shampoing Sièges Pickup" data-price="50" onclick="selectSvc(this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Pickup" data-price="60" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">60$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Pickup" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Pickup" data-price="150" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">150$</div><div class="svc-desc">Intérieur complet premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Pickup" data-price="150" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">150$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Pickup" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
+                <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Pickup" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
             </div>
 
             <!-- Forfaits -->
             <div id="g-forfait" class="hidden" style="display:none;flex-direction:column;gap:10px;" role="group" aria-label="Forfaits multi-véhicules">
-                <div class="ff-opt" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectSvc(this)">
+                <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
                     <div><div class="svc-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
                     <div class="ff-price">30$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
                 </div>
-                <div class="ff-opt" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectSvc(this)">
+                <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
                     <div><div class="svc-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
                     <div class="ff-price">25$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
                 </div>
-                <div class="ff-opt" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectSvc(this)">
+                <div class="ff-opt" tabindex="0" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
                     <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">2 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
                     <div class="ff-price">95$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
                 </div>
-                <div class="ff-opt" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectSvc(this)">
+                <div class="ff-opt" tabindex="0" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
                     <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
                     <div class="ff-price">90$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
                 </div>
-                <div class="ff-opt" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectSvc(this)">
+                <div class="ff-opt" tabindex="0" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
                     <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div><div class="ff-note-tag">PAR VÉHICULE</div></div>
                     <div class="ff-price">80$ <span style="font-size:14px;font-weight:500;color:var(--muted)">/voit.</span></div>
                 </div>
@@ -792,11 +800,11 @@ body {
         <div class="card">
             <div class="card-title">Nombre de véhicules</div>
             <div class="qty-row">
-                <button type="button" class="qty-btn" onclick="changeQty(-1)" aria-label="Diminuer">−</button>
+                <button type="button" class="qty-btn" onclick="changeQty(-1)" aria-label="Diminuer le nombre de véhicules">−</button>
                 <div class="qty-num" id="qtyDisplay" aria-live="polite">1</div>
-                <button type="button" class="qty-btn" onclick="changeQty(1)" aria-label="Augmenter">+</button>
+                <button type="button" class="qty-btn" onclick="changeQty(1)" aria-label="Augmenter le nombre de véhicules">+</button>
                 <div class="qty-label">véhicule(s)</div>
-                <div class="qty-subtotal" id="qtySubtotal"></div>
+                <div class="qty-subtotal" id="qtySubtotal" aria-live="polite"></div>
             </div>
         </div>
 
@@ -804,8 +812,12 @@ body {
             <div class="card-title">Modèle du véhicule</div>
             <div class="field">
                 <label for="vehicleModel">Marque et modèle *</label>
-                <input type="text" id="vehicleModel" placeholder="Ex: Toyota Camry 2022" required aria-required="true" aria-label="Marque et modèle du véhicule">
+                <input type="text" id="vehicleModel" placeholder="Ex. Toyota Camry 2022" required aria-required="true" aria-label="Marque et modèle du véhicule">
             </div>
+        </div>
+
+        <div id="step1Error" class="field-error hidden" role="alert">
+            <i class="fa-solid fa-circle-exclamation fa-sm"></i> <span id="step1ErrorText"></span>
         </div>
 
         <button type="button" class="btn-primary" id="btnStep1" onclick="goStep2()" disabled aria-label="Continuer vers l'étape 2">
@@ -824,7 +836,7 @@ body {
             </div>
             <div class="field">
                 <label for="telephone">Numéro de téléphone *</label>
-                <input type="tel" id="telephone" placeholder="873-662-3813" required aria-required="true" aria-label="Votre numéro de téléphone">
+                <input type="tel" id="telephone" inputmode="tel" placeholder="873-662-3813" required aria-required="true" aria-label="Votre numéro de téléphone">
             </div>
             <div class="field">
                 <label for="adresse">Adresse de service *</label>
@@ -850,30 +862,31 @@ body {
                 </div>
             </div>
 
-            <!-- Nouvelles options -->
+            <!-- Décontamination -->
             <div class="field">
                 <div class="add-option">
                     <div class="add-option-header">
-                        <div>
-                            <label class="add-option-title">Voulez-vous ajouter un décontamination complet extérieur</label>
-                        </div>
+                        <label class="add-option-title" id="decontLabel">Ajouter une décontamination complète extérieure ?</label>
                         <div class="add-option-price" id="decontTotal">+0$</div>
                     </div>
-                    <div style="display:flex; gap:12px; align-items:center;">
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                            <input type="radio" name="decont" value="oui" onclick="toggleDecont(true)">Oui
+                    <div class="radio-pair" role="radiogroup" aria-labelledby="decontLabel">
+                        <label class="radio-pill">
+                            <input type="radio" name="decont" value="non" checked onchange="toggleDecont(false)">Non
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="decont" value="oui" onchange="toggleDecont(true)">Oui
                         </label>
                     </div>
                     <div class="decont-options" id="decontOptions">
-                        <div class="decont-opt" data-price="50" data-type="sedan" onclick="selectDecont(this)">
+                        <div class="decont-opt" tabindex="0" data-price="50" data-type="sedan" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)">
                             <div class="svc-name">Sedan</div>
                             <div class="svc-price">50$</div>
                         </div>
-                        <div class="decont-opt" data-price="75" data-type="suv" onclick="selectDecont(this)">
+                        <div class="decont-opt" tabindex="0" data-price="75" data-type="suv" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)">
                             <div class="svc-name">VUS</div>
                             <div class="svc-price">75$</div>
                         </div>
-                        <div class="decont-opt" data-price="100" data-type="vanpickup" onclick="selectDecont(this)">
+                        <div class="decont-opt" tabindex="0" data-price="100" data-type="vanpickup" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)">
                             <div class="svc-name">Pickup / Van</div>
                             <div class="svc-price">100$</div>
                         </div>
@@ -881,15 +894,19 @@ body {
                 </div>
             </div>
 
+            <!-- Poils de chien -->
             <div class="field">
                 <div class="add-option">
                     <div class="add-option-header">
-                        <label class="add-option-title">Présence de poils de chien</label>
+                        <label class="add-option-title" id="dogLabel">Présence de poils d'animaux dans le véhicule ?</label>
                         <div class="add-option-price" id="dogTotal">+0$</div>
                     </div>
-                    <div style="display:flex; gap:12px; align-items:center;">
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                            <input type="radio" name="doghair" value="oui" onclick="toggleDogHair(true)">Oui (+25$)
+                    <div class="radio-pair" role="radiogroup" aria-labelledby="dogLabel">
+                        <label class="radio-pill">
+                            <input type="radio" name="doghair" value="non" checked onchange="toggleDogHair(false)">Non
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="doghair" value="oui" onchange="toggleDogHair(true)">Oui (+25$)
                         </label>
                     </div>
                 </div>
@@ -897,16 +914,20 @@ body {
 
             <div class="field">
                 <label for="noteClient">
-                    Note / Commentaire
+                    Note ou commentaire
                     <span style="font-size:10px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--dim);margin-left:6px;">(optionnel)</span>
                 </label>
-                <textarea id="noteClient" rows="3" placeholder="Véhicule très sale, animaux, accès par la ruelle..." aria-label="Note ou commentaire optionnel"></textarea>
+                <textarea id="noteClient" rows="3" placeholder="Véhicule très sale, présence d'animaux, accès par la ruelle..." aria-label="Note ou commentaire optionnel"></textarea>
             </div>
         </div>
 
         <div id="sameDayWarning" class="notice hidden" style="background:rgba(251,191,36,.1); border-color:rgba(251,191,36,.4);">
             <i class="fa-solid fa-clock fa-sm"></i>
-            <strong>Réservation le jour même :</strong> Nous vous recommandons de nous appeler ou d’envoyer un texto au <strong>873-662-3813</strong> pour une réservation d’urgence. Les demandes le jour même peuvent ne pas être traitées (idéalement réserver au moins 24h à l’avance).
+            <span><strong>Réservation le jour même :</strong> nous vous recommandons de nous appeler ou d'envoyer un texto au <strong>873-662-3813</strong> pour une demande urgente. Les réservations le jour même ne peuvent pas toujours être confirmées — idéalement, réservez au moins 24h à l'avance.</span>
+        </div>
+
+        <div id="step2Error" class="field-error hidden" role="alert">
+            <i class="fa-solid fa-circle-exclamation fa-sm"></i> <span id="step2ErrorText"></span>
         </div>
 
         <div class="btn-row">
@@ -926,12 +947,12 @@ body {
 
         <div class="card">
             <div class="card-title">Code promo</div>
-            <p class="promo-hint"> <strong></strong></p>
+            <p class="promo-hint">Vous avez un code promo ? Entrez-le ci-dessous pour l'appliquer à votre réservation.</p>
             <div class="promo-row">
-                <input type="text" id="promoCode" maxlength="20" aria-label="Code promo">
+                <input type="text" id="promoCode" maxlength="20" aria-label="Code promo" placeholder="Code promo">
                 <button type="button" class="promo-apply" onclick="applyPromo()">Appliquer</button>
             </div>
-            <div id="promoMsg"></div>
+            <div id="promoMsg" aria-live="polite"></div>
         </div>
 
         <div class="total-block">
@@ -940,7 +961,7 @@ body {
                 <div class="total-per-tag" id="totalPerTag">TOTAL</div>
             </div>
             <div class="total-row">
-                <div class="total-amount" id="totalAmount">—</div>
+                <div class="total-amount" id="totalAmount" aria-live="polite">—</div>
                 <div class="total-original hidden" id="originalAmount"></div>
             </div>
             <div class="discount-badge hidden" id="discountBadge">
@@ -960,12 +981,12 @@ body {
 <!-- SUCCESS -->
 <div id="successView" class="hidden">
     <div class="success-card">
-        <div class="success-icon">✅</div>
+        <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
         <div class="success-title">Demande<br>Envoyée !</div>
         <div class="success-sub">Votre demande a bien été reçue.<br>Vous serez contacté dans les prochaines <strong>24 heures</strong>.</div>
         <div class="success-notice">
-            Pas de nouvelles dans les 24h ? Appelez-nous au
-            <strong style="color:var(--aqua)">873-662-3813</strong> — on est là pour vous.
+            Pas de nouvelles dans les 24h ? Appelez-nous ou écrivez-nous au
+            <strong style="color:var(--blue)">873-662-3813</strong> — on est là pour vous.
         </div>
         <div class="success-btns">
             <a href="index.html" class="btn-home">
@@ -982,17 +1003,20 @@ body {
 
 <script>
 /* ══════════════════════════════════════
-   CANVAS PARTICLES
+   CANVAS PARTICLES (ambiance discrète)
 ══════════════════════════════════════ */
 (function() {
     const cvs = document.getElementById('bg-canvas');
     const ctx = cvs.getContext('2d');
     let W, H, pts = [];
-    const N = 55;
+    const N = 45;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
     resize();
     window.addEventListener('resize', resize);
+
+    if (reduceMotion) return; // respecte la préférence d'accessibilité
 
     class P {
         constructor(init) { this.reset(init); }
@@ -1002,7 +1026,7 @@ body {
             this.vx = (Math.random() - .5) * .25;
             this.vy = -(Math.random() * .35 + .08);
             this.r  = Math.random() * 1.4 + .2;
-            this.a  = Math.random() * .4 + .08;
+            this.a  = Math.random() * .35 + .06;
             this.life = 0;
             this.max  = Math.random() * 350 + 180;
         }
@@ -1015,7 +1039,7 @@ body {
             const a = this.a * (t < .1 ? t / .1 : t > .9 ? (1 - t) / .1 : 1);
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(34,211,242,${a})`;
+            ctx.fillStyle = `rgba(31,180,224,${a})`;
             ctx.fill();
         }
     }
@@ -1023,7 +1047,7 @@ body {
     for (let i = 0; i < N; i++) pts.push(new P(true));
 
     function drawGrid() {
-        ctx.strokeStyle = 'rgba(34,211,242,.022)';
+        ctx.strokeStyle = 'rgba(31,180,224,.02)';
         ctx.lineWidth = 1;
         const g = 70;
         for (let x = 0; x < W; x += g) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
@@ -1039,7 +1063,7 @@ body {
                     ctx.beginPath();
                     ctx.moveTo(pts[i].x, pts[i].y);
                     ctx.lineTo(pts[j].x, pts[j].y);
-                    ctx.strokeStyle = `rgba(34,211,242,${.035 * (1 - d / 110)})`;
+                    ctx.strokeStyle = `rgba(31,180,224,${.03 * (1 - d / 110)})`;
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -1055,27 +1079,6 @@ body {
         requestAnimationFrame(frame);
     })();
 })();
-
-/* ══════════════════════════════════════
-   CURSOR
-══════════════════════════════════════ */
-const dot  = document.getElementById('cur-dot');
-const ring = document.getElementById('cur-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-
-document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-});
-(function loop() {
-    rx += (mx - rx) * .1; ry += (my - ry) * .1;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a, button, .svc-opt, .ff-opt, .creneau-btn, .decont-opt').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('big'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('big'));
-});
 
 /* ══════════════════════════════════════
    STATE
@@ -1120,6 +1123,7 @@ function switchVehicle(v, btn) {
 
     document.querySelectorAll('.svc-opt, .ff-opt').forEach(o => o.classList.remove('selected'));
     document.getElementById('clearBtn').classList.remove('show');
+    hideStep1Error();
     updateTotal(); updateContinueBtn();
 }
 
@@ -1136,7 +1140,15 @@ function selectSvc(el) {
     document.getElementById('promoMsg') && (document.getElementById('promoMsg').innerHTML = '');
     if (document.getElementById('promoCode')) document.getElementById('promoCode').value = '';
     document.getElementById('clearBtn').classList.add('show');
+    hideStep1Error();
     updateTotal(); updateContinueBtn();
+}
+
+function svcKeydown(e, el) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectSvc(el); }
+}
+function decontKeydown(e, el) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectDecont(el); }
 }
 
 /* ══════════════════════════════════════
@@ -1181,6 +1193,7 @@ function toggleDecont(enabled) {
         S.decontPrice = 0;
         S.decontType = '';
     }
+    syncRadioPillStyles();
     updateTotal();
 }
 
@@ -1194,7 +1207,15 @@ function selectDecont(el) {
 
 function toggleDogHair(enabled) {
     S.dogHairPrice = enabled ? 25 : 0;
+    syncRadioPillStyles();
     updateTotal();
+}
+
+function syncRadioPillStyles() {
+    document.querySelectorAll('.radio-pill').forEach(pill => {
+        const input = pill.querySelector('input[type="radio"]');
+        pill.classList.toggle('checked', input.checked);
+    });
 }
 
 /* ══════════════════════════════════════
@@ -1240,6 +1261,10 @@ function applyPromo() {
     const code = document.getElementById('promoCode').value.trim().toUpperCase();
     const msg  = document.getElementById('promoMsg');
 
+    if (!code) {
+        msg.innerHTML = `<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Veuillez entrer un code promo.</div>`;
+        return;
+    }
     if (code !== PROMO_CODE) {
         S.promo = false; updateTotal();
         msg.innerHTML = `<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Code promo invalide.</div>`;
@@ -1247,11 +1272,11 @@ function applyPromo() {
     }
     if (S.base < PROMO_MIN) {
         S.promo = false; updateTotal();
-        msg.innerHTML = `<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Ce code s'applique uniquement sur les services de ${PROMO_MIN}$ et plus.</div>`;
+        msg.innerHTML = `<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Ce code s'applique uniquement aux réservations de ${PROMO_MIN}$ et plus.</div>`;
         return;
     }
     S.promo = true; updateTotal();
-    msg.innerHTML = `<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué ! Vous économisez ${PROMO_AMOUNT}$.`;
+    msg.innerHTML = `<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué ! Vous économisez ${PROMO_AMOUNT}$.</div>`;
 }
 
 /* ══════════════════════════════════════
@@ -1271,7 +1296,7 @@ function checkSameDay() {
     const warning = document.getElementById('sameDayWarning');
     if (!dateInput.value) return;
 
-    const selectedDate = new Date(dateInput.value);
+    const selectedDate = new Date(dateInput.value + 'T00:00:00');
     const today = new Date();
     today.setHours(0,0,0,0);
     selectedDate.setHours(0,0,0,0);
@@ -1284,10 +1309,28 @@ function checkSameDay() {
 }
 
 /* ══════════════════════════════════════
+   ERROR HELPERS
+══════════════════════════════════════ */
+function showStep1Error(text) {
+    document.getElementById('step1ErrorText').textContent = text;
+    document.getElementById('step1Error').classList.remove('hidden');
+}
+function hideStep1Error() {
+    document.getElementById('step1Error').classList.add('hidden');
+}
+function showStep2Error(text) {
+    document.getElementById('step2ErrorText').textContent = text;
+    document.getElementById('step2Error').classList.remove('hidden');
+}
+function hideStep2Error() {
+    document.getElementById('step2Error').classList.add('hidden');
+}
+
+/* ══════════════════════════════════════
    STEP NAVIGATION
 ══════════════════════════════════════ */
 function showStep(n) {
-    ['step1','step2','step3'].forEach((id, i) => {
+    ['step1','step2','step3'].forEach((id) => {
         const el = document.getElementById(id);
         el.classList.add('hidden');
         el.classList.remove('step-panel');
@@ -1314,8 +1357,9 @@ function showStep(n) {
 }
 
 function goStep2() {
-    if (!S.service) { alert('Veuillez sélectionner un service.'); return; }
-    if (!document.getElementById('vehicleModel').value.trim()) { alert('Veuillez entrer le modèle de votre véhicule.'); return; }
+    if (!S.service) { showStep1Error('Veuillez sélectionner un service.'); return; }
+    if (!document.getElementById('vehicleModel').value.trim()) { showStep1Error('Veuillez entrer le modèle de votre véhicule.'); return; }
+    hideStep1Error();
     showStep(2);
 }
 
@@ -1324,29 +1368,43 @@ function goStep3() {
     const tel  = document.getElementById('telephone').value.trim();
     const adr  = document.getElementById('adresse').value.trim();
     const date = document.getElementById('maDate').value;
-    if (!nom || !tel || !adr || !date) { alert('Veuillez remplir tous les champs obligatoires.'); return; }
+    if (!nom || !tel || !adr || !date) { showStep2Error('Veuillez remplir tous les champs obligatoires.'); return; }
+    hideStep2Error();
 
     const model = document.getElementById('vehicleModel').value.trim();
     const note  = document.getElementById('noteClient').value.trim();
 
     let extraSummary = '';
-    if (S.decontPrice > 0) extraSummary += `<span class="summary-key">Décontamination</span><span class="summary-val">${S.decontType.toUpperCase()} (+${S.decontPrice}$)</span>`;
-    if (S.dogHairPrice > 0) extraSummary += `<span class="summary-key">Poils de chien</span><span class="summary-val">Oui (+25$)</span>`;
+    if (S.decontPrice > 0) extraSummary += `<span class="summary-key">Décontamination</span><span class="summary-val">${decontLabel(S.decontType)} (+${S.decontPrice}$)</span>`;
+    if (S.dogHairPrice > 0) extraSummary += `<span class="summary-key">Poils d'animaux</span><span class="summary-val">Oui (+25$)</span>`;
 
     document.getElementById('summaryContent').innerHTML = `
-        <span class="summary-key">Service</span><span class="summary-val">${S.service}</span>
-        <span class="summary-key">Véhicule</span><span class="summary-val">${model}</span>
+        <span class="summary-key">Service</span><span class="summary-val">${escapeHtml(S.service)}</span>
+        <span class="summary-key">Véhicule</span><span class="summary-val">${escapeHtml(model)}</span>
         <span class="summary-key">Quantité</span><span class="summary-val">${S.qty} véhicule(s)</span>
         ${extraSummary}
-        <span class="summary-key">Nom</span><span class="summary-val">${nom}</span>
-        <span class="summary-key">Téléphone</span><span class="summary-val">${tel}</span>
-        <span class="summary-key">Adresse</span><span class="summary-val">${adr}</span>
-        <span class="summary-key">Date</span><span class="summary-val">${date}</span>
-        ${S.creneau ? `<span class="summary-key">Créneau</span><span class="summary-val">${S.creneau}</span>` : ''}
-        ${note ? `<span class="summary-key">Note</span><span class="summary-val">${note}</span>` : ''}
+        <span class="summary-key">Nom</span><span class="summary-val">${escapeHtml(nom)}</span>
+        <span class="summary-key">Téléphone</span><span class="summary-val">${escapeHtml(tel)}</span>
+        <span class="summary-key">Adresse</span><span class="summary-val">${escapeHtml(adr)}</span>
+        <span class="summary-key">Date</span><span class="summary-val">${escapeHtml(date)}</span>
+        ${S.creneau ? `<span class="summary-key">Créneau</span><span class="summary-val">${escapeHtml(S.creneau)}</span>` : ''}
+        ${note ? `<span class="summary-key">Note</span><span class="summary-val">${escapeHtml(note)}</span>` : ''}
     `;
     updateTotal();
     showStep(3);
+}
+
+function decontLabel(type) {
+    if (type === 'sedan') return 'Sedan';
+    if (type === 'suv') return 'VUS';
+    if (type === 'vanpickup') return 'Pickup / Van';
+    return type;
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
 }
 
 function goStep(n) {
@@ -1364,8 +1422,8 @@ async function submitForm() {
 
     const payload = {
         access_key:      'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',
-        subject:         'Nouvelle réservation — ShineAutomobile',
-        from_name:       'ShineAutomobile Réservation',
+        subject:         'Nouvelle réservation — Shine Automobile',
+        from_name:       'Shine Automobile — Réservation',
         service:         S.service,
         montant_base:    S.base + '$',
         montant_final:   S.final + '$',
@@ -1378,8 +1436,8 @@ async function submitForm() {
         adresse:         document.getElementById('adresse').value.trim(),
         date:            document.getElementById('maDate').value,
         creneau:         S.creneau || 'Non précisé',
-        decontamination: S.decontPrice > 0 ? `${S.decontType} (+${S.decontPrice}$)` : 'Non',
-        poils_chien:     S.dogHairPrice > 0 ? 'Oui (+25$)' : 'Non',
+        decontamination: S.decontPrice > 0 ? `${decontLabel(S.decontType)} (+${S.decontPrice}$)` : 'Non',
+        poils_animaux:   S.dogHairPrice > 0 ? 'Oui (+25$)' : 'Non',
         note_client:     document.getElementById('noteClient').value.trim() || 'Aucune note',
         botcheck:        ''  // Honeypot anti-spam
     };
@@ -1399,15 +1457,23 @@ async function submitForm() {
             document.getElementById('successView').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-            alert('Une erreur est survenue. Veuillez réessayer ou nous appeler au 873-662-3813.');
+            showStep2SubmitError();
             btn.disabled = false;
             btn.innerHTML = 'Envoyer ma demande <i class="fa-solid fa-paper-plane fa-sm"></i>';
         }
     } catch(e) {
-        alert('Erreur de connexion. Appelez-nous au 873-662-3813.');
+        showStep2SubmitError(true);
         btn.disabled = false;
         btn.innerHTML = 'Envoyer ma demande <i class="fa-solid fa-paper-plane fa-sm"></i>';
     }
+}
+
+function showStep2SubmitError(connectionIssue) {
+    const text = connectionIssue
+        ? "Problème de connexion. Veuillez réessayer ou nous appeler au 873-662-3813."
+        : "Une erreur est survenue lors de l'envoi. Veuillez réessayer ou nous appeler au 873-662-3813.";
+    showStep2Error(text);
+    showStep(2);
 }
 
 /* ══════════════════════════════════════
@@ -1415,16 +1481,16 @@ async function submitForm() {
 ══════════════════════════════════════ */
 function resetAll() {
     // Reset state
-    S = { 
-        vehicle:'sedan', 
-        service:null, 
-        price:0, 
-        isForfait:false, 
-        qty:1, 
-        base:0, 
-        final:0, 
-        promo:false, 
-        creneau:'', 
+    S = {
+        vehicle:'sedan',
+        service:null,
+        price:0,
+        isForfait:false,
+        qty:1,
+        base:0,
+        final:0,
+        promo:false,
+        creneau:'',
         decontPrice: 0,
         dogHairPrice: 0,
         decontType: ''
@@ -1436,6 +1502,8 @@ function resetAll() {
     document.getElementById('mainNotice').classList.remove('hidden');
     document.getElementById('successView').classList.add('hidden');
     document.getElementById('sameDayWarning').classList.add('hidden');
+    hideStep1Error();
+    hideStep2Error();
 
     // Reset inputs
     document.getElementById('vehicleModel').value = '';
@@ -1445,30 +1513,49 @@ function resetAll() {
     document.getElementById('maDate').value = '';
     document.getElementById('noteClient').value = '';
     if (document.getElementById('promoCode')) document.getElementById('promoCode').value = '';
+    document.getElementById('promoMsg').innerHTML = '';
+    document.getElementById('qtyDisplay').textContent = '1';
 
     // Reset service selections
     document.querySelectorAll('.svc-opt, .ff-opt').forEach(o => o.classList.remove('selected'));
     document.getElementById('clearBtn').classList.remove('show');
     document.querySelectorAll('.creneau-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.vtab').forEach((t,i) => { t.classList.remove('active'); if(i===0) t.classList.add('active'); });
+    document.querySelectorAll('.vtab').forEach((t,i) => {
+        t.classList.remove('active'); t.setAttribute('aria-selected','false');
+        if (i === 0) { t.classList.add('active'); t.setAttribute('aria-selected','true'); }
+    });
     ['suv','van','pickup'].forEach(id => document.getElementById('g-'+id)?.classList.add('hidden'));
     document.getElementById('g-sedan')?.classList.remove('hidden');
     document.getElementById('g-forfait').classList.add('hidden');
     document.getElementById('g-forfait').style.display = 'none';
 
     // Reset add-ons
-    document.querySelectorAll('input[name="decont"]').forEach(r => { if(r.value==='non') r.checked=true; });
-    document.querySelectorAll('input[name="doghair"]').forEach(r => { if(r.value==='non') r.checked=true; });
+    document.querySelector('input[name="decont"][value="non"]').checked = true;
+    document.querySelector('input[name="doghair"][value="non"]').checked = true;
     document.getElementById('decontOptions').style.display = 'none';
     document.querySelectorAll('.decont-opt').forEach(o => o.classList.remove('selected'));
+    syncRadioPillStyles();
 
     updateTotal();
     updateContinueBtn();
+    setMinDate();
     showStep(1);
+}
+
+/* Empêche de choisir une date dans le passé */
+function setMinDate() {
+    const dateInput = document.getElementById('maDate');
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
 }
 
 /* Init */
 updateContinueBtn();
+syncRadioPillStyles();
+setMinDate();
 </script>
 
 </body>
