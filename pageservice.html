@@ -859,11 +859,12 @@ body {
                         </div>
                         <div class="add-option-price" id="decontTotal">+0$</div>
                     </div>
-                    <div style="display:flex; gap:12px; align-items:center;"><br><br><br><br><br><br><br><br>
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><br><br><br><br><br><br><br><br>
-                            <input type="radio" name="decont" value="non" onclick="toggleDecont(false)" checked>Non
-                        </label><br><br><br><br><br><br><br><br>
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><br><br><br><br><br><br><br><br>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <input type="radio" name="decont" value="non" onclick="toggleDecont(false)" checked>
+                            <div class="svc-price">Non</div>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
                             <input type="radio" name="decont" value="oui" onclick="toggleDecont(true)">Oui
                         </label>
                     </div>
@@ -891,10 +892,10 @@ body {
                         <div class="add-option-price" id="dogTotal">+0$</div>
                     </div>
                     <div style="display:flex; gap:12px; align-items:center;">
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><br><br><br>
                             <input type="radio" name="doghair" value="non" onclick="toggleDogHair(false)" checked>Non
-                        </label><br><br><br><br><br><br><br><br>
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><br><br><br>
                             <input type="radio" name="doghair" value="oui" onclick="toggleDogHair(true)">Oui (+25$)
                         </label>
                     </div>
