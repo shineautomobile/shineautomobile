@@ -32,6 +32,7 @@ body{
   color:var(--text);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
+  transition:background .35s ease, color .35s ease;
 }
 a{color:inherit;}
 ::selection{background:var(--blue);color:var(--ink);}
@@ -46,6 +47,7 @@ body::before{
   background:
     radial-gradient(ellipse 900px 600px at 18% -8%, rgba(43,183,232,.10), transparent 60%),
     radial-gradient(ellipse 700px 500px at 100% 110%, rgba(43,183,232,.06), transparent 60%);
+  transition:opacity .35s ease;
 }
 body::after{
   content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.4;
@@ -54,7 +56,35 @@ body::after{
     linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
   background-size:64px 64px;
   mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), transparent 70%);
+  transition:opacity .35s ease;
 }
+
+/* ═══════════════════════ LIGHT THEME ═══════════════════════ */
+body.theme-light{
+  --ink:#f5f3ec; --ink2:#ffffff; --ink3:#eeebe0;
+  --line:rgba(20,20,20,.10); --line-soft:rgba(20,20,20,.05);
+  --text:#181b20; --muted:#5a6270; --dim:#9aa0aa;
+  --blue:#1d8ab0; --blue-dim:rgba(29,138,176,.10); --blue-line:rgba(29,138,176,.4);
+}
+body.theme-light::before{opacity:.5;}
+body.theme-light::after{opacity:.15;}
+body.theme-light .hero h1{color:#181b20;}
+body.theme-light .sk-step.done .sk-mark{color:#f3eee0;}
+
+/* theme toggle control */
+.theme-toggle{
+  position:fixed; top:18px; right:18px; z-index:80; display:flex; gap:6px;
+  background:var(--ink2); border:1px solid var(--line); border-radius:10px; padding:5px;
+}
+.theme-btn{
+  display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  color:var(--muted); background:transparent; border:none; border-radius:7px; padding:8px 12px; cursor:pointer;
+  transition:all .18s;
+}
+.theme-btn:hover{color:var(--text);}
+.theme-btn.active{background:var(--blue); color:var(--ink);}
+body.theme-light .theme-btn.active{color:#fff;}
+@media(max-width:880px){ .theme-toggle{ top:auto; bottom:96px; right:16px; } }
 
 /* ═══════════════════════ SHELL ═══════════════════════ */
 .shell{position:relative;z-index:1;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;align-items:start;}
@@ -97,6 +127,7 @@ body::after{
 .seg.done .seg-num{border-color:var(--stamp);background:transparent;color:var(--green);}
 .seg-headtext{flex:1; min-width:0;}
 .seg-title{font-family:var(--tech);font-weight:600;font-size:17px;color:#fff;letter-spacing:-.01em;}
+body.theme-light .seg-title{color:#181b20;}
 .seg.locked .seg-title{color:var(--muted);}
 .seg-sub{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.6;}
 .seg-sub b{color:var(--text);font-weight:600;}
@@ -118,7 +149,9 @@ body::after{
   background:transparent;border:1px solid var(--line);border-radius:8px;padding:9px 16px;cursor:pointer;transition:all .18s;
 }
 .vtab:hover{border-color:var(--blue-line);color:#fff;}
+body.theme-light .vtab:hover{color:#181b20;}
 .vtab.active{background:var(--blue);border-color:var(--blue);color:var(--ink);}
+body.theme-light .vtab.active{color:#fff;}
 
 .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:8px;}
 @media(max-width:560px){.svc-grid{grid-template-columns:1fr;}}
@@ -130,6 +163,7 @@ body::after{
 .svc-opt.selected{border-color:var(--blue); background:linear-gradient(135deg, var(--blue-dim), transparent);}
 .svc-opt.selected::after{content:'\f00c';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;top:14px;right:14px;font-size:11px;color:var(--blue);}
 .svc-name{font-family:var(--tech);font-weight:600;font-size:14px;color:#fff;margin-bottom:8px;letter-spacing:-.01em;}
+body.theme-light .svc-name{color:#181b20;}
 .svc-price{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--blue);}
 .svc-desc{font-size:11.5px;color:var(--dim);margin-top:5px;line-height:1.5;}
 
@@ -166,6 +200,7 @@ body::after{
 .qty-btn{width:38px;height:38px;border-radius:9px;background:var(--ink2);border:1px solid var(--line);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;}
 .qty-btn:hover{border-color:var(--blue);color:var(--blue);}
 .qty-num{font-family:var(--mono);font-weight:600;font-size:24px;color:#fff;min-width:30px;text-align:center;}
+body.theme-light .qty-num{color:#181b20;}
 .qty-label{font-size:13px;color:var(--muted);}
 .qty-sub{font-family:var(--mono);font-size:14px;color:var(--blue);margin-left:auto;}
 
@@ -188,6 +223,7 @@ body::after{
   cursor:pointer;transition:all .18s;
 }
 .creneau-btn:hover{border-color:var(--blue-line);color:#fff;}
+body.theme-light .creneau-btn:hover{color:#181b20;}
 .creneau-btn.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue);}
 
 .notice-inline{
@@ -198,6 +234,7 @@ body::after{
 .add-option{border:1px solid var(--line);border-radius:12px;padding:17px 18px;margin-bottom:12px;background:var(--ink2);}
 .add-option-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:13px;}
 .add-option-title{font-family:var(--tech);font-size:14px;font-weight:600;color:#fff;line-height:1.45;}
+body.theme-light .add-option-title{color:#181b20;}
 .add-option-price{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--blue);white-space:nowrap;}
 .radio-pair{display:flex;gap:10px;}
 .radio-pill{
@@ -205,6 +242,7 @@ body::after{
   color:var(--muted);cursor:pointer;padding:8px 15px;border:1px solid var(--line);border-radius:8px;transition:all .18s;
 }
 .radio-pill:hover{border-color:var(--blue-line);color:#fff;}
+body.theme-light .radio-pill:hover{color:#181b20;}
 .radio-pill input{accent-color:var(--blue);cursor:pointer;}
 .radio-pill.checked{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
 
@@ -215,6 +253,10 @@ body::after{
 .decont-opt.selected{border-color:var(--blue);background:var(--blue-dim);}
 .decont-opt .svc-name{font-size:12.5px;margin-bottom:5px;}
 .decont-opt .svc-price{font-size:16px;}
+.decont-single{display:none;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;border:1px solid var(--blue-line);background:linear-gradient(135deg, var(--blue-dim), transparent 70%);border-radius:10px;padding:13px 16px;}
+.decont-single-text{font-size:12.5px;color:var(--muted);}
+.decont-single-text b{color:var(--text);}
+.decont-single-price{font-family:var(--mono);font-weight:700;font-size:18px;color:var(--blue);white-space:nowrap;}
 
 /* recap on seg 4 */
 .recap{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px;background:var(--ink2);}
@@ -245,7 +287,8 @@ body::after{
   background:var(--blue);color:var(--ink);font-family:var(--tech);font-weight:700;font-size:13px;
   padding:12px 20px;border-radius:9px;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;
 }
-.promo-apply:hover{background:#fff;}
+body.theme-light .promo-apply{color:#fff;}
+.promo-apply:hover{background:#fff;color:#181b20;}
 .promo-success{margin-top:9px;font-size:13px;color:var(--green);display:flex;align-items:center;gap:6px;}
 .promo-error{margin-top:9px;font-size:13px;color:var(--red);display:flex;align-items:center;gap:6px;}
 
@@ -256,13 +299,15 @@ body::after{
   padding:14px 28px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;
   gap:9px;transition:all .25s cubic-bezier(.16,1,.3,1);
 }
-.btn-primary:hover{background:#fff;transform:translateY(-1px);}
+body.theme-light .btn-primary{color:#fff;}
+.btn-primary:hover{background:#fff;color:#181b20;transform:translateY(-1px);}
 .btn-primary:disabled{opacity:.3;cursor:not-allowed;transform:none;}
 .btn-ghost{
   background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--tech);
   font-weight:600;font-size:14px;padding:14px 22px;border-radius:10px;cursor:pointer;transition:all .2s;
 }
 .btn-ghost:hover{border-color:var(--blue-line);color:#fff;}
+body.theme-light .btn-ghost:hover{color:#181b20;}
 
 /* ═══════════════════════ THE STICKER (build sheet) ═══════════════════════ */
 .sticker-rail{padding:40px 0 40px 0;position:sticky;top:0;align-self:start;height:100vh;display:flex;align-items:center;}
@@ -384,6 +429,12 @@ body::after{
 </style>
 </head>
 <body>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle" role="group" aria-label="Choix d'apparence">
+  <button type="button" class="theme-btn active" id="themeBtnDark" onclick="setTheme('dark')" aria-pressed="true"><i class="fa-solid fa-moon fa-sm"></i> Sombre</button>
+  <button type="button" class="theme-btn" id="themeBtnLight" onclick="setTheme('light')" aria-pressed="false"><i class="fa-solid fa-sun fa-sm"></i> Clair</button>
+</div>
 
 <div class="shell">
 
@@ -585,10 +636,16 @@ body::after{
             <label class="radio-pill"><input type="radio" name="decont" value="non" checked onchange="toggleDecont(false)">Non</label>
             <label class="radio-pill"><input type="radio" name="decont" value="oui" onchange="toggleDecont(true)">Oui</label>
           </div>
+          <!-- Shown only if vehicle type has no direct price match (forfait) -->
           <div class="decont-options" id="decontOptions">
             <div class="decont-opt" tabindex="0" data-price="50" data-type="sedan" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)"><div class="svc-name">Sedan</div><div class="svc-price">50$</div></div>
             <div class="decont-opt" tabindex="0" data-price="75" data-type="suv" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)"><div class="svc-name">VUS</div><div class="svc-price">75$</div></div>
             <div class="decont-opt" tabindex="0" data-price="150" data-type="vanpickup" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)"><div class="svc-name">Pickup / Van</div><div class="svc-price">150$</div></div>
+          </div>
+          <!-- Shown automatically when vehicle type is known (sedan/suv/van/pickup) -->
+          <div class="decont-single" id="decontSingle">
+            <div class="decont-single-text">Décontamination <b id="decontSingleLabel">—</b> (selon le véhicule sélectionné à l'étape 1)</div>
+            <div class="decont-single-price" id="decontSinglePrice">+0$</div>
           </div>
         </div>
 
@@ -599,7 +656,11 @@ body::after{
           </div>
           <div class="radio-pair" role="radiogroup" aria-labelledby="dogLabel">
             <label class="radio-pill"><input type="radio" name="doghair" value="non" checked onchange="toggleDogHair(false)">Non</label>
-            <label class="radio-pill"><input type="radio" name="doghair" value="oui" onchange="toggleDogHair(true)">Oui (+25$)</label>
+            <label class="radio-pill"><input type="radio" name="doghair" value="oui" onchange="toggleDogHair(true)">Oui (environ +25$)</label>
+          </div>
+          <div class="notice-inline" id="dogHairNotice" style="display:none;">
+            <i class="fa-solid fa-circle-info fa-sm"></i>
+            <span>Le montant exact sera confirmé sur place selon la quantité de poils présents dans le véhicule.</span>
           </div>
         </div>
 
@@ -719,11 +780,23 @@ body::after{
    STATE
 ══════════════════════════════════════ */
 const PROMO_CODE='SHINE10', PROMO_AMOUNT=10, PROMO_MIN=100;
+const DECONT_PRICES={sedan:{label:'Sedan',price:50,type:'sedan'},suv:{label:'VUS',price:75,type:'suv'},van:{label:'Pickup / Van',price:150,type:'vanpickup'},pickup:{label:'Pickup / Van',price:150,type:'vanpickup'}};
 let S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:''};
 let currentSeg=1;
 let segDone={1:false,2:false,3:false,4:false};
 let refNumber='SA-'+Math.floor(100000+Math.random()*899999);
 document.getElementById('refNum').textContent=refNumber;
+
+/* ══════════════════════════════════════
+   THEME
+══════════════════════════════════════ */
+function setTheme(mode){
+  document.body.classList.toggle('theme-light', mode==='light');
+  document.getElementById('themeBtnDark').classList.toggle('active', mode==='dark');
+  document.getElementById('themeBtnLight').classList.toggle('active', mode==='light');
+  document.getElementById('themeBtnDark').setAttribute('aria-pressed', mode==='dark');
+  document.getElementById('themeBtnLight').setAttribute('aria-pressed', mode==='light');
+}
 
 /* ══════════════════════════════════════
    SEGMENT NAVIGATION
@@ -758,14 +831,16 @@ function completeSeg1(){
   hideStep1Error();
   markDone(1, `<b>${escapeHtml(S.service)}</b> · ${escapeHtml(model)} · ×${S.qty}`);
   document.getElementById('seg1').classList.remove('active');
-  unlockSeg(2); openSeg(2);
+  unlockSeg(2);
+  setupDecontForVehicle();
+  openSeg(2);
 }
 /* SEG 2 */
 function completeSeg2(){
   let sub='Aucune option supplémentaire.';
   const parts=[];
   if(S.decontPrice>0) parts.push(`Décontamination ${decontLabel(S.decontType)} (+${S.decontPrice}$)`);
-  if(S.dogHairPrice>0) parts.push(`Poils d'animaux (+25$)`);
+  if(S.dogHairPrice>0) parts.push(`Poils d'animaux (environ +${S.dogHairPrice}$)`);
   if(parts.length) sub=parts.join(' · ');
   markDone(2, sub);
   document.getElementById('seg2').classList.remove('active');
@@ -834,11 +909,38 @@ function changeQty(d){
   S.promo=false; document.getElementById('promoMsg').innerHTML='';
   updateAll();
 }
+
+/* Decide whether the vehicle type chosen in step 1 maps to a known
+   decontamination price. Sedan/SUV/Van/Pickup -> auto-selected price.
+   Forfait (multi-vehicle) -> no single mapping, so show the manual choices. */
+function setupDecontForVehicle(){
+  const known=DECONT_PRICES[S.vehicle];
+  const optsBox=document.getElementById('decontOptions');
+  const singleBox=document.getElementById('decontSingle');
+  const decontIsOn=document.querySelector('input[name="decont"][value="oui"]').checked;
+
+  if(known){
+    // auto-apply the matching price for this vehicle type
+    S.decontPrice = decontIsOn ? known.price : 0;
+    S.decontType = decontIsOn ? known.type : '';
+    document.getElementById('decontSingleLabel').textContent = known.label;
+    document.getElementById('decontSinglePrice').textContent = '+'+known.price+'$';
+    optsBox.style.display='none';
+    document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
+    singleBox.style.display = decontIsOn ? 'flex' : 'none';
+  } else {
+    // multi-vehicle forfait: keep manual selector, clear any auto state
+    singleBox.style.display='none';
+    optsBox.style.display = decontIsOn ? 'grid' : 'none';
+    if(!decontIsOn){ S.decontPrice=0; S.decontType=''; }
+  }
+  updateAll();
+}
+
 function toggleDecont(enabled){
-  const opts=document.getElementById('decontOptions');
-  if(enabled){ opts.style.display='grid'; }
-  else{ opts.style.display='none'; document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected')); S.decontPrice=0; S.decontType=''; }
-  syncRadioPillStyles(); updateAll();
+  setupDecontForVehicle();
+  syncRadioPillStyles();
+  updateAll();
 }
 function selectDecont(el){
   document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
@@ -846,7 +948,11 @@ function selectDecont(el){
   S.decontPrice=parseInt(el.dataset.price); S.decontType=el.dataset.type;
   updateAll();
 }
-function toggleDogHair(enabled){ S.dogHairPrice=enabled?25:0; syncRadioPillStyles(); updateAll(); }
+function toggleDogHair(enabled){
+  S.dogHairPrice=enabled?25:0;
+  document.getElementById('dogHairNotice').style.display=enabled?'flex':'none';
+  syncRadioPillStyles(); updateAll();
+}
 function syncRadioPillStyles(){
   document.querySelectorAll('.radio-pill').forEach(pill=>{
     const input=pill.querySelector('input[type="radio"]');
@@ -877,7 +983,7 @@ function updateTotal(){
   else { S.final=S.base; S.promo=false; }
   const qSub=document.getElementById('qtySubtotal'); if(qSub) qSub.textContent=S.base>0?`= ${S.base}$`:'';
   document.getElementById('decontTotal').textContent=S.decontPrice>0?`+${S.decontPrice}$`:'+0$';
-  document.getElementById('dogTotal').textContent=S.dogHairPrice>0?`+${S.dogHairPrice}$`:'+0$';
+  document.getElementById('dogTotal').textContent=S.dogHairPrice>0?`environ +${S.dogHairPrice}$`:'+0$';
 
   const amt=document.getElementById('stAmount');
   const newText=S.base>0?S.final+'$':'—';
@@ -918,7 +1024,7 @@ function updateStickerLines(){
   if(S.service) lines.push(['Service', S.service]);
   if(S.qty>1 || S.service) lines.push(['Quantité', S.qty+' véhicule(s)']);
   if(S.decontPrice>0) lines.push(['Décontamination', decontLabel(S.decontType)+' +'+S.decontPrice+'$']);
-  if(S.dogHairPrice>0) lines.push(["Poils d'animaux", '+25$']);
+  if(S.dogHairPrice>0) lines.push(["Poils d'animaux", 'environ +'+S.dogHairPrice+'$']);
   const container=document.getElementById('stickerLines');
   if(!lines.length){ container.innerHTML='<div class="sk-empty">Vos sélections apparaîtront ici.</div>'; return; }
   container.innerHTML=lines.map(l=>`<div class="sk-line"><span>${escapeHtml(l[0])}</span><b>${escapeHtml(l[1])}</b></div>`).join('');
@@ -974,7 +1080,7 @@ function buildRecap(){
     ['Quantité', S.qty+' véhicule(s)'],
   ];
   if(S.decontPrice>0) rows.push(['Décontamination', decontLabel(S.decontType)+' (+'+S.decontPrice+'$)']);
-  if(S.dogHairPrice>0) rows.push(["Poils d'animaux", 'Oui (+25$)']);
+  if(S.dogHairPrice>0) rows.push(["Poils d'animaux", 'Oui (environ +'+S.dogHairPrice+'$)']);
   rows.push(['Nom', nom], ['Téléphone', tel], ['Adresse', adr], ['Date', date]);
   if(S.creneau) rows.push(['Créneau', S.creneau]);
   if(note) rows.push(['Note', note]);
@@ -1005,7 +1111,7 @@ async function submitForm(){
     date:document.getElementById('maDate').value,
     creneau:S.creneau||'Non précisé',
     decontamination:S.decontPrice>0?`${decontLabel(S.decontType)} (+${S.decontPrice}$)`:'Non',
-    poils_animaux:S.dogHairPrice>0?'Oui (+25$)':'Non',
+    poils_animaux:S.dogHairPrice>0?`Oui (environ +${S.dogHairPrice}$)`:'Non',
     note_client:document.getElementById('noteClient').value.trim()||'Aucune note',
     botcheck:''
   };
@@ -1062,6 +1168,8 @@ function resetAll(){
   document.querySelector('input[name="decont"][value="non"]').checked=true;
   document.querySelector('input[name="doghair"][value="non"]').checked=true;
   document.getElementById('decontOptions').style.display='none';
+  document.getElementById('decontSingle').style.display='none';
+  document.getElementById('dogHairNotice').style.display='none';
   document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
   syncRadioPillStyles();
   for(let i=2;i<=4;i++){ const seg=document.getElementById('seg'+i); seg.classList.add('locked'); seg.classList.remove('done'); }
