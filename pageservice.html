@@ -5,475 +5,473 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prendre Rendez-vous — Shine Automobile</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════ TOKENS ═══════════════════════
-   Concept: "La Fiche" — the booking flow is a dark, immersive
-   configurator. The order summary takes the form of an actual
-   window-sticker / build-sheet — paper-toned, perforated edge,
-   mono specs, ink-stamped confirmations — the one real artifact
-   of buying or booking a vehicle service.
-*/
 :root{
-  --ink:#0a0d12; --ink2:#11151c; --ink3:#161b24;
-  --line:rgba(255,255,255,.09); --line-soft:rgba(255,255,255,.05);
-  --text:#edf0f4; --muted:#8893a4; --dim:#4c5563;
-  --blue:#2bb7e8; --blue-dim:rgba(43,183,232,.12); --blue-line:rgba(43,183,232,.4);
-  --paper:#f3eee0; --paper2:#ece5d2; --ink-on-paper:#181b20;
-  --paper-line:rgba(24,27,32,.16); --stamp:#1d4f66;
-  --green:#5fd99a; --red:#ff7a72; --amber:#e8b65a;
-  --serif:'Fraunces',serif; --tech:'Space Grotesk',sans-serif; --mono:'JetBrains Mono',monospace;
+  /* Palette — Light, professional */
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --surface2:#f7f8fa;
+  --border:#e3e7ed;
+  --border-focus:#2563eb;
+  --text:#0f172a;
+  --text2:#475569;
+  --text3:#94a3b8;
+  --blue:#2563eb;
+  --blue-mid:#3b82f6;
+  --blue-dim:rgba(37,99,235,.08);
+  --blue-line:rgba(37,99,235,.25);
+  --green:#059669;
+  --green-dim:rgba(5,150,105,.08);
+  --red:#dc2626;
+  --amber:#d97706;
+  --amber-dim:rgba(217,119,6,.08);
+  --paper:#faf9f5;
+  --paper-line:rgba(15,23,42,.12);
+  --stamp:#1e4d6b;
+  --ink-on-paper:#0f172a;
+  --shadow-sm:0 1px 3px rgba(15,23,42,.08), 0 1px 2px rgba(15,23,42,.04);
+  --shadow-md:0 4px 12px rgba(15,23,42,.08), 0 2px 4px rgba(15,23,42,.04);
+  --shadow-lg:0 12px 40px rgba(15,23,42,.10), 0 4px 8px rgba(15,23,42,.04);
+  --shadow-xl:0 24px 64px rgba(15,23,42,.12);
+  --r:12px;
+  --serif:'Fraunces',serif;
+  --sans:'Plus Jakarta Sans',sans-serif;
+  --mono:'JetBrains Mono',monospace;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:var(--tech);
-  background:var(--ink);
+  font-family:var(--sans);
+  background:var(--bg);
   color:var(--text);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
-  transition:background .35s ease, color .35s ease;
 }
-a{color:inherit;}
-::selection{background:var(--blue);color:var(--ink);}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--blue);color:#fff;}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
-  outline:2px solid var(--blue); outline-offset:3px;
-}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
 
-/* faint vignette + grid texture on the dark canvas */
+/* subtle top gradient accent */
 body::before{
-  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(ellipse 900px 600px at 18% -8%, rgba(43,183,232,.10), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 100% 110%, rgba(43,183,232,.06), transparent 60%);
-  transition:opacity .35s ease;
-}
-body::after{
-  content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.4;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size:64px 64px;
-  mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), transparent 70%);
-  transition:opacity .35s ease;
+  content:'';position:fixed;top:0;left:0;right:0;height:3px;z-index:100;
+  background:linear-gradient(90deg, var(--blue) 0%, #60a5fa 100%);
 }
 
-/* ═══════════════════════ LIGHT THEME ═══════════════════════ */
-body.theme-light{
-  --ink:#f5f3ec; --ink2:#ffffff; --ink3:#eeebe0;
-  --line:rgba(20,20,20,.10); --line-soft:rgba(20,20,20,.05);
-  --text:#181b20; --muted:#5a6270; --dim:#9aa0aa;
-  --blue:#1d8ab0; --blue-dim:rgba(29,138,176,.10); --blue-line:rgba(29,138,176,.4);
-}
-body.theme-light::before{opacity:.5;}
-body.theme-light::after{opacity:.15;}
-body.theme-light .hero h1{color:#181b20;}
-body.theme-light .sk-step.done .sk-mark{color:#f3eee0;}
+/* ═══ SHELL ═══ */
+.shell{position:relative;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:320px 1fr;align-items:start;gap:0;}
+.flow{padding:48px 60px 120px 60px;min-width:0;}
 
-/* theme toggle control */
-.theme-toggle{
-  position:fixed; top:18px; right:18px; z-index:80; display:flex; gap:6px;
-  background:var(--ink2); border:1px solid var(--line); border-radius:10px; padding:5px;
-}
-.theme-btn{
-  display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
-  color:var(--muted); background:transparent; border:none; border-radius:7px; padding:8px 12px; cursor:pointer;
-  transition:all .18s;
-}
-.theme-btn:hover{color:var(--text);}
-.theme-btn.active{background:var(--blue); color:var(--ink);}
-body.theme-light .theme-btn.active{color:#fff;}
-@media(max-width:880px){ .theme-toggle{ top:auto; bottom:96px; right:16px; } }
-
-/* ═══════════════════════ SHELL ═══════════════════════ */
-.shell{position:relative;z-index:1;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;align-items:start;}
-.flow{padding:40px 56px 140px 56px;min-width:0;}
-.topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;}
-.back-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--muted);text-decoration:none;transition:color .2s;}
+/* ═══ TOPLINE ═══ */
+.topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:44px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text2);transition:color .18s;}
 .back-link:hover{color:var(--blue);}
-.brandmark{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--dim);}
-.brandmark .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);}
+.brandmark{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--text3);}
+.brandmark-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);}
 
-/* ═══════════════════════ HERO ═══════════════════════ */
-.hero{margin-bottom:56px;opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.16,1,.3,1) .05s forwards;}
-.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
-.hero-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--blue-line),transparent);max-width:120px;}
-.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.4vw,52px);line-height:1.08;letter-spacing:-.01em;color:#fff;max-width:13ch;}
-.hero h1 em{font-style:italic;color:var(--blue);font-weight:500;}
-.hero p{font-size:14.5px;color:var(--muted);margin-top:16px;max-width:46ch;line-height:1.7;}
+/* ═══ HERO ═══ */
+.hero{margin-bottom:48px;opacity:0;transform:translateY(12px);animation:rise .6s cubic-bezier(.16,1,.3,1) .05s forwards;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);background:var(--blue-dim);border:1px solid var(--blue-line);border-radius:100px;padding:5px 13px;margin-bottom:18px;}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.8vw,46px);line-height:1.1;letter-spacing:-.02em;color:var(--text);max-width:14ch;}
+.hero h1 em{font-style:italic;color:var(--blue);}
+.hero p{font-size:15px;color:var(--text2);margin-top:14px;max-width:48ch;line-height:1.72;}
 
 .callout{
-  margin-bottom:40px; display:flex; gap:11px; align-items:flex-start;
-  border:1px solid rgba(232,182,90,.22); background:rgba(232,182,90,.06);
-  border-radius:10px; padding:13px 16px; font-size:12.5px; color:var(--amber); line-height:1.6;
+  margin-bottom:36px;display:flex;gap:11px;align-items:flex-start;
+  border:1px solid rgba(217,119,6,.2);background:var(--amber-dim);
+  border-radius:10px;padding:13px 16px;font-size:13px;color:var(--amber);line-height:1.65;
 }
-.callout i{margin-top:2px;}
 
-/* ═══════════════════════ SEGMENTS ═══════════════════════ */
-.seg{border-top:1px solid var(--line);}
-.seg:last-of-type{border-bottom:1px solid var(--line);}
-.seg-head{
-  display:flex; align-items:flex-start; gap:18px; padding:26px 4px; cursor:pointer;
-  transition:opacity .2s;
-}
-.seg.locked .seg-head{cursor:default;opacity:.4;}
+/* ═══ SEGMENTS ═══ */
+.seg{border-top:1px solid var(--border);}
+.seg:last-of-type{border-bottom:1px solid var(--border);}
+.seg-head{display:flex;align-items:flex-start;gap:16px;padding:24px 0;cursor:pointer;transition:opacity .2s;}
+.seg.locked .seg-head{cursor:default;opacity:.45;}
 .seg-num{
-  font-family:var(--mono); font-size:13px; color:var(--dim); border:1px solid var(--line);
-  width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0; transition:all .25s;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text3);
+  border:1.5px solid var(--border);width:34px;height:34px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .22s;
 }
 .seg.active .seg-num{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
-.seg.done .seg-num{border-color:var(--stamp);background:transparent;color:var(--green);}
-.seg-headtext{flex:1; min-width:0;}
-.seg-title{font-family:var(--tech);font-weight:600;font-size:17px;color:#fff;letter-spacing:-.01em;}
-body.theme-light .seg-title{color:#181b20;}
-.seg.locked .seg-title{color:var(--muted);}
-.seg-sub{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.6;}
+.seg.done .seg-num{border-color:var(--green);color:var(--green);background:var(--green-dim);}
+.seg-headtext{flex:1;min-width:0;}
+.seg-title{font-weight:700;font-size:16px;color:var(--text);letter-spacing:-.01em;}
+.seg.locked .seg-title{color:var(--text3);}
+.seg-sub{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.55;}
 .seg-sub b{color:var(--text);font-weight:600;}
-.seg-edit{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--blue);display:none;align-items:center;gap:6px;white-space:nowrap;padding-top:7px;}
+.seg-edit{font-family:var(--mono);font-size:11px;color:var(--blue);display:none;align-items:center;gap:6px;padding-top:7px;}
 .seg.done .seg-edit{display:flex;}
-.seg-chev{color:var(--dim);transition:transform .3s;padding-top:9px;}
+.seg-chev{color:var(--text3);transition:transform .28s;padding-top:9px;}
 .seg.active .seg-chev{transform:rotate(180deg);color:var(--blue);}
-
-.seg-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s cubic-bezier(.16,1,.3,1);}
+.seg-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.16,1,.3,1);}
 .seg.active .seg-wrap{grid-template-rows:1fr;}
 .seg-inner{overflow:hidden;}
-.seg-body{padding:2px 4px 36px;}
+.seg-body{padding:0 0 36px;}
 
-/* ═══════════════════════ CARDS / TILES ═══════════════════════ */
-.label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:13px;display:block;}
-.vtabs{display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap;}
-.vtab{
-  font-family:var(--tech);font-size:13px;font-weight:600;letter-spacing:.01em;color:var(--muted);
-  background:transparent;border:1px solid var(--line);border-radius:8px;padding:9px 16px;cursor:pointer;transition:all .18s;
+/* ═══ LABELS ═══ */
+.lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:block;font-weight:600;}
+
+/* ═══ VEHICLE CARDS ═══ */
+.vcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
+.vcard{
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:20px 14px 16px;background:var(--surface);border:1.5px solid var(--border);
+  border-radius:14px;cursor:pointer;transition:all .2s cubic-bezier(.16,1,.3,1);
+  position:relative;overflow:hidden;min-height:128px;box-shadow:var(--shadow-sm);
 }
-.vtab:hover{border-color:var(--blue-line);color:#fff;}
-body.theme-light .vtab:hover{color:#181b20;}
-.vtab.active{background:var(--blue);border-color:var(--blue);color:var(--ink);}
-body.theme-light .vtab.active{color:#fff;}
+.vcard:hover{border-color:var(--blue-line);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.vcard.active{
+  border-color:var(--blue);background:linear-gradient(160deg,var(--blue-dim) 0%,var(--surface) 55%);
+  box-shadow:0 0 0 3px rgba(37,99,235,.12), var(--shadow-md);
+}
+.vcard-img{font-size:50px;line-height:1;margin-bottom:10px;transition:transform .22s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 3px 8px rgba(15,23,42,.18));}
+.vcard:hover .vcard-img,.vcard.active .vcard-img{transform:scale(1.09) translateY(-2px);}
+.vcard-label{font-weight:700;font-size:13px;color:var(--text2);transition:color .18s;}
+.vcard:hover .vcard-label{color:var(--text);}
+.vcard.active .vcard-label{color:var(--blue);}
+.vcard-check{
+  position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;
+  background:var(--blue);display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:#fff;opacity:0;transform:scale(.5);transition:all .2s;
+}
+.vcard.active .vcard-check{opacity:1;transform:scale(1);}
+.vcard-forfait{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;min-height:64px;padding:16px 20px;}
+.vcard-forfait .vcard-img{font-size:30px;margin-bottom:0;}
+.vcard-forfait .vcard-label{font-size:14px;}
 
-.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:8px;}
-@media(max-width:560px){.svc-grid{grid-template-columns:1fr;}}
+/* ═══ SERVICE CARDS — redesigned ═══ */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
+@media(max-width:580px){.svc-grid{grid-template-columns:1fr;}}
 .svc-opt{
-  border:1px solid var(--line); border-radius:12px; padding:16px 17px; cursor:pointer;
-  background:var(--ink2); transition:border-color .2s, background .2s; position:relative;
+  border:1.5px solid var(--border);border-radius:var(--r);padding:0;cursor:pointer;
+  background:var(--surface);transition:all .2s;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-sm);display:flex;flex-direction:column;
 }
-.svc-opt:hover{border-color:var(--blue-line);background:var(--ink3);}
-.svc-opt.selected{border-color:var(--blue); background:linear-gradient(135deg, var(--blue-dim), transparent);}
-.svc-opt.selected::after{content:'\f00c';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;top:14px;right:14px;font-size:11px;color:var(--blue);}
-.svc-name{font-family:var(--tech);font-weight:600;font-size:14px;color:#fff;margin-bottom:8px;letter-spacing:-.01em;}
-body.theme-light .svc-name{color:#181b20;}
-.svc-price{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--blue);}
-.svc-desc{font-size:11.5px;color:var(--dim);margin-top:5px;line-height:1.5;}
+.svc-opt:hover{border-color:var(--blue-line);box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.svc-opt.selected{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12),var(--shadow-md);}
+.svc-opt-top{padding:16px 18px 12px;flex:1;}
+.svc-icon{width:36px;height:36px;border-radius:9px;background:var(--blue-dim);border:1px solid var(--blue-line);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:16px;transition:background .2s;}
+.svc-opt.selected .svc-icon{background:var(--blue);border-color:var(--blue);}
+.svc-opt.selected .svc-icon i{color:#fff;}
+.svc-icon i{color:var(--blue);transition:color .2s;}
+.svc-name{font-weight:700;font-size:14px;color:var(--text);line-height:1.3;margin-bottom:10px;}
+.svc-features{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:4px;}
+.svc-features li{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:var(--text2);line-height:1.45;}
+.svc-features li i{color:var(--green);margin-top:2px;flex-shrink:0;font-size:10px;}
+.svc-opt-bottom{
+  padding:12px 18px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:var(--surface2);transition:background .2s;
+}
+.svc-opt.selected .svc-opt-bottom{background:var(--blue-dim);}
+.svc-price-big{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue);}
+.svc-select-hint{font-size:11.5px;font-weight:600;color:var(--text3);display:flex;align-items:center;gap:5px;transition:color .18s;}
+.svc-opt:hover .svc-select-hint{color:var(--blue);}
+.svc-opt.selected .svc-select-hint{color:var(--blue);}
+/* selected check badge */
+.svc-badge{
+  position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;
+  background:var(--blue);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.5);transition:all .2s;
+}
+.svc-opt.selected .svc-badge{opacity:1;transform:scale(1);}
 
+/* forfait cards */
 .ff-opt{
-  border:1px solid var(--line); border-radius:12px; padding:15px 18px; cursor:pointer;
-  background:var(--ink2); display:flex; align-items:center; justify-content:space-between; gap:14px;
-  margin-bottom:8px; transition:all .18s;
+  border:1.5px solid var(--border);border-radius:var(--r);padding:16px 20px;cursor:pointer;
+  background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:14px;
+  margin-bottom:10px;transition:all .2s;box-shadow:var(--shadow-sm);
 }
-.ff-opt:hover{border-color:var(--blue-line);}
-.ff-opt.selected{border-color:var(--blue);background:linear-gradient(135deg, var(--blue-dim), transparent);}
-.ff-tier{font-size:12.5px;color:var(--muted);margin-top:3px;}
-.ff-price{font-family:var(--mono);font-weight:600;font-size:20px;color:var(--blue);white-space:nowrap;}
-.ff-price small{font-family:var(--tech);font-size:12px;font-weight:500;color:var(--muted);}
+.ff-opt:hover{border-color:var(--blue-line);box-shadow:var(--shadow-md);}
+.ff-opt.selected{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12);}
+.ff-info{display:flex;flex-direction:column;gap:3px;}
+.ff-name{font-weight:700;font-size:14px;color:var(--text);}
+.ff-tier{font-size:12.5px;color:var(--text2);}
+.ff-price{font-family:var(--mono);font-weight:700;font-size:22px;color:var(--blue);white-space:nowrap;}
+.ff-price small{font-size:12px;font-weight:500;color:var(--text3);font-family:var(--sans);}
 
+/* desc box */
 .svc-desc-box{
-  display:none; border:1px solid var(--blue-line); background:linear-gradient(135deg, var(--blue-dim), transparent 70%);
-  border-radius:10px; padding:14px 16px; margin:0 0 9px; gap:10px; align-items:flex-start;
+  display:none;border:1px solid var(--blue-line);background:var(--blue-dim);
+  border-radius:10px;padding:14px 16px;margin:0 0 10px;gap:10px;align-items:flex-start;
 }
 .svc-desc-box.show{display:flex;}
-.svc-grid .svc-desc-box{grid-column:1 / -1;}
+.svc-grid .svc-desc-box{grid-column:1/-1;}
 .svc-desc-box i{color:var(--blue);margin-top:2px;flex-shrink:0;}
 .svc-desc-box-text{font-size:12.5px;color:var(--text);line-height:1.65;}
 .svc-desc-box-text b{color:var(--blue);font-weight:600;}
 
 .clear-btn{
-  display:none;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
-  color:var(--muted);background:none;border:1px solid var(--line);border-radius:7px;padding:7px 13px;
-  cursor:pointer;margin-top:6px;transition:all .2s;
+  display:none;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;
+  color:var(--text3);background:none;border:1px solid var(--border);border-radius:7px;
+  padding:7px 13px;cursor:pointer;margin-top:6px;transition:all .2s;
 }
 .clear-btn.show{display:inline-flex;}
-.clear-btn:hover{color:var(--red);border-color:rgba(255,122,114,.35);}
+.clear-btn:hover{color:var(--red);border-color:rgba(220,38,38,.3);}
 
-.qty-block{display:flex;align-items:center;gap:16px;margin:26px 0;flex-wrap:wrap;}
-.qty-btn{width:38px;height:38px;border-radius:9px;background:var(--ink2);border:1px solid var(--line);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;}
+/* ═══ QTY ═══ */
+.qty-block{display:flex;align-items:center;gap:14px;margin:24px 0;flex-wrap:wrap;}
+.qty-btn{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1.5px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;box-shadow:var(--shadow-sm);}
 .qty-btn:hover{border-color:var(--blue);color:var(--blue);}
-.qty-num{font-family:var(--mono);font-weight:600;font-size:24px;color:#fff;min-width:30px;text-align:center;}
-body.theme-light .qty-num{color:#181b20;}
-.qty-label{font-size:13px;color:var(--muted);}
-.qty-sub{font-family:var(--mono);font-size:14px;color:var(--blue);margin-left:auto;}
+.qty-num{font-family:var(--mono);font-weight:700;font-size:24px;color:var(--text);min-width:30px;text-align:center;}
+.qty-label{font-size:13px;color:var(--text2);}
+.qty-sub{font-family:var(--mono);font-size:14px;color:var(--blue);margin-left:auto;font-weight:600;}
 
-.field{margin-bottom:20px;}
-.field label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+/* ═══ FIELDS ═══ */
+.field{margin-bottom:18px;}
+.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;font-weight:600;}
 .field input,.field textarea{
-  width:100%;background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:13px 16px;
-  font-family:var(--tech);font-size:14.5px;color:var(--text);outline:none;transition:all .2s;
+  width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;
+  padding:12px 16px;font-family:var(--sans);font-size:14.5px;color:var(--text);outline:none;transition:all .2s;
+  box-shadow:var(--shadow-sm);
 }
 .field input:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-dim);}
 .field textarea{resize:vertical;min-height:88px;line-height:1.6;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media(max-width:560px){.field-row{grid-template-columns:1fr;}}
-.field-error{font-size:12.5px;color:var(--red);margin-top:14px;display:flex;align-items:center;gap:7px;}
+.field-error{font-size:12.5px;color:var(--red);margin-top:12px;display:flex;align-items:center;gap:7px;font-weight:500;}
 
+/* ═══ CRENEAU ═══ */
 .creneau-row{display:flex;gap:8px;flex-wrap:wrap;}
 .creneau-btn{
-  display:flex;align-items:center;gap:7px;font-family:var(--tech);font-size:13px;font-weight:600;
-  padding:10px 16px;border-radius:9px;border:1px solid var(--line);color:var(--muted);background:var(--ink2);
-  cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
+  padding:10px 16px;border-radius:9px;border:1.5px solid var(--border);color:var(--text2);
+  background:var(--surface);cursor:pointer;transition:all .18s;box-shadow:var(--shadow-sm);
 }
-.creneau-btn:hover{border-color:var(--blue-line);color:#fff;}
-body.theme-light .creneau-btn:hover{color:#181b20;}
+.creneau-btn:hover{border-color:var(--blue-line);color:var(--text);}
 .creneau-btn.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue);}
 
 .notice-inline{
-  background:rgba(232,182,90,.07);border:1px solid rgba(232,182,90,.25);border-radius:10px;
-  padding:13px 16px;font-size:12.5px;color:var(--amber);margin-top:6px;display:flex;gap:9px;line-height:1.6;
+  background:var(--amber-dim);border:1px solid rgba(217,119,6,.22);border-radius:10px;
+  padding:12px 16px;font-size:12.5px;color:var(--amber);margin-top:8px;display:flex;gap:9px;line-height:1.6;
 }
 
-.add-option{border:1px solid var(--line);border-radius:12px;padding:17px 18px;margin-bottom:12px;background:var(--ink2);}
+/* ═══ OPTIONS (decont / dog hair) ═══ */
+.add-option{
+  border:1.5px solid var(--border);border-radius:var(--r);padding:18px 20px;
+  margin-bottom:12px;background:var(--surface);box-shadow:var(--shadow-sm);
+}
 .add-option-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:13px;}
-.add-option-title{font-family:var(--tech);font-size:14px;font-weight:600;color:#fff;line-height:1.45;}
-body.theme-light .add-option-title{color:#181b20;}
-.add-option-price{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--blue);white-space:nowrap;}
+.add-option-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.45;}
+.add-option-price{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--blue);white-space:nowrap;}
 .radio-pair{display:flex;gap:10px;}
 .radio-pill{
-  display:flex;align-items:center;gap:8px;font-family:var(--tech);font-size:13px;font-weight:500;
-  color:var(--muted);cursor:pointer;padding:8px 15px;border:1px solid var(--line);border-radius:8px;transition:all .18s;
+  display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;
+  color:var(--text2);cursor:pointer;padding:9px 16px;border:1.5px solid var(--border);
+  border-radius:9px;transition:all .18s;background:var(--surface);
 }
-.radio-pill:hover{border-color:var(--blue-line);color:#fff;}
-body.theme-light .radio-pill:hover{color:#181b20;}
+.radio-pill:hover{border-color:var(--blue-line);color:var(--text);}
 .radio-pill input{accent-color:var(--blue);cursor:pointer;}
 .radio-pill.checked{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
-
 .decont-options{display:none;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;}
 @media(max-width:560px){.decont-options{grid-template-columns:1fr;}}
-.decont-opt{border:1px solid var(--line);border-radius:9px;padding:11px 12px;text-align:center;cursor:pointer;transition:all .18s;background:var(--ink3);}
+.decont-opt{
+  border:1.5px solid var(--border);border-radius:9px;padding:12px;text-align:center;
+  cursor:pointer;transition:all .18s;background:var(--surface2);
+}
 .decont-opt:hover{border-color:var(--blue-line);}
 .decont-opt.selected{border-color:var(--blue);background:var(--blue-dim);}
-.decont-opt .svc-name{font-size:12.5px;margin-bottom:5px;}
-.decont-opt .svc-price{font-size:16px;}
-.decont-single{display:none;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;border:1px solid var(--blue-line);background:linear-gradient(135deg, var(--blue-dim), transparent 70%);border-radius:10px;padding:13px 16px;}
-.decont-single-text{font-size:12.5px;color:var(--muted);}
+.decont-opt .svc-name{font-size:13px;margin-bottom:5px;color:var(--text);}
+.decont-opt .svc-price{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--blue);}
+.decont-single{
+  display:none;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;
+  border:1px solid var(--blue-line);background:var(--blue-dim);border-radius:10px;padding:13px 16px;
+}
+.decont-single-text{font-size:13px;color:var(--text2);}
 .decont-single-text b{color:var(--text);}
 .decont-single-price{font-family:var(--mono);font-weight:700;font-size:18px;color:var(--blue);white-space:nowrap;}
 
-/* recap on seg 4 */
-.recap{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px;background:var(--ink2);}
-.recap-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px;}
+/* ═══ RECAP / CONFIRMATION ═══ */
+.recap{border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+.recap-row{display:flex;justify-content:space-between;gap:14px;padding:11px 18px;border-bottom:1px solid var(--border);font-size:13.5px;}
 .recap-row:last-child{border-bottom:none;}
-.recap-key{color:var(--dim);}
-.recap-val{color:var(--text);font-weight:500;text-align:right;}
+.recap-key{color:var(--text2);}
+.recap-val{color:var(--text);font-weight:600;text-align:right;}
 
 .final-total{
-  border:1px solid var(--blue-line); border-radius:14px; padding:22px 24px; margin-bottom:24px;
-  background:linear-gradient(135deg, var(--blue-dim), transparent 70%);
+  border:1.5px solid var(--blue-line);border-radius:var(--r);padding:22px 24px;margin-bottom:22px;
+  background:var(--blue-dim);
 }
 .ft-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
-.ft-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
-.ft-orig{font-family:var(--mono);font-size:16px;color:var(--dim);text-decoration:line-through;}
-.ft-amount{font-family:var(--mono);font-weight:700;font-size:46px;color:var(--blue);letter-spacing:-.02em;line-height:1;transition:transform .25s;}
-.ft-amount.bump{transform:scale(1.06);}
-.ft-discount{margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);display:flex;align-items:center;gap:7px;}
+.ft-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);}
+.ft-orig{font-family:var(--mono);font-size:16px;color:var(--text3);text-decoration:line-through;}
+.ft-amount{font-family:var(--mono);font-weight:700;font-size:46px;color:var(--blue);letter-spacing:-.02em;line-height:1;transition:transform .22s;}
+.ft-amount.bump{transform:scale(1.05);}
+.ft-discount{margin-top:10px;font-size:13px;font-weight:600;color:var(--green);display:flex;align-items:center;gap:7px;}
 
 .promo-row{display:flex;gap:9px;margin-bottom:6px;}
 .promo-row input{
-  flex:1;background:var(--ink2);border:1px solid var(--line);border-radius:9px;padding:12px 16px;
-  font-family:var(--mono);font-size:15px;letter-spacing:.08em;color:var(--text);text-transform:uppercase;outline:none;
+  flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:12px 16px;
+  font-family:var(--mono);font-size:15px;letter-spacing:.06em;color:var(--text);text-transform:uppercase;outline:none;
 }
 .promo-row input:focus{border-color:var(--blue);}
-.promo-row input::placeholder{font-size:13px;letter-spacing:.02em;color:var(--dim);text-transform:none;}
+.promo-row input::placeholder{font-size:13px;letter-spacing:0;color:var(--text3);text-transform:none;font-family:var(--sans);}
 .promo-apply{
-  background:var(--blue);color:var(--ink);font-family:var(--tech);font-weight:700;font-size:13px;
-  padding:12px 20px;border-radius:9px;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;
+  background:var(--blue);color:#fff;font-weight:700;font-size:13.5px;
+  padding:12px 22px;border-radius:9px;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;
 }
-body.theme-light .promo-apply{color:#fff;}
-.promo-apply:hover{background:#fff;color:#181b20;}
-.promo-success{margin-top:9px;font-size:13px;color:var(--green);display:flex;align-items:center;gap:6px;}
+.promo-apply:hover{background:#1d4ed8;}
+.promo-success{margin-top:9px;font-size:13px;color:var(--green);display:flex;align-items:center;gap:6px;font-weight:600;}
 .promo-error{margin-top:9px;font-size:13px;color:var(--red);display:flex;align-items:center;gap:6px;}
 
-/* ═══════════════════════ ACTIONS ═══════════════════════ */
-.seg-actions{display:flex;gap:10px;margin-top:8px;}
+/* ═══ ACTIONS ═══ */
+.seg-actions{display:flex;gap:10px;margin-top:10px;}
 .btn-primary{
-  background:var(--blue);color:var(--ink);font-family:var(--tech);font-weight:700;font-size:14.5px;
-  padding:14px 28px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;
-  gap:9px;transition:all .25s cubic-bezier(.16,1,.3,1);
+  background:var(--blue);color:#fff;font-weight:700;font-size:14.5px;
+  padding:13px 28px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;
+  gap:9px;transition:all .22s;
 }
-body.theme-light .btn-primary{color:#fff;}
-.btn-primary:hover{background:#fff;color:#181b20;transform:translateY(-1px);}
-.btn-primary:disabled{opacity:.3;cursor:not-allowed;transform:none;}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,.3);}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none;}
 .btn-ghost{
-  background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--tech);
-  font-weight:600;font-size:14px;padding:14px 22px;border-radius:10px;cursor:pointer;transition:all .2s;
+  background:var(--surface);border:1.5px solid var(--border);color:var(--text2);font-weight:600;font-size:14px;
+  padding:13px 22px;border-radius:10px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow-sm);
 }
-.btn-ghost:hover{border-color:var(--blue-line);color:#fff;}
-body.theme-light .btn-ghost:hover{color:#181b20;}
+.btn-ghost:hover{border-color:var(--blue-line);color:var(--text);}
 
-/* ═══════════════════════ THE STICKER (build sheet) ═══════════════════════ */
-.sticker-rail{padding:40px 0 40px 0;position:sticky;top:0;align-self:start;height:100vh;display:flex;align-items:center;}
+/* ═══ STICKER RAIL ═══ */
+.sticker-rail{padding:48px 0 48px 0;position:sticky;top:0;align-self:start;height:100vh;display:flex;align-items:center;}
 .sticker{
-  width:100%; background:var(--paper); color:var(--ink-on-paper); border-radius:4px;
-  position:relative; box-shadow:0 30px 70px -20px rgba(0,0,0,.65); max-height:calc(100vh - 80px); overflow-y:auto;
-  opacity:0; transform:translateY(14px) rotate(-.4deg); animation:riseSticker .7s cubic-bezier(.16,1,.3,1) .18s forwards;
+  width:100%;background:var(--paper);color:var(--ink-on-paper);border-radius:6px;
+  position:relative;box-shadow:var(--shadow-xl);max-height:calc(100vh - 96px);overflow-y:auto;
+  border:1px solid rgba(15,23,42,.08);
+  opacity:0;transform:translateY(12px) rotate(-.5deg);animation:riseSticker .65s cubic-bezier(.16,1,.3,1) .18s forwards;
 }
-.sticker::before{ /* perforated top edge */
-  content:''; position:absolute; top:0; left:0; right:0; height:1px;
-  background-image:radial-gradient(circle, var(--ink) 1.5px, transparent 1.6px);
-  background-size:10px 1px; background-position:0 0; opacity:.5;
+.sticker::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background-image:radial-gradient(circle, rgba(15,23,42,.45) 1.5px, transparent 1.6px);
+  background-size:10px 1px;
 }
-.sticker-pad{padding:26px 26px 22px;}
-.sticker-top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px dashed var(--paper-line);padding-bottom:16px;margin-bottom:18px;}
-.sticker-brand{font-family:var(--tech);font-weight:700;font-size:14px;letter-spacing:.06em;}
-.sticker-brand span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:#5a6270;margin-top:3px;font-weight:400;}
-.sticker-ref{font-family:var(--mono);font-size:10.5px;color:#5a6270;text-align:right;line-height:1.6;}
+.sticker-pad{padding:24px 24px 20px;}
+.sticker-top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px dashed var(--paper-line);padding-bottom:14px;margin-bottom:16px;}
+.sticker-brand{font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--ink-on-paper);}
+.sticker-brand span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:#6b7280;margin-top:3px;font-weight:400;}
+.sticker-ref{font-family:var(--mono);font-size:10.5px;color:#6b7280;text-align:right;line-height:1.65;}
 .sticker-ref b{color:var(--ink-on-paper);display:block;font-size:11.5px;}
 
-.sticker-steps{display:flex;flex-direction:column;gap:0;margin-bottom:18px;}
-.sk-step{display:flex;align-items:center;gap:10px;padding:7px 0;font-family:var(--mono);font-size:11.5px;color:#5a6270;}
-.sk-step .sk-mark{width:15px;height:15px;border-radius:3px;border:1px solid var(--paper-line);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
+.sticker-steps{display:flex;flex-direction:column;gap:0;margin-bottom:16px;}
+.sk-step{display:flex;align-items:center;gap:10px;padding:6px 0;font-family:var(--mono);font-size:11.5px;color:#9ca3af;}
+.sk-step .sk-mark{width:16px;height:16px;border-radius:4px;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
 .sk-step.done{color:var(--ink-on-paper);}
-.sk-step.done .sk-mark{background:var(--stamp);border-color:var(--stamp);color:#f3eee0;}
+.sk-step.done .sk-mark{background:var(--stamp);border-color:var(--stamp);color:#fff;}
 .sk-step.now{color:var(--ink-on-paper);font-weight:600;}
 .sk-step.now .sk-mark{border-color:var(--ink-on-paper);}
 
-.sticker-lines{border-top:1px dashed var(--paper-line);padding-top:16px;margin-bottom:8px;min-height:18px;}
-.sk-line{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:6px 0;color:#5a6270;}
+.sticker-lines{border-top:1px dashed var(--paper-line);padding-top:14px;margin-bottom:8px;min-height:16px;}
+.sk-line{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:5px 0;color:#6b7280;}
 .sk-line b{color:var(--ink-on-paper);font-weight:600;text-align:right;font-family:var(--mono);font-size:11.5px;}
-.sk-empty{font-family:var(--mono);font-size:11px;color:#9aa0aa;font-style:italic;}
+.sk-empty{font-family:var(--mono);font-size:11px;color:#9ca3af;font-style:italic;}
 
-.sticker-total{border-top:1px dashed var(--paper-line);margin-top:14px;padding-top:16px;}
+.sticker-total{border-top:1px dashed var(--paper-line);margin-top:12px;padding-top:14px;}
 .st-row{display:flex;justify-content:space-between;align-items:baseline;}
-.st-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#5a6270;text-transform:uppercase;}
-.st-amount{font-family:var(--mono);font-weight:700;font-size:34px;color:var(--ink-on-paper);transition:transform .25s;}
-.st-amount.bump{transform:scale(1.08);}
-.st-orig{font-family:var(--mono);font-size:15px;color:#9aa0aa;text-decoration:line-through;}
-.st-discount{margin-top:7px;font-family:var(--mono);font-size:11px;color:var(--stamp);}
+.st-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#9ca3af;text-transform:uppercase;}
+.st-amount{font-family:var(--mono);font-weight:700;font-size:32px;color:var(--ink-on-paper);transition:transform .22s;}
+.st-amount.bump{transform:scale(1.07);}
+.st-orig{font-family:var(--mono);font-size:15px;color:#9ca3af;text-decoration:line-through;}
+.st-discount{margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--stamp);font-weight:600;}
 
 .sticker-cta{
-  width:100%;margin-top:18px;background:var(--ink-on-paper);color:var(--paper);
-  font-family:var(--tech);font-weight:700;font-size:14px;padding:14px;border-radius:8px;border:none;
+  width:100%;margin-top:16px;background:var(--ink-on-paper);color:var(--paper);
+  font-weight:700;font-size:14px;padding:14px;border-radius:8px;border:none;
   cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .2s;
 }
 .sticker-cta:hover{background:var(--stamp);}
 .sticker-cta:disabled{opacity:.35;cursor:not-allowed;}
-.sticker-note{font-family:var(--mono);font-size:10px;color:#8b9099;text-align:center;margin-top:11px;line-height:1.6;}
+.sticker-note{font-family:var(--mono);font-size:10px;color:#9ca3af;text-align:center;margin-top:10px;line-height:1.6;}
 
-/* mobile bar variant of the handle (hidden on desktop) */
 .sticker-handle{display:none;}
 
-@keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-@keyframes riseSticker{from{opacity:0;transform:translateY(14px) rotate(-.4deg);}to{opacity:1;transform:translateY(0) rotate(-.4deg);}}
+@keyframes rise{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes riseSticker{from{opacity:0;transform:translateY(12px) rotate(-.5deg);}to{opacity:1;transform:translateY(0) rotate(-.5deg);}}
 
-/* ═══════════════════════ SUCCESS ═══════════════════════ */
-.success-wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:90px 24px;}
+/* ═══ SUCCESS ═══ */
+.success-wrap{max-width:560px;margin:0 auto;padding:80px 24px;}
 .success-card{
-  background:var(--paper);color:var(--ink-on-paper);border-radius:6px;padding:50px 38px;text-align:center;
-  position:relative; box-shadow:0 30px 70px -20px rgba(0,0,0,.65);
-  animation:riseSticker .55s cubic-bezier(.16,1,.3,1);
+  background:var(--paper);color:var(--ink-on-paper);border-radius:8px;padding:48px 38px;text-align:center;
+  position:relative;box-shadow:var(--shadow-xl);border:1px solid rgba(15,23,42,.08);
+  animation:riseSticker .5s cubic-bezier(.16,1,.3,1);
 }
-.success-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background-image:radial-gradient(circle, var(--ink) 1.5px, transparent 1.6px);background-size:10px 1px;opacity:.5;}
-.success-stamp{
-  display:inline-flex;align-items:center;gap:8px;border:2px solid var(--stamp);color:var(--stamp);
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;padding:6px 14px;border-radius:5px;
-  transform:rotate(-3deg);margin-bottom:22px;
-}
-.success-title{font-family:var(--serif);font-weight:500;font-size:32px;letter-spacing:-.01em;margin-bottom:12px;}
-.success-sub{font-size:13.5px;color:#5a6270;line-height:1.75;margin-bottom:22px;}
+.success-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background-image:radial-gradient(circle,rgba(15,23,42,.45) 1.5px,transparent 1.6px);background-size:10px 1px;}
+.success-stamp{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--stamp);color:var(--stamp);font-family:var(--mono);font-size:11px;letter-spacing:.14em;padding:6px 14px;border-radius:5px;transform:rotate(-3deg);margin-bottom:20px;}
+.success-title{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.01em;margin-bottom:12px;}
+.success-sub{font-size:13.5px;color:#6b7280;line-height:1.75;margin-bottom:20px;}
 .success-sub b{color:var(--ink-on-paper);}
-.success-notice{
-  background:rgba(29,79,102,.06);border:1px solid rgba(29,79,102,.2);border-radius:9px;padding:14px 18px;
-  font-size:12.5px;color:#4a5260;margin-bottom:26px;line-height:1.7;
-}
+.success-notice{background:rgba(29,77,107,.05);border:1px solid rgba(29,77,107,.18);border-radius:9px;padding:13px 18px;font-size:12.5px;color:#4b5563;margin-bottom:24px;line-height:1.7;}
 .success-notice b{color:var(--stamp);}
-.success-recap{
-  border-top:1px dashed var(--paper-line); border-bottom:1px dashed var(--paper-line);
-  padding:16px 4px; margin-bottom:22px; text-align:left;
-}
-.sr-row{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:#5a6270;padding:5px 0;}
+.success-recap{border-top:1px dashed var(--paper-line);border-bottom:1px dashed var(--paper-line);padding:14px 0;margin-bottom:20px;text-align:left;}
+.sr-row{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:#6b7280;padding:5px 0;}
 .sr-row b{color:var(--ink-on-paper);font-family:var(--mono);font-weight:600;}
 .sr-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:10px;margin-top:4px;border-top:1px dashed var(--paper-line);}
-.sr-total span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a6270;}
+.sr-total span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;}
 .sr-total b{font-family:var(--mono);font-weight:700;font-size:26px;color:var(--stamp);}
 .success-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-.btn-home{display:inline-flex;align-items:center;gap:8px;background:var(--ink-on-paper);color:var(--paper);font-family:var(--tech);font-weight:700;font-size:13.5px;padding:12px 24px;border-radius:8px;text-decoration:none;transition:all .2s;}
+.btn-home{display:inline-flex;align-items:center;gap:8px;background:var(--ink-on-paper);color:var(--paper);font-weight:700;font-size:13.5px;padding:12px 24px;border-radius:8px;transition:all .2s;}
 .btn-home:hover{background:var(--stamp);}
-.btn-another{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#5a6270;font-family:var(--tech);font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;border:1px solid var(--paper-line);cursor:pointer;transition:all .2s;}
+.btn-another{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#6b7280;font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;border:1.5px solid #e5e7eb;cursor:pointer;transition:all .2s;}
 .btn-another:hover{border-color:var(--stamp);color:var(--stamp);}
 
 .hidden{display:none!important;}
 
-/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
-@media(max-width:880px){
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
   .shell{grid-template-columns:1fr;}
   .sticker-rail{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;padding:0;z-index:60;align-items:flex-end;}
-  .sticker{
-    max-height:0; opacity:1; transform:none; border-radius:18px 18px 0 0; animation:none;
-    transition:max-height .4s cubic-bezier(.16,1,.3,1); box-shadow:0 -20px 50px -10px rgba(0,0,0,.6);
-  }
+  .sticker{max-height:0;opacity:1;transform:none;border-radius:20px 20px 0 0;animation:none;transition:max-height .4s cubic-bezier(.16,1,.3,1);box-shadow:0 -12px 40px rgba(15,23,42,.12);}
   .sticker.expanded{max-height:78vh;}
   .sticker::before{display:none;}
   .sticker-handle{
-    display:flex; align-items:center; justify-content:space-between; gap:14px; cursor:pointer;
-    background:var(--paper); padding:14px 20px; border-radius:18px 18px 0 0;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;
+    background:var(--paper);padding:14px 20px;border-radius:20px 20px 0 0;border-bottom:1px solid transparent;
   }
+  .sticker.expanded .sticker-handle{border-bottom-color:var(--paper-line);}
   .sh-total{font-family:var(--mono);font-weight:700;font-size:20px;color:var(--ink-on-paper);}
-  .sh-mid{font-family:var(--mono);font-size:10.5px;color:#5a6270;letter-spacing:.06em;}
-  .sticker.expanded .sticker-handle{border-radius:0;border-bottom:1px dashed var(--paper-line);}
+  .sh-mid{font-family:var(--mono);font-size:10.5px;color:#9ca3af;letter-spacing:.06em;}
   .sticker-pad{max-height:calc(78vh - 56px);overflow-y:auto;}
-  .flow{padding:32px 20px 160px;}
-  .seg-head{padding:22px 2px;}
+  .flow{padding:40px 20px 160px;}
+  .seg-head{padding:20px 0;}
 }
-@media(max-width:600px){
-  .hero h1{max-width:none;}
-}
+@media(max-width:600px){.hero h1{max-width:none;} .svc-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- THEME TOGGLE -->
-<div class="theme-toggle" role="group" aria-label="Choix d'apparence">
-  <button type="button" class="theme-btn active" id="themeBtnDark" onclick="setTheme('dark')" aria-pressed="true"><i class="fa-solid fa-moon fa-sm"></i> Sombre</button>
-  <button type="button" class="theme-btn" id="themeBtnLight" onclick="setTheme('light')" aria-pressed="false"><i class="fa-solid fa-sun fa-sm"></i> Clair</button>
-</div>
-
 <div class="shell">
 
-  <!-- ═══ STICKER RAIL (sticky build-sheet) ═══ -->
+  <!-- ═══ STICKER RAIL ═══ -->
   <div class="sticker-rail">
     <div class="sticker" id="sticker">
-      <div class="sticker-handle" id="stickerHandle" onclick="toggleSticker()">
-        <span class="sh-mid" id="shMid">Étape 1 · Service</span>
-        <span class="sh-total" id="shTotal">—</span>
-        <i class="fa-solid fa-chevron-up" id="stickerChev"></i>
+      <div class="sticker-handle" onclick="toggleSticker()">
+        <div>
+          <div class="sh-mid" id="shMid">Étape 1 · Service</div>
+          <div class="sh-total" id="shTotal">—</div>
+        </div>
+        <i class="fa-solid fa-chevron-up fa-sm"></i>
       </div>
       <div class="sticker-pad">
         <div class="sticker-top">
           <div class="sticker-brand">SHINE<span>AUTOMOBILE · FICHE</span></div>
           <div class="sticker-ref">N° <b id="refNum">SA-000000</b>Sherbrooke, QC</div>
         </div>
-
         <div class="sticker-steps" id="stickerSteps">
           <div class="sk-step now" data-s="1"><div class="sk-mark">1</div>Service &amp; véhicule</div>
           <div class="sk-step" data-s="2"><div class="sk-mark">2</div>Personnalisation</div>
           <div class="sk-step" data-s="3"><div class="sk-mark">3</div>Coordonnées</div>
           <div class="sk-step" data-s="4"><div class="sk-mark">4</div>Confirmation</div>
         </div>
-
         <div class="sticker-lines" id="stickerLines">
           <div class="sk-empty">Vos sélections apparaîtront ici.</div>
         </div>
-
         <div class="sticker-total">
           <div class="st-row">
             <div class="st-label" id="stLabel">Total estimé</div>
+            <div class="st-orig hidden" id="stOrig"></div>
           </div>
           <div class="st-row" style="margin-top:4px;">
             <div class="st-amount" id="stAmount">—</div>
-            <div class="st-orig hidden" id="stOrig"></div>
           </div>
           <div class="st-discount hidden" id="stDiscount"></div>
         </div>
-
         <button type="button" class="sticker-cta" id="stickerCta" onclick="stickerCtaClick()" disabled>
           Choisir un service <i class="fa-solid fa-arrow-right fa-xs"></i>
         </button>
@@ -487,15 +485,16 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
 
     <div class="topline">
       <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left fa-sm"></i> Accueil</a>
-      <div class="brandmark"><span class="dot"></span> RÉSERVATION EN LIGNE</div>
+      <div class="brandmark"><span class="brandmark-dot"></span> RÉSERVATION EN LIGNE</div>
     </div>
 
     <div class="hero">
-      <div class="hero-eyebrow">Lavage auto à domicile · Sherbrooke &amp; région</div>
-      <h1> <em>Votre</em> rendez-vous, ligne par ligne.</h1>
+      <div class="hero-tag"><i class="fa-solid fa-location-dot fa-xs"></i> Sherbrooke &amp; Estrie</div>
+      <h1>Votre <em>rendez-vous</em>, configuré en ligne.</h1>
+      <p>Lavage mobile à domicile — sélectionnez votre service et on s'occupe du reste.</p>
     </div>
 
-    <div class="callout" id="mainNotice">
+    <div class="callout">
       <i class="fa-solid fa-triangle-exclamation fa-sm"></i>
       <div>Des frais supplémentaires peuvent s'appliquer pour les services à l'extérieur de Sherbrooke.</div>
     </div>
@@ -513,82 +512,169 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
       </div>
       <div class="seg-wrap"><div class="seg-inner"><div class="seg-body">
 
-        <span class="label">Type de véhicule</span>
-        <div class="vtabs" role="tablist" aria-label="Type de véhicule">
-          <button type="button" class="vtab active" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">Sedan</button>
-          <button type="button" class="vtab" onclick="switchVehicle('suv',this)" aria-selected="false" role="tab">VUS</button>
-          <button type="button" class="vtab" onclick="switchVehicle('van',this)" aria-selected="false" role="tab">Van</button>
-          <button type="button" class="vtab" onclick="switchVehicle('pickup',this)" aria-selected="false" role="tab">Pickup</button>
-          <button type="button" class="vtab" onclick="switchVehicle('forfait',this)" aria-selected="false" role="tab">Forfaits multi-véhicules</button>
+        <span class="lbl">Type de véhicule</span>
+        <div class="vcard-grid" role="tablist" aria-label="Type de véhicule">
+          <button type="button" class="vcard active" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">
+            <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="vcard-img">🚗</div>
+            <div class="vcard-label">Sedan</div>
+          </button>
+          <button type="button" class="vcard" onclick="switchVehicle('suv',this)" aria-selected="false" role="tab">
+            <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="vcard-img">🚙</div>
+            <div class="vcard-label">VUS</div>
+          </button>
+          <button type="button" class="vcard" onclick="switchVehicle('van',this)" aria-selected="false" role="tab">
+            <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="vcard-img">🚐</div>
+            <div class="vcard-label">Van</div>
+          </button>
+          <button type="button" class="vcard" onclick="switchVehicle('pickup',this)" aria-selected="false" role="tab">
+            <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="vcard-img">🛻</div>
+            <div class="vcard-label">Pickup</div>
+          </button>
+          <button type="button" class="vcard vcard-forfait" onclick="switchVehicle('forfait',this)" aria-selected="false" role="tab">
+            <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="vcard-img">🚗</div>
+            <div class="vcard-label">Forfaits multi-véhicules</div>
+          </button>
         </div>
 
-        <span class="label">Service</span>
-        <div id="g-sedan" class="svc-grid" role="group" aria-label="Services sedan">
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Sedan" data-price="40" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Sedan" data-price="50" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Sedan" data-price="75" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">75$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Sedan" data-price="125" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">125$</div><div class="svc-desc">Intérieur complet premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Sedan" data-price="100" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Sedan" data-price="175" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">175$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Sedan" data-price="50" data-desc="Shampoing professionnel des sièges et tapis." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
-        </div>
+        <span class="lbl">Choisir un service</span>
 
-        <div id="g-suv" class="svc-grid hidden" role="group" aria-label="Services VUS">
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur SUV" data-price="40" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">40$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus SUV" data-price="50" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">50$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier SUV" data-price="100" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">100$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super SUV" data-price="130" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">130$</div><div class="svc-desc">Intérieur complet premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier SUV" data-price="120" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">120$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super SUV" data-price="180" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">180$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges SUV" data-price="60" data-desc="Shampoing professionnel des sièges et tapis." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">60$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
-        </div>
-
-        <div id="g-van" class="svc-grid hidden" role="group" aria-label="Services Van">
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Van" data-price="50" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Van" data-price="80" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">80$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Van" data-price="130" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">130$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Van" data-price="180" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">180$</div><div class="svc-desc">Intérieur complet premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Van" data-price="200" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">200$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Van" data-price="300" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">300$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Van" data-price="100" data-desc="Shampoing professionnel des sièges et tapis." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">100$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
-        </div>
-
-        <div id="g-pickup" class="svc-grid hidden" role="group" aria-label="Services Pickup">
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Pickup" data-price="50" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur</div><div class="svc-price">50$</div><div class="svc-desc">Nettoyage complet extérieur</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Pickup" data-price="70" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Extérieur Plus</div><div class="svc-price">70$</div><div class="svc-desc">Extérieur + finition détaillée</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Pickup" data-price="130" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Régulier</div><div class="svc-price">130$</div><div class="svc-desc">Aspirateur + surfaces</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Pickup" data-price="200" data-desc="Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Intérieur Super</div><div class="svc-price">200$</div><div class="svc-desc">Intérieur complet premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Pickup" data-price="190" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Régulier</div><div class="svc-price">190$</div><div class="svc-desc">Extérieur + intérieur régulier</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Pickup" data-price="250" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes <b>+ application de cire protectrice</b>. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures <b>+ shampoing des sièges et tapis et application de protection plastique intérieur</b>." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Lavage Complet Super</div><div class="svc-price">250$</div><div class="svc-desc">Extérieur + intérieur premium</div></div>
-          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Pickup" data-price="75" data-desc="Shampoing professionnel des sièges et tapis." onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-name">Shampoing des Sièges</div><div class="svc-price">75$</div><div class="svc-desc">Nettoyage profond des sièges</div></div>
-        </div>
-
-        <div id="g-forfait" class="hidden" style="display:none;flex-direction:column;" role="group" aria-label="Forfaits multi-véhicules">
-          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes." data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div><div class="svc-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div></div>
-            <div class="ff-price">30$<small> /voit.</small></div>
+        <!-- SEDAN -->
+        <div id="g-sedan" class="svc-grid" role="group">
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Sedan" data-price="40" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+              <div class="svc-name">Lavage Extérieur</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Rinçage &amp; nettoyage au savon</li>
+                <li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li>
+                <li><i class="fa-solid fa-check"></i>Séchage manuel sans traces</li>
+                <li><i class="fa-solid fa-check"></i>Lustrage des pneus</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">40$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes." data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div><div class="svc-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div></div>
-            <div class="ff-price">25$<small> /voit.</small></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Sedan" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-star"></i></div>
+              <div class="svc-name">Lavage Extérieur Plus</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li>
+                <li><i class="fa-solid fa-check"></i>Application de cire protectrice</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 2 voitures" data-price="95" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">2 voitures</div></div>
-            <div class="ff-price">95$<small> /voit.</small></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-couch"></i></div>
+              <div class="svc-name">Lavage Intérieur Régulier</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Aspiration complète (moquette, tapis, sièges, coffre)</li>
+                <li><i class="fa-solid fa-check"></i>Surfaces plastique + tableau de bord</li>
+                <li><i class="fa-solid fa-check"></i>Volant + vitres intérieures</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">75$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 3-4 voitures" data-price="90" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div></div>
-            <div class="ff-price">90$<small> /voit.</small></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-gem"></i></div>
+              <div class="svc-name">Lavage Intérieur Super</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Tout du Lavage Intérieur Régulier</li>
+                <li><i class="fa-solid fa-check"></i>Shampoing des sièges et tapis</li>
+                <li><i class="fa-solid fa-check"></i>Protection plastique intérieur</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">125$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 5+ voitures" data-price="80" data-desc="Rinçage complet, nettoyage au savon, nettoyage des jantes, vitres extérieures et séchage manuel sans traces, lustrage des pneus et nettoyage autour des portes. Aspiration complète (moquette, tapis, sièges et coffre), nettoyage des surfaces en plastique, tableau de bord, volant et vitres intérieures." data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div><div class="svc-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div></div>
-            <div class="ff-price">80$<small> /voit.</small></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Sedan" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-car-side"></i></div>
+              <div class="svc-name">Lavage Complet Régulier</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Extérieur complet</li>
+                <li><i class="fa-solid fa-check"></i>Intérieur régulier (aspiration + surfaces)</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
+          </div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-trophy"></i></div>
+              <div class="svc-name">Lavage Complet Super</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Extérieur Plus (cire protectrice)</li>
+                <li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">175$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
+          </div>
+          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Sedan" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-soap"></i></div>
+              <div class="svc-name">Shampoing des Sièges</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Shampoing professionnel des sièges</li>
+                <li><i class="fa-solid fa-check"></i>Nettoyage en profondeur des tapis</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
         </div>
 
-        <div class="svc-desc-box" id="svcDescBox">
-          <i class="fa-solid fa-circle-info fa-sm"></i>
-          <div class="svc-desc-box-text" id="svcDescText"></div>
+        <!-- SUV -->
+        <div id="g-suv" class="svc-grid hidden" role="group">
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur SUV" data-price="40" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div><div class="svc-name">Lavage Extérieur</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Rinçage &amp; savon complet</li><li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li><li><i class="fa-solid fa-check"></i>Séchage + lustrage des pneus</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">40$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Application de cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier SUV" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Lavage Intérieur Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Surfaces + tableau de bord</li><li><i class="fa-solid fa-check"></i>Vitres intérieures</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Intérieur Régulier</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique intérieur</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier SUV" data-price="120" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-car-side"></i></div><div class="svc-name">Lavage Complet Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur complet</li><li><i class="fa-solid fa-check"></i>Intérieur régulier</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">120$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges SUV" data-price="60" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">60$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+        </div>
+
+        <!-- VAN -->
+        <div id="g-van" class="svc-grid hidden" role="group">
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Van" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div><div class="svc-name">Lavage Extérieur</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Rinçage &amp; savon complet</li><li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li><li><i class="fa-solid fa-check"></i>Séchage + lustrage des pneus</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Van" data-price="80" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">80$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Van" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Lavage Intérieur Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Surfaces + tableau de bord</li><li><i class="fa-solid fa-check"></i>Vitres intérieures</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Van" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Intérieur régulier complet</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Van" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-car-side"></i></div><div class="svc-name">Lavage Complet Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur complet</li><li><i class="fa-solid fa-check"></i>Intérieur régulier</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">200$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Van" data-price="300" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">300$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Van" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+        </div>
+
+        <!-- PICKUP -->
+        <div id="g-pickup" class="svc-grid hidden" role="group">
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div><div class="svc-name">Lavage Extérieur</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Rinçage &amp; savon complet</li><li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li><li><i class="fa-solid fa-check"></i>Séchage + lustrage des pneus</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Pickup" data-price="70" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">70$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Pickup" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Lavage Intérieur Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Surfaces + tableau de bord</li><li><i class="fa-solid fa-check"></i>Vitres intérieures</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Pickup" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Intérieur régulier complet</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">200$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Pickup" data-price="190" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-car-side"></i></div><div class="svc-name">Lavage Complet Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur complet</li><li><i class="fa-solid fa-check"></i>Intérieur régulier</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">190$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Pickup" data-price="250" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">250$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Pickup" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">75$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+        </div>
+
+        <!-- FORFAITS -->
+        <div id="g-forfait" class="hidden" style="display:none;flex-direction:column;" role="group">
+          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div></div><div class="ff-price">30$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div></div><div class="ff-price">25$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">2 voitures</div></div><div class="ff-price">95$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div></div><div class="ff-price">90$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div></div><div class="ff-price">80$<small> / voiture</small></div></div>
         </div>
 
         <button type="button" class="clear-btn" id="clearBtn" onclick="clearSelection()"><i class="fa-solid fa-xmark fa-2xs"></i> Effacer la sélection</button>
@@ -603,11 +689,10 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
 
         <div class="field" style="max-width:420px;margin-bottom:8px;">
           <label for="vehicleModel">Marque et modèle *</label>
-          <input type="text" id="vehicleModel" placeholder="Ex. Toyota Camry 2022" required aria-required="true">
+          <input type="text" id="vehicleModel" placeholder="Ex. Toyota Camry 2022" required>
         </div>
 
         <div id="step1Error" class="field-error hidden" role="alert"><i class="fa-solid fa-circle-exclamation fa-sm"></i> <span id="step1ErrorText"></span></div>
-
         <div class="seg-actions">
           <button type="button" class="btn-primary" id="btnStep1" onclick="completeSeg1()" disabled>Continuer <i class="fa-solid fa-arrow-right fa-xs"></i></button>
         </div>
@@ -626,44 +711,39 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
         <div class="seg-chev"><i class="fa-solid fa-chevron-down fa-sm"></i></div>
       </div>
       <div class="seg-wrap"><div class="seg-inner"><div class="seg-body">
-
         <div class="add-option">
           <div class="add-option-head">
-            <label class="add-option-title" id="decontLabel">Ajouter une décontamination complète extérieure ?</label>
+            <label class="add-option-title">Ajouter une décontamination complète extérieure ?</label>
             <div class="add-option-price" id="decontTotal">+0$</div>
           </div>
-          <div class="radio-pair" role="radiogroup" aria-labelledby="decontLabel">
+          <div class="radio-pair" role="radiogroup">
             <label class="radio-pill"><input type="radio" name="decont" value="non" checked onchange="toggleDecont(false)">Non</label>
             <label class="radio-pill"><input type="radio" name="decont" value="oui" onchange="toggleDecont(true)">Oui</label>
           </div>
-          <!-- Shown only if vehicle type has no direct price match (forfait) -->
           <div class="decont-options" id="decontOptions">
             <div class="decont-opt" tabindex="0" data-price="50" data-type="sedan" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)"><div class="svc-name">Sedan</div><div class="svc-price">50$</div></div>
             <div class="decont-opt" tabindex="0" data-price="75" data-type="suv" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)"><div class="svc-name">VUS</div><div class="svc-price">75$</div></div>
             <div class="decont-opt" tabindex="0" data-price="150" data-type="vanpickup" onclick="selectDecont(this)" onkeydown="decontKeydown(event,this)"><div class="svc-name">Pickup / Van</div><div class="svc-price">150$</div></div>
           </div>
-          <!-- Shown automatically when vehicle type is known (sedan/suv/van/pickup) -->
           <div class="decont-single" id="decontSingle">
-            <div class="decont-single-text">Décontamination <b id="decontSingleLabel">—</b> (selon le véhicule sélectionné à l'étape 1)</div>
+            <div class="decont-single-text">Décontamination <b id="decontSingleLabel">—</b></div>
             <div class="decont-single-price" id="decontSinglePrice">+0$</div>
           </div>
         </div>
-
         <div class="add-option">
           <div class="add-option-head">
-            <label class="add-option-title" id="dogLabel">Présence de poils d'animaux dans le véhicule ?</label>
+            <label class="add-option-title">Présence de poils d'animaux dans le véhicule ?</label>
             <div class="add-option-price" id="dogTotal">+0$</div>
           </div>
-          <div class="radio-pair" role="radiogroup" aria-labelledby="dogLabel">
+          <div class="radio-pair" role="radiogroup">
             <label class="radio-pill"><input type="radio" name="doghair" value="non" checked onchange="toggleDogHair(false)">Non</label>
             <label class="radio-pill"><input type="radio" name="doghair" value="oui" onchange="toggleDogHair(true)">Oui (environ +25$)</label>
           </div>
           <div class="notice-inline" id="dogHairNotice" style="display:none;">
             <i class="fa-solid fa-circle-info fa-sm"></i>
-            <span>Le montant exact sera confirmé sur place selon la quantité de poils présents dans le véhicule.</span>
+            <span>Le montant exact sera confirmé sur place selon la quantité de poils présents.</span>
           </div>
         </div>
-
         <div class="seg-actions">
           <button type="button" class="btn-ghost" onclick="openSeg(1)">← Retour</button>
           <button type="button" class="btn-primary" onclick="completeSeg2()">Continuer <i class="fa-solid fa-arrow-right fa-xs"></i></button>
@@ -683,36 +763,31 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
         <div class="seg-chev"><i class="fa-solid fa-chevron-down fa-sm"></i></div>
       </div>
       <div class="seg-wrap"><div class="seg-inner"><div class="seg-body">
-
         <div class="field-row">
-          <div class="field"><label for="nom">Nom complet *</label><input type="text" id="nom" placeholder="Jean Tremblay" required aria-required="true"></div>
-          <div class="field"><label for="telephone">Téléphone *</label><input type="tel" id="telephone" inputmode="tel" placeholder="873-662-3813" required aria-required="true"></div>
+          <div class="field"><label for="nom">Nom complet *</label><input type="text" id="nom" placeholder="Jean Tremblay" required></div>
+          <div class="field"><label for="telephone">Téléphone *</label><input type="tel" id="telephone" inputmode="tel" placeholder="873-662-3813" required></div>
         </div>
-        <div class="field"><label for="adresse">Adresse de service *</label><input type="text" id="adresse" placeholder="123 rue Principale, Sherbrooke, QC" required aria-required="true"></div>
+        <div class="field"><label for="adresse">Adresse de service *</label><input type="text" id="adresse" placeholder="123 rue Principale, Sherbrooke, QC" required></div>
         <div class="field-row">
-          <div class="field" style="max-width:230px"><label for="maDate">Date souhaitée *</label><input type="date" id="maDate" onchange="checkSameDay()" required aria-required="true"></div>
+          <div class="field" style="max-width:230px"><label for="maDate">Date souhaitée *</label><input type="date" id="maDate" onchange="checkSameDay()" required></div>
           <div class="field">
             <label>Créneau préféré</label>
-            <div class="creneau-row" role="group" aria-label="Créneau horaire">
+            <div class="creneau-row" role="group">
               <button type="button" class="creneau-btn" data-creneau="Matin (8h–12h)" onclick="selectCreneau(this)"><i class="fa-solid fa-sun fa-2xs"></i> Matin</button>
               <button type="button" class="creneau-btn" data-creneau="Après-midi (12h–17h)" onclick="selectCreneau(this)"><i class="fa-solid fa-cloud-sun fa-2xs"></i> Après-midi</button>
               <button type="button" class="creneau-btn" data-creneau="Pas de préférence" onclick="selectCreneau(this)">Indifférent</button>
             </div>
           </div>
         </div>
-
         <div id="sameDayWarning" class="notice-inline hidden">
           <i class="fa-solid fa-clock fa-sm"></i>
-          <span><strong>Réservation le jour même :</strong> appelez ou texter au <strong>873-662-3813</strong> pour une demande urgente — les réservations du jour ne sont pas toujours confirmables. Idéalement, réservez au moins 24h à l'avance.</span>
+          <span><strong>Réservation le jour même :</strong> appelez au <strong>873-662-3813</strong> — les réservations du jour ne sont pas toujours confirmables en ligne.</span>
         </div>
-
         <div class="field" style="margin-top:6px;">
-          <label for="noteClient">Note ou commentaire <span style="text-transform:none;letter-spacing:0;color:var(--dim);">(optionnel)</span></label>
+          <label for="noteClient">Note ou commentaire <span style="text-transform:none;letter-spacing:0;color:var(--text3);">(optionnel)</span></label>
           <textarea id="noteClient" rows="3" placeholder="Véhicule très sale, présence d'animaux, accès par la ruelle..."></textarea>
         </div>
-
         <div id="step2Error" class="field-error hidden" role="alert"><i class="fa-solid fa-circle-exclamation fa-sm"></i> <span id="step2ErrorText"></span></div>
-
         <div class="seg-actions">
           <button type="button" class="btn-ghost" onclick="openSeg(2)">← Retour</button>
           <button type="button" class="btn-primary" onclick="completeSeg3()">Continuer <i class="fa-solid fa-arrow-right fa-xs"></i></button>
@@ -731,10 +806,8 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
         <div class="seg-chev"><i class="fa-solid fa-chevron-down fa-sm"></i></div>
       </div>
       <div class="seg-wrap"><div class="seg-inner"><div class="seg-body">
-
         <div class="recap" id="recapContent"></div>
-
-        <div class="final-total" id="finalTotal">
+        <div class="final-total">
           <div class="ft-row">
             <span class="ft-label" id="ftLabel">Montant total</span>
             <span class="ft-orig hidden" id="ftOrig"></span>
@@ -742,14 +815,12 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
           <div class="ft-amount" id="ftAmount">—</div>
           <div class="ft-discount hidden" id="ftDiscount"><i class="fa-solid fa-check fa-2xs"></i> Rabais de 10$ appliqué (code SHINE10)</div>
         </div>
-
-        <span class="label">Code promo</span>
+        <span class="lbl">Code promo</span>
         <div class="promo-row">
           <input type="text" id="promoCode" maxlength="20" placeholder="Code promo">
           <button type="button" class="promo-apply" onclick="applyPromo()">Appliquer</button>
         </div>
         <div id="promoMsg" aria-live="polite" style="margin-bottom:20px;"></div>
-
         <div class="seg-actions">
           <button type="button" class="btn-ghost" onclick="openSeg(3)">← Retour</button>
           <button type="button" class="btn-primary" id="submitBtn" onclick="submitForm()">Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i></button>
@@ -765,9 +836,9 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
   <div class="success-card">
     <div class="success-stamp"><i class="fa-solid fa-check"></i> CONFIRMÉ</div>
     <div class="success-title" id="successTitle">Merci !</div>
-    <div class="success-sub" id="successSub">Votre demande a été reçue avec soin. Notre équipe vous contactera personnellement dans les prochaines <b>24 heures</b> pour confirmer votre rendez-vous.</div>
+    <div class="success-sub" id="successSub">Votre demande a été reçue. Notre équipe vous contactera dans les prochaines <b>24 heures</b>.</div>
     <div class="success-recap" id="successRecap"></div>
-    <div class="success-notice">Une question avant notre appel ? Écrivez-nous ou appelez au <b>873-662-3813</b> — ce sera toujours un plaisir de vous aider.</div>
+    <div class="success-notice">Une question ? Appelez au <b>873-662-3813</b> — il nous fera plaisir de vous aider.</div>
     <div class="success-btns">
       <a href="index.html" class="btn-home"><i class="fa-solid fa-house fa-sm"></i> Retour à l'accueil</a>
       <button type="button" class="btn-another" onclick="resetAll()"><i class="fa-solid fa-rotate-left fa-sm"></i> Nouvelle réservation</button>
@@ -776,421 +847,257 @@ body.theme-light .btn-ghost:hover{color:#181b20;}
 </div>
 
 <script>
-/* ══════════════════════════════════════
-   STATE
-══════════════════════════════════════ */
-const PROMO_CODE='SHINE10', PROMO_AMOUNT=10, PROMO_MIN=100;
+const PROMO_CODE='SHINE10',PROMO_AMOUNT=10,PROMO_MIN=100;
 const DECONT_PRICES={sedan:{label:'Sedan',price:50,type:'sedan'},suv:{label:'VUS',price:75,type:'suv'},van:{label:'Pickup / Van',price:150,type:'vanpickup'},pickup:{label:'Pickup / Van',price:150,type:'vanpickup'}};
 let S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:''};
-let currentSeg=1;
-let segDone={1:false,2:false,3:false,4:false};
+let currentSeg=1,segDone={1:false,2:false,3:false,4:false};
 let refNumber='SA-'+Math.floor(100000+Math.random()*899999);
 document.getElementById('refNum').textContent=refNumber;
 
-/* ══════════════════════════════════════
-   THEME
-══════════════════════════════════════ */
-function setTheme(mode){
-  document.body.classList.toggle('theme-light', mode==='light');
-  document.getElementById('themeBtnDark').classList.toggle('active', mode==='dark');
-  document.getElementById('themeBtnLight').classList.toggle('active', mode==='light');
-  document.getElementById('themeBtnDark').setAttribute('aria-pressed', mode==='dark');
-  document.getElementById('themeBtnLight').setAttribute('aria-pressed', mode==='light');
-}
-
-/* ══════════════════════════════════════
-   SEGMENT NAVIGATION
-══════════════════════════════════════ */
 function openSeg(n){
-  if(document.getElementById('seg'+n).classList.contains('locked')) return;
+  if(document.getElementById('seg'+n).classList.contains('locked'))return;
   currentSeg=n;
-  for(let i=1;i<=4;i++){
-    const el=document.getElementById('seg'+i);
-    el.classList.remove('active');
-    if(i===n) el.classList.add('active');
-  }
-  updateStickerSteps();
-  updateStickerCta();
-  if(window.innerWidth>880){
-    setTimeout(()=>document.getElementById('seg'+n).scrollIntoView({behavior:'smooth',block:'start'}),60);
-  }
+  for(let i=1;i<=4;i++){const el=document.getElementById('seg'+i);el.classList.remove('active');if(i===n)el.classList.add('active');}
+  updateStickerSteps();updateStickerCta();
+  if(window.innerWidth>900)setTimeout(()=>document.getElementById('seg'+n).scrollIntoView({behavior:'smooth',block:'start'}),60);
 }
-function unlockSeg(n){ document.getElementById('seg'+n).classList.remove('locked'); }
+function unlockSeg(n){document.getElementById('seg'+n).classList.remove('locked');}
 function markDone(n,sub){
   segDone[n]=true;
-  const seg=document.getElementById('seg'+n);
-  seg.classList.add('done');
-  if(sub) document.getElementById('seg'+n+'Sub').innerHTML=sub;
+  document.getElementById('seg'+n).classList.add('done');
+  if(sub)document.getElementById('seg'+n+'Sub').innerHTML=sub;
 }
 
-/* SEG 1 */
 function completeSeg1(){
-  if(!S.service){ showStep1Error('Veuillez sélectionner un service.'); return; }
+  if(!S.service){showStep1Error('Veuillez sélectionner un service.');return;}
   const model=document.getElementById('vehicleModel').value.trim();
-  if(!model){ showStep1Error('Veuillez entrer le modèle de votre véhicule.'); return; }
+  if(!model){showStep1Error('Veuillez entrer le modèle de votre véhicule.');return;}
   hideStep1Error();
-  markDone(1, `<b>${escapeHtml(S.service)}</b> · ${escapeHtml(model)} · ×${S.qty}`);
+  markDone(1,`<b>${escapeHtml(S.service)}</b> · ${escapeHtml(model)} · ×${S.qty}`);
   document.getElementById('seg1').classList.remove('active');
-  unlockSeg(2);
-  setupDecontForVehicle();
-  openSeg(2);
+  unlockSeg(2);setupDecontForVehicle();openSeg(2);
 }
-/* SEG 2 */
 function completeSeg2(){
-  let sub='Aucune option supplémentaire.';
   const parts=[];
-  if(S.decontPrice>0) parts.push(`Décontamination ${decontLabel(S.decontType)} (+${S.decontPrice}$)`);
-  if(S.dogHairPrice>0) parts.push(`Poils d'animaux (environ +${S.dogHairPrice}$)`);
-  if(parts.length) sub=parts.join(' · ');
-  markDone(2, sub);
+  if(S.decontPrice>0)parts.push(`Décontamination ${decontLabel(S.decontType)} (+${S.decontPrice}$)`);
+  if(S.dogHairPrice>0)parts.push(`Poils d'animaux (environ +${S.dogHairPrice}$)`);
+  markDone(2,parts.length?parts.join(' · '):'Aucune option supplémentaire.');
   document.getElementById('seg2').classList.remove('active');
-  unlockSeg(3); openSeg(3);
+  unlockSeg(3);openSeg(3);
 }
-/* SEG 3 */
 function completeSeg3(){
-  const nom=document.getElementById('nom').value.trim();
-  const tel=document.getElementById('telephone').value.trim();
-  const adr=document.getElementById('adresse').value.trim();
-  const date=document.getElementById('maDate').value;
-  if(!nom||!tel||!adr||!date){ showStep2Error('Veuillez remplir tous les champs obligatoires.'); return; }
+  const nom=document.getElementById('nom').value.trim(),tel=document.getElementById('telephone').value.trim(),adr=document.getElementById('adresse').value.trim(),date=document.getElementById('maDate').value;
+  if(!nom||!tel||!adr||!date){showStep2Error('Veuillez remplir tous les champs obligatoires.');return;}
   hideStep2Error();
-  markDone(3, `<b>${escapeHtml(nom)}</b> · ${escapeHtml(date)}${S.creneau?(' · '+escapeHtml(S.creneau)):''}`);
+  markDone(3,`<b>${escapeHtml(nom)}</b> · ${escapeHtml(date)}${S.creneau?' · '+escapeHtml(S.creneau):''}`);
   document.getElementById('seg3').classList.remove('active');
-  unlockSeg(4); openSeg(4);
-  buildRecap();
+  unlockSeg(4);openSeg(4);buildRecap();
 }
 
-/* ══════════════════════════════════════
-   VEHICLE / SERVICE SELECTION
-══════════════════════════════════════ */
 function switchVehicle(v,btn){
-  S.vehicle=v; S.service=null; S.price=0; S.promo=false;
-  document.querySelectorAll('.vtab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
-  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+  S.vehicle=v;S.service=null;S.price=0;S.promo=false;
+  document.querySelectorAll('.vcard').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
   ['sedan','suv','van','pickup'].forEach(id=>document.getElementById('g-'+id)?.classList.add('hidden'));
   const ff=document.getElementById('g-forfait');
-  if(v==='forfait'){ ff.classList.remove('hidden'); ff.style.display='flex'; }
-  else{ ff.classList.add('hidden'); ff.style.display='none'; document.getElementById('g-'+v)?.classList.remove('hidden'); }
+  if(v==='forfait'){ff.classList.remove('hidden');ff.style.display='flex';}
+  else{ff.classList.add('hidden');ff.style.display='none';document.getElementById('g-'+v)?.classList.remove('hidden');}
   document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
   document.getElementById('clearBtn').classList.remove('show');
-  showSvcDesc(null, null);
-  hideStep1Error(); updateAll();
+  hideStep1Error();updateAll();
 }
 function selectSvc(el){
   document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
   el.classList.add('selected');
-  S.service=el.dataset.service; S.price=parseInt(el.dataset.price); S.isForfait=el.dataset.forfait==='true';
+  S.service=el.dataset.service;S.price=parseInt(el.dataset.price);S.isForfait=el.dataset.forfait==='true';
   S.promo=false;
-  const pc=document.getElementById('promoCode'); if(pc) pc.value='';
+  const pc=document.getElementById('promoCode');if(pc)pc.value='';
   document.getElementById('promoMsg').innerHTML='';
   document.getElementById('clearBtn').classList.add('show');
-  showSvcDesc(el, el.dataset.desc);
-  hideStep1Error(); updateAll();
+  hideStep1Error();updateAll();
 }
-function showSvcDesc(el, desc){
-  const box=document.getElementById('svcDescBox'); const text=document.getElementById('svcDescText');
-  if(!desc){ box.classList.remove('show'); text.innerHTML=''; return; }
-  text.innerHTML=desc;
-  el.insertAdjacentElement('afterend', box);
-  box.classList.add('show');
-}
-function svcKeydown(e,el){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selectSvc(el); } }
-function decontKeydown(e,el){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selectDecont(el); } }
+function svcKeydown(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSvc(el);}}
+function decontKeydown(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();selectDecont(el);}}
 function clearSelection(){
   document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
-  S.service=null; S.price=0; S.promo=false;
+  S.service=null;S.price=0;S.promo=false;
   document.getElementById('clearBtn').classList.remove('show');
-  showSvcDesc(null, null);
   updateAll();
 }
 function changeQty(d){
   S.qty=Math.max(1,Math.min(10,S.qty+d));
   document.getElementById('qtyDisplay').textContent=S.qty;
-  S.promo=false; document.getElementById('promoMsg').innerHTML='';
+  S.promo=false;document.getElementById('promoMsg').innerHTML='';
   updateAll();
 }
-
-/* Decide whether the vehicle type chosen in step 1 maps to a known
-   decontamination price. Sedan/SUV/Van/Pickup -> auto-selected price.
-   Forfait (multi-vehicle) -> no single mapping, so show the manual choices. */
 function setupDecontForVehicle(){
   const known=DECONT_PRICES[S.vehicle];
-  const optsBox=document.getElementById('decontOptions');
-  const singleBox=document.getElementById('decontSingle');
+  const optsBox=document.getElementById('decontOptions'),singleBox=document.getElementById('decontSingle');
   const decontIsOn=document.querySelector('input[name="decont"][value="oui"]').checked;
-
   if(known){
-    // auto-apply the matching price for this vehicle type
-    S.decontPrice = decontIsOn ? known.price : 0;
-    S.decontType = decontIsOn ? known.type : '';
-    document.getElementById('decontSingleLabel').textContent = known.label;
-    document.getElementById('decontSinglePrice').textContent = '+'+known.price+'$';
+    S.decontPrice=decontIsOn?known.price:0;S.decontType=decontIsOn?known.type:'';
+    document.getElementById('decontSingleLabel').textContent=known.label;
+    document.getElementById('decontSinglePrice').textContent='+'+known.price+'$';
     optsBox.style.display='none';
     document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
-    singleBox.style.display = decontIsOn ? 'flex' : 'none';
-  } else {
-    // multi-vehicle forfait: keep manual selector, clear any auto state
+    singleBox.style.display=decontIsOn?'flex':'none';
+  }else{
     singleBox.style.display='none';
-    optsBox.style.display = decontIsOn ? 'grid' : 'none';
-    if(!decontIsOn){ S.decontPrice=0; S.decontType=''; }
+    optsBox.style.display=decontIsOn?'grid':'none';
+    if(!decontIsOn){S.decontPrice=0;S.decontType='';}
   }
   updateAll();
 }
-
-function toggleDecont(enabled){
-  setupDecontForVehicle();
-  syncRadioPillStyles();
-  updateAll();
-}
+function toggleDecont(enabled){setupDecontForVehicle();syncRadioPillStyles();updateAll();}
 function selectDecont(el){
   document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  S.decontPrice=parseInt(el.dataset.price); S.decontType=el.dataset.type;
-  updateAll();
+  el.classList.add('selected');S.decontPrice=parseInt(el.dataset.price);S.decontType=el.dataset.type;updateAll();
 }
 function toggleDogHair(enabled){
   S.dogHairPrice=enabled?25:0;
   document.getElementById('dogHairNotice').style.display=enabled?'flex':'none';
-  syncRadioPillStyles(); updateAll();
+  syncRadioPillStyles();updateAll();
 }
 function syncRadioPillStyles(){
   document.querySelectorAll('.radio-pill').forEach(pill=>{
-    const input=pill.querySelector('input[type="radio"]');
-    pill.classList.toggle('checked', input.checked);
+    pill.classList.toggle('checked',pill.querySelector('input[type="radio"]').checked);
   });
 }
-function selectCreneau(btn){
-  document.querySelectorAll('.creneau-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); S.creneau=btn.dataset.creneau;
-}
+function selectCreneau(btn){document.querySelectorAll('.creneau-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.creneau=btn.dataset.creneau;}
 function checkSameDay(){
-  const dateInput=document.getElementById('maDate'); const warning=document.getElementById('sameDayWarning');
-  if(!dateInput.value) return;
-  const selected=new Date(dateInput.value+'T00:00:00'); const today=new Date();
-  today.setHours(0,0,0,0); selected.setHours(0,0,0,0);
-  warning.classList.toggle('hidden', selected.getTime()!==today.getTime());
+  const v=document.getElementById('maDate').value;if(!v)return;
+  const sel=new Date(v+'T00:00:00'),today=new Date();today.setHours(0,0,0,0);sel.setHours(0,0,0,0);
+  document.getElementById('sameDayWarning').classList.toggle('hidden',sel.getTime()!==today.getTime());
 }
 
-/* ══════════════════════════════════════
-   PRICE / TOTALS
-══════════════════════════════════════ */
-function updateAll(){ updateTotal(); updateContinueBtn(); updateStickerLines(); updateStickerCta(); }
-
+function updateAll(){updateTotal();updateContinueBtn();updateStickerLines();updateStickerCta();}
 function updateTotal(){
-  let extra=S.decontPrice+S.dogHairPrice;
-  S.base=(S.price*S.qty)+extra;
-  if(S.promo && S.base>=PROMO_MIN) S.final=S.base-PROMO_AMOUNT;
-  else { S.final=S.base; S.promo=false; }
-  const qSub=document.getElementById('qtySubtotal'); if(qSub) qSub.textContent=S.base>0?`= ${S.base}$`:'';
-  document.getElementById('decontTotal').textContent=S.decontPrice>0?`+${S.decontPrice}$`:'+0$';
-  document.getElementById('dogTotal').textContent=S.dogHairPrice>0?`environ +${S.dogHairPrice}$`:'+0$';
-
-  const amt=document.getElementById('stAmount');
+  S.base=(S.price*S.qty)+S.decontPrice+S.dogHairPrice;
+  S.final=(S.promo&&S.base>=PROMO_MIN)?S.base-PROMO_AMOUNT:(S.promo=false,S.base);
+  const q=document.getElementById('qtySubtotal');if(q)q.textContent=S.base>0?'= '+S.base+'$':'';
+  document.getElementById('decontTotal').textContent=S.decontPrice>0?'+'+S.decontPrice+'$':'+0$';
+  document.getElementById('dogTotal').textContent=S.dogHairPrice>0?'environ +'+S.dogHairPrice+'$':'+0$';
   const newText=S.base>0?S.final+'$':'—';
-  if(amt.textContent!==newText){ amt.textContent=newText; amt.classList.add('bump'); setTimeout(()=>amt.classList.remove('bump'),250); }
-  const shTotal=document.getElementById('shTotal'); if(shTotal) shTotal.textContent=newText;
-
-  const orig=document.getElementById('stOrig'); const disc=document.getElementById('stDiscount');
-  if(S.promo && S.base>0){ orig.textContent=S.base+'$'; orig.classList.remove('hidden'); disc.classList.remove('hidden'); }
-  else{ orig.classList.add('hidden'); disc.classList.add('hidden'); }
-
-  document.getElementById('stLabel').textContent = S.isForfait ? `Total estimé · par véhicule × ${S.qty}` : 'Total estimé';
-
-  const ftAmount=document.getElementById('ftAmount');
-  if(ftAmount){
-    if(ftAmount.textContent!==newText){ ftAmount.textContent=newText; ftAmount.classList.add('bump'); setTimeout(()=>ftAmount.classList.remove('bump'),250); }
-    document.getElementById('ftLabel').textContent = S.isForfait ? `Montant total · par véhicule × ${S.qty}` : 'Montant total';
-    const ftOrig=document.getElementById('ftOrig'), ftDiscount=document.getElementById('ftDiscount');
-    if(S.promo && S.base>0){ ftOrig.textContent=S.base+'$'; ftOrig.classList.remove('hidden'); ftDiscount.classList.remove('hidden'); }
-    else { ftOrig.classList.add('hidden'); ftDiscount.classList.add('hidden'); }
+  const amt=document.getElementById('stAmount');
+  if(amt.textContent!==newText){amt.textContent=newText;amt.classList.add('bump');setTimeout(()=>amt.classList.remove('bump'),250);}
+  document.getElementById('shTotal').textContent=newText;
+  document.getElementById('stOrig').classList.toggle('hidden',!S.promo||!S.base);
+  document.getElementById('stDiscount').classList.toggle('hidden',!S.promo||!S.base);
+  if(S.promo&&S.base)document.getElementById('stOrig').textContent=S.base+'$';
+  document.getElementById('stLabel').textContent=S.isForfait?`Total estimé · par véhicule × ${S.qty}`:'Total estimé';
+  const ftAmt=document.getElementById('ftAmount');
+  if(ftAmt){
+    if(ftAmt.textContent!==newText){ftAmt.textContent=newText;ftAmt.classList.add('bump');setTimeout(()=>ftAmt.classList.remove('bump'),250);}
+    document.getElementById('ftLabel').textContent=S.isForfait?`Montant total · par véhicule × ${S.qty}`:'Montant total';
+    document.getElementById('ftOrig').classList.toggle('hidden',!S.promo||!S.base);
+    document.getElementById('ftDiscount').classList.toggle('hidden',!S.promo||!S.base);
+    if(S.promo&&S.base)document.getElementById('ftOrig').textContent=S.base+'$';
   }
 }
-
-function updateContinueBtn(){ document.getElementById('btnStep1').disabled=!S.service; }
-
-/* sticker progress / lines */
+function updateContinueBtn(){document.getElementById('btnStep1').disabled=!S.service;}
 function updateStickerSteps(){
   document.querySelectorAll('.sk-step').forEach(el=>{
-    const n=parseInt(el.dataset.s);
-    el.classList.remove('now','done');
-    if(segDone[n]) el.classList.add('done');
-    if(n===currentSeg) el.classList.add('now');
+    const n=parseInt(el.dataset.s);el.classList.remove('now','done');
+    if(segDone[n])el.classList.add('done');if(n===currentSeg)el.classList.add('now');
   });
   const labels={1:'Service',2:'Personnalisation',3:'Coordonnées',4:'Confirmation'};
   document.getElementById('shMid').textContent=`Étape ${currentSeg} · ${labels[currentSeg]}`;
 }
 function updateStickerLines(){
   const lines=[];
-  if(S.service) lines.push(['Service', S.service]);
-  if(S.qty>1 || S.service) lines.push(['Quantité', S.qty+' véhicule(s)']);
-  if(S.decontPrice>0) lines.push(['Décontamination', decontLabel(S.decontType)+' +'+S.decontPrice+'$']);
-  if(S.dogHairPrice>0) lines.push(["Poils d'animaux", 'environ +'+S.dogHairPrice+'$']);
-  const container=document.getElementById('stickerLines');
-  if(!lines.length){ container.innerHTML='<div class="sk-empty">Vos sélections apparaîtront ici.</div>'; return; }
-  container.innerHTML=lines.map(l=>`<div class="sk-line"><span>${escapeHtml(l[0])}</span><b>${escapeHtml(l[1])}</b></div>`).join('');
+  if(S.service)lines.push(['Service',S.service]);
+  if(S.qty>1||S.service)lines.push(['Quantité',S.qty+' véhicule(s)']);
+  if(S.decontPrice>0)lines.push(['Décontamination',decontLabel(S.decontType)+' +'+S.decontPrice+'$']);
+  if(S.dogHairPrice>0)lines.push(["Poils d'animaux",'environ +'+S.dogHairPrice+'$']);
+  const c=document.getElementById('stickerLines');
+  c.innerHTML=lines.length?lines.map(l=>`<div class="sk-line"><span>${escapeHtml(l[0])}</span><b>${escapeHtml(l[1])}</b></div>`).join(''):'<div class="sk-empty">Vos sélections apparaîtront ici.</div>';
 }
 function updateStickerCta(){
   const cta=document.getElementById('stickerCta');
-  if(currentSeg===1){ cta.innerHTML = S.service ? 'Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>' : 'Choisir un service <i class="fa-solid fa-arrow-right fa-xs"></i>'; cta.disabled=!S.service; }
-  else if(currentSeg===2){ cta.innerHTML='Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>'; cta.disabled=false; }
-  else if(currentSeg===3){ cta.innerHTML='Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>'; cta.disabled=false; }
-  else { cta.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>'; cta.disabled=false; }
+  if(currentSeg===1){cta.innerHTML=S.service?'Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>':'Choisir un service <i class="fa-solid fa-arrow-right fa-xs"></i>';cta.disabled=!S.service;}
+  else if(currentSeg===4){cta.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>';cta.disabled=false;}
+  else{cta.innerHTML='Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>';cta.disabled=false;}
 }
 function stickerCtaClick(){
-  if(currentSeg===1) completeSeg1();
-  else if(currentSeg===2) completeSeg2();
-  else if(currentSeg===3) completeSeg3();
-  else submitForm();
+  if(currentSeg===1)completeSeg1();else if(currentSeg===2)completeSeg2();else if(currentSeg===3)completeSeg3();else submitForm();
 }
-function toggleSticker(){ document.getElementById('sticker').classList.toggle('expanded'); }
+function toggleSticker(){document.getElementById('sticker').classList.toggle('expanded');}
 
-/* ══════════════════════════════════════
-   PROMO
-══════════════════════════════════════ */
 function applyPromo(){
-  const code=document.getElementById('promoCode').value.trim().toUpperCase();
-  const msg=document.getElementById('promoMsg');
-  if(!code){ msg.innerHTML=`<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Veuillez entrer un code promo.</div>`; return; }
-  if(code!==PROMO_CODE){ S.promo=false; updateTotal(); msg.innerHTML=`<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Code promo invalide.</div>`; return; }
-  if(S.base<PROMO_MIN){ S.promo=false; updateTotal(); msg.innerHTML=`<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Ce code s'applique aux réservations de ${PROMO_MIN}$ et plus.</div>`; return; }
-  S.promo=true; updateTotal();
-  msg.innerHTML=`<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué ! Vous économisez ${PROMO_AMOUNT}$.</div>`;
+  const code=document.getElementById('promoCode').value.trim().toUpperCase(),msg=document.getElementById('promoMsg');
+  if(!code){msg.innerHTML=`<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Veuillez entrer un code promo.</div>`;return;}
+  if(code!==PROMO_CODE){S.promo=false;updateTotal();msg.innerHTML=`<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Code promo invalide.</div>`;return;}
+  if(S.base<PROMO_MIN){S.promo=false;updateTotal();msg.innerHTML=`<div class="promo-error"><i class="fa-solid fa-xmark fa-sm"></i> Ce code s'applique aux réservations de ${PROMO_MIN}$ et plus.</div>`;return;}
+  S.promo=true;updateTotal();msg.innerHTML=`<div class="promo-success"><i class="fa-solid fa-check fa-sm"></i> Code appliqué — vous économisez ${PROMO_AMOUNT}$.</div>`;
 }
 
-/* ══════════════════════════════════════
-   HELPERS
-══════════════════════════════════════ */
-function decontLabel(type){ if(type==='sedan')return'Sedan'; if(type==='suv')return'VUS'; if(type==='vanpickup')return'Pickup / Van'; return type; }
-function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
-function showStep1Error(t){ document.getElementById('step1ErrorText').textContent=t; document.getElementById('step1Error').classList.remove('hidden'); }
-function hideStep1Error(){ document.getElementById('step1Error').classList.add('hidden'); }
-function showStep2Error(t){ document.getElementById('step2ErrorText').textContent=t; document.getElementById('step2Error').classList.remove('hidden'); }
-function hideStep2Error(){ document.getElementById('step2Error').classList.add('hidden'); }
+function decontLabel(t){return t==='sedan'?'Sedan':t==='suv'?'VUS':t==='vanpickup'?'Pickup / Van':t;}
+function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function showStep1Error(t){document.getElementById('step1ErrorText').textContent=t;document.getElementById('step1Error').classList.remove('hidden');}
+function hideStep1Error(){document.getElementById('step1Error').classList.add('hidden');}
+function showStep2Error(t){document.getElementById('step2ErrorText').textContent=t;document.getElementById('step2Error').classList.remove('hidden');}
+function hideStep2Error(){document.getElementById('step2Error').classList.add('hidden');}
 
 function buildRecap(){
-  const model=document.getElementById('vehicleModel').value.trim();
-  const nom=document.getElementById('nom').value.trim();
-  const tel=document.getElementById('telephone').value.trim();
-  const adr=document.getElementById('adresse').value.trim();
-  const date=document.getElementById('maDate').value;
-  const note=document.getElementById('noteClient').value.trim();
-  const rows=[
-    ['Service', S.service],
-    ['Véhicule', model],
-    ['Quantité', S.qty+' véhicule(s)'],
-  ];
-  if(S.decontPrice>0) rows.push(['Décontamination', decontLabel(S.decontType)+' (+'+S.decontPrice+'$)']);
-  if(S.dogHairPrice>0) rows.push(["Poils d'animaux", 'Oui (environ +'+S.dogHairPrice+'$)']);
-  rows.push(['Nom', nom], ['Téléphone', tel], ['Adresse', adr], ['Date', date]);
-  if(S.creneau) rows.push(['Créneau', S.creneau]);
-  if(note) rows.push(['Note', note]);
-  document.getElementById('recapContent').innerHTML = rows.map(r=>`<div class="recap-row"><span class="recap-key">${escapeHtml(r[0])}</span><span class="recap-val">${escapeHtml(r[1])}</span></div>`).join('');
+  const model=document.getElementById('vehicleModel').value.trim(),nom=document.getElementById('nom').value.trim(),tel=document.getElementById('telephone').value.trim(),adr=document.getElementById('adresse').value.trim(),date=document.getElementById('maDate').value,note=document.getElementById('noteClient').value.trim();
+  const rows=[['Service',S.service],['Véhicule',model],['Quantité',S.qty+' véhicule(s)']];
+  if(S.decontPrice>0)rows.push(['Décontamination',decontLabel(S.decontType)+' (+'+S.decontPrice+'$)']);
+  if(S.dogHairPrice>0)rows.push(["Poils d'animaux",'Oui (environ +'+S.dogHairPrice+'$)']);
+  rows.push(['Nom',nom],['Téléphone',tel],['Adresse',adr],['Date',date]);
+  if(S.creneau)rows.push(['Créneau',S.creneau]);if(note)rows.push(['Note',note]);
+  document.getElementById('recapContent').innerHTML=rows.map(r=>`<div class="recap-row"><span class="recap-key">${escapeHtml(r[0])}</span><span class="recap-val">${escapeHtml(r[1])}</span></div>`).join('');
 }
 
-/* ══════════════════════════════════════
-   SUBMIT
-══════════════════════════════════════ */
 async function submitForm(){
-  const btn=document.getElementById('submitBtn');
-  btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours…';
-  const payload={
-    access_key:'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',
-    subject:'Nouvelle réservation — Shine Automobile',
-    from_name:'Shine Automobile — Réservation',
-    reference: refNumber,
-    service:S.service,
-    montant_base:S.base+'$',
-    montant_final:S.final+'$',
-    economies:S.promo?'-'+PROMO_AMOUNT+'$':'Aucun',
-    code_promo:S.promo?PROMO_CODE:'',
-    nombre_voitures:S.qty,
-    modele_vehicule:document.getElementById('vehicleModel').value.trim(),
-    nom:document.getElementById('nom').value.trim(),
-    telephone:document.getElementById('telephone').value.trim(),
-    adresse:document.getElementById('adresse').value.trim(),
-    date:document.getElementById('maDate').value,
-    creneau:S.creneau||'Non précisé',
-    decontamination:S.decontPrice>0?`${decontLabel(S.decontType)} (+${S.decontPrice}$)`:'Non',
-    poils_animaux:S.dogHairPrice>0?`Oui (environ +${S.dogHairPrice}$)`:'Non',
-    note_client:document.getElementById('noteClient').value.trim()||'Aucune note',
-    botcheck:''
-  };
+  const btn=document.getElementById('submitBtn');btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours…';
+  const payload={access_key:'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',subject:'Nouvelle réservation — Shine Automobile',from_name:'Shine Automobile — Réservation',reference:refNumber,service:S.service,montant_base:S.base+'$',montant_final:S.final+'$',economies:S.promo?'-'+PROMO_AMOUNT+'$':'Aucun',code_promo:S.promo?PROMO_CODE:'',nombre_voitures:S.qty,modele_vehicule:document.getElementById('vehicleModel').value.trim(),nom:document.getElementById('nom').value.trim(),telephone:document.getElementById('telephone').value.trim(),adresse:document.getElementById('adresse').value.trim(),date:document.getElementById('maDate').value,creneau:S.creneau||'Non précisé',decontamination:S.decontPrice>0?decontLabel(S.decontType)+' (+'+S.decontPrice+'$)':'Non',poils_animaux:S.dogHairPrice>0?'Oui (environ +'+S.dogHairPrice+'$)':'Non',note_client:document.getElementById('noteClient').value.trim()||'Aucune note',botcheck:''};
   try{
     const res=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
     const data=await res.json();
     if(data.success){
-      showSuccessScreen();
-      document.querySelector('.shell').classList.add('hidden');
-      document.getElementById('successView').classList.remove('hidden');
-      window.scrollTo({top:0,behavior:'smooth'});
-    } else { showSubmitError(); btn.disabled=false; btn.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>'; }
-  } catch(e){ showSubmitError(true); btn.disabled=false; btn.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>'; }
+      document.querySelector('.shell').classList.add('hidden');document.getElementById('successView').classList.remove('hidden');
+      showSuccessScreen();window.scrollTo({top:0,behavior:'smooth'});
+    }else{btn.disabled=false;btn.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>';showStep2Error('Erreur lors de l\'envoi. Réessayez ou appelez le 873-662-3813.');}
+  }catch(e){btn.disabled=false;btn.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>';showStep2Error('Problème de connexion. Réessayez ou appelez le 873-662-3813.');}
 }
-
 function showSuccessScreen(){
-  const fullName=document.getElementById('nom').value.trim();
-  const firstName=fullName.split(' ')[0] || '';
-  document.getElementById('successTitle').textContent = firstName ? `Merci, ${firstName} !` : 'Merci !';
-  document.getElementById('successSub').innerHTML = `Votre demande a été reçue avec soin. Notre équipe vous contactera personnellement dans les prochaines <b>24 heures</b> pour confirmer votre rendez-vous et l'heure d'arrivée.`;
-
-  const rows=[['Référence', refNumber],['Service', S.service]];
-  document.getElementById('successRecap').innerHTML = `
-    ${rows.map(r=>`<div class="sr-row"><span>${escapeHtml(r[0])}</span><b>${escapeHtml(r[1])}</b></div>`).join('')}
-    <div class="sr-total"><span>Montant total</span><b>${S.final}$</b></div>
-  `;
-}
-function showSubmitError(connectionIssue){
-  const text=connectionIssue ? "Problème de connexion. Réessayez ou appelez le 873-662-3813." : "Une erreur est survenue lors de l'envoi. Réessayez ou appelez le 873-662-3813.";
-  document.getElementById('step2ErrorText').textContent=text;
+  const fullName=document.getElementById('nom').value.trim(),firstName=fullName.split(' ')[0]||'';
+  document.getElementById('successTitle').textContent=firstName?`Merci, ${firstName} !`:'Merci !';
+  document.getElementById('successRecap').innerHTML=`<div class="sr-row"><span>Référence</span><b>${escapeHtml(refNumber)}</b></div><div class="sr-row"><span>Service</span><b>${escapeHtml(S.service)}</b></div><div class="sr-total"><span>Montant total</span><b>${S.final}$</b></div>`;
 }
 
-/* ══════════════════════════════════════
-   RESET
-══════════════════════════════════════ */
 function resetAll(){
   S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:''};
-  currentSeg=1; segDone={1:false,2:false,3:false,4:false};
-  document.querySelector('.shell').classList.remove('hidden');
-  document.getElementById('successView').classList.add('hidden');
+  currentSeg=1;segDone={1:false,2:false,3:false,4:false};
+  document.querySelector('.shell').classList.remove('hidden');document.getElementById('successView').classList.add('hidden');
   document.getElementById('sameDayWarning').classList.add('hidden');
-  hideStep1Error(); hideStep2Error();
+  hideStep1Error();hideStep2Error();
   ['vehicleModel','nom','telephone','adresse','maDate','noteClient'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('promoCode').value=''; document.getElementById('promoMsg').innerHTML='';
+  document.getElementById('promoCode').value='';document.getElementById('promoMsg').innerHTML='';
   document.getElementById('qtyDisplay').textContent='1';
   document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
   document.getElementById('clearBtn').classList.remove('show');
-  showSvcDesc(null, null);
   document.querySelectorAll('.creneau-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.vtab').forEach((t,i)=>{ t.classList.remove('active'); t.setAttribute('aria-selected','false'); if(i===0){ t.classList.add('active'); t.setAttribute('aria-selected','true'); } });
+  document.querySelectorAll('.vcard').forEach((t,i)=>{t.classList.remove('active');t.setAttribute('aria-selected','false');if(i===0){t.classList.add('active');t.setAttribute('aria-selected','true');}});
   ['suv','van','pickup'].forEach(id=>document.getElementById('g-'+id)?.classList.add('hidden'));
   document.getElementById('g-sedan')?.classList.remove('hidden');
-  document.getElementById('g-forfait').classList.add('hidden'); document.getElementById('g-forfait').style.display='none';
+  document.getElementById('g-forfait').classList.add('hidden');document.getElementById('g-forfait').style.display='none';
   document.querySelector('input[name="decont"][value="non"]').checked=true;
   document.querySelector('input[name="doghair"][value="non"]').checked=true;
-  document.getElementById('decontOptions').style.display='none';
-  document.getElementById('decontSingle').style.display='none';
+  document.getElementById('decontOptions').style.display='none';document.getElementById('decontSingle').style.display='none';
   document.getElementById('dogHairNotice').style.display='none';
   document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
   syncRadioPillStyles();
-  for(let i=2;i<=4;i++){ const seg=document.getElementById('seg'+i); seg.classList.add('locked'); seg.classList.remove('done'); }
+  for(let i=2;i<=4;i++){const s=document.getElementById('seg'+i);s.classList.add('locked');s.classList.remove('done','active');}
   document.getElementById('seg1').classList.add('active');
-  document.getElementById('seg2Sub').textContent="Décontamination et options selon l'état du véhicule.";
-  document.getElementById('seg3Sub').textContent="Vos informations, l'adresse et la date souhaitée.";
-  document.getElementById('seg1Sub').textContent='Choisissez le type de véhicule, le service et la quantité.';
-  refNumber='SA-'+Math.floor(100000+Math.random()*899999);
-  document.getElementById('refNum').textContent=refNumber;
-  updateAll(); updateStickerSteps(); setMinDate();
-  window.scrollTo({top:0,behavior:'smooth'});
+  ['seg1Sub','seg2Sub','seg3Sub'].forEach((id,i)=>{document.getElementById(id).textContent=['Choisissez le type de véhicule, le service et la quantité.',"Décontamination et options selon l'état du véhicule.",'Vos informations, l\'adresse et la date souhaitée.'][i];});
+  refNumber='SA-'+Math.floor(100000+Math.random()*899999);document.getElementById('refNum').textContent=refNumber;
+  updateAll();updateStickerSteps();setMinDate();window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function setMinDate(){
-  const dateInput=document.getElementById('maDate');
-  const today=new Date();
-  dateInput.min=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  const t=new Date();document.getElementById('maDate').min=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
 }
-
-/* Init */
-updateAll(); syncRadioPillStyles(); setMinDate(); updateStickerSteps();
+updateAll();syncRadioPillStyles();setMinDate();updateStickerSteps();
 </script>
 </body>
 </html>
