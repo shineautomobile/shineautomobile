@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -1508,189 +1509,15 @@ footer {
   .footer-top { grid-template-columns:1fr; }
   .hero-float { grid-template-columns:1fr; }
 }
-
-/* ═══════════════════════════════════════════
-   WASH-HERO — Séquence 3D pilotée au scroll
-   ═══════════════════════════════════════════ */
-.wash-hero {
-  position: relative;
-  height: 380vh;
-  background: linear-gradient(160deg, var(--white) 0%, var(--blueL) 50%, var(--skyL) 100%);
-}
-.wash-hero::before {
-  content:'';
-  position:absolute;
-  top:-200px; right:-200px;
-  width:700px; height:700px;
-  background:radial-gradient(circle, rgba(26,86,255,0.08) 0%, transparent 70%);
-  pointer-events:none;
-}
-.wash-hero::after {
-  content:'';
-  position:absolute;
-  bottom:-100px; left:-100px;
-  width:500px; height:500px;
-  background:radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%);
-  pointer-events:none;
-}
-.wash-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-#wash-canvas {
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-.wash-scroll-cue {
-  position:absolute;
-  bottom:36px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
-  font-family:var(--font-mono);
-  font-size:10px;
-  letter-spacing:0.16em;
-  color:var(--subtle);
-  opacity:1;
-  transition:opacity 0.4s;
-  z-index:5;
-  pointer-events:none;
-}
-.wash-scroll-cue i { animation: cueBounce 1.8s ease-in-out infinite; color:var(--blue); }
-@keyframes cueBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-
-.wash-progress-rail {
-  position:absolute;
-  right:28px;
-  top:50%;
-  transform:translateY(-50%);
-  width:3px;
-  height:180px;
-  background:var(--border);
-  border-radius:100px;
-  z-index:5;
-  overflow:hidden;
-  display:none;
-}
-.wash-progress-rail::after {
-  content:'';
-  position:absolute;
-  left:0; top:0; width:100%;
-  height:var(--wash-fill, 0%);
-  background:linear-gradient(180deg, var(--blue), var(--sky));
-  border-radius:100px;
-}
-@media(min-width:900px){ .wash-progress-rail { display:block; } }
-
-.wash-text-stage {
-  position:absolute;
-  left:50%;
-  top:44%;
-  transform:translate(-50%,-50%);
-  width:min(620px, 86vw);
-  text-align:center;
-  opacity:0;
-  pointer-events:none;
-  z-index:4;
-  will-change: opacity, transform;
-}
-.wash-eyebrow {
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:var(--font-mono);
-  font-size:11px;
-  letter-spacing:0.18em;
-  color:var(--blue);
-  background:rgba(255,255,255,0.75);
-  backdrop-filter:blur(6px);
-  padding:5px 14px;
-  border-radius:100px;
-  border:1px solid var(--blueM);
-  margin-bottom:18px;
-}
-.wash-heading {
-  font-family:var(--font-display);
-  font-size:clamp(30px, 4.4vw, 54px);
-  font-weight:900;
-  line-height:1.08;
-  letter-spacing:-0.03em;
-  color:var(--ink);
-}
-.wash-heading em {
-  font-style:italic;
-  background:linear-gradient(135deg, var(--blue), var(--sky));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.wash-sub {
-  font-size:16px;
-  line-height:1.7;
-  color:var(--muted);
-  margin-top:14px;
-  max-width:440px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-/* Safety net: if the module script never runs (very old browser), keep the
-   finished-result stage visible by default so the hero is never blank. */
-.wash-text-stage[data-stage="3"] { opacity:1; pointer-events:auto; }
-.wash-final { pointer-events:none; }
-.wash-final .hero-badge { pointer-events:auto; margin-bottom:24px; }
-.wash-final .hero-h1 { margin-bottom:20px; }
-.wash-final .hero-p { max-width:480px; margin:0 auto 32px; }
-.wash-final .hero-ctas { justify-content:center; margin-bottom:0; pointer-events:auto; }
-.wash-final .hero-ctas .btn-primary,
-.wash-final .hero-ctas .btn-ghost { pointer-events:auto; }
-
-.wash-float-badge {
-  position:absolute;
-  z-index:4;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  box-shadow:var(--shadow-lg);
-  opacity:0;
-  pointer-events:none;
-  will-change: opacity, transform;
-}
-.wash-float-badge.left { left:5%; bottom:14%; }
-.wash-float-badge.right { right:5%; bottom:14%; }
-@media(max-width:768px){
-  .wash-float-badge { display:none; }
-}
-
-@media(max-width:768px) {
-  .wash-hero { height: 320vh; }
-  .wash-heading { font-size:clamp(26px,7vw,38px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .wash-hero { height:auto; }
-  .wash-stage { position:relative; height:100vh; }
-}
 </style>
+
 </head>
 <body>
 
+<!-- ANNOUNCE BANNER -->
+
 <!-- TICKER -->
+
 <div class="ticker">
   <div class="ticker-inner">
     <span class="ticker-item"><span>✦</span>LAVAGE À DOMICILE</span>
@@ -1709,14 +1536,18 @@ footer {
 </div>
 
 <!-- NAV -->
+
 <nav id="nav">
   <div class="nav-inner">
+<!-- ✅ LOGO CORRIGÉ : balise <img> pointant vers Images/logo.jpeg -->
 <a href="index.html" class="nav-logo">
   <img
     src="Images/logo.jpeg"
     alt="ShineAutomobile Logo"
     class="nav-logo-mark"
     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+  <!-- Fallback carré bleu si l'image ne se charge pas -->
   <div class="nav-logo-mark-fallback"></div>
   <div class="nav-logo-text">
     <div class="nav-logo-name">ShineAutomobile</div>
@@ -1740,6 +1571,8 @@ footer {
   </a>
   <button id="mob-btn" onclick="toggleMob()"><i class="fa-solid fa-bars"></i></button>
 </div>
+```
+
   </div>
   <div id="mob-menu">
     <a href="#services" class="nav-link" onclick="toggleMob()">Services</a>
@@ -1754,47 +1587,22 @@ footer {
   </div>
 </nav>
 
-<!-- ════ HERO 3D — LAVAGE AU SCROLL ════ -->
-<section class="wash-hero" id="wash-hero">
-  <div class="wash-stage">
-    <canvas id="wash-canvas" aria-hidden="true"></canvas>
+<!-- ════ HERO ════ -->
 
-    <div class="wash-progress-rail" id="wash-rail"></div>
-
-    <!-- Étape 1 — intro -->
-    <div class="wash-text-stage" data-stage="0">
-      <div class="wash-eyebrow"><span class="hero-badge-dot" style="width:6px;height:6px;"></span> Service disponible maintenant</div>
-      <h1 class="wash-heading">Votre voiture,<br><em>avant.</em></h1>
-      <p class="wash-sub">Faites défiler pour voir la transformation, de la poussière au brillant — sans lever le petit doigt.</p>
-    </div>
-
-    <!-- Étape 2 — savon -->
-    <div class="wash-text-stage" data-stage="1">
-      <div class="wash-eyebrow">🧼 Étape 1</div>
-      <h1 class="wash-heading">Mousse <em>100% écologique</em>,<br>appliquée à la main.</h1>
-      <p class="wash-sub">Des produits biodégradables, doux pour la peinture et pour l'environnement.</p>
-    </div>
-
-    <!-- Étape 3 — rinçage -->
-    <div class="wash-text-stage" data-stage="2">
-      <div class="wash-eyebrow">💧 Étape 2</div>
-      <h1 class="wash-heading">Rinçage complet,<br><em>chaque recoin.</em></h1>
-      <p class="wash-sub">On rince à grande eau pour ne laisser aucune trace de savon derrière.</p>
-    </div>
-
-    <!-- Étape 4 — brillance / final -->
-    <div class="wash-text-stage wash-final" data-stage="3">
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
         Service disponible maintenant
       </div>
-      <h1 class="hero-h1" style="font-size:clamp(36px,5vw,64px);">
+      <h1 class="hero-h1">
         Votre voiture<br>
         <em>impeccable,</em><br>
         chez vous.
       </h1>
-      <p class="hero-p" style="margin-left:auto;margin-right:auto;">
-        Lavage automobile professionnel à domicile. Produits 100% écologiques,
+      <p class="hero-p">
+        Lavage automobile professionnel à domicile. Produits 100% écologiques, 
         résultats garantis. Nous venons partout à Sherbrooke et dans les environs.
       </p>
       <div class="hero-ctas">
@@ -1805,31 +1613,57 @@ footer {
           <i class="fa-solid fa-arrow-down"></i> Voir les services
         </a>
       </div>
-    </div>
-
-    <div class="wash-float-badge left" id="wash-badge-left">
-      <div class="hfc-icon green">🌱</div>
-      <div>
-        <div class="hfc-text-val">Éco-certifié</div>
-        <div class="hfc-text-sub">Produits biodégradables</div>
+      <div class="hero-trust">
+        <div class="hero-trust-item"><i class="fa-solid fa-check"></i> 100% écologique</div>
+        <div class="hero-trust-item"><i class="fa-solid fa-check"></i> Garantie satisfaction</div>
+        <div class="hero-trust-item"><i class="fa-solid fa-check"></i> Paiement sur place</div>
       </div>
     </div>
-    <div class="wash-float-badge right" id="wash-badge-right">
-      <div class="hfc-icon blue">⚡</div>
-      <div>
-        <div class="hfc-text-val">Urgences 24/7</div>
-        <div class="hfc-text-sub">Déverrouillage & boost</div>
+    <div class="hero-right">
+      <div class="hero-card-main">
+        <div class="hero-car-img">
+          <img src="Images/photo.jpeg" alt="Voiture propre" onerror="this.style.display='none';this.parentNode.innerHTML='🚗'">
+        </div>
+        <div class="hero-card-label">SERVICE PROFESSIONNEL</div>
+        <div class="hero-card-name">Lavage à domicile</div>
+        <div class="hero-card-sub">On se déplace — vous n'avez rien à faire</div>
+        <div class="hero-card-stats">
+          <div class="hcs-item">
+            <div class="hcs-val">5/5</div>
+            <div class="hcs-label">SATISFACTION</div>
+          </div>
+          <div class="hcs-item">
+            <div class="hcs-val">15+</div>
+            <div class="hcs-label">VILLES</div>
+          </div>
+          <div class="hcs-item">
+            <div class="hcs-val">4</div>
+            <div class="hcs-label">TYPES</div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="wash-scroll-cue" id="wash-cue">
-      <span>DÉFILER</span>
-      <i class="fa-solid fa-chevron-down"></i>
+      <div class="hero-float">
+        <div class="hero-float-card">
+          <div class="hfc-icon green">🌱</div>
+          <div>
+            <div class="hfc-text-val">Éco-certifié</div>
+            <div class="hfc-text-sub">Produits biodégradables</div>
+          </div>
+        </div>
+        <div class="hero-float-card">
+          <div class="hfc-icon blue">⚡</div>
+          <div>
+            <div class="hfc-text-val">Urgences 24/7</div>
+            <div class="hfc-text-sub">Déverrouillage & boost</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ════ PROCESS ════ -->
+
 <section class="process">
   <div class="wrap">
     <div class="fade-up">
@@ -1865,6 +1699,7 @@ footer {
 </section>
 
 <!-- ════ VEHICLES ════ -->
+
 <section id="services" class="vehicles">
   <div class="wrap">
     <div class="fade-up">
@@ -1926,6 +1761,7 @@ footer {
 </section>
 
 <!-- ════ URGENCES ════ -->
+
 <section id="urgences" class="urgences">
   <div class="wrap">
     <div class="fade-up">
@@ -1963,6 +1799,7 @@ footer {
 </section>
 
 <!-- ════ FORFAITS ════ -->
+
 <section id="forfaits" class="forfaits">
   <div class="wrap">
     <div class="fade-up">
@@ -2028,6 +1865,7 @@ footer {
 </section>
 
 <!-- ════ WHY ════ -->
+
 <section class="why">
   <div class="wrap">
     <div class="fade-up" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
@@ -2113,6 +1951,7 @@ footer {
 </section>
 
 <!-- ════ REVIEWS ════ -->
+
 <section id="temoignages" class="reviews">
   <div class="wrap">
     <div class="fade-up">
@@ -2159,6 +1998,7 @@ footer {
 </section>
 
 <!-- ════ PARTNER ════ -->
+
 <section class="partner">
   <div class="wrap">
     <div class="fade-up">
@@ -2180,6 +2020,7 @@ footer {
 </section>
 
 <!-- ════ CONTACT ════ -->
+
 <section id="contact" class="contact">
   <div class="wrap">
     <div class="fade-up">
@@ -2213,6 +2054,7 @@ footer {
 </section>
 
 <!-- ════ MAP ════ -->
+
 <section class="map-section">
   <div class="wrap">
     <div class="map-header">
@@ -2246,11 +2088,13 @@ footer {
 </section>
 
 <!-- SMS FLOAT -->
+
 <a href="sms:8736623813" class="sms-float" title="Nous écrire par SMS">
   <i class="fa-solid fa-comment-sms"></i>
 </a>
 
 <!-- ════ FOOTER ════ -->
+
 <footer>
   <div class="wrap">
     <div class="footer-top">
@@ -2344,325 +2188,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
-</script>
-
-<!-- ═══════════════════════════════════════════════════════
-     WASH-HERO 3D — voiture stylisée pilotée par le scroll
-     ═══════════════════════════════════════════════════════ -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module">
-try {
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const heroEl   = document.getElementById('wash-hero');
-  const canvas   = document.getElementById('wash-canvas');
-  const stages   = Array.from(document.querySelectorAll('.wash-text-stage'));
-  const cue      = document.getElementById('wash-cue');
-  const rail     = document.getElementById('wash-rail');
-  const badgeL   = document.getElementById('wash-badge-left');
-  const badgeR   = document.getElementById('wash-badge-right');
-
-  if (!heroEl || !canvas) throw new Error('wash-hero markup missing');
-
-  if (reduceMotion) {
-    // Static, accessible fallback: show the finished result, no animation loop.
-    stages.forEach(s => { s.style.opacity = (s.dataset.stage === '3') ? '1' : '0'; });
-    stages.forEach(s => { if (s.dataset.stage === '3') s.style.pointerEvents = 'auto'; });
-    if (cue) cue.style.display = 'none';
-    canvas.style.display = 'none';
-    heroEl.style.height = '100vh';
-    throw new Error('__reduced_motion_fallback_applied__');
-  }
-
-  const THREE = await import('three');
-  const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
-
-  const isSmall = window.innerWidth < 760;
-
-  /* ── RENDERER ── */
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isSmall ? 1.5 : 2));
-  renderer.setSize(window.innerWidth, window.innerHeight, false);
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
-
-  /* ── SCENE / ENV ── */
-  const scene = new THREE.Scene();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-
-  const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 100);
-
-  /* ── LIGHTS ── */
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xcdd6e8, 0.55));
-  const key = new THREE.DirectionalLight(0xffffff, 1.9);
-  key.position.set(4, 6, 5);
-  scene.add(key);
-  const rim = new THREE.DirectionalLight(0x8fb4ff, 1.1);
-  rim.position.set(-5, 3, -4);
-  scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.4);
-  fill.position.set(-2, 2, 6);
-  scene.add(fill);
-
-  /* ── CAR GROUP ── */
-  const car = new THREE.Group();
-  scene.add(car);
-
-  const CARW = 1.9; // car width (depth of extrude)
-
-  // Body silhouette (length = X, height = Y), extruded across width (Z)
-  const profile = new THREE.Shape();
-  profile.moveTo(1.85, 0.16);
-  profile.lineTo(1.95, 0.34);
-  profile.lineTo(1.55, 0.64);
-  profile.lineTo(0.95, 1.08);
-  profile.quadraticCurveTo(0.35, 1.16, -0.15, 1.13);
-  profile.lineTo(-0.55, 1.04);
-  profile.lineTo(-1.15, 0.72);
-  profile.lineTo(-1.55, 0.50);
-  profile.lineTo(-1.85, 0.34);
-  profile.lineTo(-1.9, 0.16);
-  profile.lineTo(1.85, 0.16);
-
-  const bodyGeo = new THREE.ExtrudeGeometry(profile, {
-    depth: CARW, bevelEnabled:true, bevelThickness:0.045, bevelSize:0.045, bevelSegments:5, steps:1, curveSegments:16
-  });
-  bodyGeo.translate(0, 0, -CARW/2);
-  bodyGeo.computeVertexNormals();
-
-  const paint = new THREE.MeshPhysicalMaterial({
-    color: 0x9aa3b2,
-    metalness: 0.55,
-    roughness: 0.75,
-    clearcoat: 0.0,
-    clearcoatRoughness: 0.15,
-    envMapIntensity: 1.0
-  });
-  const body = new THREE.Mesh(bodyGeo, paint);
-  car.add(body); // front of car = -X, consistent with wheels/glass/lights below
-
-  // Glass (built as manual quads to avoid rotation guesswork)
-  const glassMat = new THREE.MeshPhysicalMaterial({ color:0x0b1220, metalness:0.85, roughness:0.08, envMapIntensity:1.2 });
-  function quad(p1,p2,p3,p4, mat){
-    const g = new THREE.BufferGeometry();
-    const verts = new Float32Array([...p1, ...p2, ...p3, ...p1, ...p3, ...p4]);
-    g.setAttribute('position', new THREE.BufferAttribute(verts, 3));
-    g.computeVertexNormals();
-    return new THREE.Mesh(g, mat);
-  }
-  const hw = CARW/2 - 0.04;
-  car.add(quad([-1.13,0.735,-hw],[-1.13,0.735,hw],[-0.52,1.09,hw],[-0.52,1.09,-hw], glassMat)); // windshield
-  car.add(quad([1.52,0.66,-hw],[1.52,0.66,hw],[0.93,1.07,hw],[0.93,1.07,-hw], glassMat));       // rear window
-  const sideZ = CARW/2 - 0.02;
-  car.add(quad([-0.5,1.06,sideZ],[-0.95,0.78,sideZ],[0.85,0.78,sideZ],[0.72,1.05,sideZ], glassMat));   // side R
-  car.add(quad([-0.95,0.78,-sideZ],[-0.5,1.06,-sideZ],[0.72,1.05,-sideZ],[0.85,0.78,-sideZ], glassMat)); // side L
-
-  // Lights (head/tail)
-  const headMat = new THREE.MeshStandardMaterial({ color:0xffffff, emissive:0xffffff, emissiveIntensity:1.4, roughness:0.3 });
-  const tailMat = new THREE.MeshStandardMaterial({ color:0xff3b3b, emissive:0xff2020, emissiveIntensity:1.2, roughness:0.3 });
-  [1,-1].forEach(s=>{
-    const h = new THREE.Mesh(new THREE.BoxGeometry(0.08,0.09,0.22), headMat);
-    h.position.set(-1.9, 0.42, s*0.56);
-    car.add(h);
-    const t = new THREE.Mesh(new THREE.BoxGeometry(0.08,0.11,0.24), tailMat);
-    t.position.set(1.92, 0.42, s*0.56);
-    car.add(t);
-  });
-
-  // Wheels
-  const tireMat = new THREE.MeshStandardMaterial({ color:0x14161c, roughness:0.92, metalness:0.1 });
-  const rimMat  = new THREE.MeshStandardMaterial({ color:0xdfe3ea, roughness:0.28, metalness:0.85 });
-  const wheelR = 0.37;
-  [[-1.18,1],[-1.18,-1],[1.18,1],[1.18,-1]].forEach(([x,side])=>{
-    const g = new THREE.Group();
-    const tire = new THREE.Mesh(new THREE.TorusGeometry(wheelR, 0.145, 10, 26), tireMat);
-    const rimM = new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,0.12,18), rimMat);
-    rimM.rotation.x = Math.PI/2;
-    g.add(tire, rimM);
-    g.position.set(x, wheelR-0.02, side*(CARW/2-0.16));
-    car.add(g);
-  });
-
-  car.scale.setScalar(1.0);
-  car.position.y = -0.15;
-
-  /* ── FOAM / RINSE PARTICLES ── */
-  const PCOUNT = isSmall ? 90 : 220;
-  const foamCanvas = document.createElement('canvas');
-  foamCanvas.width = foamCanvas.height = 64;
-  const fctx = foamCanvas.getContext('2d');
-  const grad = fctx.createRadialGradient(32,32,0,32,32,32);
-  grad.addColorStop(0, 'rgba(255,255,255,1)');
-  grad.addColorStop(0.5, 'rgba(255,255,255,0.65)');
-  grad.addColorStop(1, 'rgba(255,255,255,0)');
-  fctx.fillStyle = grad;
-  fctx.fillRect(0,0,64,64);
-  const foamTex = new THREE.CanvasTexture(foamCanvas);
-
-  const basePositions = [];
-  const seeds = [];
-  const posAttr = new Float32Array(PCOUNT*3);
-  for (let i=0;i<PCOUNT;i++){
-    const u = Math.random()*Math.PI*2;
-    const v = Math.acos(2*Math.random()-1);
-    const rx = 2.1, ry = 0.75, rz = 1.05;
-    const x = Math.sin(v)*Math.cos(u)*rx;
-    const y = Math.abs(Math.cos(v))*ry + 0.35;
-    const z = Math.sin(v)*Math.sin(u)*rz;
-    basePositions.push(x,y,z);
-    seeds.push(Math.random()*Math.PI*2, 0.4+Math.random()*0.8);
-    posAttr[i*3]=x; posAttr[i*3+1]=y; posAttr[i*3+2]=z;
-  }
-  const foamGeo = new THREE.BufferGeometry();
-  foamGeo.setAttribute('position', new THREE.BufferAttribute(posAttr,3));
-  const foamMat = new THREE.PointsMaterial({
-    map: foamTex, size: isSmall?0.34:0.4, transparent:true, opacity:0,
-    depthWrite:false, sizeAttenuation:true, color:0xffffff
-  });
-  const foam = new THREE.Points(foamGeo, foamMat);
-  car.add(foam);
-
-  /* ── SCROLL / STATE ── */
-  let targetProgress = 0, progress = 0;
-  const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
-  const smoothstep = (a,b,x)=>{ const t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
-  const lerp = (a,b,t)=>a+(b-a)*t;
-  const lerpColor = (c1,c2,t,out)=> out.copy(c1).lerp(c2,t);
-
-  function computeProgress(){
-    const rect = heroEl.getBoundingClientRect();
-    const total = heroEl.offsetHeight - window.innerHeight;
-    if (total <= 0) return 0;
-    return clamp(-rect.top/total, 0, 1);
-  }
-
-  let inView = true;
-  const io = new IntersectionObserver((entries)=>{ inView = entries[0].isIntersecting; }, { threshold:0 });
-  io.observe(heroEl);
-
-  window.addEventListener('scroll', ()=>{ targetProgress = computeProgress(); }, { passive:true });
-  window.addEventListener('resize', ()=>{
-    renderer.setSize(window.innerWidth, window.innerHeight, false);
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    targetProgress = computeProgress();
-  });
-  targetProgress = computeProgress();
-
-  const dirtyColor = new THREE.Color(0x93998f);
-  const cleanColor = new THREE.Color(0x1a56ff);
-  const tmpColor = new THREE.Color();
-
-  const camA = new THREE.Vector3(-4.6, 1.7, 5.2);
-  const camB = new THREE.Vector3(-3.4, 1.55, 3.9);
-  const camC = new THREE.Vector3(-3.1, 1.35, 3.6);
-  const camD = new THREE.Vector3(-4.5, 1.35, 5.6);
-  const camTmp = new THREE.Vector3();
-
-  function setStageOpacity(el, start, inEnd, outStart, end){
-    let o;
-    if (progress <= start || progress >= end) o = 0;
-    else if (progress < inEnd) o = smoothstep(start, inEnd, progress);
-    else if (progress < outStart) o = 1;
-    else o = 1 - smoothstep(outStart, end, progress);
-    el.style.opacity = o.toFixed(3);
-    el.style.transform = `translate(-50%, ${(-50 + (1-o)*14).toFixed(1)}%)`;
-    el.style.pointerEvents = o > 0.6 ? 'auto' : 'none';
-    return o;
-  }
-
-  let clock = new THREE.Clock();
-  let autoRot = 0;
-
-  function render(){
-    requestAnimationFrame(render);
-    if (!inView) return;
-    const dt = clock.getDelta();
-
-    progress = lerp(progress, targetProgress, 0.09);
-
-    // --- stage text opacities ---
-    stages.forEach(s=>{
-      const st = s.dataset.stage;
-      if (st==='0') setStageOpacity(s, -0.05, 0.03, 0.10, 0.17);
-      if (st==='1') setStageOpacity(s, 0.13, 0.20, 0.33, 0.40);
-      if (st==='2') setStageOpacity(s, 0.39, 0.46, 0.59, 0.66);
-      if (st==='3') setStageOpacity(s, 0.74, 0.87, 1.01, 1.02);
-    });
-    if (cue) cue.style.opacity = (1 - smoothstep(0.0,0.07,progress)).toFixed(3);
-    const finalT = smoothstep(0.80, 0.96, progress);
-    if (badgeL){ badgeL.style.opacity = finalT.toFixed(3); badgeL.style.transform = `translateY(${(1-finalT)*16}px)`; }
-    if (badgeR){ badgeR.style.opacity = finalT.toFixed(3); badgeR.style.transform = `translateY(${(1-finalT)*16}px)`; }
-    if (rail){ rail.style.display = (progress>0.02 && progress<0.98) ? 'block':'block'; rail.style.setProperty('--wash-fill', (progress*100)+'%'); }
-
-    // --- car material: dirty -> clean ---
-    const cleanT = smoothstep(0.0, 0.72, progress);
-    paint.roughness = lerp(0.78, 0.14, cleanT);
-    paint.clearcoat = lerp(0.0, 1.0, cleanT);
-    lerpColor(dirtyColor, cleanColor, cleanT, tmpColor);
-    paint.color.copy(tmpColor);
-
-    // --- foam appear (soap stage) then rinse-fall ---
-    const soapT = smoothstep(0.12,0.20,progress) * (1-smoothstep(0.32,0.40,progress));
-    const rinseT = smoothstep(0.38,0.46,progress) * (1-smoothstep(0.58,0.66,progress));
-    foamMat.opacity = clamp(Math.max(soapT, rinseT*0.85), 0, 1);
-    const fallAmt = smoothstep(0.40, 0.64, progress);
-    const posArr = foamGeo.attributes.position.array;
-    for (let i=0;i<PCOUNT;i++){
-      const bx=basePositions[i*3], by=basePositions[i*3+1], bz=basePositions[i*3+2];
-      const seedA=seeds[i*2], seedB=seeds[i*2+1];
-      const bob = Math.sin(clock.elapsedTime*seedB + seedA)*0.02;
-      posArr[i*3]   = bx;
-      posArr[i*3+1] = by + bob - fallAmt*seedB*1.4;
-      posArr[i*3+2] = bz;
-    }
-    foamGeo.attributes.position.needsUpdate = true;
-
-    // --- car settle position for final reveal ---
-    car.position.y = lerp(-0.15, -0.62, smoothstep(0.78,0.98,progress));
-
-    // --- autorotate + scroll-tied intro swing ---
-    autoRot += dt*0.18;
-    const introSwing = lerp(-0.5, 0, smoothstep(0,0.14,progress));
-    car.rotation.y = autoRot + introSwing;
-
-    // --- camera path across 4 stages ---
-    let camPos;
-    if (progress < 0.20) camPos = camTmp.copy(camA).lerp(camB, smoothstep(0,0.20,progress));
-    else if (progress < 0.45) camPos = camTmp.copy(camB).lerp(camC, smoothstep(0.20,0.45,progress));
-    else if (progress < 0.78) camPos = camTmp.copy(camC).lerp(camC, 0);
-    else camPos = camTmp.copy(camC).lerp(camD, smoothstep(0.78,0.98,progress));
-    camera.position.copy(camPos);
-    camera.lookAt(0, 0.45 + car.position.y*0.3, 0);
-
-    renderer.render(scene, camera);
-  }
-  render();
-
-} catch (err) {
-  if (err && err.message === '__reduced_motion_fallback_applied__') {
-    // expected — accessible static fallback already applied above
-  } else {
-    console.warn('Wash-hero 3D indisponible, repli statique appliqué.', err);
-    document.querySelectorAll('.wash-text-stage').forEach(s=>{
-      if (s.dataset.stage === '3') { s.style.opacity='1'; s.style.pointerEvents='auto'; }
-      else { s.style.opacity='0'; }
-    });
-    const c = document.getElementById('wash-canvas');
-    if (c) c.style.display='none';
-    const cue = document.getElementById('wash-cue');
-    if (cue) cue.style.display='none';
-  }
-}
 </script>
 
 </body>
