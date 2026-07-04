@@ -670,16 +670,24 @@ body::before{
 
         <!-- FORFAITS -->
         <div id="g-forfait" class="hidden" style="display:none;flex-direction:column;" role="group">
-          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div></div><div class="ff-price">30$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div></div><div class="ff-price">25$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">2 voitures</div></div><div class="ff-price">95$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div></div><div class="ff-price">90$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div></div><div class="ff-price">80$<small> / voiture</small></div></div>
+          <div class="notice-inline" id="forfaitNotice" style="margin-bottom:14px;margin-top:0;">
+            <i class="fa-solid fa-circle-info fa-sm"></i>
+            <span>Les forfaits multi-véhicules s'appliquent uniquement aux voitures de type <strong>sedan</strong>. Pour un autre type de véhicule, réservez chaque service individuellement.</span>
+          </div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" data-min="2" data-max="4" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div></div><div class="ff-price">30$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" data-min="5" data-max="10" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div></div><div class="ff-price">25$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" data-min="2" data-max="2" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">2 voitures</div></div><div class="ff-price">95$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" data-min="3" data-max="4" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div></div><div class="ff-price">90$<small> / voiture</small></div></div>
+          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" data-min="5" data-max="unbounded" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div></div><div class="ff-price">80$<small> / voiture</small></div></div>
+          <div class="hidden" id="forfaitQtyPicker" style="margin-top:14px;">
+            <span class="lbl">Combien de véhicules ?</span>
+            <div class="creneau-row" id="forfaitQtyButtons"></div>
+          </div>
         </div>
 
         <button type="button" class="clear-btn" id="clearBtn" onclick="clearSelection()"><i class="fa-solid fa-xmark fa-2xs"></i> Effacer la sélection</button>
 
-        <div class="qty-block">
+        <div class="qty-block" id="qtyBlock">
           <button type="button" class="qty-btn" onclick="changeQty(-1)" aria-label="Diminuer">−</button>
           <div class="qty-num" id="qtyDisplay" aria-live="polite">1</div>
           <button type="button" class="qty-btn" onclick="changeQty(1)" aria-label="Augmenter">+</button>
@@ -687,10 +695,11 @@ body::before{
           <div class="qty-sub" id="qtySubtotal" aria-live="polite"></div>
         </div>
 
-        <div class="field" style="max-width:420px;margin-bottom:8px;">
+        <div id="vehicleModelSingle" class="field" style="max-width:420px;margin-bottom:8px;">
           <label for="vehicleModel">Marque et modèle *</label>
           <input type="text" id="vehicleModel" placeholder="Ex. Toyota Camry 2022" required>
         </div>
+        <div id="vehicleModelsMulti" class="hidden" style="margin-bottom:8px;"></div>
 
         <div id="step1Error" class="field-error hidden" role="alert"><i class="fa-solid fa-circle-exclamation fa-sm"></i> <span id="step1ErrorText"></span></div>
         <div class="seg-actions">
@@ -849,7 +858,7 @@ body::before{
 <script>
 const PROMO_CODE='SHINE10',PROMO_AMOUNT=10,PROMO_MIN=100;
 const DECONT_PRICES={sedan:{label:'Sedan',price:50,type:'sedan'},suv:{label:'VUS',price:75,type:'suv'},van:{label:'Pickup / Van',price:150,type:'vanpickup'},pickup:{label:'Pickup / Van',price:150,type:'vanpickup'}};
-let S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:''};
+let S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:'',forfaitMin:null,forfaitMax:null,vehicleModels:[]};
 let currentSeg=1,segDone={1:false,2:false,3:false,4:false};
 let refNumber='SA-'+Math.floor(100000+Math.random()*899999);
 document.getElementById('refNum').textContent=refNumber;
@@ -870,10 +879,25 @@ function markDone(n,sub){
 
 function completeSeg1(){
   if(!S.service){showStep1Error('Veuillez sélectionner un service.');return;}
-  const model=document.getElementById('vehicleModel').value.trim();
-  if(!model){showStep1Error('Veuillez entrer le modèle de votre véhicule.');return;}
+  if(S.isForfait && S.forfaitMin!==S.forfaitMax && !S.qty){
+    showStep1Error('Veuillez choisir le nombre de véhicules.');return;
+  }
+  let models=[];
+  if(S.isForfait){
+    for(let i=0;i<S.qty;i++){
+      const val=(document.getElementById('vehicleModel_'+i)?.value||'').trim();
+      if(!val){showStep1Error('Veuillez entrer le modèle de chaque véhicule.');return;}
+      models.push(val);
+    }
+  }else{
+    const model=document.getElementById('vehicleModel').value.trim();
+    if(!model){showStep1Error('Veuillez entrer le modèle de votre véhicule.');return;}
+    models=[model];
+  }
+  S.vehicleModels=models;
   hideStep1Error();
-  markDone(1,`<b>${escapeHtml(S.service)}</b> · ${escapeHtml(model)} · ×${S.qty}`);
+  const modelSummary=models.join(', ');
+  markDone(1,`<b>${escapeHtml(S.service)}</b> · ${escapeHtml(modelSummary)} · ×${S.qty}`);
   document.getElementById('seg1').classList.remove('active');
   unlockSeg(2);setupDecontForVehicle();openSeg(2);
 }
@@ -895,7 +919,13 @@ function completeSeg3(){
 }
 
 function switchVehicle(v,btn){
-  S.vehicle=v;S.service=null;S.price=0;S.promo=false;
+  S.vehicle=v;S.service=null;S.price=0;S.promo=false;S.isForfait=false;
+  S.forfaitMin=null;S.forfaitMax=null;S.qty=1;
+  document.getElementById('qtyDisplay').textContent='1';
+  document.getElementById('forfaitQtyPicker').classList.add('hidden');
+  document.getElementById('forfaitQtyButtons').innerHTML='';
+  document.getElementById('qtyBlock').classList.remove('hidden');
+  showSingleVehicleField();
   document.querySelectorAll('.vcard').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
   btn.classList.add('active');btn.setAttribute('aria-selected','true');
   ['sedan','suv','van','pickup'].forEach(id=>document.getElementById('g-'+id)?.classList.add('hidden'));
@@ -914,24 +944,102 @@ function selectSvc(el){
   const pc=document.getElementById('promoCode');if(pc)pc.value='';
   document.getElementById('promoMsg').innerHTML='';
   document.getElementById('clearBtn').classList.add('show');
-  hideStep1Error();updateAll();
+  hideStep1Error();
+
+  if(S.isForfait){
+    S.forfaitMin=parseInt(el.dataset.min);
+    S.forfaitMax=el.dataset.max==='unbounded'?Infinity:parseInt(el.dataset.max);
+    if(S.forfaitMin===S.forfaitMax){
+      document.getElementById('forfaitQtyPicker').classList.add('hidden');
+      document.getElementById('forfaitQtyButtons').innerHTML='';
+      document.getElementById('qtyBlock').classList.add('hidden');
+      S.qty=S.forfaitMin;
+      document.getElementById('qtyDisplay').textContent=S.qty;
+      renderVehicleModelFields(S.qty);
+    }else if(isFinite(S.forfaitMax)){
+      document.getElementById('qtyBlock').classList.add('hidden');
+      buildForfaitQtyButtons(S.forfaitMin,S.forfaitMax);
+      document.getElementById('forfaitQtyPicker').classList.remove('hidden');
+      S.qty=0;
+      renderVehicleModelFields(0);
+    }else{
+      document.getElementById('forfaitQtyPicker').classList.add('hidden');
+      document.getElementById('forfaitQtyButtons').innerHTML='';
+      document.getElementById('qtyBlock').classList.remove('hidden');
+      S.qty=Math.max(S.forfaitMin,S.qty||S.forfaitMin);
+      document.getElementById('qtyDisplay').textContent=S.qty;
+      renderVehicleModelFields(S.qty);
+    }
+  }else{
+    S.forfaitMin=null;S.forfaitMax=null;
+    document.getElementById('forfaitQtyPicker').classList.add('hidden');
+    document.getElementById('forfaitQtyButtons').innerHTML='';
+    document.getElementById('qtyBlock').classList.remove('hidden');
+    showSingleVehicleField();
+  }
+  updateAll();
+}
+function buildForfaitQtyButtons(min,max){
+  const c=document.getElementById('forfaitQtyButtons');
+  let html='';
+  for(let n=min;n<=max;n++){
+    html+=`<button type="button" class="creneau-btn" data-n="${n}" onclick="selectForfaitQty(${n},this)">${n} voitures</button>`;
+  }
+  c.innerHTML=html;
+}
+function selectForfaitQty(n,btn){
+  document.querySelectorAll('#forfaitQtyButtons .creneau-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  S.qty=n;
+  document.getElementById('qtyDisplay').textContent=n;
+  hideStep1Error();
+  renderVehicleModelFields(n);
+  updateAll();
+}
+function renderVehicleModelFields(n){
+  const multi=document.getElementById('vehicleModelsMulti');
+  if(!S.isForfait){showSingleVehicleField();return;}
+  document.getElementById('vehicleModelSingle').classList.add('hidden');
+  if(n<=0){multi.classList.add('hidden');multi.innerHTML='';return;}
+  let html='';
+  for(let i=0;i<n;i++){
+    html+=`<div class="field" style="max-width:420px;margin-bottom:8px;">
+      <label for="vehicleModel_${i}">Véhicule ${i+1} — Marque et modèle *</label>
+      <input type="text" id="vehicleModel_${i}" placeholder="Ex. Toyota Camry 2022" required>
+    </div>`;
+  }
+  multi.innerHTML=html;
+  multi.classList.remove('hidden');
+}
+function showSingleVehicleField(){
+  document.getElementById('vehicleModelSingle').classList.remove('hidden');
+  document.getElementById('vehicleModelsMulti').classList.add('hidden');
+  document.getElementById('vehicleModelsMulti').innerHTML='';
 }
 function svcKeydown(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSvc(el);}}
 function decontKeydown(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();selectDecont(el);}}
 function clearSelection(){
   document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
-  S.service=null;S.price=0;S.promo=false;
+  S.service=null;S.price=0;S.promo=false;S.isForfait=false;
+  S.forfaitMin=null;S.forfaitMax=null;
+  document.getElementById('forfaitQtyPicker').classList.add('hidden');
+  document.getElementById('forfaitQtyButtons').innerHTML='';
+  document.getElementById('qtyBlock').classList.remove('hidden');
+  showSingleVehicleField();
   document.getElementById('clearBtn').classList.remove('show');
   updateAll();
 }
 function changeQty(d){
-  S.qty=Math.max(1,Math.min(10,S.qty+d));
+  const min=(S.isForfait&&S.forfaitMin)?S.forfaitMin:1;
+  S.qty=Math.max(min,Math.min(10,S.qty+d));
   document.getElementById('qtyDisplay').textContent=S.qty;
   S.promo=false;document.getElementById('promoMsg').innerHTML='';
+  if(S.isForfait)renderVehicleModelFields(S.qty);
   updateAll();
 }
 function setupDecontForVehicle(){
-  const known=DECONT_PRICES[S.vehicle];
+  const key=S.isForfait?'sedan':S.vehicle;
+  const known=DECONT_PRICES[key];
   const optsBox=document.getElementById('decontOptions'),singleBox=document.getElementById('decontSingle');
   const decontIsOn=document.querySelector('input[name="decont"][value="oui"]').checked;
   if(known){
@@ -994,7 +1102,11 @@ function updateTotal(){
     if(S.promo&&S.base)document.getElementById('ftOrig').textContent=S.base+'$';
   }
 }
-function updateContinueBtn(){document.getElementById('btnStep1').disabled=!S.service;}
+function updateContinueBtn(){
+  let ok=!!S.service;
+  if(S.isForfait&&S.forfaitMin!==S.forfaitMax&&!S.qty)ok=false;
+  document.getElementById('btnStep1').disabled=!ok;
+}
 function updateStickerSteps(){
   document.querySelectorAll('.sk-step').forEach(el=>{
     const n=parseInt(el.dataset.s);el.classList.remove('now','done');
@@ -1014,7 +1126,11 @@ function updateStickerLines(){
 }
 function updateStickerCta(){
   const cta=document.getElementById('stickerCta');
-  if(currentSeg===1){cta.innerHTML=S.service?'Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>':'Choisir un service <i class="fa-solid fa-arrow-right fa-xs"></i>';cta.disabled=!S.service;}
+  if(currentSeg===1){
+    const ok=S.service&&!(S.isForfait&&S.forfaitMin!==S.forfaitMax&&!S.qty);
+    cta.innerHTML=ok?'Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>':'Choisir un service <i class="fa-solid fa-arrow-right fa-xs"></i>';
+    cta.disabled=!ok;
+  }
   else if(currentSeg===4){cta.innerHTML='Envoyer ma demande <i class="fa-solid fa-paper-plane fa-xs"></i>';cta.disabled=false;}
   else{cta.innerHTML='Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>';cta.disabled=false;}
 }
@@ -1039,8 +1155,9 @@ function showStep2Error(t){document.getElementById('step2ErrorText').textContent
 function hideStep2Error(){document.getElementById('step2Error').classList.add('hidden');}
 
 function buildRecap(){
-  const model=document.getElementById('vehicleModel').value.trim(),nom=document.getElementById('nom').value.trim(),tel=document.getElementById('telephone').value.trim(),adr=document.getElementById('adresse').value.trim(),date=document.getElementById('maDate').value,note=document.getElementById('noteClient').value.trim();
-  const rows=[['Service',S.service],['Véhicule',model],['Quantité',S.qty+' véhicule(s)']];
+  const nom=document.getElementById('nom').value.trim(),tel=document.getElementById('telephone').value.trim(),adr=document.getElementById('adresse').value.trim(),date=document.getElementById('maDate').value,note=document.getElementById('noteClient').value.trim();
+  const vehicleDisplay=S.vehicleModels.length>1?S.vehicleModels.map((m,i)=>`#${i+1} ${m}`).join(' · '):(S.vehicleModels[0]||'');
+  const rows=[['Service',S.service],['Véhicule(s)',vehicleDisplay],['Quantité',S.qty+' véhicule(s)']];
   if(S.decontPrice>0)rows.push(['Décontamination',decontLabel(S.decontType)+' (+'+S.decontPrice+'$)']);
   if(S.dogHairPrice>0)rows.push(["Poils d'animaux",'Oui (environ +'+S.dogHairPrice+'$)']);
   rows.push(['Nom',nom],['Téléphone',tel],['Adresse',adr],['Date',date]);
@@ -1050,7 +1167,7 @@ function buildRecap(){
 
 async function submitForm(){
   const btn=document.getElementById('submitBtn');btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours…';
-  const payload={access_key:'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',subject:'Nouvelle réservation — Shine Automobile',from_name:'Shine Automobile — Réservation',reference:refNumber,service:S.service,montant_base:S.base+'$',montant_final:S.final+'$',economies:S.promo?'-'+PROMO_AMOUNT+'$':'Aucun',code_promo:S.promo?PROMO_CODE:'',nombre_voitures:S.qty,modele_vehicule:document.getElementById('vehicleModel').value.trim(),nom:document.getElementById('nom').value.trim(),telephone:document.getElementById('telephone').value.trim(),adresse:document.getElementById('adresse').value.trim(),date:document.getElementById('maDate').value,creneau:S.creneau||'Non précisé',decontamination:S.decontPrice>0?decontLabel(S.decontType)+' (+'+S.decontPrice+'$)':'Non',poils_animaux:S.dogHairPrice>0?'Oui (environ +'+S.dogHairPrice+'$)':'Non',note_client:document.getElementById('noteClient').value.trim()||'Aucune note',botcheck:''};
+  const payload={access_key:'dd16b3a1-14a2-4bb6-acf9-ccf34ef5574a',subject:'Nouvelle réservation — Shine Automobile',from_name:'Shine Automobile — Réservation',reference:refNumber,service:S.service,montant_base:S.base+'$',montant_final:S.final+'$',economies:S.promo?'-'+PROMO_AMOUNT+'$':'Aucun',code_promo:S.promo?PROMO_CODE:'',nombre_voitures:S.qty,modele_vehicule:S.vehicleModels.join(' | '),nom:document.getElementById('nom').value.trim(),telephone:document.getElementById('telephone').value.trim(),adresse:document.getElementById('adresse').value.trim(),date:document.getElementById('maDate').value,creneau:S.creneau||'Non précisé',decontamination:S.decontPrice>0?decontLabel(S.decontType)+' (+'+S.decontPrice+'$)':'Non',poils_animaux:S.dogHairPrice>0?'Oui (environ +'+S.dogHairPrice+'$)':'Non',note_client:document.getElementById('noteClient').value.trim()||'Aucune note',botcheck:''};
   try{
     const res=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
     const data=await res.json();
@@ -1067,7 +1184,7 @@ function showSuccessScreen(){
 }
 
 function resetAll(){
-  S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:''};
+  S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',decontPrice:0,dogHairPrice:0,decontType:'',forfaitMin:null,forfaitMax:null,vehicleModels:[]};
   currentSeg=1;segDone={1:false,2:false,3:false,4:false};
   document.querySelector('.shell').classList.remove('hidden');document.getElementById('successView').classList.add('hidden');
   document.getElementById('sameDayWarning').classList.add('hidden');
@@ -1075,6 +1192,10 @@ function resetAll(){
   ['vehicleModel','nom','telephone','adresse','maDate','noteClient'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('promoCode').value='';document.getElementById('promoMsg').innerHTML='';
   document.getElementById('qtyDisplay').textContent='1';
+  document.getElementById('forfaitQtyPicker').classList.add('hidden');
+  document.getElementById('forfaitQtyButtons').innerHTML='';
+  document.getElementById('qtyBlock').classList.remove('hidden');
+  showSingleVehicleField();
   document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
   document.getElementById('clearBtn').classList.remove('show');
   document.querySelectorAll('.creneau-btn').forEach(b=>b.classList.remove('active'));
