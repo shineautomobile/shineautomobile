@@ -136,9 +136,6 @@ body::before{
   font-size:9px;color:#fff;opacity:0;transform:scale(.5);transition:all .2s;
 }
 .vcard.active .vcard-check{opacity:1;transform:scale(1);}
-.vcard-forfait{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;min-height:64px;padding:16px 20px;}
-.vcard-forfait .vcard-img{font-size:30px;margin-bottom:0;}
-.vcard-forfait .vcard-label{font-size:14px;}
 
 /* ═══ SERVICE CARDS — redesigned ═══ */
 .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
@@ -176,20 +173,6 @@ body::before{
   opacity:0;transform:scale(.5);transition:all .2s;
 }
 .svc-opt.selected .svc-badge{opacity:1;transform:scale(1);}
-
-/* forfait cards */
-.ff-opt{
-  border:1.5px solid var(--border);border-radius:var(--r);padding:16px 20px;cursor:pointer;
-  background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:14px;
-  margin-bottom:10px;transition:all .2s;box-shadow:var(--shadow-sm);
-}
-.ff-opt:hover{border-color:var(--blue-line);box-shadow:var(--shadow-md);}
-.ff-opt.selected{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12);}
-.ff-info{display:flex;flex-direction:column;gap:3px;}
-.ff-name{font-weight:700;font-size:14px;color:var(--text);}
-.ff-tier{font-size:12.5px;color:var(--text2);}
-.ff-price{font-family:var(--mono);font-weight:700;font-size:22px;color:var(--blue);white-space:nowrap;}
-.ff-price small{font-size:12px;font-weight:500;color:var(--text3);font-family:var(--sans);}
 
 /* desc box */
 .svc-desc-box{
@@ -534,11 +517,6 @@ body::before{
             <div class="vcard-img">🛻</div>
             <div class="vcard-label">Pickup</div>
           </button>
-          <button type="button" class="vcard vcard-forfait" onclick="switchVehicle('forfait',this)" aria-selected="false" role="tab">
-            <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="vcard-img">🚗</div>
-            <div class="vcard-label">Forfaits multi-véhicules</div>
-          </button>
         </div>
 
         <span class="lbl">Choisir un service</span>
@@ -571,43 +549,18 @@ body::before{
             </div>
             <div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Sedan" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="svc-opt-top">
-              <div class="svc-icon"><i class="fa-solid fa-couch"></i></div>
-              <div class="svc-name">Lavage Intérieur Régulier</div>
-              <ul class="svc-features">
-                <li><i class="fa-solid fa-check"></i>Aspiration complète (moquette, tapis, sièges, coffre)</li>
-                <li><i class="fa-solid fa-check"></i>Surfaces plastique + tableau de bord</li>
-                <li><i class="fa-solid fa-check"></i>Volant + vitres intérieures</li>
-              </ul>
-            </div>
-            <div class="svc-opt-bottom"><div class="svc-price-big">75$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
-          </div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Sedan" data-price="125" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
             <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
             <div class="svc-opt-top">
               <div class="svc-icon"><i class="fa-solid fa-gem"></i></div>
               <div class="svc-name">Lavage Intérieur Super</div>
               <ul class="svc-features">
-                <li><i class="fa-solid fa-check"></i>Tout du Lavage Intérieur Régulier</li>
+                <li><i class="fa-solid fa-check"></i>Aspiration complète (moquette, tapis, sièges, coffre)</li>
                 <li><i class="fa-solid fa-check"></i>Shampoing des sièges et tapis</li>
                 <li><i class="fa-solid fa-check"></i>Protection plastique intérieur</li>
               </ul>
             </div>
             <div class="svc-opt-bottom"><div class="svc-price-big">125$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
-          </div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Sedan" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
-            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="svc-opt-top">
-              <div class="svc-icon"><i class="fa-solid fa-car-side"></i></div>
-              <div class="svc-name">Lavage Complet Régulier</div>
-              <ul class="svc-features">
-                <li><i class="fa-solid fa-check"></i>Extérieur complet</li>
-                <li><i class="fa-solid fa-check"></i>Intérieur régulier (aspiration + surfaces)</li>
-              </ul>
-            </div>
-            <div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Sedan" data-price="175" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
             <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
@@ -639,9 +592,7 @@ body::before{
         <div id="g-suv" class="svc-grid hidden" role="group">
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur SUV" data-price="40" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div><div class="svc-name">Lavage Extérieur</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Rinçage &amp; savon complet</li><li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li><li><i class="fa-solid fa-check"></i>Séchage + lustrage des pneus</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">40$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Application de cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier SUV" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Lavage Intérieur Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Surfaces + tableau de bord</li><li><i class="fa-solid fa-check"></i>Vitres intérieures</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Intérieur Régulier</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique intérieur</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier SUV" data-price="120" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-car-side"></i></div><div class="svc-name">Lavage Complet Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur complet</li><li><i class="fa-solid fa-check"></i>Intérieur régulier</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">120$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique intérieur</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges SUV" data-price="60" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">60$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
         </div>
@@ -650,9 +601,7 @@ body::before{
         <div id="g-van" class="svc-grid hidden" role="group">
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Van" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div><div class="svc-name">Lavage Extérieur</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Rinçage &amp; savon complet</li><li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li><li><i class="fa-solid fa-check"></i>Séchage + lustrage des pneus</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Van" data-price="80" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">80$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Van" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Lavage Intérieur Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Surfaces + tableau de bord</li><li><i class="fa-solid fa-check"></i>Vitres intérieures</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Van" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Intérieur régulier complet</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Van" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-car-side"></i></div><div class="svc-name">Lavage Complet Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur complet</li><li><i class="fa-solid fa-check"></i>Intérieur régulier</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">200$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Van" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Van" data-price="300" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">300$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Van" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
         </div>
@@ -661,28 +610,9 @@ body::before{
         <div id="g-pickup" class="svc-grid hidden" role="group">
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Pickup" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div><div class="svc-name">Lavage Extérieur</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Rinçage &amp; savon complet</li><li><i class="fa-solid fa-check"></i>Jantes + vitres extérieures</li><li><i class="fa-solid fa-check"></i>Séchage + lustrage des pneus</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Pickup" data-price="70" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">70$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Régulier Pickup" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Lavage Intérieur Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Surfaces + tableau de bord</li><li><i class="fa-solid fa-check"></i>Vitres intérieures</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Pickup" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Intérieur régulier complet</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">200$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Régulier Pickup" data-price="190" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-car-side"></i></div><div class="svc-name">Lavage Complet Régulier</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur complet</li><li><i class="fa-solid fa-check"></i>Intérieur régulier</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">190$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Pickup" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">200$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Pickup" data-price="250" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">250$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Pickup" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">75$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
-        </div>
-
-        <!-- FORFAITS -->
-        <div id="g-forfait" class="hidden" style="display:none;flex-direction:column;" role="group">
-          <div class="notice-inline" id="forfaitNotice" style="margin-bottom:14px;margin-top:0;">
-            <i class="fa-solid fa-circle-info fa-sm"></i>
-            <span>Les forfaits multi-véhicules s'appliquent uniquement aux voitures de type <strong>sedan</strong>. Pour un autre type de véhicule, réservez chaque service individuellement.</span>
-          </div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 2-4 voitures" data-price="30" data-forfait="true" data-min="2" data-max="4" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">2 à 4 voitures</div></div><div class="ff-price">30$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Extérieur 5-10 voitures" data-price="25" data-forfait="true" data-min="5" data-max="10" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Extérieur</div><div class="ff-tier">5 à 10 voitures</div></div><div class="ff-price">25$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 2 voitures" data-price="95" data-forfait="true" data-min="2" data-max="2" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">2 voitures</div></div><div class="ff-price">95$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 3-4 voitures" data-price="90" data-forfait="true" data-min="3" data-max="4" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">3 à 4 voitures</div></div><div class="ff-price">90$<small> / voiture</small></div></div>
-          <div class="ff-opt" tabindex="0" data-service="Forfait Complet 5+ voitures" data-price="80" data-forfait="true" data-min="5" data-max="unbounded" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="ff-info"><div class="ff-name">Forfait Complet</div><div class="ff-tier">5 voitures et plus</div></div><div class="ff-price">80$<small> / voiture</small></div></div>
-          <div class="hidden" id="forfaitQtyPicker" style="margin-top:14px;">
-            <span class="lbl">Combien de véhicules ?</span>
-            <div class="creneau-row" id="forfaitQtyButtons"></div>
-          </div>
         </div>
 
         <button type="button" class="clear-btn" id="clearBtn" onclick="clearSelection()"><i class="fa-solid fa-xmark fa-2xs"></i> Effacer la sélection</button>
@@ -699,7 +629,6 @@ body::before{
           <label for="vehicleModel">Marque et modèle *</label>
           <input type="text" id="vehicleModel" placeholder="Ex. Toyota Camry 2022" required>
         </div>
-        <div id="vehicleModelsMulti" class="hidden" style="margin-bottom:8px;"></div>
 
         <div id="step1Error" class="field-error hidden" role="alert"><i class="fa-solid fa-circle-exclamation fa-sm"></i> <span id="step1ErrorText"></span></div>
         <div class="seg-actions">
@@ -865,7 +794,7 @@ body::before{
 <script>
 const PROMO_CODE='SHINE10',PROMO_AMOUNT=10,PROMO_MIN=100;
 const DECONT_PRICES={sedan:{label:'Sedan',price:50,type:'sedan'},suv:{label:'VUS',price:75,type:'suv'},van:{label:'Pickup / Van',price:150,type:'vanpickup'},pickup:{label:'Pickup / Van',price:150,type:'vanpickup'}};
-let S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',commPref:'',decontPrice:0,dogHairPrice:0,decontType:'',forfaitMin:null,forfaitMax:null,vehicleModels:[]};
+let S={vehicle:'sedan',service:null,price:0,qty:1,base:0,final:0,promo:false,creneau:'',commPref:'',decontPrice:0,dogHairPrice:0,decontType:'',vehicleModels:[]};
 let currentSeg=1,segDone={1:false,2:false,3:false,4:false};
 let refNumber='SA-'+Math.floor(100000+Math.random()*899999);
 document.getElementById('refNum').textContent=refNumber;
@@ -886,25 +815,11 @@ function markDone(n,sub){
 
 function completeSeg1(){
   if(!S.service){showStep1Error('Veuillez sélectionner un service.');return;}
-  if(S.isForfait && S.forfaitMin!==S.forfaitMax && !S.qty){
-    showStep1Error('Veuillez choisir le nombre de véhicules.');return;
-  }
-  let models=[];
-  if(S.isForfait){
-    for(let i=0;i<S.qty;i++){
-      const val=(document.getElementById('vehicleModel_'+i)?.value||'').trim();
-      if(!val){showStep1Error('Veuillez entrer le modèle de chaque véhicule.');return;}
-      models.push(val);
-    }
-  }else{
-    const model=document.getElementById('vehicleModel').value.trim();
-    if(!model){showStep1Error('Veuillez entrer le modèle de votre véhicule.');return;}
-    models=[model];
-  }
-  S.vehicleModels=models;
+  const model=document.getElementById('vehicleModel').value.trim();
+  if(!model){showStep1Error('Veuillez entrer le modèle de votre véhicule.');return;}
+  S.vehicleModels=[model];
   hideStep1Error();
-  const modelSummary=models.join(', ');
-  markDone(1,`<b>${escapeHtml(S.service)}</b> · ${escapeHtml(modelSummary)} · ×${S.qty}`);
+  markDone(1,`<b>${escapeHtml(S.service)}</b> · ${escapeHtml(model)} · ×${S.qty}`);
   document.getElementById('seg1').classList.remove('active');
   unlockSeg(2);setupDecontForVehicle();openSeg(2);
 }
@@ -926,126 +841,45 @@ function completeSeg3(){
 }
 
 function switchVehicle(v,btn){
-  S.vehicle=v;S.service=null;S.price=0;S.promo=false;S.isForfait=false;
-  S.forfaitMin=null;S.forfaitMax=null;S.qty=1;
+  S.vehicle=v;S.service=null;S.price=0;S.promo=false;S.qty=1;
   document.getElementById('qtyDisplay').textContent='1';
-  document.getElementById('forfaitQtyPicker').classList.add('hidden');
-  document.getElementById('forfaitQtyButtons').innerHTML='';
   document.getElementById('qtyBlock').classList.remove('hidden');
-  showSingleVehicleField();
   document.querySelectorAll('.vcard').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
   btn.classList.add('active');btn.setAttribute('aria-selected','true');
   ['sedan','suv','van','pickup'].forEach(id=>document.getElementById('g-'+id)?.classList.add('hidden'));
-  const ff=document.getElementById('g-forfait');
-  if(v==='forfait'){ff.classList.remove('hidden');ff.style.display='flex';}
-  else{ff.classList.add('hidden');ff.style.display='none';document.getElementById('g-'+v)?.classList.remove('hidden');}
-  document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
+  document.getElementById('g-'+v)?.classList.remove('hidden');
+  document.querySelectorAll('.svc-opt').forEach(o=>o.classList.remove('selected'));
   document.getElementById('clearBtn').classList.remove('show');
   hideStep1Error();updateAll();
 }
 function selectSvc(el){
-  document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('.svc-opt').forEach(o=>o.classList.remove('selected'));
   el.classList.add('selected');
-  S.service=el.dataset.service;S.price=parseInt(el.dataset.price);S.isForfait=el.dataset.forfait==='true';
+  S.service=el.dataset.service;S.price=parseInt(el.dataset.price);
   S.promo=false;
   const pc=document.getElementById('promoCode');if(pc)pc.value='';
   document.getElementById('promoMsg').innerHTML='';
   document.getElementById('clearBtn').classList.add('show');
   hideStep1Error();
-
-  if(S.isForfait){
-    S.forfaitMin=parseInt(el.dataset.min);
-    S.forfaitMax=el.dataset.max==='unbounded'?Infinity:parseInt(el.dataset.max);
-    if(S.forfaitMin===S.forfaitMax){
-      document.getElementById('forfaitQtyPicker').classList.add('hidden');
-      document.getElementById('forfaitQtyButtons').innerHTML='';
-      document.getElementById('qtyBlock').classList.add('hidden');
-      S.qty=S.forfaitMin;
-      document.getElementById('qtyDisplay').textContent=S.qty;
-      renderVehicleModelFields(S.qty);
-    }else if(isFinite(S.forfaitMax)){
-      document.getElementById('qtyBlock').classList.add('hidden');
-      buildForfaitQtyButtons(S.forfaitMin,S.forfaitMax);
-      document.getElementById('forfaitQtyPicker').classList.remove('hidden');
-      S.qty=0;
-      renderVehicleModelFields(0);
-    }else{
-      document.getElementById('forfaitQtyPicker').classList.add('hidden');
-      document.getElementById('forfaitQtyButtons').innerHTML='';
-      document.getElementById('qtyBlock').classList.remove('hidden');
-      S.qty=Math.max(S.forfaitMin,S.qty||S.forfaitMin);
-      document.getElementById('qtyDisplay').textContent=S.qty;
-      renderVehicleModelFields(S.qty);
-    }
-  }else{
-    S.forfaitMin=null;S.forfaitMax=null;
-    document.getElementById('forfaitQtyPicker').classList.add('hidden');
-    document.getElementById('forfaitQtyButtons').innerHTML='';
-    document.getElementById('qtyBlock').classList.remove('hidden');
-    showSingleVehicleField();
-  }
   updateAll();
-}
-function buildForfaitQtyButtons(min,max){
-  const c=document.getElementById('forfaitQtyButtons');
-  let html='';
-  for(let n=min;n<=max;n++){
-    html+=`<button type="button" class="creneau-btn" data-n="${n}" onclick="selectForfaitQty(${n},this)">${n} voitures</button>`;
-  }
-  c.innerHTML=html;
-}
-function selectForfaitQty(n,btn){
-  document.querySelectorAll('#forfaitQtyButtons .creneau-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  S.qty=n;
-  document.getElementById('qtyDisplay').textContent=n;
-  hideStep1Error();
-  renderVehicleModelFields(n);
-  updateAll();
-}
-function renderVehicleModelFields(n){
-  const multi=document.getElementById('vehicleModelsMulti');
-  if(!S.isForfait){showSingleVehicleField();return;}
-  document.getElementById('vehicleModelSingle').classList.add('hidden');
-  if(n<=0){multi.classList.add('hidden');multi.innerHTML='';return;}
-  let html='';
-  for(let i=0;i<n;i++){
-    html+=`<div class="field" style="max-width:420px;margin-bottom:8px;">
-      <label for="vehicleModel_${i}">Véhicule ${i+1} — Marque et modèle *</label>
-      <input type="text" id="vehicleModel_${i}" placeholder="Ex. Toyota Camry 2022" required>
-    </div>`;
-  }
-  multi.innerHTML=html;
-  multi.classList.remove('hidden');
-}
-function showSingleVehicleField(){
-  document.getElementById('vehicleModelSingle').classList.remove('hidden');
-  document.getElementById('vehicleModelsMulti').classList.add('hidden');
-  document.getElementById('vehicleModelsMulti').innerHTML='';
 }
 function svcKeydown(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSvc(el);}}
 function decontKeydown(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();selectDecont(el);}}
 function clearSelection(){
-  document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
-  S.service=null;S.price=0;S.promo=false;S.isForfait=false;
-  S.forfaitMin=null;S.forfaitMax=null;
-  document.getElementById('forfaitQtyPicker').classList.add('hidden');
-  document.getElementById('forfaitQtyButtons').innerHTML='';
+  document.querySelectorAll('.svc-opt').forEach(o=>o.classList.remove('selected'));
+  S.service=null;S.price=0;S.promo=false;
   document.getElementById('qtyBlock').classList.remove('hidden');
-  showSingleVehicleField();
   document.getElementById('clearBtn').classList.remove('show');
   updateAll();
 }
 function changeQty(d){
-  const min=(S.isForfait&&S.forfaitMin)?S.forfaitMin:1;
-  S.qty=Math.max(min,Math.min(10,S.qty+d));
+  S.qty=Math.max(1,Math.min(10,S.qty+d));
   document.getElementById('qtyDisplay').textContent=S.qty;
   S.promo=false;document.getElementById('promoMsg').innerHTML='';
-  if(S.isForfait)renderVehicleModelFields(S.qty);
   updateAll();
 }
 function setupDecontForVehicle(){
-  const key=S.isForfait?'sedan':S.vehicle;
+  const key=S.vehicle;
   const known=DECONT_PRICES[key];
   const optsBox=document.getElementById('decontOptions'),singleBox=document.getElementById('decontSingle');
   const decontIsOn=document.querySelector('input[name="decont"][value="oui"]').checked;
@@ -1100,20 +934,18 @@ function updateTotal(){
   document.getElementById('stOrig').classList.toggle('hidden',!S.promo||!S.base);
   document.getElementById('stDiscount').classList.toggle('hidden',!S.promo||!S.base);
   if(S.promo&&S.base)document.getElementById('stOrig').textContent=S.base+'$';
-  document.getElementById('stLabel').textContent=S.isForfait?`Total estimé · par véhicule × ${S.qty}`:'Total estimé';
+  document.getElementById('stLabel').textContent='Total estimé';
   const ftAmt=document.getElementById('ftAmount');
   if(ftAmt){
     if(ftAmt.textContent!==newText){ftAmt.textContent=newText;ftAmt.classList.add('bump');setTimeout(()=>ftAmt.classList.remove('bump'),250);}
-    document.getElementById('ftLabel').textContent=S.isForfait?`Montant total · par véhicule × ${S.qty}`:'Montant total';
+    document.getElementById('ftLabel').textContent='Montant total';
     document.getElementById('ftOrig').classList.toggle('hidden',!S.promo||!S.base);
     document.getElementById('ftDiscount').classList.toggle('hidden',!S.promo||!S.base);
     if(S.promo&&S.base)document.getElementById('ftOrig').textContent=S.base+'$';
   }
 }
 function updateContinueBtn(){
-  let ok=!!S.service;
-  if(S.isForfait&&S.forfaitMin!==S.forfaitMax&&!S.qty)ok=false;
-  document.getElementById('btnStep1').disabled=!ok;
+  document.getElementById('btnStep1').disabled=!S.service;
 }
 function updateStickerSteps(){
   document.querySelectorAll('.sk-step').forEach(el=>{
@@ -1135,7 +967,7 @@ function updateStickerLines(){
 function updateStickerCta(){
   const cta=document.getElementById('stickerCta');
   if(currentSeg===1){
-    const ok=S.service&&!(S.isForfait&&S.forfaitMin!==S.forfaitMax&&!S.qty);
+    const ok=!!S.service;
     cta.innerHTML=ok?'Continuer <i class="fa-solid fa-arrow-right fa-xs"></i>':'Choisir un service <i class="fa-solid fa-arrow-right fa-xs"></i>';
     cta.disabled=!ok;
   }
@@ -1164,8 +996,8 @@ function hideStep2Error(){document.getElementById('step2Error').classList.add('h
 
 function buildRecap(){
   const nom=document.getElementById('nom').value.trim(),tel=document.getElementById('telephone').value.trim(),adr=document.getElementById('adresse').value.trim(),date=document.getElementById('maDate').value,note=document.getElementById('noteClient').value.trim();
-  const vehicleDisplay=S.vehicleModels.length>1?S.vehicleModels.map((m,i)=>`#${i+1} ${m}`).join(' · '):(S.vehicleModels[0]||'');
-  const rows=[['Service',S.service],['Véhicule(s)',vehicleDisplay],['Quantité',S.qty+' véhicule(s)']];
+  const vehicleDisplay=S.vehicleModels[0]||'';
+  const rows=[['Service',S.service],['Véhicule',vehicleDisplay],['Quantité',S.qty+' véhicule(s)']];
   if(S.decontPrice>0)rows.push(['Décontamination',decontLabel(S.decontType)+' (+'+S.decontPrice+'$)']);
   if(S.dogHairPrice>0)rows.push(["Poils d'animaux",'Oui (environ +'+S.dogHairPrice+'$)']);
   rows.push(['Nom',nom],['Téléphone',tel],['Adresse',adr],['Date',date]);
@@ -1194,7 +1026,7 @@ function showSuccessScreen(){
 }
 
 function resetAll(){
-  S={vehicle:'sedan',service:null,price:0,isForfait:false,qty:1,base:0,final:0,promo:false,creneau:'',commPref:'',decontPrice:0,dogHairPrice:0,decontType:'',forfaitMin:null,forfaitMax:null,vehicleModels:[]};
+  S={vehicle:'sedan',service:null,price:0,qty:1,base:0,final:0,promo:false,creneau:'',commPref:'',decontPrice:0,dogHairPrice:0,decontType:'',vehicleModels:[]};
   currentSeg=1;segDone={1:false,2:false,3:false,4:false};
   document.querySelector('.shell').classList.remove('hidden');document.getElementById('successView').classList.add('hidden');
   document.getElementById('sameDayWarning').classList.add('hidden');
@@ -1202,17 +1034,13 @@ function resetAll(){
   ['vehicleModel','nom','telephone','adresse','maDate','noteClient'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('promoCode').value='';document.getElementById('promoMsg').innerHTML='';
   document.getElementById('qtyDisplay').textContent='1';
-  document.getElementById('forfaitQtyPicker').classList.add('hidden');
-  document.getElementById('forfaitQtyButtons').innerHTML='';
   document.getElementById('qtyBlock').classList.remove('hidden');
-  showSingleVehicleField();
-  document.querySelectorAll('.svc-opt,.ff-opt').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('.svc-opt').forEach(o=>o.classList.remove('selected'));
   document.getElementById('clearBtn').classList.remove('show');
   document.querySelectorAll('.creneau-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.vcard').forEach((t,i)=>{t.classList.remove('active');t.setAttribute('aria-selected','false');if(i===0){t.classList.add('active');t.setAttribute('aria-selected','true');}});
   ['suv','van','pickup'].forEach(id=>document.getElementById('g-'+id)?.classList.add('hidden'));
   document.getElementById('g-sedan')?.classList.remove('hidden');
-  document.getElementById('g-forfait').classList.add('hidden');document.getElementById('g-forfait').style.display='none';
   document.querySelector('input[name="decont"][value="non"]').checked=true;
   document.querySelector('input[name="doghair"][value="non"]').checked=true;
   document.getElementById('decontOptions').style.display='none';document.getElementById('decontSingle').style.display='none';
