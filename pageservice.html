@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+;<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -116,25 +116,29 @@ body::before{
 .vcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
 .vcard{
   display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  padding:20px 14px 16px;background:var(--surface);border:1.5px solid var(--border);
+  padding:0;background:var(--surface);border:1.5px solid var(--border);
   border-radius:14px;cursor:pointer;transition:all .2s cubic-bezier(.16,1,.3,1);
-  position:relative;overflow:hidden;min-height:128px;box-shadow:var(--shadow-sm);
+  position:relative;overflow:hidden;min-height:140px;box-shadow:var(--shadow-sm);
+}
+.vcard::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top, rgba(15,23,42,.78) 0%, rgba(15,23,42,.22) 55%, rgba(15,23,42,.02) 75%);
 }
 .vcard:hover{border-color:var(--blue-line);box-shadow:var(--shadow-md);transform:translateY(-2px);}
 .vcard.active{
-  border-color:var(--blue);background:linear-gradient(160deg,var(--blue-dim) 0%,var(--surface) 55%);
+  border-color:var(--blue);
   box-shadow:0 0 0 3px rgba(37,99,235,.12), var(--shadow-md);
 }
-.vcard-img{font-size:50px;line-height:1;margin-bottom:10px;transition:transform .22s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 3px 8px rgba(15,23,42,.18));width:64px;height:64px;display:flex;align-items:center;justify-content:center;}
-.vcard-img img{width:64px;height:64px;object-fit:cover;border-radius:10px;box-shadow:0 3px 8px rgba(15,23,42,.18);}
-.vcard:hover .vcard-img,.vcard.active .vcard-img{transform:scale(1.09) translateY(-2px);}
-.vcard-label{font-weight:700;font-size:13px;color:var(--text2);transition:color .18s;}
-.vcard:hover .vcard-label{color:var(--text);}
-.vcard.active .vcard-label{color:var(--blue);}
+.vcard-img{position:absolute;inset:0;width:100%;height:100%;margin:0;filter:none;display:flex;align-items:center;justify-content:center;font-size:50px;color:#fff;}
+.vcard-img img{width:100%;height:100%;object-fit:cover;border-radius:0;box-shadow:none;display:block;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.vcard:hover .vcard-img img,.vcard.active .vcard-img img{transform:scale(1.06);}
+.vcard-label{font-weight:700;font-size:13px;color:#fff;transition:color .18s;position:relative;z-index:2;padding:0 14px 14px;width:100%;text-align:center;}
+.vcard:hover .vcard-label{color:#fff;}
+.vcard.active .vcard-label{color:#fff;}
 .vcard-check{
   position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;
   background:var(--blue);display:flex;align-items:center;justify-content:center;
-  font-size:9px;color:#fff;opacity:0;transform:scale(.5);transition:all .2s;
+  font-size:9px;color:#fff;opacity:0;transform:scale(.5);transition:all .2s;z-index:3;
 }
 .vcard.active .vcard-check{opacity:1;transform:scale(1);}
 
@@ -666,7 +670,7 @@ body::before{
         <div class="seg-chev"><i class="fa-solid fa-chevron-down fa-sm"></i></div>
       </div>
       <div class="seg-wrap"><div class="seg-inner"><div class="seg-body">
-        <div class="add-option">
+        <div class="add-option" id="decontBlock">
           <div class="add-option-head">
             <label class="add-option-title">Ajouter une décontamination complète extérieure ?</label>
             <div class="add-option-price" id="decontTotal">+0$</div>
@@ -684,6 +688,10 @@ body::before{
             <div class="decont-single-text">Décontamination <b id="decontSingleLabel">—</b></div>
             <div class="decont-single-price" id="decontSinglePrice">+0$</div>
           </div>
+        </div>
+        <div class="notice-inline hidden" id="decontIncludedNotice" style="margin-top:0;margin-bottom:12px;">
+          <i class="fa-solid fa-circle-check fa-sm"></i>
+          <span>La décontamination extérieure complète est déjà incluse dans votre <strong>Lavage Complet Luxe</strong>.</span>
         </div>
         <div class="add-option">
           <div class="add-option-head">
@@ -896,6 +904,22 @@ function changeQty(d){
   updateAll();
 }
 function setupDecontForVehicle(){
+  const isLuxe=!!(S.service && S.service.indexOf('Lavage Complet Luxe')===0);
+  const decontBlock=document.getElementById('decontBlock'),decontIncluded=document.getElementById('decontIncludedNotice');
+  if(isLuxe){
+    decontBlock.classList.add('hidden');
+    decontIncluded.classList.remove('hidden');
+    const nonRadio=document.querySelector('input[name="decont"][value="non"]');
+    if(nonRadio)nonRadio.checked=true;
+    document.getElementById('decontOptions').style.display='none';
+    document.getElementById('decontSingle').style.display='none';
+    document.querySelectorAll('.decont-opt').forEach(o=>o.classList.remove('selected'));
+    S.decontPrice=0;S.decontType='';
+    syncRadioPillStyles();updateAll();
+    return;
+  }
+  decontBlock.classList.remove('hidden');
+  decontIncluded.classList.add('hidden');
   const key=S.vehicle;
   const known=DECONT_PRICES[key];
   const optsBox=document.getElementById('decontOptions'),singleBox=document.getElementById('decontSingle');
