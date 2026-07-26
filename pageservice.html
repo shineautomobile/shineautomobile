@@ -1,4 +1,4 @@
-;<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -691,7 +691,7 @@ body::before{
         </div>
         <div class="notice-inline hidden" id="decontIncludedNotice" style="margin-top:0;margin-bottom:12px;">
           <i class="fa-solid fa-circle-check fa-sm"></i>
-          <span>La décontamination extérieure complète est déjà incluse dans votre <strong>Lavage Complet Luxe</strong>.</span>
+          <span id="decontNoticeText">La décontamination extérieure complète est déjà incluse dans votre <strong>Lavage Complet Luxe</strong>.</span>
         </div>
         <div class="add-option">
           <div class="add-option-head">
@@ -905,10 +905,14 @@ function changeQty(d){
 }
 function setupDecontForVehicle(){
   const isLuxe=!!(S.service && S.service.indexOf('Lavage Complet Luxe')===0);
-  const decontBlock=document.getElementById('decontBlock'),decontIncluded=document.getElementById('decontIncludedNotice');
-  if(isLuxe){
+  const isInteriorOnly=!!(S.service && (S.service.indexOf('Lavage Intérieur')===0 || S.service.indexOf('Shampoing')===0));
+  const decontBlock=document.getElementById('decontBlock'),decontIncluded=document.getElementById('decontIncludedNotice'),decontNoticeText=document.getElementById('decontNoticeText');
+  if(isLuxe||isInteriorOnly){
     decontBlock.classList.add('hidden');
     decontIncluded.classList.remove('hidden');
+    decontNoticeText.innerHTML=isLuxe
+      ? 'La décontamination extérieure complète est déjà incluse dans votre <strong>Lavage Complet Luxe</strong>.'
+      : "La décontamination extérieure ne s'applique pas aux services <strong>intérieur seulement</strong>.";
     const nonRadio=document.querySelector('input[name="decont"][value="non"]');
     if(nonRadio)nonRadio.checked=true;
     document.getElementById('decontOptions').style.display='none';
