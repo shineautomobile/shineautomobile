@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+;<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -125,7 +125,8 @@ body::before{
   border-color:var(--blue);background:linear-gradient(160deg,var(--blue-dim) 0%,var(--surface) 55%);
   box-shadow:0 0 0 3px rgba(37,99,235,.12), var(--shadow-md);
 }
-.vcard-img{font-size:50px;line-height:1;margin-bottom:10px;transition:transform .22s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 3px 8px rgba(15,23,42,.18));}
+.vcard-img{font-size:50px;line-height:1;margin-bottom:10px;transition:transform .22s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 3px 8px rgba(15,23,42,.18));width:64px;height:64px;display:flex;align-items:center;justify-content:center;}
+.vcard-img img{width:64px;height:64px;object-fit:cover;border-radius:10px;box-shadow:0 3px 8px rgba(15,23,42,.18);}
 .vcard:hover .vcard-img,.vcard.active .vcard-img{transform:scale(1.09) translateY(-2px);}
 .vcard-label{font-weight:700;font-size:13px;color:var(--text2);transition:color .18s;}
 .vcard:hover .vcard-label{color:var(--text);}
@@ -499,22 +500,22 @@ body::before{
         <div class="vcard-grid" role="tablist" aria-label="Type de véhicule">
           <button type="button" class="vcard active" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="vcard-img">🚗</div>
+            <div class="vcard-img"><img src="Images/sedan.jpeg" alt="Sedan" onerror="this.parentElement.textContent='🚗'"></div>
             <div class="vcard-label">Sedan</div>
           </button>
           <button type="button" class="vcard" onclick="switchVehicle('suv',this)" aria-selected="false" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="vcard-img">🚙</div>
+            <div class="vcard-img"><img src="Images/vus.jpeg" alt="VUS" onerror="this.parentElement.textContent='🚙'"></div>
             <div class="vcard-label">VUS</div>
           </button>
           <button type="button" class="vcard" onclick="switchVehicle('van',this)" aria-selected="false" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="vcard-img">🚐</div>
+            <div class="vcard-img"><img src="Images/van.jpeg" alt="Van" onerror="this.parentElement.textContent='🚐'"></div>
             <div class="vcard-label">Van</div>
           </button>
           <button type="button" class="vcard" onclick="switchVehicle('pickup',this)" aria-selected="false" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
-            <div class="vcard-img">🛻</div>
+            <div class="vcard-img"><img src="Images/pickup.jpeg" alt="Pickup" onerror="this.parentElement.textContent='🛻'"></div>
             <div class="vcard-label">Pickup</div>
           </button>
         </div>
