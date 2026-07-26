@@ -1,4 +1,4 @@
-;<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -498,22 +498,22 @@ body::before{
 
         <span class="lbl">Type de véhicule</span>
         <div class="vcard-grid" role="tablist" aria-label="Type de véhicule">
-          <button type="button" class="vcard active" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">
+          <button type="button" class="vcard active" data-vehicle="sedan" onclick="switchVehicle('sedan',this)" aria-selected="true" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
             <div class="vcard-img"><img src="Images/sedan.jpeg" alt="Sedan" onerror="this.parentElement.textContent='🚗'"></div>
             <div class="vcard-label">Sedan</div>
           </button>
-          <button type="button" class="vcard" onclick="switchVehicle('suv',this)" aria-selected="false" role="tab">
+          <button type="button" class="vcard" data-vehicle="suv" onclick="switchVehicle('suv',this)" aria-selected="false" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
             <div class="vcard-img"><img src="Images/vus.jpeg" alt="VUS" onerror="this.parentElement.textContent='🚙'"></div>
             <div class="vcard-label">VUS</div>
           </button>
-          <button type="button" class="vcard" onclick="switchVehicle('van',this)" aria-selected="false" role="tab">
+          <button type="button" class="vcard" data-vehicle="van" onclick="switchVehicle('van',this)" aria-selected="false" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
             <div class="vcard-img"><img src="Images/van.jpeg" alt="Van" onerror="this.parentElement.textContent='🚐'"></div>
             <div class="vcard-label">Van</div>
           </button>
-          <button type="button" class="vcard" onclick="switchVehicle('pickup',this)" aria-selected="false" role="tab">
+          <button type="button" class="vcard" data-vehicle="pickup" onclick="switchVehicle('pickup',this)" aria-selected="false" role="tab">
             <div class="vcard-check"><i class="fa-solid fa-check fa-2xs"></i></div>
             <div class="vcard-img"><img src="Images/pickup.jpeg" alt="Pickup" onerror="this.parentElement.textContent='🛻'"></div>
             <div class="vcard-label">Pickup</div>
@@ -575,6 +575,19 @@ body::before{
             </div>
             <div class="svc-opt-bottom"><div class="svc-price-big">175$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
           </div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Luxe Sedan" data-price="300" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
+            <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
+            <div class="svc-opt-top">
+              <div class="svc-icon"><i class="fa-solid fa-crown"></i></div>
+              <div class="svc-name">Lavage Complet Luxe</div>
+              <ul class="svc-features">
+                <li><i class="fa-solid fa-check"></i>Lavage Complet Super inclus</li>
+                <li><i class="fa-solid fa-check"></i>Shampoing du sol / moquette (retrait du calcium)</li>
+                <li><i class="fa-solid fa-check"></i>Décontamination extérieure complète</li>
+              </ul>
+            </div>
+            <div class="svc-opt-bottom"><div class="svc-price-big">300$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div>
+          </div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Sedan" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)">
             <div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div>
             <div class="svc-opt-top">
@@ -595,6 +608,7 @@ body::before{
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus SUV" data-price="50" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Application de cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">50$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super SUV" data-price="130" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique intérieur</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">130$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super SUV" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Luxe SUV" data-price="325" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-crown"></i></div><div class="svc-name">Lavage Complet Luxe</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Lavage Complet Super inclus</li><li><i class="fa-solid fa-check"></i>Shampoing du sol / moquette (retrait du calcium)</li><li><i class="fa-solid fa-check"></i>Décontamination extérieure complète</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">325$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges SUV" data-price="60" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">60$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
         </div>
 
@@ -604,6 +618,7 @@ body::before{
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Van" data-price="80" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">80$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Van" data-price="180" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">180$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Van" data-price="300" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">300$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Luxe Van" data-price="550" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-crown"></i></div><div class="svc-name">Lavage Complet Luxe</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Lavage Complet Super inclus</li><li><i class="fa-solid fa-check"></i>Shampoing du sol / moquette (retrait du calcium)</li><li><i class="fa-solid fa-check"></i>Décontamination extérieure complète</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">550$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Van" data-price="100" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">100$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
         </div>
 
@@ -613,6 +628,7 @@ body::before{
           <div class="svc-opt" tabindex="0" data-service="Lavage Extérieur Plus Pickup" data-price="70" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage Extérieur Plus</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Tout du Lavage Extérieur</li><li><i class="fa-solid fa-check"></i>Cire protectrice</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">70$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Intérieur Super Pickup" data-price="200" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Lavage Intérieur Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Aspiration complète</li><li><i class="fa-solid fa-check"></i>Shampoing sièges &amp; tapis</li><li><i class="fa-solid fa-check"></i>Protection plastique</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">200$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Lavage Complet Super Pickup" data-price="250" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-trophy"></i></div><div class="svc-name">Lavage Complet Super</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Extérieur Plus (cire)</li><li><i class="fa-solid fa-check"></i>Intérieur Super (shampoing + protection)</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">250$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
+          <div class="svc-opt" tabindex="0" data-service="Lavage Complet Luxe Pickup" data-price="450" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-crown"></i></div><div class="svc-name">Lavage Complet Luxe</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Lavage Complet Super inclus</li><li><i class="fa-solid fa-check"></i>Shampoing du sol / moquette (retrait du calcium)</li><li><i class="fa-solid fa-check"></i>Décontamination extérieure complète</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">450$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
           <div class="svc-opt" tabindex="0" data-service="Shampoing Sièges Pickup" data-price="75" onclick="selectSvc(this)" onkeydown="svcKeydown(event,this)"><div class="svc-badge"><i class="fa-solid fa-check fa-2xs"></i></div><div class="svc-opt-top"><div class="svc-icon"><i class="fa-solid fa-soap"></i></div><div class="svc-name">Shampoing des Sièges</div><ul class="svc-features"><li><i class="fa-solid fa-check"></i>Shampoing professionnel sièges</li><li><i class="fa-solid fa-check"></i>Nettoyage en profondeur tapis</li></ul></div><div class="svc-opt-bottom"><div class="svc-price-big">75$</div><div class="svc-select-hint"><i class="fa-solid fa-circle-plus fa-xs"></i> Sélectionner</div></div></div>
         </div>
 
@@ -1058,6 +1074,28 @@ function setMinDate(){
   const t=new Date();document.getElementById('maDate').min=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
 }
 updateAll();syncRadioPillStyles();setMinDate();updateStickerSteps();
+
+/* ═══ AUTO-SÉLECTION DEPUIS L'URL (?service=...) ═══ */
+function applyServiceFromUrl(){
+  const params=new URLSearchParams(window.location.search);
+  const wanted=params.get('service');
+  if(!wanted)return;
+  const suffixMap={'Sedan':'sedan','SUV':'suv','Van':'van','Pickup':'pickup'};
+  let vKey=null;
+  for(const suffix in suffixMap){
+    if(wanted.trim().endsWith(suffix)){vKey=suffixMap[suffix];break;}
+  }
+  if(!vKey)return;
+  const vBtn=document.querySelector('.vcard[data-vehicle="'+vKey+'"]');
+  if(vBtn)switchVehicle(vKey,vBtn);
+  const group=document.getElementById('g-'+vKey);
+  if(!group)return;
+  const opts=group.querySelectorAll('.svc-opt');
+  let match=null;
+  opts.forEach(o=>{if(o.dataset.service===wanted.trim())match=o;});
+  if(match)selectSvc(match);
+}
+applyServiceFromUrl();
 </script>
 </body>
 </html>
