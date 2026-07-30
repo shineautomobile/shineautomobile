@@ -63,7 +63,8 @@ nav{background:rgba(5,7,12,0.0);border-bottom:1px solid rgba(255,255,255,0.08);}
 nav.scrolled{background:rgba(8,11,20,0.72);backdrop-filter:blur(18px) saturate(140%);border-bottom-color:rgba(255,255,255,0.08);}
 nav.light{background:rgba(255,255,255,0.82);backdrop-filter:blur(18px) saturate(140%);border-bottom-color:var(--line);}
 .nav-logo{display:flex;align-items:center;gap:11px;}
-.nav-mark{width:38px;height:38px;border-radius:10px;object-fit:contain;background:linear-gradient(135deg,var(--blue),var(--blueSoft));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(20,64,255,.35);}
+.nav-mark{width:38px;height:38px;border-radius:10px;object-fit:contain;background:linear-gradient(135deg,var(--blue),var(--blueSoft));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(20,64,255,.35);overflow:hidden;}
+.nav-mark-img{width:100%;height:100%;object-fit:cover;}
 .nav-word{font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:-.01em;color:#fff;transition:color .4s;}
 nav.light .nav-word{color:var(--ink);}
 .nav-links{display:flex;gap:2px;}
@@ -327,16 +328,18 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
 <nav id="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-mark"><i class="fa-solid fa-car" style="font-size:15px"></i></div>
+      <div class="nav-mark">
+        <img src="Images/logo.jpeg" alt="Logo ShineAutomobile" class="nav-mark-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <i class="fa-solid fa-car" style="font-size:15px;display:none"></i>
+      </div>
       <span class="nav-word">ShineAutomobile</span>
     </a>
     <div class="nav-links">
       <a href="index.html" class="nav-link">Accueil</a>
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="tarifs.html" class="nav-link">Tarifs</a>
-      <a href="galerie.html" class="nav-link">Galerie</a>
-      <a href="apropos.html" class="nav-link">À propos</a>
-      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#urgences" class="nav-link">Urgences</a>
+      <a href="#apropos" class="nav-link">À propos</a>
+      <a href="#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
       <a href="tel:8736623813" class="btn btn-glass"><i class="fa-solid fa-phone"></i></a>
@@ -346,11 +349,10 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
   </div>
   <div id="mob-menu">
     <a href="index.html">Accueil</a>
-    <a href="services.html">Services</a>
-    <a href="tarifs.html">Tarifs</a>
-    <a href="galerie.html">Galerie</a>
-    <a href="apropos.html">À propos</a>
-    <a href="contact.html">Contact</a>
+    <a href="#services">Services</a>
+    <a href="#urgences">Urgences</a>
+    <a href="#apropos">À propos</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
@@ -565,7 +567,7 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
         <div class="footer-sub">LAVAGE AUTO HAUT DE GAMME · SHERBROOKE</div>
         <a href="tel:8736623813" class="footer-tel">873-662-3813</a>
       </div>
-      <div><div class="footer-col-title">Navigation</div><div class="footer-links"><a href="services.html">Services</a><a href="tarifs.html">Tarifs</a><a href="galerie.html">Galerie</a><a href="apropos.html">À propos</a></div></div>
+      <div><div class="footer-col-title">Navigation</div><div class="footer-links"><a href="#services">Services</a><a href="#urgences">Urgences</a><a href="#apropos">À propos</a><a href="#contact">Contact</a></div></div>
       <div><div class="footer-col-title">Contact</div><div class="footer-links"><a href="tel:8736623813">873-662-3813</a><a href="mailto:info.shineautomobile@gmail.com">info.shineautomobile@gmail.com</a><a href="https://www.instagram.com/shineautomobile_" target="_blank">@shineautomobile_</a></div></div>
       <div><div class="footer-col-title">Réserver</div><div class="footer-links"><a href="pageservice.html">Réservation en ligne</a><a href="sedan.html">Sedan</a><a href="suv.html">VUS</a><a href="van.html">Van</a><a href="pickup.html">Pickup</a></div></div>
     </div>
