@@ -278,7 +278,7 @@ section{position:relative;}
 .float-stack{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:12px;z-index:800;}
 .fbtn{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:all .3s var(--ease);}
 .fbtn:hover{transform:scale(1.1);}
-.fbtn.whatsapp{background:#25D366;}
+.fbtn.message{background:#25D366;}
 .fbtn.call{background:var(--blue);}
 .fbtn.top{background:var(--ink);opacity:0;pointer-events:none;transform:translateY(10px);}
 .fbtn.top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
@@ -364,7 +364,7 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
     <p class="hero-p">Une expérience de détaillage haut de gamme, livrée directement chez vous. Produits écologiques, gestes précis, résultat qui se voit dès le premier regard.</p>
     <div class="hero-ctas">
       <a href="pageservice.html" class="btn btn-blue"><i class="fa-solid fa-calendar-check"></i> Réserver maintenant</a>
-      <a href="contact.html" class="btn btn-glass"><i class="fa-solid fa-envelope"></i> Obtenir une soumission</a>
+      <a href="#services" class="btn btn-glass"><i class="fa-solid fa-list-check"></i> Voir les services</a>
     </div>
     <div class="hud">
       <div class="hud-cell"><div class="hud-val">5/5</div><div class="hud-label">Satisfaction</div></div>
@@ -428,9 +428,7 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
       <div class="svc-card reveal"><div class="svc-icon"><i class="fa-solid fa-star"></i></div><div class="svc-name">Lavage complet</div><div class="svc-desc">L'intérieur et l'extérieur, pour une remise à neuf totale.</div><span class="svc-tag">Le plus choisi</span></div>
       <div class="svc-card reveal"><div class="svc-icon"><i class="fa-solid fa-shield-virus"></i></div><div class="svc-name">Décontamination</div><div class="svc-desc">Retrait des résidus incrustés invisibles à l'œil nu.</div><span class="svc-tag">Approfondi</span></div>
       <div class="svc-card reveal"><div class="svc-icon"><i class="fa-solid fa-hand-sparkles"></i></div><div class="svc-name">Cire (Wax)</div><div class="svc-desc">Protection et brillance longue durée pour la carrosserie.</div><span class="svc-tag">Finition</span></div>
-      <div class="svc-card reveal soon"><div class="svc-icon"><i class="fa-solid fa-gem"></i></div><div class="svc-name">Protection céramique</div><div class="svc-desc">Protection longue durée haut de gamme. Arrive bientôt.</div><span class="svc-tag soon">À venir</span></div>
       <div class="svc-card reveal"><div class="svc-icon"><i class="fa-solid fa-couch"></i></div><div class="svc-name">Shampooing des sièges</div><div class="svc-desc">Nettoyage en profondeur des sièges en tissu ou en cuir.</div><span class="svc-tag">Sur mesure</span></div>
-      <div class="svc-card reveal soon"><div class="svc-icon"><i class="fa-solid fa-gear"></i></div><div class="svc-name">Nettoyage moteur</div><div class="svc-desc">Dégraissage du compartiment moteur. Service optionnel.</div><span class="svc-tag soon">Sur demande</span></div>
     </div>
   </div>
 </section>
@@ -471,20 +469,6 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
   </div>
 </section>
 
-<!-- ════ TARIFS TEASER ════ -->
-<section class="tarifs-teaser">
-  <div class="wrap">
-    <div class="tt-inner reveal">
-      <div>
-        <div class="eyebrow">Tarification</div>
-        <h2 class="h2">Des forfaits <em>clairs et honnêtes</em></h2>
-        <p class="lead">Aucune surprise à la facture. Consultez le détail de chaque forfait par catégorie de véhicule.</p>
-      </div>
-      <div class="tt-right"><a href="tarifs.html" class="btn btn-blue"><i class="fa-solid fa-tags"></i> Voir tous les tarifs</a></div>
-    </div>
-  </div>
-</section>
-
 <!-- ════ WHY ════ -->
 <section class="why">
   <div class="wrap">
@@ -496,22 +480,6 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
       <div class="why-card reveal"><div class="why-icon"><i class="fa-solid fa-house"></i></div><div class="why-title">Service à domicile</div><div class="why-desc">On se déplace chez vous. Zéro déplacement, zéro perte de temps de votre côté.</div></div>
       <div class="why-card reveal"><div class="why-icon"><i class="fa-solid fa-award"></i></div><div class="why-title">Satisfaction garantie</div><div class="why-desc">Résultat impeccable ou on revient. Votre satisfaction est notre priorité absolue.</div></div>
     </div>
-  </div>
-</section>
-
-<!-- ════ GALLERY TEASER ════ -->
-<section class="gallery-teaser dark">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div><div class="eyebrow">Résultats</div><h2 class="h2">Avant / <em>Après</em></h2></div>
-      <p class="lead">Un aperçu du travail. La galerie complète vous attend.</p>
-    </div>
-    <div class="gt-grid">
-      <div class="gt-card reveal"><span class="gt-badge">Sedan</span><img src="Images/sedan.jpeg" alt="Résultat sedan" onerror="this.style.display='none'"><div class="gt-overlay"><span>Lavage complet</span></div></div>
-      <div class="gt-card reveal"><span class="gt-badge">VUS</span><img src="Images/vus.jpeg" alt="Résultat VUS" onerror="this.style.display='none'"><div class="gt-overlay"><span>Décontamination</span></div></div>
-      <div class="gt-card reveal"><span class="gt-badge">Pickup</span><img src="Images/pickup.jpeg" alt="Résultat pickup" onerror="this.style.display='none'"><div class="gt-overlay"><span>Cire &amp; finition</span></div></div>
-    </div>
-    <div style="text-align:center;margin-top:44px" class="reveal"><a href="galerie.html" class="btn btn-glass">Voir la galerie complète <i class="fa-solid fa-arrow-right"></i></a></div>
   </div>
 </section>
 
@@ -583,7 +551,7 @@ footer{background:var(--black);padding:90px 0 40px;color:#fff;}
 
 <!-- ════ FLOATING BUTTONS ════ -->
 <div class="float-stack">
-  <a href="https://wa.me/18736623813" target="_blank" class="fbtn whatsapp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="sms:8736623813" class="fbtn message" title="Nous écrire par SMS"><i class="fa-solid fa-comment-sms"></i></a>
   <a href="tel:8736623813" class="fbtn call" title="Appeler"><i class="fa-solid fa-phone"></i></a>
   <button class="fbtn top" id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Retour en haut"><i class="fa-solid fa-arrow-up"></i></button>
 </div>
